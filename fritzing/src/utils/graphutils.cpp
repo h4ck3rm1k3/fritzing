@@ -32,9 +32,9 @@ $Date$
 
 #ifdef _MSC_VER 
 #pragma warning(push) 
+#pragma warning(disable:4503)
 #pragma warning(disable:4100)			// disable scary-looking compiler warnings in Boost library
 #pragma warning(disable:4181)	
-#pragma warning(disable:4503)
 #endif
 
 #include <boost/config.hpp>

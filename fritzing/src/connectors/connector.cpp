@@ -34,6 +34,7 @@ $Date$
 #include "ercdata.h"
 
 QHash <Connector::ConnectorType, QString > Connector::Names;
+static const QList<SvgIdLayer *> EmptySvgIdLayerList;
 
 static inline int QuickHash(ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID) {
 	return (1000 * viewIdentifier) + viewLayerID;
@@ -79,7 +80,7 @@ const QString & Connector::connectorNameFromType(ConnectorType type) {
 	return Names[type];
 }
 
-Connector::ConnectorType Connector::connectorType() {
+Connector::ConnectorType Connector::connectorType() const {
 	if (m_connectorShared != NULL) {
 		return m_connectorShared->connectorType();
 	}
@@ -186,13 +187,13 @@ bool Connector::connectionIsAllowed(Connector* that)
 	return (thisConnectorType != thatConnectorType);		// otherwise heterosexual
 }
 
-const QString & Connector::connectorSharedID() {
+const QString & Connector::connectorSharedID() const {
 	if (m_connectorShared == NULL) return ___emptyString___;
 
 	return m_connectorShared->id();
 }
 
-const QString & Connector::connectorSharedName() {
+const QString & Connector::connectorSharedName() const {
 	if (m_connectorShared == NULL) return ___emptyString___;
 
 	if (!m_connectorLocalName.isEmpty()) {
@@ -202,7 +203,7 @@ const QString & Connector::connectorSharedName() {
 	return m_connectorShared->sharedName();
 }
 
-const QString & Connector::connectorSharedDescription() {
+const QString & Connector::connectorSharedDescription() const {
 	if (m_connectorShared == NULL) return ___emptyString___;
 
 	return m_connectorShared->description();
@@ -280,3 +281,13 @@ const QString & Connector::connectorLocalName() {
 	return m_connectorLocalName;
 }
 
+const QList<SvgIdLayer *> Connector::svgIdLayers() const {
+    if (m_connectorShared) return m_connectorShared->svgIdLayers();
+
+    return EmptySvgIdLayerList;
+}
+
+void Connector::addPin(ViewIdentifierClass::ViewIdentifier viewIdentifier, const QString & svgId, ViewLayer::ViewLayerID viewLayerId, const QString & terminalId, const QString & legId, bool hybrid)
+{
+    if (m_connectorShared) m_connectorShared->addPin(viewIdentifier, svgId, viewLayerId, terminalId, legId, hybrid);
+}

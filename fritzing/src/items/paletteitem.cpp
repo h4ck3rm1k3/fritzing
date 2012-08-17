@@ -150,7 +150,6 @@ void PaletteItem::loadLayerKin(const LayerHash & viewLayers, ViewLayer::ViewLaye
 
 	ModelPartShared * modelPartShared = m_modelPart->modelPartShared();
 	if (modelPartShared == NULL) return;
-	if (modelPartShared->domDocument() == NULL) return;
 
 	qint64 id = m_id + 1;
 	ViewGeometry viewGeometry = m_viewGeometry;
@@ -502,28 +501,28 @@ void PaletteItem::slamZ(double z) {
 	}
 }
 
-void PaletteItem::resetImage(InfoGraphicsView * infoGraphicsView, QDomDocument * domDocument) {
+void PaletteItem::resetImage(InfoGraphicsView * infoGraphicsView) {
 	foreach (Connector * connector, modelPart()->connectors()) {
 		connector->unprocess(this->viewIdentifier(), this->viewLayerID());
 	}
 
 	QString error;
 	LayerAttributes layerAttributes;
-	this->setUpImage(modelPart(), domDocument, this->viewIdentifier(), infoGraphicsView->viewLayers(), this->viewLayerID(), this->viewLayerSpec(), true, layerAttributes, error);
+	this->setUpImage(modelPart(), this->viewIdentifier(), infoGraphicsView->viewLayers(), this->viewLayerID(), this->viewLayerSpec(), true, layerAttributes, error);
 	
 	foreach (ItemBase * layerKin, m_layerKin) {
-		resetKinImage(layerKin, infoGraphicsView, domDocument);
+		resetKinImage(layerKin, infoGraphicsView);
 	}
 }
 
-void PaletteItem::resetKinImage(ItemBase * layerKin, InfoGraphicsView * infoGraphicsView, QDomDocument * domDocument) 
+void PaletteItem::resetKinImage(ItemBase * layerKin, InfoGraphicsView * infoGraphicsView) 
 {
 	foreach (Connector * connector, modelPart()->connectors()) {
 		connector->unprocess(layerKin->viewIdentifier(), layerKin->viewLayerID());
 	}
 	QString error;
 	LayerAttributes layerAttributes;
-	qobject_cast<PaletteItemBase *>(layerKin)->setUpImage(modelPart(), domDocument, layerKin->viewIdentifier(), infoGraphicsView->viewLayers(), layerKin->viewLayerID(), layerKin->viewLayerSpec(), true, layerAttributes, error);
+	qobject_cast<PaletteItemBase *>(layerKin)->setUpImage(modelPart(), layerKin->viewIdentifier(), infoGraphicsView->viewLayers(), layerKin->viewLayerID(), layerKin->viewLayerSpec(), true, layerAttributes, error);
 }
 
 QString PaletteItem::genFZP(const QString & moduleid, const QString & templateName, int minPins, int maxPins, int steps, bool smd)
@@ -1161,15 +1160,30 @@ void PaletteItem::changeHoleSize(const QString & newSize) {
 
 QString PaletteItem::hackFzpHoleSize(const QString & fzp, const QString & moduleid, int hsix) 
 {
+    QString errorStr;
+    int errorLine;
+    int errorColumn;
     QDomDocument document;
-    document.setContent(fzp);
+    bool result = document.setContent(fzp, &errorStr, &errorLine, &errorColumn);
+    if (!result) {
+        DebugDialog::debug(QString("bad fzp in %1:%2").arg(moduleid).arg(fzp));
+    }
     QStringList strings = moduleid.mid(hsix).split("_");
     return hackFzpHoleSize(document, moduleid, "pcb/" + moduleid + ".svg", strings.at(2) + "," + strings.at(3)); 
 }
 
 
 QString PaletteItem::hackFzpHoleSize(const QString & newModuleID, const QString & pcbFilename, const QString & newSize) {
-    QDomDocument document = modelPart()->domDocument()->cloneNode(true).toDocument();
+    QFile file(modelPart()->path());
+    QString errorStr;
+    int errorLine;
+    int errorColumn;
+    QDomDocument document;
+    bool result = document.setContent(&file, &errorStr, &errorLine, &errorColumn);    
+    if (!result) {
+        DebugDialog::debug(QString("bad doc fzp in %1:%2 %3 %4").arg(newModuleID).arg(errorStr).arg(errorLine).arg(errorColumn));
+    }
+
     return hackFzpHoleSize(document, newModuleID, pcbFilename, newSize);
 }
 
@@ -1313,22 +1327,31 @@ void PaletteItem::generateSwap(const QString & text, GenModuleID genModuleID, Ge
         QDomDocument doc;
         doc.setContent(fzp);
 
-        QString bbName = LayerAttributes::getSvgElementLayers(&doc, ViewIdentifierClass::BreadboardView).attribute("image");
-        QString schName = LayerAttributes::getSvgElementLayers(&doc, ViewIdentifierClass::SchematicView).attribute("image");
-        QString pcbName = LayerAttributes::getSvgElementLayers(&doc, ViewIdentifierClass::PCBView).attribute("image");
+        QHash<QString, QString> viewNames;
 
-        if (!PartFactory::svgFileExists(bbName, path)) {
-            QString svg = makeBreadboardSvg(bbName);
+        QDomElement root = doc.documentElement();
+	    QDomElement views = root.firstChildElement("views");
+        QDomElement view = views.firstChildElement();
+	    while (!view.isNull()) {
+            viewNames.insert(view.tagName(), view.attribute("image", ""));
+            view = view.nextSiblingElement();
+        }
+
+        QString name = viewNames.value("breadboardView", "");
+        if (!PartFactory::svgFileExists(name, path)) {
+            QString svg = makeBreadboardSvg(name);
 	        TextUtils::writeUtf8(path, svg);
         }
 
-        if (!PartFactory::svgFileExists(schName, path)) {
-            QString svg = makeSchematicSvg(schName);
+        name = viewNames.value("schematicView", "");
+        if (!PartFactory::svgFileExists(name, path)) {
+            QString svg = makeSchematicSvg(name);
 	        TextUtils::writeUtf8(path, svg);
         }
 
-        if (!PartFactory::svgFileExists(pcbName, path)) {
-            QString svg = makePcbSvg(pcbName);
+        name = viewNames.value("pcbView", "");
+        if (!PartFactory::svgFileExists(name, path)) {
+            QString svg = makePcbSvg(name);
 	        TextUtils::writeUtf8(path, svg);
         } 
     }

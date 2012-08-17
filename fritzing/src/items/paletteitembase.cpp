@@ -378,25 +378,20 @@ void PaletteItemBase::collectWireConnectees(QSet<Wire *> & wires) {
 		}
 	}
 }
+
 bool PaletteItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec viewLayerSpec, bool doConnectors, LayerAttributes & layerAttributes, QString & error)
 {
-    return setUpImage(modelPart, NULL, viewIdentifier, viewLayers, viewLayerID, viewLayerSpec, doConnectors, layerAttributes, error);
-}
-
-
-bool PaletteItemBase::setUpImage(ModelPart * modelPart, QDomDocument * domDocument, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec viewLayerSpec, bool doConnectors, LayerAttributes & layerAttributes, QString & error)
-{
-	FSvgRenderer * renderer = ItemBase::setUpImage(modelPart, domDocument, viewIdentifier, viewLayerID, viewLayerSpec, layerAttributes, error);
+	FSvgRenderer * renderer = ItemBase::setUpImage(modelPart, viewIdentifier, viewLayerID, viewLayerSpec, layerAttributes, error);
 	if (renderer == NULL) {
 		return false;
 	}
 
-	m_canFlipVertical = layerAttributes.canFlipVertical();
-	m_canFlipHorizontal = layerAttributes.canFlipHorizontal();
+	m_canFlipVertical = modelPart->canFlipVertical(viewIdentifier);
+	m_canFlipHorizontal = modelPart->canFlipHorizontal(viewIdentifier);
 	m_filename = layerAttributes.filename();
 	//DebugDialog::debug(QString("filename %1").arg(m_filename) );
-	setSticky(layerAttributes.isSticky());
-	QString elementID = layerAttributes.layerName();
+	setSticky(modelPart->isSticky(viewIdentifier, viewLayerID));
+	QString elementID = ViewLayer::viewLayerXmlNameFromID(viewLayerID);
 	setViewLayerID(elementID, viewLayers);
 
 	//DebugDialog::debug(QString("setting layer %1 view:%2 z:%3").arg(modelPart->title()).arg(viewIdentifier).arg(this->z()) );

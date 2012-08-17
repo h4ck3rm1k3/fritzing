@@ -47,6 +47,7 @@ InstanceTitleIncrementHash NullInstanceTitleIncrements;
 
 static const QRegExp InstanceTitleRegExp("^(.*[^\\d])(\\d+)$");
 
+static const QList<ViewImage *> EmptyViewImages;
 
 ////////////////////////////////////////
 
@@ -119,6 +120,12 @@ const QString & ModelPart::label() {
 
 const QString & ModelPart::author() {
 	if (m_modelPartShared != NULL) return m_modelPartShared->author();
+
+	return ___emptyString___;
+}
+
+const QString & ModelPart::taxonomy() {
+	if (m_modelPartShared != NULL) return m_modelPartShared->taxonomy();
 
 	return ___emptyString___;
 }
@@ -489,6 +496,13 @@ const QDomElement & ModelPart::instanceDomElement() {
 	return m_instanceDomElement;
 }
 
+const QString & ModelPart::fritzingVersion() {
+
+	if (m_modelPartShared != NULL) return m_modelPartShared->fritzingVersion();
+
+	return ___emptyString___;
+}
+
 const QString & ModelPart::title() {
 	if (!m_localTitle.isEmpty()) return m_localTitle;
 
@@ -597,15 +611,49 @@ void ModelPart::setLocationFlag(bool setting, LocationFlag flag) {
 }
 
 bool ModelPart::hasViewIdentifier(ViewIdentifierClass::ViewIdentifier viewIdentifier) {
-	QDomDocument * doc = domDocument();
-	if (doc == NULL) return false;
+    if (m_modelPartShared) return m_modelPartShared->hasViewIdentifier(viewIdentifier);
 
-	QDomElement viewsElems = doc->documentElement().firstChildElement("views");
-	if(viewsElems.isNull()) return false;
+    return false;
 
-	return !viewsElems.firstChildElement(ViewIdentifierClass::viewIdentifierXmlName(viewIdentifier)).isNull();
 }
 
+bool ModelPart::canFlipVertical(ViewIdentifierClass::ViewIdentifier viewIdentifier) {
+    if (m_modelPartShared) return m_modelPartShared->canFlipVertical(viewIdentifier);
+
+    return false;
+
+}
+
+bool ModelPart::canFlipHorizontal(ViewIdentifierClass::ViewIdentifier viewIdentifier) {
+    if (m_modelPartShared) return m_modelPartShared->canFlipHorizontal(viewIdentifier);
+
+    return false;
+}
+
+LayerList ModelPart::viewLayers(ViewIdentifierClass::ViewIdentifier viewIdentifier) {
+    if (m_modelPartShared) return m_modelPartShared->viewLayers(viewIdentifier);
+
+    LayerList layerList;
+    return layerList;
+}
+
+QString ModelPart::imageFileName(ViewIdentifierClass::ViewIdentifier viewIdentifier) {
+    if (m_modelPartShared) return m_modelPartShared->imageFileName(viewIdentifier);
+
+    return "";
+}
+
+QString ModelPart::imageFileName(ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID) {
+    if (m_modelPartShared) return m_modelPartShared->imageFileName(viewIdentifier, viewLayerID);
+
+    return "";
+}
+
+bool ModelPart::isSticky(ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID) {
+    if (m_modelPartShared) return m_modelPartShared->isSticky(viewIdentifier, viewLayerID);
+
+    return false;
+}
 
 QList<ModelPart*> ModelPart::getAllParts() {
 	QList<ModelPart*> retval;
@@ -769,7 +817,7 @@ void ModelPart::setOrderedChildren(QList<QObject*> children) {
 
 void ModelPart::setLocalProp(const char * name, const QVariant & value) {
     //DebugDialog::debug(QString("mp set prop %1 %2").arg(name).arg(value.toString()));
-	setProperty(name, value);
+	QObject::setProperty(name, value);
 }
 
 QVariant ModelPart::localProp(const char * name) const {
@@ -826,12 +874,6 @@ bool ModelPart::needsCopper1() {
 	return false;
 }
 
-QDomDocument* ModelPart::domDocument() {
-	if (m_modelPartShared == NULL) return NULL;
-
-	return m_modelPartShared->domDocument();
-}
-
 bool ModelPart::hasViewFor(ViewIdentifierClass::ViewIdentifier viewIdentifier) {
 	if (m_modelPartShared == NULL) return false;
 
@@ -878,4 +920,48 @@ QString ModelPart::family(){
 
 bool ModelPart::hasViewItems() {
 	return (m_viewItems.count() > 0);
+}
+
+void ModelPart::setDBID(qulonglong dbid) {
+    if (m_modelPartShared) m_modelPartShared->setDBID(dbid);
+}
+
+qulonglong ModelPart::dbid() {
+    if (m_modelPartShared) return m_modelPartShared->dbid();
+
+    return 0;
+}
+
+const QList<ViewImage *> ModelPart::viewImages() {
+    if (m_modelPartShared) return m_modelPartShared->viewImages();
+
+    return EmptyViewImages;
+}
+
+void ModelPart::setViewImage(ViewImage * viewImage) {
+    if (m_modelPartShared) m_modelPartShared->setViewImage(viewImage);
+}
+
+void ModelPart::setTag(const QString & tag)
+{
+    if (m_modelPartShared) m_modelPartShared->setTag(tag);
+}
+
+void ModelPart::setProperty(const QString & name, const QString &value)
+{
+    if (m_modelPartShared) m_modelPartShared->setProperty(name, value);
+}
+
+void ModelPart::addConnector(Connector * connector) {
+    m_connectorHash.insert(connector->connectorSharedID(), connector);
+
+    if (m_modelPartShared) m_modelPartShared->addConnector(connector->connectorShared());
+}
+
+void ModelPart::flipSMDAnd() {
+    if (m_modelPartShared) m_modelPartShared->flipSMDAnd();
+}
+
+void ModelPart::setImageFileName(ViewIdentifierClass::ViewIdentifier viewIdentifier, const QString & filename) {
+    if (m_modelPartShared) m_modelPartShared->setImageFileName(viewIdentifier, filename);
 }

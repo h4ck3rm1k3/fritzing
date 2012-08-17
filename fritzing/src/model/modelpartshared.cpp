@@ -29,8 +29,10 @@ $Date$
 #include "../debugdialog.h"
 #include "../connectors/busshared.h"
 
+
 #include <QHash>
 #include <QMessageBox>
+#include <math.h>
 
 void copyPinAttributes(QDomElement & from, QDomElement & to)
 {
@@ -47,6 +49,14 @@ void copyPinAttributes(QDomElement & from, QDomElement & to)
 	if (!legId.isEmpty()) {
 		to.setAttribute("legId", legId);
 	}
+}
+
+///////////////////////////////////////////////
+
+ViewImage::ViewImage(ViewIdentifierClass::ViewIdentifier vi) {
+    flipped = sticky = layers = 0;
+    canFlipVertical = canFlipHorizontal = false;
+    viewIdentifier = vi;
 }
 
 ///////////////////////////////////////////////
@@ -72,16 +82,15 @@ void ModelPartSharedRoot::setSearchTerm(const QString & searchTerm) {
 const QString ModelPartShared::PartNumberPropertyName = "part number";
 
 ModelPartShared::ModelPartShared() {
+
 	commonInit();
 
-	m_domDocument = NULL;
 	m_path = "";
 }
 
 ModelPartShared::ModelPartShared(QDomDocument * domDocument, const QString & path) {
 	commonInit();
 
-	m_domDocument = domDocument;
 	m_path = path;
 
 	if (domDocument) {
@@ -112,21 +121,27 @@ ModelPartShared::ModelPartShared(QDomDocument * domDocument, const QString & pat
 		ensurePartNumberProperty();
 
 		m_moduleID = root.attribute("moduleId", "");
+        m_fritzingVersion = root.attribute("fritzingVersion", "");
 
 		QDomElement views = root.firstChildElement("views");
 		if (!views.isNull()) {
 			QDomElement view = views.firstChildElement();
 			while (!view.isNull()) {
 				ViewIdentifierClass::ViewIdentifier viewIdentifier = ViewIdentifierClass::idFromXmlName(view.nodeName());
+                ViewImage * viewImage = new ViewImage(viewIdentifier);
+                m_viewImages.insert(viewIdentifier, viewImage);
+                viewImage->canFlipHorizontal = view.attribute("fliphorizontal","").compare("true") == 0;
+                viewImage->canFlipVertical = view.attribute("flipvertical","").compare("true") == 0;
 				QDomElement layers = view.firstChildElement("layers");
 				if (!layers.isNull()) {
-					setHasBaseNameFor(viewIdentifier, layers.attribute("image"));
+                    viewImage->image = layers.attribute("image", "");
 					QDomElement layer = layers.firstChildElement("layer");
 					while (!layer.isNull()) {
 						ViewLayer::ViewLayerID viewLayerID = ViewLayer::viewLayerIDFromXmlString(layer.attribute("layerId"));
-						if (ViewIdentifierClass::viewHasLayer(viewIdentifier, viewLayerID)) {
-							setHasViewFor(viewIdentifier, viewLayerID);
-						}
+                        qulonglong sticky = (layer.attribute("sticky", "").compare("true") == 0) ? 1 : 0;
+                        qulonglong one = 1;
+                        viewImage->layers |= (one << viewLayerID); 
+                        viewImage->sticky |= (sticky << viewLayerID); 
 						layer = layer.nextSiblingElement("layer");
 					}
 				}
@@ -140,6 +155,7 @@ ModelPartShared::ModelPartShared(QDomDocument * domDocument, const QString & pat
 
 void ModelPartShared::commonInit() {
 	m_moduleID = "";
+    m_dbid = 0;
 	m_flippedSMD = m_connectorsInitialized = m_ignoreTerminalPoints = m_partlyLoaded = m_needsCopper1 = false;
 }
 
@@ -148,6 +164,11 @@ ModelPartShared::~ModelPartShared() {
 		delete connectorShared;
 	}
 	m_connectorSharedHash.clear();
+
+	foreach (ViewImage * viewImage, m_viewImages.values()) {
+		delete viewImage;
+	}
+	m_viewImages.clear();
 
 	foreach (ConnectorShared * connectorShared, m_deletedList) {
 		delete connectorShared;
@@ -159,10 +180,6 @@ ModelPartShared::~ModelPartShared() {
 	}
 	m_buses.clear();
 
-	if (m_domDocument) {
-		delete m_domDocument;
-		m_domDocument = NULL;
-	}
 }
 
 void ModelPartShared::loadTagText(QDomElement parent, QString tagName, QString &field) {
@@ -196,19 +213,24 @@ void ModelPartShared::populateProperties(QDomElement parent, QHash<QString,QStri
 }
 
 void ModelPartShared::setDomDocument(QDomDocument * domDocument) {
-	if (m_domDocument) {
-		delete m_domDocument;
-	}
-	m_domDocument = domDocument;
+
+    DebugDialog::debug("set dom document no longer implemented");
+
 }
 
+    /*
 QDomDocument* ModelPartShared::domDocument() {
+
+
 	if (m_partlyLoaded) {
 		loadDocument();
 	}
 
 	return m_domDocument;
+
+
 }
+    */
 
 const QString & ModelPartShared::title() {
 	return m_title;
@@ -288,8 +310,13 @@ void ModelPartShared::setDate(QString date) {
 const QStringList & ModelPartShared::tags() {
 	return m_tags;
 }
+
 void ModelPartShared::setTags(const QStringList &tags) {
 	m_tags = tags;
+}
+
+void ModelPartShared::setTag(const QString &tag) {
+	m_tags.append(tag);
 }
 
 QString ModelPartShared::family() {
@@ -352,10 +379,22 @@ void ModelPartShared::resetConnectorsInitialization() {
 	m_connectorSharedHash.clear();
 }
 
+void ModelPartShared::setConnectorsInitialized(bool init) {
+    m_connectorsInitialized = init;
+}
+
 void ModelPartShared::initConnectors() {
 	if (m_connectorsInitialized)
 		return;
 
+	QFile file(m_path);
+	QString errorStr;
+	int errorLine;
+	int errorColumn;
+	QDomDocument doc;
+    doc.setContent(&file, &errorStr, &errorLine, &errorColumn);
+
+    /*
 	if (m_partlyLoaded) {
 		loadDocument();
 	}
@@ -363,11 +402,12 @@ void ModelPartShared::initConnectors() {
 	if (m_domDocument == NULL) {
 		return;
 	}
+    */
 
 	//QString deleteMe = m_domDocument->toString();
 
 	m_connectorsInitialized = true;
-	QDomElement root = m_domDocument->documentElement();
+	QDomElement root = doc.documentElement();
 	if (root.isNull()) {
 		return;
 	}
@@ -425,13 +465,16 @@ void ModelPartShared::copy(ModelPartShared* other) {
 	setTitle(other->title());
 	setUri(other->uri());
 	setVersion(other->version());
-	foreach (ViewIdentifierClass::ViewIdentifier viewIdentifier, other->m_hasViewFor.keys()) {
-		foreach (ViewLayer::ViewLayerID viewLayerID, other->m_hasViewFor.values(viewIdentifier)) {
-			setHasViewFor(viewIdentifier, viewLayerID);
-		}
-	}
-	foreach (ViewIdentifierClass::ViewIdentifier viewIdentifier, other->m_hasBaseNameFor.keys()) {
-		setHasBaseNameFor(viewIdentifier, other->hasBaseNameFor(viewIdentifier));
+
+	foreach (ViewIdentifierClass::ViewIdentifier viewIdentifier, other->m_viewImages.keys()) {
+        ViewImage * otherViewImage = other->m_viewImages.value(viewIdentifier);
+        ViewImage * viewImage = new ViewImage(viewIdentifier);
+        viewImage->layers = otherViewImage->layers;
+        viewImage->sticky = otherViewImage->sticky;
+        viewImage->canFlipHorizontal = otherViewImage->canFlipHorizontal;
+        viewImage->canFlipVertical = otherViewImage->canFlipVertical;
+        viewImage->image = otherViewImage->image;
+        m_viewImages.insert(viewIdentifier, viewImage);
 	}
 }
 
@@ -486,191 +529,76 @@ void ModelPartShared::loadDocument() {
 	QString errorStr;
 	int errorLine;
 	int errorColumn;
-	QDomDocument * doc = new QDomDocument();
-	if (!doc->setContent(&file, true, &errorStr, &errorLine, &errorColumn)) {
+	QDomDocument doc;
+	if (!doc.setContent(&file, true, &errorStr, &errorLine, &errorColumn)) {
 		DebugDialog::debug(QString("ModelPartShared load document failed: %1 line:%2 col:%3 on file '%4'").arg(errorStr).arg(errorLine).arg(errorColumn).arg(m_path));
 		QMessageBox::critical(NULL, tr("Fritzing"), tr("Unable to parse '%1': %2: line %3 column %4.").arg(m_path).arg(errorStr).arg(errorLine).arg(errorColumn));
-		delete doc;
 	}
 	else {
-		m_domDocument = doc;
 		flipSMDAnd();
 	}
 }
 
 void ModelPartShared::flipSMDAnd() {
-	QDomElement root = m_domDocument->documentElement();
-	QDomElement views = root.firstChildElement("views");
-	if (views.isNull()) return;
+    LayerList layerList = viewLayers(ViewIdentifierClass::PCBView);
+    if (layerList.isEmpty()) return;
+    if (!layerList.contains(ViewLayer::Copper0) && !layerList.contains(ViewLayer::Copper1)) return;
 
-	QDomElement pcb = views.firstChildElement("pcbView");
-	if (pcb.isNull()) return;
-
-	QDomElement layers = pcb.firstChildElement("layers");
-	if (layers.isNull()) return;
-
-	QString c1String = ViewLayer::viewLayerXmlNameFromID(ViewLayer::Copper1);
-	QString c0String = ViewLayer::viewLayerXmlNameFromID(ViewLayer::Copper0);
-	QString s0String = ViewLayer::viewLayerXmlNameFromID(ViewLayer::Silkscreen0);
-	QString s1String = ViewLayer::viewLayerXmlNameFromID(ViewLayer::Silkscreen1);
-	
-	QDomElement c0;
-	QDomElement c1;
-	QDomElement s0;
-	QDomElement s1;
-
-	QDomElement layer = layers.firstChildElement("layer");
-	while (!layer.isNull()) {
-		QString layerID = layer.attribute("layerId");
-		if (layerID.compare(c1String) == 0) {
-			c1 = layer;
-		}
-		else if (layerID.compare(c0String) == 0) {
-			c0 = layer;
-		}
-		else if (layerID.compare(s0String) == 0) {
-			s0 = layer;
-		}
-		else if (layerID.compare(s1String) == 0) {
-			s1 = layer;
-		}
-
-		layer = layer.nextSiblingElement("layer");
-	}
-
-	if (!c0.isNull()) {
-		if (checkNeedsCopper1(c0, c1)) {
-			setHasViewFor(ViewIdentifierClass::PCBView, ViewLayer::Copper1);
-		}
-		return;
-	}
-	if (c1.isNull()) return;
+    if (layerList.contains(ViewLayer::Copper0)) {
+        if (!layerList.contains(ViewLayer::Copper1)) {
+            m_needsCopper1 = true;
+            ViewImage * viewImage = m_viewImages.value(ViewIdentifierClass::PCBView);
+            qulonglong one = 1;
+            viewImage->layers |= (one << ViewLayer::Copper1);
+            copyPins(ViewLayer::Copper0, ViewLayer::Copper1);            
+        }
+        return;
+    }
 
 	setFlippedSMD(true);
+    // DebugDialog::debug("set flipped smd " + moduleID());
 
-	if (c0.isNull()) {
-		c0 = m_domDocument->createElement("layer");
-		c0.setAttribute("layerId", c0String);
-		layers.appendChild(c0);
-		setHasViewFor(ViewIdentifierClass::PCBView, ViewLayer::Copper0);
+    qulonglong one = 1;
+    ViewImage * viewImage = m_viewImages.value(ViewIdentifierClass::PCBView);
+
+    if (!layerList.contains(ViewLayer::Copper0)) {
+        viewImage->layers |= (one << ViewLayer::Copper0);
+    }
+
+    viewImage->flipped |= (one << ViewLayer::Copper0);
+
+	if (layerList.contains(ViewLayer::Silkscreen1) &&  !layerList.contains(ViewLayer::Silkscreen0)) {
+        viewImage->layers |= (one << ViewLayer::Silkscreen0);
+        layerList << ViewLayer::Silkscreen0;
 	}
 
-	c0.setAttribute("flipSMD", "true");
+    if (layerList.contains(ViewLayer::Silkscreen0)) {
+	    viewImage->flipped |= (one << ViewLayer::Silkscreen0);
+    }
 
-	if (!s1.isNull() && s0.isNull()) {
-		s0 = m_domDocument->createElement("layer");
-		s0.setAttribute("layerId", s0String);
-		layers.appendChild(s0);
-		setHasViewFor(ViewIdentifierClass::PCBView, ViewLayer::Silkscreen0);
-	}
-
-	if (!s0.isNull()) {
-		s0.setAttribute("flipSMD", "true");
-	}
-
-	QDomElement connectors = root.firstChildElement("connectors");
-	QDomElement connector = connectors.firstChildElement("connector");
-	while (!connector.isNull()) {
-		views = connector.firstChildElement("views");
-		pcb = views.firstChildElement("pcbView");
-		QDomElement p = pcb.firstChildElement("p");
-		QList<QDomElement> newPs;
-		while (!p.isNull()) {
-			QString l = p.attribute("layer");
-			if (l == c1String) {
-				QDomElement newP = m_domDocument->createElement("p");
-				newPs.append(newP);
-				newP.setAttribute("layer", c0String);
-				newP.setAttribute("flipSMD", "true");
-				copyPinAttributes(p, newP);
-			}
-			p = p.nextSiblingElement("p");
-		}
-		foreach(QDomElement p, newPs) {
-			pcb.appendChild(p);
-		}
-
-		connector = connector.nextSiblingElement("connector");
-	}
-
-#ifndef QT_NO_DEBUG
-	//QString temp = m_domDocument->toString();
-	//Q_UNUSED(temp);
-	//DebugDialog::debug(temp);
-#endif
+    copyPins(ViewLayer::Copper1, ViewLayer::Copper0);   
 }
 
 bool ModelPartShared::hasViewFor(ViewIdentifierClass::ViewIdentifier viewIdentifier) {
-	return m_hasViewFor.values(viewIdentifier).count() > 0;
+    ViewImage * viewImage = m_viewImages.value(viewIdentifier, NULL);
+    if (viewImage == NULL) return false;
+
+    return viewImage->layers != 0;
 }
 
 bool ModelPartShared::hasViewFor(ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID) {
-	return m_hasViewFor.values(viewIdentifier).contains(viewLayerID);
-}
+    ViewImage * viewImage = m_viewImages.value(viewIdentifier, NULL);
+    if (viewImage == NULL) return false;
 
-void ModelPartShared::setHasViewFor(ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID) {
-	m_hasViewFor.insert(viewIdentifier, viewLayerID);
+    qulonglong one = 1;
+    return (viewImage->layers & (one << viewLayerID)) != 0;
 }
 
 QString ModelPartShared::hasBaseNameFor(ViewIdentifierClass::ViewIdentifier viewIdentifier) {
-	return m_hasBaseNameFor.value(viewIdentifier, "");
-}
+    ViewImage * viewImage = m_viewImages.value(viewIdentifier, NULL);
+    if (viewImage == NULL) return "";
 
-void ModelPartShared::setHasBaseNameFor(ViewIdentifierClass::ViewIdentifier viewIdentifier, const QString & value) {
-	m_hasBaseNameFor.insert(viewIdentifier, value);
-}
-
-bool ModelPartShared::checkNeedsCopper1(QDomElement & copper0, QDomElement & copper1) 
-{
-	if (!m_replacedby.isEmpty()) return false;
-
-	bool ok;
-	double versionNumber = m_version.toDouble(&ok);
-	if (ok) {
-		if (versionNumber >= 4.0) return false;
-	}
-
-	QString c1String = ViewLayer::viewLayerXmlNameFromID(ViewLayer::Copper1);
-
-	if (copper1.isNull()) {					
-		QDomElement c1 = m_domDocument->createElement("layer");
-		c1.setAttribute("layerId", c1String);
-		copper0.parentNode().appendChild(c1);
-		m_needsCopper1 = true;
-	}
-
-	QDomElement root = m_domDocument->documentElement();
-	QDomElement connectors = root.firstChildElement("connectors");
-	QDomElement connector = connectors.firstChildElement("connector");
-	while (!connector.isNull()) {
-		QDomElement views = connector.firstChildElement("views");
-		QDomElement pcb = views.firstChildElement("pcbView");
-		QDomElement p = pcb.firstChildElement("p");
-		bool hasCopper1 = false;
-		while (!p.isNull()) {
-			QString l = p.attribute("layer");
-			if (l == c1String) {
-				hasCopper1 = true;
-				break;
-			}
-			p = p.nextSiblingElement("p");
-		}
-		if (!hasCopper1) {
-			p = pcb.firstChildElement("p");
-			QDomElement newP = m_domDocument->createElement("p");
-			newP.setAttribute("layer", c1String);
-			copyPinAttributes(p, newP);
-			pcb.appendChild(newP);
-			m_needsCopper1 = true;
-		}
-
-		connector = connector.nextSiblingElement("connector");
-	}
-
-	return m_needsCopper1;
-
-	//QString test = m_domDocument->toString();
-	//DebugDialog::debug("test " + test);
+    return viewImage->image;
 }
 
 const QStringList & ModelPartShared::displayKeys() {
@@ -688,3 +616,166 @@ void ModelPartShared::ensurePartNumberProperty() {
 	}
 }
 
+void ModelPartShared::setDBID(qulonglong dbid) {
+    m_dbid = dbid;
+}
+
+qulonglong ModelPartShared::dbid() {
+    return m_dbid;
+}
+
+const QString & ModelPartShared::fritzingVersion() {
+	return m_fritzingVersion;
+}
+
+void ModelPartShared::setFritzingVersion(const QString & fv) {
+	m_fritzingVersion = fv;
+}
+
+void ModelPartShared::setViewImage(ViewImage * viewImage) {
+    ViewImage * old = m_viewImages.value(viewImage->viewIdentifier);
+    if (old) delete old;
+    m_viewImages.insert(viewImage->viewIdentifier, viewImage);
+}
+
+const QList<ViewImage *> ModelPartShared::viewImages() {
+    return m_viewImages.values();
+}
+
+QString ModelPartShared::imageFileName(ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID) {
+    ViewImage * viewImage = m_viewImages.value(viewIdentifier);
+    if (viewImage == NULL) return "";
+
+    qulonglong one = 1;
+    if ((viewImage->layers & (one << viewLayerID)) == 0) return "";
+
+    return viewImage->image;
+}
+
+QString ModelPartShared::imageFileName(ViewIdentifierClass::ViewIdentifier viewIdentifier) {
+    ViewImage * viewImage = m_viewImages.value(viewIdentifier);
+    if (viewImage == NULL) return "";
+
+    return viewImage->image;
+}
+
+void ModelPartShared::setImageFileName(ViewIdentifierClass::ViewIdentifier viewIdentifier, const QString & filename) {
+    ViewImage * viewImage = m_viewImages.value(viewIdentifier);
+    if (viewImage == NULL) return;
+
+    viewImage->image = filename;
+}
+
+bool ModelPartShared::hasViewIdentifier(ViewIdentifierClass::ViewIdentifier viewIdentifier) {
+    ViewImage * viewImage = m_viewImages.value(viewIdentifier);
+    if (viewImage == NULL) return false;
+
+    return viewImage->layers != 0;
+}
+
+bool ModelPartShared::hasMultipleLayers(ViewIdentifierClass::ViewIdentifier viewIdentifier) {
+    ViewImage * viewImage = m_viewImages.value(viewIdentifier);
+    if (viewImage == NULL) return false;
+
+    // http://eli.thegreenplace.net/2004/07/30/a-cool-algorithm-for-counting-ones-in-a-bitstring/
+
+    qulonglong layers = viewImage->layers;
+    return ((layers & (layers - 1)) != 0);
+}
+
+qulonglong layers(ViewImage * viewImage) {
+    return viewImage->layers;
+}
+
+qulonglong flipped(ViewImage * viewImage) {
+    return viewImage->flipped;
+}
+
+LayerList ModelPartShared::viewLayersFlipped(ViewIdentifierClass::ViewIdentifier viewIdentifier) {
+    return viewLayersAux(viewIdentifier, flipped);
+}
+
+LayerList ModelPartShared::viewLayers(ViewIdentifierClass::ViewIdentifier viewIdentifier) {
+    return viewLayersAux(viewIdentifier, layers);
+}
+
+LayerList ModelPartShared::viewLayersAux(ViewIdentifierClass::ViewIdentifier viewIdentifier, qulonglong (*accessor)(ViewImage *)) {
+
+    static QHash<qulonglong, ViewLayer::ViewLayerID> ToLayerIDs;
+
+    LayerList layerList;
+    ViewImage * viewImage = m_viewImages.value(viewIdentifier);
+    if (viewImage == NULL) return layerList;
+
+    // http://eli.thegreenplace.net/2004/07/30/a-cool-algorithm-for-counting-ones-in-a-bitstring/
+
+    if (ToLayerIDs.isEmpty()) {
+        qulonglong one = 1;
+        for (int ix = 0; ix < ViewLayer::ViewLayerCount; ix++) {
+            ToLayerIDs.insert(one, (ViewLayer::ViewLayerID) ix);
+            one = one << 1;
+        }
+    }
+
+    qulonglong layers = accessor(viewImage);
+    while (layers) {
+        qulonglong removeLeast = layers & (layers - 1);
+        qulonglong diff = layers - removeLeast;
+        layerList << ToLayerIDs.value(diff);
+        layers = removeLeast;
+    }
+
+    return layerList;
+}
+
+
+bool ModelPartShared::canFlipHorizontal(ViewIdentifierClass::ViewIdentifier viewIdentifier) {
+    ViewImage * viewImage = m_viewImages.value(viewIdentifier);
+    if (viewImage == NULL) return false;
+
+    return viewImage->canFlipHorizontal;
+}
+
+bool ModelPartShared::canFlipVertical(ViewIdentifierClass::ViewIdentifier viewIdentifier) {
+    ViewImage * viewImage = m_viewImages.value(viewIdentifier);
+    if (viewImage == NULL) return false;
+
+    return viewImage->canFlipVertical;
+}
+
+bool ModelPartShared::isSticky(ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID) {
+    ViewImage * viewImage = m_viewImages.value(viewIdentifier);
+    if (viewImage == NULL) return false;
+
+    qulonglong one = 1;
+    return ((viewImage->sticky & (one << viewLayerID)) != 0);
+}
+
+void ModelPartShared::addConnector(ConnectorShared * connectorShared)
+{
+    m_connectorSharedHash.insert(connectorShared->id(), connectorShared);
+}
+
+void ModelPartShared::copyPins(ViewLayer::ViewLayerID from, ViewLayer::ViewLayerID to) {
+    foreach (ConnectorShared * connectorShared, m_connectorSharedHash.values()) {
+        SvgIdLayer * svgIdLayer = connectorShared->fullPinInfo(ViewIdentifierClass::PCBView, to);
+        if (svgIdLayer) {
+            // already there
+            continue;
+        }
+
+        svgIdLayer = connectorShared->fullPinInfo(ViewIdentifierClass::PCBView, from);
+        if (svgIdLayer == NULL) {
+            DebugDialog::debug(QString("missing connector in %1").arg(moduleID()));
+            continue;
+        }
+
+        SvgIdLayer * newSvgIdLayer = svgIdLayer->copyLayer();
+        newSvgIdLayer->m_svgViewLayerID = to;
+        connectorShared->insertPin(ViewIdentifierClass::PCBView, newSvgIdLayer);
+    }
+}
+
+void ModelPartShared::insertBus(BusShared * busShared) {
+    m_buses.insert(busShared->id(), busShared);
+}

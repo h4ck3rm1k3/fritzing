@@ -149,18 +149,16 @@ void Resistor::setResistance(QString resistance, QString pinSpacing, bool force)
 
 				if (modelPart()->properties().value("package").compare("tht", Qt::CaseInsensitive) == 0) 
 				{
-					// pinspacing is irrelevant for SMD resistors
-					QDomElement element = LayerAttributes::getSvgElementLayers(modelPart()->domDocument(), m_viewIdentifier);
-					if (element.isNull()) break;
-
-					// hack the dom element and call setUpImage
+                    // pinspacing is irrelevant for SMD resistors
 					QString filename = PinSpacings.value(pinSpacing, "");
 					if (filename.isEmpty()) break;
 
-					element.setAttribute("image", filename);
+                    QString original = modelPart()->imageFileName(m_viewIdentifier);
+                    modelPart()->setImageFileName(m_viewIdentifier, filename);
 					m_changingPinSpacing = true;
-					resetImage(infoGraphicsView, NULL);
+					resetImage(infoGraphicsView);
 					m_changingPinSpacing = false;
+                    modelPart()->setImageFileName(m_viewIdentifier, original);
 
 					updateConnections();
 				}

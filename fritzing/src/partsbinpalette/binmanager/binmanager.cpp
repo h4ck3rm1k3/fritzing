@@ -294,15 +294,15 @@ QString BinManager::createIfBinNotExists(const QString & dest, const QString & s
 	return binPath;
 }
 
-void BinManager::addPart(ModelPart *modelPart, int position) {
+void BinManager::addPartToBin(ModelPart *modelPart, int position) {
 	PartsBinPaletteWidget *bin = m_currentBin? m_currentBin: getOrOpenMyPartsBin();
-	addPartAux(bin,modelPart,position);
+	addPartToBinAux(bin,modelPart,position);
 }
 
 void BinManager::addToMyPart(ModelPart *modelPart) {
 	PartsBinPaletteWidget *bin = getOrOpenMyPartsBin();
 	if (bin) {
-		addPartAux(bin,modelPart);
+		addPartToBinAux(bin,modelPart);
 		setAsCurrentTab(bin);
 	}
 }
@@ -310,7 +310,7 @@ void BinManager::addToMyPart(ModelPart *modelPart) {
 void BinManager::addToContrib(ModelPart *modelPart) {
 	PartsBinPaletteWidget *bin = getOrOpenBin(ContribPartsBinLocation, ContribPartsBinTemplateLocation);
 	if (bin) {
-		addPartAux(bin,modelPart);
+		addPartToBinAux(bin,modelPart);
 		setAsCurrentTab(bin);
 	}
 }
@@ -318,7 +318,7 @@ void BinManager::addToContrib(ModelPart *modelPart) {
 void BinManager::addToTempPartsBin(ModelPart *modelPart) {
 	PartsBinPaletteWidget *bin = getOrOpenBin(m_tempPartsBinLocation, TempPartsBinTemplateLocation);
 	if (bin) {
-		addPartAux(bin,modelPart);
+		addPartToBinAux(bin,modelPart);
 		setAsCurrentTab(bin);
 		bin->setDirty(false);
 	}
@@ -334,7 +334,7 @@ void BinManager::hideTempPartsBin() {
 	}
 }
 
-void BinManager::addPartAux(PartsBinPaletteWidget *bin, ModelPart *modelPart, int position) {
+void BinManager::addPartToBinAux(PartsBinPaletteWidget *bin, ModelPart *modelPart, int position) {
 	if(bin) {
 		if (bin->fastLoaded()) {
 			bin->load(bin->fileName(), bin, false);
@@ -380,7 +380,7 @@ void BinManager::updateTitle(PartsBinPaletteWidget* w, const QString& newTitle) 
 
 PartsBinPaletteWidget* BinManager::newBinIn() {
 	PartsBinPaletteWidget* bin = newBin();
-	bin->setPaletteModel(new PaletteModel(true, false, false), true);
+	bin->setPaletteModel(new PaletteModel(true, false), true);
 	bin->setTitle(tr("New bin (%1)").arg(++m_unsavedBinsCount));
 	insertBin(bin, m_stackTabWidget->count());
     bin->setReadOnly(false);

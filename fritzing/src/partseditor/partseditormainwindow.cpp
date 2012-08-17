@@ -130,7 +130,7 @@ void PartsEditorMainWindow::setup(long id, ModelPart *modelPart, bool fromTempla
 
 	setAttribute(Qt::WA_DeleteOnClose, true);
 
-	m_paletteModel = new PaletteModel(false, false, false);
+	m_paletteModel = new PaletteModel(false, false);
 
 	if(modelPart == NULL){
 		m_lastOpened = this;
@@ -148,7 +148,7 @@ void PartsEditorMainWindow::setup(long id, ModelPart *modelPart, bool fromTempla
 	if(!fromTemplate) {
 		m_sketchModel = new SketchModel(true);
 	} else {
-		ModelPart * mp = m_paletteModel->loadPart(m_fwFilename, false, false);
+		ModelPart * mp = m_paletteModel->loadPart(m_fwFilename, false);
 	    // this seems hacky but maybe it's ok
 		if (mp == NULL || mp->modelPartShared() == NULL) {
 			QMessageBox::critical(this, tr("Parts Editor"),

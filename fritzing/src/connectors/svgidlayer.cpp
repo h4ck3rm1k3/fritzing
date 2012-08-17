@@ -26,13 +26,14 @@ $Date$
 
 #include "svgidlayer.h"
 
-SvgIdLayer::SvgIdLayer() {
+SvgIdLayer::SvgIdLayer(ViewIdentifierClass::ViewIdentifier viewIdentifier) {
+    m_viewIdentifier = viewIdentifier;
 	m_processed = m_hybrid = false;
 	m_radius = m_strokeWidth = 0;
 }
 
 SvgIdLayer * SvgIdLayer::copyLayer() {
-	SvgIdLayer * toSvgIdLayer = new SvgIdLayer;
+	SvgIdLayer * toSvgIdLayer = new SvgIdLayer(m_viewIdentifier);
 	*toSvgIdLayer = *this;
 	return toSvgIdLayer;
 }

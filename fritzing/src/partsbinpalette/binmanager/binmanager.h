@@ -66,7 +66,7 @@ class BinManager : public QFrame {
 
 		void addBin(PartsBinPaletteWidget* bin);
 		void insertBin(PartsBinPaletteWidget* bin, int index);
-		void addPart(ModelPart *modelPart, int position = -1);
+		void addPartToBin(ModelPart *modelPart, int position = -1);
 		void addToMyPart(ModelPart *modelPart);
 		void addToContrib(ModelPart *modelPart);
 		void addToTempPartsBin(ModelPart *modelPart);
@@ -154,7 +154,7 @@ class BinManager : public QFrame {
         PartsBinPaletteWidget* getOrOpenSearchBin();
         PartsBinPaletteWidget* getOrOpenBin(const QString & dest, const QString & source);
         void connectTabWidget();
-		void addPartAux(PartsBinPaletteWidget *bin, ModelPart *modelPart, int position = -1);
+		void addPartToBinAux(PartsBinPaletteWidget *bin, ModelPart *modelPart, int position = -1);
 		PartsBinPaletteWidget* findBin(const QString & binLocation);
 		void createCombinedMenu();
 		void createContextMenus();

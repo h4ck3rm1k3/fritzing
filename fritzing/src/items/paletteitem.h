@@ -108,8 +108,8 @@ public:
 	ItemBase * lowerConnectorLayerVisible(ItemBase *);
 	void resetID();
 	void slamZ(double z);
-	void resetImage(class InfoGraphicsView *, QDomDocument *);
-	void resetKinImage(ItemBase * layerKin, InfoGraphicsView * infoGraphicsView, QDomDocument *);
+	void resetImage(class InfoGraphicsView *);
+	void resetKinImage(ItemBase * layerKin, InfoGraphicsView * infoGraphicsView);
 	bool collectExtraInfo(QWidget * parent, const QString & family, const QString & prop, const QString & value, bool swappingEnabled, QString & returnProp, QString & returnValue, QWidget * & returnWidget);
 	virtual bool changePinLabels(bool singleRow, bool sip);
 	QStringList getPinLabels(bool & hasLocal);

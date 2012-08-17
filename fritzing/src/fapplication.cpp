@@ -472,12 +472,21 @@ void FApplication::registerFonts() {
 	*/	
 }
 
-ReferenceModel * FApplication::loadReferenceModel(const QString & databaseName) {
+ReferenceModel * FApplication::loadReferenceModel(const QString & databaseName, bool fullLoad) {
 	m_referenceModel = new CurrentReferenceModel();	
 	ItemBase::setReferenceModel(m_referenceModel);
 	connect(m_referenceModel, SIGNAL(loadedPart(int, int)), this, SLOT(loadedPart(int, int)));
-	m_referenceModel->loadAll(true, databaseName);								// this is very slow
-	m_paletteBinModel = new PaletteModel(true, false, false);
+    if (databaseName.isEmpty()) {
+        QDir * dir = FolderUtils::getApplicationSubFolder("parts");
+        QFile file(dir->absoluteFilePath("parts.db"));
+        if (file.exists()) {
+            m_referenceModel->loadFromDB(dir->absoluteFilePath("parts.db"));
+        }
+        delete dir;
+    }
+
+	m_referenceModel->loadAll(databaseName, fullLoad);								// loads local parts, resource parts, and any other parts in files not in the db
+	m_paletteBinModel = new PaletteModel(true, false);
     m_paletteBinModel->setReferenceModel(m_referenceModel);
 	//DebugDialog::debug("after new palette model");
 	return m_referenceModel;
@@ -550,7 +559,7 @@ void FApplication::runGerberService()
 	createUserDataStoreFolderStructure();
 
 	registerFonts();
-	loadReferenceModel("");
+	loadReferenceModel("", false);
 
 	QDir dir(m_outputFolder);
 	QString s = dir.absolutePath();
@@ -577,7 +586,29 @@ void FApplication::runGerberService()
 
 void FApplication::runDatabaseService()
 {
-	loadReferenceModel(m_outputFolder);  // actually a full path ending in ".db"
+    DebugDialog::setEnabled(true);
+    QDir * parent = FolderUtils::getApplicationSubFolder("pdb");
+    QFileInfoList dirs = parent->entryInfoList(QDir::AllDirs | QDir::NoDotAndDotDot | QDir::NoSymLinks);
+    delete parent;
+
+    QStringList nameFilters;
+    nameFilters << ("*" + FritzingPartExtension);
+    foreach (QFileInfo dirInfo, dirs) {
+        if (!dirInfo.isDir()) continue;
+
+        QDir dir(dirInfo.absoluteFilePath());
+        QFileInfoList files = dir.entryInfoList(nameFilters, QDir::Files | QDir::NoSymLinks);
+        foreach (QFileInfo fileInfo, files) {
+            QString path = fileInfo.absoluteFilePath();
+            QString newPath = path;
+            newPath.replace("/pdb/", "/parts/");
+            QFile::rename(path, newPath);
+        }
+    }
+
+
+    QFile::remove(m_outputFolder);
+	loadReferenceModel(m_outputFolder, true);  // m_outputFolder is actually a full path ending in ".db"
 }
 
 void FApplication::runGedaService() {
@@ -735,7 +766,7 @@ int FApplication::startup(bool firstRun)
 		FSvgRenderer::cleanup();
 	}
 
-	loadReferenceModel("");
+	loadReferenceModel("", false);
 
 	QString prevVersion;
 	{
@@ -1434,7 +1465,7 @@ void FApplication::runExampleService()
 
 	createUserDataStoreFolderStructure();
 	registerFonts();
-	loadReferenceModel("");
+	loadReferenceModel("", false);
 
 	QDir sketchesDir(FolderUtils::getApplicationSubFolderPath("sketches"));
 	runExampleService(sketchesDir);

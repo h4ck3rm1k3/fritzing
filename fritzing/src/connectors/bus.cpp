@@ -40,14 +40,14 @@ Bus::Bus(BusShared * busShared, ModelPart * modelPart) : QObject()
 	m_modelPart = modelPart;
 }
 
-const QString & Bus::id() {
+const QString & Bus::id() const {
 	if (m_busShared == NULL) return ___emptyString___;
 
 	return m_busShared->id();
 }
 
 
-const QList<Connector *> & Bus::connectors() {
+const QList<Connector *> & Bus::connectors() const {
 	return m_connectors;
 }
 

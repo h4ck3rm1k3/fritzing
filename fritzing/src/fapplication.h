@@ -50,7 +50,7 @@ public:
 	int startup(bool firstRun);
 	int serviceStartup();
 	void finish();
-	class ReferenceModel * loadReferenceModel(const QString & databaseName);
+	class ReferenceModel * loadReferenceModel(const QString & databaseName, bool fullLoad);
 	void registerFonts();
 	class MainWindow * loadWindows(int & loaded, bool lockFiles);
 

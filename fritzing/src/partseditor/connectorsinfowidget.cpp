@@ -238,19 +238,22 @@ Connector* ConnectorsInfoWidget::addConnectorInfo(QString id) {
 		ViewIdentifierClass::BreadboardView,
 		m_views->breadboardView()->svgIdForConnector(id),
 		m_views->breadboardView()->connectorsLayerId(),
-		m_views->breadboardView()->terminalIdForConnector(id)
+		m_views->breadboardView()->terminalIdForConnector(id),
+        "", false
 	);
 	connShared->addPin(
 		ViewIdentifierClass::SchematicView,
 		m_views->schematicView()->svgIdForConnector(id),
 		m_views->schematicView()->connectorsLayerId(),
-		m_views->schematicView()->terminalIdForConnector(id)
+		m_views->schematicView()->terminalIdForConnector(id),
+        "", false
 	);
 	connShared->addPin(
 		ViewIdentifierClass::PCBView,
 		m_views->pcbView()->svgIdForConnector(id),
 		m_views->pcbView()->connectorsLayerId(),
-		m_views->pcbView()->terminalIdForConnector(id)
+		m_views->pcbView()->terminalIdForConnector(id),
+        "", false
 	);
 
 	Connector *conn = new Connector(connShared,0); // modelPart =? null

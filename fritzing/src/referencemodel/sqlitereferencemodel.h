@@ -34,7 +34,6 @@ $Date$
 #include <QApplication>
 
 #include "referencemodel.h"
-#include "daos.h"
 
 class SqliteReferenceModel : public ReferenceModel {
 	Q_OBJECT
@@ -42,23 +41,20 @@ class SqliteReferenceModel : public ReferenceModel {
 		SqliteReferenceModel();
 		~SqliteReferenceModel();
 
-		void loadAll(bool fastLoad, const QString & databaseName);
-		ModelPart *loadPart(const QString & path, bool update, bool fastLoad);
+		void loadAll(const QString & databaseName, bool fullLoad);
+		bool loadFromDB(const QString & databaseName);
+		ModelPart *loadPart(const QString & path, bool update);
 
 		ModelPart *retrieveModelPart(const QString &moduleID);
-		ModelPart *retrieveModelPart(const QString &family, const QMultiHash<QString /*name*/, QString /*value*/> &properties);
-		ModelPart *retrieveModelPart(const Part *examplePart);
-		QString retrieveModuleId(const Part *examplePart, const QString &propertyName, bool closestMatch);
 
 		bool addPart(ModelPart * newModel, bool update);
 		bool updatePart(ModelPart * newModel);
-		bool addPart(Part* part);
 		ModelPart * addPart(QString newPartPath, bool addToReference, bool updateIdAlreadyExists);
 
 		bool swapEnabled();
 		bool containsModelPart(const QString & moduleID);
 
-		QString partTitle(const QString moduleID);
+		QString partTitle(const QString & moduleID);
 
 	public slots:
 		void recordProperty(const QString &name, const QString &value);
@@ -68,26 +64,38 @@ class SqliteReferenceModel : public ReferenceModel {
 		bool lastWasExactMatch();
 
 	protected:
-		void initParts(bool fastLoad);
+		void initParts();
+        void killParts();
 
 	protected:
-		bool addPartAux(ModelPart * newModel);
+		bool addPartAux(ModelPart * newModel, bool fullLoad);
 
-		QString closestMatchId(const Part *examplePart, const QString &propertyName, const QString &propertyValue);
-		QStringList getPossibleMatches(const Part *examplePart, const QString &propertyName, const QString &propertyValue);
-		QString getClosestMatch(const Part *examplePart, QStringList possibleMatches);
-		int countPropsInCommon(const Part *part1, const ModelPart *part2);
+		QString closestMatchId(const QString &family, const QMultiHash<QString, QString> &properties, const QString &propertyName, const QString &propertyValue);
+		QStringList getPossibleMatches(const QString &family, const QMultiHash<QString, QString> &properties, const QString &propertyName, const QString &propertyValue);
+		QString getClosestMatch(const QString &family, const QMultiHash<QString, QString> &properties, QStringList possibleMatches);
+		int countPropsInCommon(const QString &family, const QMultiHash<QString, QString> &properties, const ModelPart *part2);
 
-		bool createConnection(const QString & databaseName);
+		bool createConnection(const QString & databaseName, bool fullLoad);
 		void deleteConnection();
-		bool insertPart(Part *part);
-		bool insertProperty(PartProperty *property);
-		qlonglong partId(QString moduleID);
-		bool removePart(qlonglong partId);
-		bool removeProperties(qlonglong partId);
+		bool insertPart(ModelPart *, bool fullLoad);
+		bool insertProperty(const QString & name, const QString & value, qulonglong id);
+		bool insertTag(const QString & tag, qulonglong id);
+		bool insertViewImage(const struct ViewImage *, qulonglong id);
+        bool insertConnector(const class Connector *, qulonglong id);
+        bool insertConnectorLayer(const struct SvgIdLayer *, qulonglong id);  // connector db id
+        bool insertBus(const Bus * bus, qulonglong id);
+        bool insertBusMember(const Connector * connector, qulonglong id);
+		qulonglong partId(QString moduleID);
+		bool removePart(qulonglong partId);
+		bool removeProperties(qulonglong partId);
+        bool loadFromDB(QSqlDatabase & keep_db, QSqlDatabase & db);
+        bool createProperties(QSqlDatabase & db);
+        bool createParts(QSqlDatabase & db, bool fullLoad);
 
+protected:
 		volatile bool m_swappingEnabled;
 		volatile bool m_lastWasExactMatch;
+        volatile bool m_keepGoing;
 		bool m_init;
 		QMultiHash<QString /*name*/, QString /*value*/> m_recordedProperties;
 };

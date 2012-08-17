@@ -38,6 +38,18 @@ $Date$
 #include "../viewidentifierclass.h"
 #include "../viewlayer.h"
 
+struct ViewImage {
+    ViewIdentifierClass::ViewIdentifier viewIdentifier;
+    qulonglong layers;
+    qulonglong sticky;
+    qulonglong flipped;
+    QString image;
+    bool canFlipHorizontal;
+    bool canFlipVertical;
+
+    ViewImage(ViewIdentifierClass::ViewIdentifier);
+};
+
 class ModelPartShared : public QObject
 {
 Q_OBJECT
@@ -50,7 +62,7 @@ public:
 	void setPartlyLoaded(bool);
 
 	void setDomDocument(QDomDocument *);
-	QDomDocument * domDocument();
+	//QDomDocument * domDocument();
 
 	void copy(ModelPartShared* other);
 
@@ -74,6 +86,22 @@ public:
 	void setDate(QDate date);
 	const QString & dateAsStr();
 	void setDate(QString date);
+    void setDBID(qulonglong);
+    qulonglong dbid();
+    const QString & fritzingVersion();
+    void setFritzingVersion(const QString & fv);
+
+    const QList<ViewImage *> viewImages();
+    QString imageFileName(ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerID);
+    void setImageFileName(ViewIdentifierClass::ViewIdentifier, const QString & filename);
+    QString imageFileName(ViewIdentifierClass::ViewIdentifier);
+    bool isSticky(ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerID);
+    bool hasMultipleLayers(ViewIdentifierClass::ViewIdentifier);
+    bool canFlipHorizontal(ViewIdentifierClass::ViewIdentifier);
+    bool canFlipVertical(ViewIdentifierClass::ViewIdentifier);
+    bool hasViewIdentifier(ViewIdentifierClass::ViewIdentifier viewIdentifier);
+    LayerList viewLayers(ViewIdentifierClass::ViewIdentifier viewIdentifier);
+    LayerList viewLayersFlipped(ViewIdentifierClass::ViewIdentifier viewIdentifier);
 
 	const QString & path();
 	void setPath(QString path);
@@ -86,6 +114,7 @@ public:
 
 	const QStringList &tags();
 	void setTags(const QStringList &tags);
+	void setTag(const QString &tag);
 
 	QString family();
 	void setFamily(const QString &family);
@@ -98,6 +127,7 @@ public:
 
 	void initConnectors();
 	void resetConnectorsInitialization();
+    void setConnectorsInitialized(bool); 
 	ConnectorShared * getConnectorShared(const QString & id);
 	bool ignoreTerminalPoints();
 
@@ -111,9 +141,10 @@ public:
 	bool needsCopper1();
 	bool hasViewFor(ViewIdentifierClass::ViewIdentifier);
 	bool hasViewFor(ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerID);
-	void setHasViewFor(ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerID);
 	QString hasBaseNameFor(ViewIdentifierClass::ViewIdentifier);
-	void setHasBaseNameFor(ViewIdentifierClass::ViewIdentifier, const QString &);
+    void setViewImage(ViewImage *);
+    void addConnector(ConnectorShared *);
+    void insertBus(class BusShared *);
 
 protected:
 	void loadTagText(QDomElement parent, QString tagName, QString &field);
@@ -122,18 +153,20 @@ protected:
 	void populateProperties(QDomElement parent, QHash<QString,QString> &hash, QStringList & displayKeys);
 	void commonInit();
 	void loadDocument();
-	bool checkNeedsCopper1(QDomElement & copper0, QDomElement & copper1);
 	void ensurePartNumberProperty();
+    void copyPins(ViewLayer::ViewLayerID from, ViewLayer::ViewLayerID to);
+    LayerList viewLayersAux(ViewIdentifierClass::ViewIdentifier viewIdentifier, qulonglong (*accessor)(ViewImage *));
 
 public:
 	static const QString PartNumberPropertyName;
 
 protected:
 
-	QDomDocument* m_domDocument;
+	//QDomDocument* m_domDocument;
 
 	QString m_uri;
 	QString m_moduleID;
+    QString m_fritzingVersion;
 	QString m_version;
 	QString m_author;
 	QString m_title;
@@ -152,9 +185,8 @@ protected:
 
 	QHash<QString, QPointer<class ConnectorShared> > m_connectorSharedHash;
 	QHash<QString, class BusShared *> m_buses;
-	QMultiHash<ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerID> m_hasViewFor;
-	QHash<ViewIdentifierClass::ViewIdentifier, QString> m_hasBaseNameFor;
 	QList<class ConnectorShared *> m_deletedList;
+    QHash<ViewIdentifierClass::ViewIdentifier, ViewImage *> m_viewImages;
 
 	bool m_connectorsInitialized;
 	bool m_ignoreTerminalPoints;
@@ -162,6 +194,8 @@ protected:
 	bool m_flippedSMD;
 	bool m_partlyLoaded;
 	bool m_needsCopper1;				// for converting pre-two-layer parts
+    qulonglong m_dbid;
+
 };
 
 class ModelPartSharedRoot : public ModelPartShared

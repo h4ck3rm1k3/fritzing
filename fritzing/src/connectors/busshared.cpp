@@ -67,7 +67,7 @@ void BusShared::addConnectorShared(ConnectorShared * connectorShared)
 	connectorShared->setBus(this);
 }
 
-const QString & BusShared::id() {
+const QString & BusShared::id() const {
 	return m_id;
 }
 

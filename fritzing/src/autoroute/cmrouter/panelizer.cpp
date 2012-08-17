@@ -52,6 +52,9 @@ $Date$
 #include <limits>
 #include <QPrinter>
 
+static int OutlineLayer = 0;
+static int SilkTopLayer = 0;
+
 bool areaGreaterThan(PanelItem * p1, PanelItem * p2)
 {
 	return p1->boardSizeInches.width() * p1->boardSizeInches.height() > p2->boardSizeInches.width() * p2->boardSizeInches.height();
@@ -270,7 +273,7 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 
 	app->createUserDataStoreFolderStructure();
 	app->registerFonts();
-	app->loadReferenceModel("");
+	app->loadReferenceModel("", false);
 
     QList<LayerThing> layerThingList;
 	layerThingList.append(LayerThing("outline", ViewLayer::outlineLayers(), SVG2gerber::ForOutline, GerberGenerator::OutlineSuffix));  
@@ -283,6 +286,12 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 	layerThingList.append(LayerThing("silk_top", ViewLayer::silkLayers(ViewLayer::Top), SVG2gerber::ForSilk, GerberGenerator::SilkTopSuffix));
 	layerThingList.append(LayerThing("silk_bottom", ViewLayer::silkLayers(ViewLayer::Bottom), SVG2gerber::ForSilk, GerberGenerator::SilkBottomSuffix));
 	layerThingList.append(LayerThing("drill", ViewLayer::drillLayers(), SVG2gerber::ForDrill, GerberGenerator::DrillSuffix));
+
+    for (int i = 0; i < layerThingList.count(); i++) {
+        LayerThing layerThing = layerThingList.at(i);
+        if (layerThing.name.compare("outline") == 0) OutlineLayer = i;
+        else if (layerThing.name.compare("silk_top") == 0) SilkTopLayer = i;
+    }
 
 	QList<PanelItem *> refPanelItems;
 	board = boards.firstChildElement("board");
@@ -349,12 +358,12 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 		}
 
 		QDomDocument doc;
-		QString merger = planePair->svgs.at(0);  // outline layer
+		QString merger = planePair->svgs.at(OutlineLayer);  // outline layer
 		merger.replace("black", "#90f0a0");
 		merger.replace("#000000", "#90f0a0");
 		merger.replace("fill-opacity=\"0.5\"", "fill-opacity=\"1\"");
 		TextUtils::mergeSvg(doc, merger, "");
-		merger = planePair->svgs.at(5);			// silktop layer
+		merger = planePair->svgs.at(SilkTopLayer);			// silktop layer
 		merger.replace("black", "#909090");
 		merger.replace("#000000", "#909090");
 		TextUtils::mergeSvg(doc, merger, "");		
@@ -1084,7 +1093,7 @@ void Panelizer::inscribe(FApplication * app, const QString & panelFilename)
 
 	app->createUserDataStoreFolderStructure();
 	app->registerFonts();
-	app->loadReferenceModel("");
+	app->loadReferenceModel("", false);
 
 	board = boards.firstChildElement("board");
 	while (!board.isNull()) {

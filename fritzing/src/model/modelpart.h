@@ -106,6 +106,8 @@ public:
 	const QDomElement & instanceDomElement();
 	Connector * getConnector(const QString & id);
 
+    const QString & fritzingVersion();
+
 	const QString & title();
 	const QString & description();
 	const QString & url();
@@ -113,7 +115,7 @@ public:
 	const QStringList & displayKeys();
 	const QHash<QString,QString> & properties() const;
 	const QHash<QString, QPointer<Bus> > & buses();
-	QDomDocument * domDocument();
+	const QString & taxonomy();
 	const QString & version();
 	const QString & path();
 	const QString & label();
@@ -122,6 +124,8 @@ public:
 	const QString & uri();
 	const QDate & date();
 	QString family();
+    void setDBID(qulonglong);
+    qulonglong dbid();
 
 	Bus * bus(const QString & busID);
 	bool ignoreTerminalPoints();
@@ -136,7 +140,15 @@ public:
 	void setFzz(bool alien);
 	void setLocationFlag(bool setting, LocationFlag flag);
 
-	bool hasViewIdentifier(ViewIdentifierClass::ViewIdentifier viewIdentifier);
+	bool hasViewIdentifier(ViewIdentifierClass::ViewIdentifier);
+	bool canFlipVertical(ViewIdentifierClass::ViewIdentifier);
+	bool canFlipHorizontal(ViewIdentifierClass::ViewIdentifier);
+	bool isSticky(ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerID);
+    QString imageFileName(ViewIdentifierClass::ViewIdentifier);
+    void setImageFileName(ViewIdentifierClass::ViewIdentifier, const QString & filename);
+    QString imageFileName(ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerID);
+    LayerList viewLayers(ViewIdentifierClass::ViewIdentifier);
+    void setViewImage(struct ViewImage *);
 
 	QList<ModelPart*> getAllParts();
 	QList<ModelPart*> getAllNonCoreParts();
@@ -153,7 +165,9 @@ public:
 	QVariant localProp(const QString & name) const;
 	void setLocalProp(const char * name, const QVariant & value);
 	QVariant localProp(const char * name) const;
-
+    void setTag(const QString &tag);
+	void setProperty(const QString & key, const QString & value);
+    
 	const QString & replacedby();
 	bool isObsolete();
 
@@ -167,6 +181,9 @@ public:
 	void clearBuses();
 	void setConnectorLocalName(const QString & id, const QString & name);
 	void setLocalTitle(const QString &);
+    const QList<ViewImage *> viewImages();
+    void addConnector(Connector *);
+    void flipSMDAnd();
 
 public:
 	static long nextIndex();

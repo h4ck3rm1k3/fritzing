@@ -54,7 +54,7 @@ public:
 	Connector(class ConnectorShared *, class ModelPart * modelPart);
 	~Connector();
 
-	Connector::ConnectorType connectorType();
+	Connector::ConnectorType connectorType() const;
 	void addViewItem(class ConnectorItem *);
 	void removeViewItem(class ConnectorItem *);
 	class ConnectorShared * connectorShared();
@@ -64,9 +64,9 @@ public:
 	const QList<Connector *> & toConnectors();
 	ConnectorItem * connectorItemByViewLayerID(ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID);
 	bool connectionIsAllowed(Connector* that);
-	const QString & connectorSharedID();
-	const QString & connectorSharedName();	
-	const QString & connectorSharedDescription();
+	const QString & connectorSharedID() const;
+	const QString & connectorSharedName() const;	
+	const QString & connectorSharedDescription() const;
 	class ErcData * connectorSharedErcData();
 	const QString & busID();
 	class Bus * bus();
@@ -76,10 +76,12 @@ public:
 	int connectorItemCount();
 	void unprocess(ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID);
 	struct SvgIdLayer * fullPinInfo(ViewIdentifierClass::ViewIdentifier viewId, ViewLayer::ViewLayerID viewLayerID);
+	const QList<SvgIdLayer *> svgIdLayers() const;
 	QList< QPointer<class ConnectorItem> > viewItems();
 	const QString & legID(ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerID);
 	void setConnectorLocalName(const QString &);
 	const QString & connectorLocalName();
+	void addPin(ViewIdentifierClass::ViewIdentifier, const QString & svgId, ViewLayer::ViewLayerID, const QString & terminalId, const QString & legId, bool hybrid);
 
 public:
 	static void initNames();

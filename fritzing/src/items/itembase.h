@@ -214,8 +214,6 @@ public:
 	bool resetRenderer(const QString & svg, QString & newSvg);
     void getPixmaps(QPixmap * &, QPixmap * &, QPixmap * &, bool swappingEnabled, QSize);
     class FSvgRenderer * setUpImage(class ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerID, ViewLayer::ViewLayerSpec, class LayerAttributes &, QString & error);
-	class FSvgRenderer * setUpImage(class ModelPart * modelPart, QDomDocument *, ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerID, ViewLayer::ViewLayerSpec, class LayerAttributes &, QString & error);
-
 
 public:
 	virtual void getConnectedColor(ConnectorItem *, QBrush * &, QPen * &, double & opacity, double & negativePenWidth, bool & negativeOffsetRect);
@@ -348,7 +346,7 @@ protected:
        
  protected:
 	static long nextID;
-	static QPointer<class ReferenceModel> referenceModel;
+	static QPointer<class ReferenceModel> TheReferenceModel;
 
 public:
 	static const QString ITEMBASE_FONT_PREFIX;

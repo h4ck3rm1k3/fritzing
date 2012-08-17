@@ -1478,7 +1478,7 @@ void MainWindow::saveBundledPart(const QString &moduleId) {
 
 QStringList MainWindow::saveBundledAux(ModelPart *mp, const QDir &destFolder) {
 	QStringList names;
-	QString partPath = mp->modelPartShared()->path();
+	QString partPath = mp->path();
 	QFile file(partPath);
 	QString fn = ZIP_PART + QFileInfo(partPath).fileName();
 	names << fn;
@@ -1561,7 +1561,7 @@ ModelPart* MainWindow::copyToPartsFolder(const QFileInfo& file, bool addToBin, b
 			m_alienPartsMsg = tr("Do you want to keep the imported parts?");
 		}
 	}
-	ModelPart *mp = m_refModel->loadPart(destFilePath, true, false);
+	ModelPart *mp = m_refModel->loadPart(destFilePath, true);
 	mp->setAlien(true);
 
 	if(addToBin) {

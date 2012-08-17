@@ -29,26 +29,22 @@ $Date$
 #define REFERENCEMODEL_H_
 
 #include "../model/palettemodel.h"
-#include "daos.h"
 
 class ReferenceModel : public PaletteModel {
 	Q_OBJECT
 	public:
-		virtual void loadAll(bool fastLoad, const QString & databaseName) = 0;
-		virtual ModelPart *loadPart(const QString & path, bool update, bool fastLoad) = 0;
+		virtual void loadAll(const QString & databaseName, bool fullLoad) = 0;
+		virtual bool loadFromDB(const QString & databaseName) = 0;
+		virtual ModelPart *loadPart(const QString & path, bool update) = 0;
 
 		virtual ModelPart *retrieveModelPart(const QString &moduleID) = 0;
-		virtual ModelPart *retrieveModelPart(const QString &family, const QMultiHash<QString /*name*/, QString /*value*/> &properties) = 0;
-		virtual ModelPart *retrieveModelPart(const Part *examplePart) = 0;
-		virtual QString retrieveModuleId(const Part *examplePart, const QString &propertyName, bool closestMatch) = 0;
 
 		virtual bool addPart(ModelPart * newModel, bool update) = 0;
 		virtual ModelPart * addPart(QString newPartPath, bool addToReference, bool updateIdAlreadyExists) = 0;
 		virtual bool updatePart(ModelPart * newModel) = 0;
-		virtual bool addPart(Part* part) = 0;
 
 		virtual bool swapEnabled() = 0;
-		virtual QString partTitle(const QString moduleID) = 0;
+		virtual QString partTitle(const QString & moduleID) = 0;
 
 	public slots:
 		virtual void recordProperty(const QString &name, const QString &value) = 0;

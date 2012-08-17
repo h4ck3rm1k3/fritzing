@@ -34,6 +34,7 @@ $Date$
 
 #include <QMessageBox>
 
+QList<QString> ModelBase::CoreList;
 
 /////////////////////////////////////////////////
 
@@ -680,4 +681,10 @@ void ModelBase::checkMystery(QDomElement & instance)
         }
         prop = prop.nextSiblingElement("property");
     }
+}
+
+bool ModelBase::onCoreList(const QString & moduleID) {
+    // CoreList contains db entries that are (presumably) overridden by an fzp in the parts folder
+    return CoreList.contains(moduleID);
+
 }

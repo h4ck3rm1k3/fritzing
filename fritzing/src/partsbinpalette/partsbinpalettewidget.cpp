@@ -465,7 +465,7 @@ void PartsBinPaletteWidget::load(const QString &filename, QWidget * progressTarg
 	m_fastLoaded = false;
     PaletteModel * paletteBinModel = PaletteBinModels.value(filename);
     if (paletteBinModel == NULL) {
-	    paletteBinModel = new PaletteModel(true, false, false);
+	    paletteBinModel = new PaletteModel(true, false);
 	    DebugDialog::debug("after palette model");
 
 	    QString name = m_title;

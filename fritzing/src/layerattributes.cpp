@@ -29,9 +29,6 @@ $Date$
 
 LayerAttributes::LayerAttributes()
 {
-	m_sticky = false;
-	m_multiLayer = false;
-	m_canFlipHorizontal = m_canFlipVertical = false;
 }
 
 const QString & LayerAttributes::filename() {
@@ -42,18 +39,12 @@ void LayerAttributes::setFilename(const QString & filename) {
 	m_filename = filename;
 }
 
-const QString & LayerAttributes::layerName() {
-	return m_layerName;
-}
-
-bool LayerAttributes::multiLayer() {
-	return m_multiLayer;
-}
+/*
 
 bool LayerAttributes::getSvgElementID(QDomDocument * doc, ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID) {
 	int layerCount;
 	QDomElement layer = getSvgElementLayer(doc, viewIdentifier, viewLayerID, layerCount);
-	m_multiLayer = (layerCount > 1);
+	bool m_multiLayer = (layerCount > 1);
 
 	if (layer.isNull()) return false;
 	if (layerCount == 0) return false;
@@ -62,15 +53,15 @@ bool LayerAttributes::getSvgElementID(QDomDocument * doc, ViewIdentifierClass::V
 	if (m_filename.isNull()) return false;
 	if (m_filename.isEmpty()) return false;
 
-	m_canFlipVertical = layer.parentNode().parentNode().toElement().attribute("flipvertical").compare("true") == 0;
-	m_canFlipHorizontal = layer.parentNode().parentNode().toElement().attribute("fliphorizontal").compare("true") == 0;
+	bool m_canFlipVertical = layer.parentNode().parentNode().toElement().attribute("flipvertical").compare("true") == 0;
+	bool m_canFlipHorizontal = layer.parentNode().parentNode().toElement().attribute("fliphorizontal").compare("true") == 0;
 
 	m_layerName = layer.attribute("layerId");
 	if (m_layerName.isNull()) return false;
 	if (m_layerName.isEmpty()) return false;
 
 	QString stickyVal = layer.attribute("sticky");
-	m_sticky = stickyVal.compare("true", Qt::CaseInsensitive) == 0;
+	bool m_sticky = stickyVal.compare("true", Qt::CaseInsensitive) == 0;
 
 	return true;
 }
@@ -127,18 +118,7 @@ QDomElement LayerAttributes::getSvgElementLayer(QDomDocument * doc, ViewIdentifi
 
 }
 
-bool LayerAttributes::isSticky() {
-    // return false; to disable sticky
-	return m_sticky;
-}
-
-bool LayerAttributes::canFlipHorizontal() {
-	return m_canFlipHorizontal;
-}
-
-bool LayerAttributes::canFlipVertical() {
-	return m_canFlipVertical;
-}
+*/
 
 const QByteArray & LayerAttributes::loaded() {
 	return m_loaded;

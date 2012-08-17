@@ -563,10 +563,7 @@ bool PartsEditorView::findConnectorsLayerIdAux(QString &result, QDomElement &doc
 }
 
 QString PartsEditorView::getLayerFileName(ModelPart * modelPart) {
-	QDomElement layers = LayerAttributes::getSvgElementLayers(modelPart->domDocument(), m_viewIdentifier);
-	if (layers.isNull()) return ___emptyString___;
-
-	return layers.attribute("image");
+    return modelPart->imageFileName(m_viewIdentifier);
 }
 
 

@@ -1081,10 +1081,6 @@ void Wire::setRatsnest(bool ratsnest) {
 	m_viewGeometry.setRatsnest(ratsnest);
 }
 
-bool Wire::getRatsnest() {
-	return m_viewGeometry.getRatsnest();
-}
-
 void Wire::setAutoroutable(bool ar) {
 	m_viewGeometry.setAutoroutable(ar);
 }

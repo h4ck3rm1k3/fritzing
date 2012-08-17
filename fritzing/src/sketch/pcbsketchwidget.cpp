@@ -148,26 +148,16 @@ void PCBSketchWidget::addViewLayers() {
 
 
 
-ViewLayer::ViewLayerID PCBSketchWidget::multiLayerGetViewLayerID(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerSpec viewLayerSpec, QDomElement & layers, QString & layerName) {
-	Q_UNUSED(modelPart);
-	Q_UNUSED(viewIdentifier);
-
+ViewLayer::ViewLayerID PCBSketchWidget::multiLayerGetViewLayerID(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerSpec viewLayerSpec, LayerList & layerList) 
+{
 	if (viewLayerSpec == ViewLayer::GroundPlane_Bottom) return ViewLayer::GroundPlane0;
 	else if (viewLayerSpec == ViewLayer::GroundPlane_Top) return ViewLayer::GroundPlane1;
 
 	// priviledge Copper if it's available
 	ViewLayer::ViewLayerID wantLayer = modelPart->flippedSMD() && viewLayerSpec == ViewLayer::ThroughHoleThroughTop_TwoLayers ? ViewLayer::Copper1 : ViewLayer::Copper0;
-	QDomElement layer = layers.firstChildElement("layer");
-	while (!layer.isNull()) {
-		QString lName = layer.attribute("layerId");
-		if (ViewLayer::viewLayerIDFromXmlString(lName) == wantLayer) {
-			return wantLayer;
-		}
+	if (layerList.contains(wantLayer)) return wantLayer;
 
-		layer = layer.nextSiblingElement("layer");
-	}
-
-	return ViewLayer::viewLayerIDFromXmlString(layerName);
+    return SketchWidget::multiLayerGetViewLayerID(modelPart, viewIdentifier, viewLayerSpec, layerList);   
 }
 
 bool PCBSketchWidget::canDeleteItem(QGraphicsItem * item, int count)

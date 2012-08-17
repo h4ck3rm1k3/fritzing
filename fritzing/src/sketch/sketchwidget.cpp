@@ -2502,11 +2502,6 @@ void SketchWidget::categorizeDragWires(QSet<Wire *> & wires, QList<ItemBase *> &
 			// it's not connected and not stuck
 
 			if (ct->wire->getTrace() && from.at(i)->connectionsCount() == 0) {
-				// this is a bug.  traces should be connected at both ends. Pretend that the unconnected end is connected to something
-				DebugDialog::debug(QString("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"
-											"Trace %1 connector %2 is unconnected\n"
-											"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-								.arg(ct->wire->id()).arg(i));
 				QPointF p = from.at(i)->sceneAdjustedTerminalPoint(NULL);
 				foreach (QGraphicsItem * item,  scene()->items(p)) {
 					ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
@@ -5142,33 +5137,23 @@ void SketchWidget::killDroppingItem() {
 
 ViewLayer::ViewLayerID SketchWidget::getViewLayerID(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerSpec viewLayerSpec) {
 
-	QDomElement layers = LayerAttributes::getSvgElementLayers(modelPart->domDocument(), viewIdentifier);
-	if (layers.isNull()) return ViewLayer::UnknownLayer;
+    LayerList viewLayers = modelPart->viewLayers(viewIdentifier);
 
-	QDomElement layer = layers.firstChildElement("layer");
-	if (layer.isNull()) return ViewLayer::UnknownLayer;
-
-	QString layerName = layer.attribute("layerId");
-	int layerCount = 0;
-	while (!layer.isNull()) {
-		if (++layerCount > 1) break;
-
-		layer = layer.nextSiblingElement("layer");
+	if (viewLayers.count() == 1) {
+		return viewLayers.at(0);
 	}
 
-	if (layerCount == 1) {
-		return ViewLayer::viewLayerIDFromXmlString(layerName);
-	}
-
-	return multiLayerGetViewLayerID(modelPart, viewIdentifier, viewLayerSpec, layers, layerName);
+	return multiLayerGetViewLayerID(modelPart, viewIdentifier, viewLayerSpec, viewLayers);
 }
 
-ViewLayer::ViewLayerID SketchWidget::multiLayerGetViewLayerID(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerSpec, QDomElement & layers, QString & layerName) {
+ViewLayer::ViewLayerID SketchWidget::multiLayerGetViewLayerID(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerSpec viewLayerSpec, LayerList & layerList) {
 	Q_UNUSED(modelPart);
-	Q_UNUSED(layers);
 	Q_UNUSED(viewIdentifier);
+	Q_UNUSED(viewLayerSpec);
 
-	return ViewLayer::viewLayerIDFromXmlString(layerName);
+    if (layerList.count() == 0) return ViewLayer::UnknownLayer;
+
+	return layerList.at(0);
 }
 
 ItemBase * SketchWidget::overSticky(ItemBase * itemBase) {
@@ -6642,29 +6627,10 @@ void SketchWidget::forwardRoutingStatus(const RoutingStatus & routingStatus) {
 }
 
 bool SketchWidget::matchesLayer(ModelPart * modelPart) {
-	QDomDocument * domDocument = modelPart->domDocument();
-	if (domDocument->isNull()) return false;
+    LayerList viewLayers = modelPart->viewLayers(m_viewIdentifier);
 
-	QDomElement views = domDocument->documentElement().firstChildElement("views");
-	if(views.isNull()) return false;
-
-	QDomElement view = views.firstChildElement(ViewIdentifierClass::viewIdentifierXmlName(m_viewIdentifier));
-	if (view.isNull()) return false;
-
-	QDomElement layers = view.firstChildElement("layers");
-	if (layers.isNull()) return false;
-
-	QDomElement layer = layers.firstChildElement("layer");
-	while (!layer.isNull()) {
-		QString layerName = layer.attribute("layerId");
-		ViewLayer::ViewLayerID viewLayerID = ViewLayer::viewLayerIDFromXmlString(layerName);
-		foreach (ViewLayer* viewLayer, m_viewLayers) {
-			if (viewLayer == NULL) continue;
-
-			if (viewLayer->viewLayerID() == viewLayerID) return true;
-		}
-
-		layer = layer.nextSiblingElement("layer");
+	foreach (ViewLayer* viewLayer, m_viewLayers) {
+		if (viewLayers.contains(viewLayer->viewLayerID())) return true;
 	}
 
 	return false;

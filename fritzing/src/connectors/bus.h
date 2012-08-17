@@ -42,10 +42,10 @@ class Bus : public QObject
 public:
 	Bus(class BusShared *, class ModelPart *);
 	
-	const QString & id();
-	const QList<class Connector *> & connectors();
+	const QString & id() const;
 	void addConnector(class Connector *);
 	class ModelPart * modelPart();
+	const QList<Connector *> & connectors() const;
 	
 public:
 	static QHash<QString, QPointer<Bus> > ___emptyBusList___;

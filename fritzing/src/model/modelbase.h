@@ -54,6 +54,9 @@ public:
 	const QString & fritzingVersion();
     void setReferenceModel(ModelBase *);
 
+public:
+    static bool onCoreList(const QString & moduleID);
+
 signals:
 	void loadedViews(ModelBase *, QDomElement & views);
 	void loadedRoot(const QString & fileName, ModelBase *, QDomElement & root);
@@ -74,6 +77,10 @@ protected:
 	QPointer<ModelBase> m_referenceModel;
 	bool m_reportMissingModules;
 	QString m_fritzingVersion;
+
+protected:
+    static QList<QString> CoreList;
+
 };
 
 #endif

@@ -41,11 +41,11 @@ class PaletteModel : public ModelBase
 Q_OBJECT
 public:
 	PaletteModel();
-	PaletteModel(bool makeRoot, bool doInit, bool fastLoad);
+	PaletteModel(bool makeRoot, bool doInit);
 	ModelPart * retrieveModelPart(const QString & moduleID);
 	void updateOrAddModelPart(const QString & moduleID, ModelPart *modelPart);
 	virtual bool containsModelPart(const QString & moduleID);
-	virtual ModelPart * loadPart(const QString & path, bool update, bool fastLoad);
+	virtual ModelPart * loadPart(const QString & path, bool update);
 	void clear();
 	bool loadedFromFile();
 	QString loadedFrom();
@@ -63,8 +63,8 @@ protected:
 	bool m_loadedFromFile;
 	QString m_loadedFrom; // The file this was loaded from, only if m_loadedFromFile == true
 
-	bool m_loadingCore;
 	bool m_loadingContrib;
+    bool m_fullLoad;
 
 signals:
 	void loadedPart(int i, int total);
@@ -72,9 +72,9 @@ signals:
     void addSearchMaximum(int);
 
 protected:
-	virtual void initParts(bool fastLoad);
-	void loadParts(bool fastLoad);
-	void loadPartsAux(QDir & dir, QStringList & nameFilters, int & loadedPart, int totalParts, bool fastLoad);
+	virtual void initParts();
+	void loadParts();
+	void loadPartsAux(QDir & dir, QStringList & nameFilters, int & loadedPart, int totalParts);
 	void countParts(QDir & dir, QStringList & nameFilters, int & partCount);
     void search(ModelPart * modelPart, const QStringList & searchStrings, QList<ModelPart *> & modelParts, bool allowObsolete);
 
@@ -94,6 +94,7 @@ protected:
 	static QString ContribPartsBinFilePath;
 	static bool CreateTempPartsBinFile;
 	static QString TempPartsBinFilePath;
+    const static QString ResourcePath;
 
 public:
 	static void initNames();

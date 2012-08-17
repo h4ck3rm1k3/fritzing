@@ -98,7 +98,6 @@ public:
 	void setPcbPenBrush(QBrush & brush);
 	bool getRouted();
 	void setRouted(bool);
-	bool getRatsnest();
 	void setRatsnest(bool);
 	void setAutoroutable(bool);
 	bool getAutoroutable();

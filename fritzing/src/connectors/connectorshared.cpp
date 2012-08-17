@@ -104,6 +104,7 @@ void ConnectorShared::setDescription(QString description) {
 const QString & ConnectorShared::sharedName() {
 	return m_name;
 }
+
 void ConnectorShared::setSharedName(QString name) {
 	m_name = name;
 }
@@ -121,6 +122,11 @@ void ConnectorShared::setConnectorType(QString type) {
 	m_type = Connector::connectorTypeFromName(type);
 }
 
+void ConnectorShared::setConnectorType(Connector::ConnectorType type) {
+	m_typeString = Connector::connectorNameFromType(type);
+	m_type = type;
+}
+
 const QMultiHash<ViewIdentifierClass::ViewIdentifier,SvgIdLayer*> & ConnectorShared::pins() {
 	return m_pins;
 }
@@ -129,12 +135,14 @@ void ConnectorShared::insertPin(ViewIdentifierClass::ViewIdentifier layer, SvgId
 	m_pins.insert(layer, svgIdLayer);
 }
 
-void ConnectorShared::addPin(ViewIdentifierClass::ViewIdentifier layer, QString connectorId, ViewLayer::ViewLayerID viewLayerID, QString terminalId) {
-	SvgIdLayer * svgIdLayer = new SvgIdLayer;
+void ConnectorShared::addPin(ViewIdentifierClass::ViewIdentifier viewIdentifier, const QString & svgId, ViewLayer::ViewLayerID viewLayerID, const QString & terminalId, const QString & legId, bool hybrid) {
+	SvgIdLayer * svgIdLayer = new SvgIdLayer(viewIdentifier);
 	svgIdLayer->m_svgViewLayerID = viewLayerID;
-	svgIdLayer->m_svgId = connectorId;
+	svgIdLayer->m_svgId = svgId;
 	svgIdLayer->m_terminalId = terminalId;
-	m_pins.insert(layer, svgIdLayer);
+    svgIdLayer->m_hybrid = hybrid;
+    svgIdLayer->m_legId = legId;
+	m_pins.insert(viewIdentifier, svgIdLayer);
 	// DebugDialog::debug(QString("insert a %1 %2 %3").arg(layer).arg(connectorId).arg(viewLayerID));
 }
 
@@ -182,7 +190,7 @@ void ConnectorShared::loadPins(const QDomElement & domElement) {
 	loadPin(viewsTag.firstChildElement("pcbView"),ViewIdentifierClass::PCBView);
 }
 
-void ConnectorShared::loadPin(QDomElement elem, ViewIdentifierClass::ViewIdentifier viewId) {
+void ConnectorShared::loadPin(QDomElement elem, ViewIdentifierClass::ViewIdentifier viewIdentifier) {
 	QDomElement pinElem = elem.firstChildElement("p");
 	while (!pinElem.isNull()) {
 		//QString temp;
@@ -192,7 +200,7 @@ void ConnectorShared::loadPin(QDomElement elem, ViewIdentifierClass::ViewIdentif
 		QString svgId = pinElem.attribute("svgId");
 		//svgId = svgId.left(svgId.lastIndexOf(QRegExp("\\d"))+1);
 		QString layer = pinElem.attribute("layer");
-		SvgIdLayer * svgIdLayer = new SvgIdLayer;
+		SvgIdLayer * svgIdLayer = new SvgIdLayer(viewIdentifier);
 		svgIdLayer->m_hybrid = (pinElem.attribute("hybrid").compare("yes") == 0);
 		svgIdLayer->m_legId = pinElem.attribute("legId");
 		svgIdLayer->m_svgId = svgId;
@@ -203,7 +211,7 @@ void ConnectorShared::loadPin(QDomElement elem, ViewIdentifierClass::ViewIdentif
 		//if (!svgIdLayer->m_terminalId.isEmpty()) {
 		//	DebugDialog::debug("terminalid " + svgIdLayer->m_terminalId);
 		//}
-		m_pins.insert(viewId, svgIdLayer);
+		m_pins.insert(viewIdentifier, svgIdLayer);
 		//DebugDialog::debug(QString("insert b %1 %2 %3").arg(viewId).arg(svgId).arg(layer));
 
 		pinElem = pinElem.nextSiblingElement("p");
@@ -227,3 +235,7 @@ ErcData * ConnectorShared::ercData() {
 	return m_ercData;
 }
 
+const QList<SvgIdLayer *> ConnectorShared::svgIdLayers() const
+{
+    return m_pins.values();
+}

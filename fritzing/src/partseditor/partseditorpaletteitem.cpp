@@ -205,42 +205,29 @@ bool PartsEditorPaletteItem::setUpImage(ModelPart * modelPart, ViewIdentifierCla
 
     ModelPartShared * modelPartShared = modelPart->modelPartShared();
     if (modelPartShared == NULL) return false;
-    if (modelPartShared->domDocument() == NULL) return false;
 
 	setViewLayerID(viewLayerID, viewLayers);
 
 	if (m_svgStrings == NULL) {
 		// TODO Mariano: Copied from paletteitembase::setUpImage (extract what's in common)
-		if (modelPartShared->domDocument() ) {
-			bool result = layerAttributes.getSvgElementID(modelPartShared->domDocument(), viewIdentifier, viewLayerID);
-			if (!result) return false;
-		}
+        QString filename = modelPartShared->imageFileName(viewIdentifier, viewLayerID);
+		if (filename.isEmpty()) return false;
 
-		if(!createSvgPath(modelPartShared->path(), layerAttributes.filename())) {
+
+		if(!createSvgPath(modelPartShared->path(), filename)) {
 			//QMessageBox::information( NULL, QObject::tr("Fritzing"),
 				//					 QObject::tr("The file %1 is not a Fritzing file (6).").arg(tempPath.arg(possibleFolders[0])));
 			return false;
 		}
 	}
 
-	QDomElement layers = LayerAttributes::getSvgElementLayers(modelPartShared->domDocument(), viewIdentifier);
-	QDomElement layer = layers.firstChildElement("layer");
-	while (!layer.isNull()) {
-		// skip layer if it's an SMD
-		if (layer.attribute("flipSMD").compare("true") != 0) {
-			QString layerName = layer.attribute("layerId");
-			if (!layerName.isEmpty()) {
-				ViewLayer::ViewLayerID vlid = ViewLayer::viewLayerIDFromXmlString(layerName);
-				if (vlid != viewLayerID) {
-					m_extraViewLayers << vlid;
-				}
-			}
-		}
-		else {
-			DebugDialog::debug(QString("skipping layer %1").arg(layer.attribute("layerId")));
-		}
-		layer = layer.nextSiblingElement("layer");
-	}
+    DebugDialog::debug("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! deal with flipsmd !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+    LayerList layerList = modelPartShared->viewLayersFlipped(viewIdentifier);
+    foreach (ViewLayer::ViewLayerID vlid, layerList) {
+        if (vlid != viewLayerID) {
+            m_extraViewLayers << vlid;
+        }
+    }
 
 	FSvgRenderer * renderer = NULL;
 	if (renderer == NULL) {

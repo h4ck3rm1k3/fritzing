@@ -106,7 +106,7 @@ const QString ItemBase::ITEMBASE_FONT_SUFFIX = "</font>";
 
 QHash<QString, QString> ItemBase::TranslatedPropertyNames;
 
-QPointer<ReferenceModel> ItemBase::referenceModel = NULL;
+QPointer<ReferenceModel> ItemBase::TheReferenceModel = NULL;
 
 QString ItemBase::partInstanceDefaultTitle;
 QList<ItemBase *> ItemBase::emptyList;
@@ -1233,23 +1233,6 @@ void ItemBase::saveLocAndTransform(QXmlStreamWriter & streamWriter)
 
 FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec viewLayerSpec, LayerAttributes & layerAttributes, QString & error)
 {
-    ModelPartShared * modelPartShared = modelPart->modelPartShared();
-
-	if (modelPartShared == NULL) {
-		error = tr("model part problem");
-		return NULL;
-	}
-	if (modelPartShared->domDocument() == NULL) {
-		error = tr("part xml missing");
-		return NULL;
-	}
-
-    return setUpImage(modelPart, NULL, viewIdentifier, viewLayerID, viewLayerSpec, layerAttributes, error);
-
-}
-
-FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, QDomDocument * domDocument, ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec viewLayerSpec, LayerAttributes & layerAttributes, QString & error)
-{
 #ifndef QT_NO_DEBUG
 	QTime t;
 	t.start();
@@ -1262,27 +1245,13 @@ FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, QDomDocument * domDoc
 		return NULL;
 	}
 
-    if (domDocument == NULL) {
-        domDocument = modelPart->domDocument();
-        if (domDocument == NULL) {
-            error = tr("dom document problem");
-		    return NULL;
-        }
-    }
-
-	bool result = layerAttributes.getSvgElementID(domDocument, viewIdentifier, viewLayerID);
-	if (!result) {
-		error = tr("missing xml for view %1 layer %2").arg(viewIdentifier).arg(viewLayerID);
-		return NULL;
-	}
-
 	//DebugDialog::debug(QString("setting z %1 %2")
 		//.arg(this->z())
 		//.arg(ViewLayer::viewLayerNameFromID(viewLayerID))  );
 
 
 	//DebugDialog::debug(QString("set up image elapsed (1) %1").arg(t.elapsed()) );
-	QString filename = getSvgFilename(modelPart, layerAttributes.filename());
+	QString filename = getSvgFilename(modelPart, modelPartShared->imageFileName(viewIdentifier, viewLayerID));
 
 //#ifndef QT_NO_DEBUG
 	//DebugDialog::debug(QString("set up image elapsed (2) %1").arg(t.elapsed()) );
@@ -1290,7 +1259,7 @@ FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, QDomDocument * domDoc
 
 	if (filename.isEmpty()) {
 		//QString deleteme = modelPartShared->domDocument()->toString();
-		error = tr("file %1 not found").arg(layerAttributes.filename());
+		error = tr("file for %1 %2 not found").arg(modelPartShared->title()).arg(modelPartShared->moduleID());
         return NULL;
 	}
 
@@ -1332,16 +1301,17 @@ FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, QDomDocument * domDoc
 		fixCopper1(modelPart, filename, viewLayerID, viewLayerSpec, flipDoc);
 	}
     QByteArray bytesToLoad;
-	if (layerAttributes.multiLayer()) {
+	if (modelPartShared->hasMultipleLayers(viewIdentifier)) {
+        QString layerName = ViewLayer::viewLayerXmlNameFromID(viewLayerID);
 		// need to treat create "virtual" svg file for each layer
 		SvgFileSplitter svgFileSplitter;
 		bool result;
 		if (flipDoc.isNull()) {
-			result = svgFileSplitter.split(filename, layerAttributes.layerName());
+			result = svgFileSplitter.split(filename, layerName);
 		}
 		else {
 			QString f = flipDoc.toString(); 
-			result = svgFileSplitter.splitString(f, layerAttributes.layerName());
+			result = svgFileSplitter.splitString(f, layerName);
 		}
 		if (result) {
             bytesToLoad = svgFileSplitter.byteArray();
@@ -1635,18 +1605,18 @@ void ItemBase::swapEntry(const QString & text) {
 }
 
 void ItemBase::setReferenceModel(ReferenceModel * rm) {
-	referenceModel = rm;
+	TheReferenceModel = rm;
 }
 
 QStringList ItemBase::collectValues(const QString & family, const QString & prop, QString & value) {
 	Q_UNUSED(value);
 
-	if (referenceModel == NULL) return ___emptyStringList___;
+	if (TheReferenceModel == NULL) return ___emptyStringList___;
 
 	QStringList values = CachedValues.value(family + prop, QStringList());
 	if (values.count() > 0) return values;
 
-	values = referenceModel->values(family, prop);
+	values = TheReferenceModel->values(family, prop);
 
 	// sort values numerically
 	NumberMatcherValues.clear();

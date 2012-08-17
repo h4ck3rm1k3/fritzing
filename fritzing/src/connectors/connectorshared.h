@@ -52,12 +52,14 @@ public:
 	void setSharedName(QString name);
 	const QString & connectorTypeString();
 	void setConnectorType(QString type);
+	void setConnectorType(Connector::ConnectorType);
 	Connector::ConnectorType connectorType();
 
 	const QString & legID(ViewIdentifierClass::ViewIdentifier viewId, ViewLayer::ViewLayerID viewLayerID);
 	const QMultiHash<ViewIdentifierClass::ViewIdentifier,SvgIdLayer *> &pins();
 	SvgIdLayer * fullPinInfo(ViewIdentifierClass::ViewIdentifier viewId, ViewLayer::ViewLayerID viewLayerID);
-	void addPin(ViewIdentifierClass::ViewIdentifier layer, QString connectorId, ViewLayer::ViewLayerID, QString terminalId);
+    const QList<SvgIdLayer *> svgIdLayers() const;
+	void addPin(ViewIdentifierClass::ViewIdentifier, const QString & svgId, ViewLayer::ViewLayerID, const QString & terminalId, const QString & legId, bool hybrid);
 	void insertPin(ViewIdentifierClass::ViewIdentifier layer, SvgIdLayer * svgIdLayer);
 	void removePins(ViewIdentifierClass::ViewIdentifier layer);
 	void removePin(ViewIdentifierClass::ViewIdentifier layer, SvgIdLayer * svgIdLayer);

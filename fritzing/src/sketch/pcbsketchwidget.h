@@ -130,7 +130,7 @@ public:
 protected:
 	void setWireVisible(Wire * wire);
 	// void checkAutorouted();
-	ViewLayer::ViewLayerID multiLayerGetViewLayerID(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerSpec, QDomElement & layers, QString & layerName);
+	ViewLayer::ViewLayerID multiLayerGetViewLayerID(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerSpec, LayerList &);
 	bool canChainWire(Wire *);
 	bool canDragWire(Wire * wire);
 	const QString & hoverEnterPartConnectorMessage(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
