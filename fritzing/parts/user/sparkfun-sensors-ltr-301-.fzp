@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-LTR-301-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Sensors' LTR-301  -->
 <version>4</version>
-<date>2012-08-14</date>
+<date>2012-08-17</date>
 <label>Q</label>
 <author>www.fritzing.org</author>
 <description>Through-hole side-receiving IR phototransistor</description>

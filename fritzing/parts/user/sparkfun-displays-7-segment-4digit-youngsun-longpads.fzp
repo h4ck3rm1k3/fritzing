@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Displays-7-SEGMENT-4DIGIT-YOUNGSUN-LONGPADS'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Displays' 7-SEGMENT-4DIGIT-YOUNGSUN LONGPADS -->
 <version>4</version>
-<date>2012-08-14</date>
+<date>2012-08-17</date>
 <label>LED</label>
 <author>www.fritzing.org</author>
 <description>This is a part for the 4-Digit 7-segment LEDs from Young Sun.  Different from the Digikey LEDs, all 16 pins are used.
