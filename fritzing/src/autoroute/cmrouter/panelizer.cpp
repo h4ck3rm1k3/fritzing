@@ -358,12 +358,12 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 		}
 
 		QDomDocument doc;
-		QString merger = planePair->svgs.at(OutlineLayer);  // outline layer
+		QString merger = planePair->svgs.at(OutlineLayer);  
 		merger.replace("black", "#90f0a0");
 		merger.replace("#000000", "#90f0a0");
 		merger.replace("fill-opacity=\"0.5\"", "fill-opacity=\"1\"");
 		TextUtils::mergeSvg(doc, merger, "");
-		merger = planePair->svgs.at(SilkTopLayer);			// silktop layer
+		merger = planePair->svgs.at(SilkTopLayer);			
 		merger.replace("black", "#909090");
 		merger.replace("#000000", "#909090");
 		TextUtils::mergeSvg(doc, merger, "");		
