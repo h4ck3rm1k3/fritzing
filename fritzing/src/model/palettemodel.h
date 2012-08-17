@@ -94,7 +94,6 @@ protected:
 	static QString ContribPartsBinFilePath;
 	static bool CreateTempPartsBinFile;
 	static QString TempPartsBinFilePath;
-    const static QString ResourcePath;
 
 public:
 	static void initNames();

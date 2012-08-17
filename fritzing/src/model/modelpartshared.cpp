@@ -543,6 +543,11 @@ void ModelPartShared::flipSMDAnd() {
     LayerList layerList = viewLayers(ViewIdentifierClass::PCBView);
     if (layerList.isEmpty()) return;
     if (!layerList.contains(ViewLayer::Copper0) && !layerList.contains(ViewLayer::Copper1)) return;
+    if (this->path().startsWith(ResourcePath)) {
+        // assume resources are set up exactly as intended
+        // DebugDialog::debug(QString("skip flip %1").arg(path()));
+        return;
+    }
 
     if (layerList.contains(ViewLayer::Copper0)) {
         if (!layerList.contains(ViewLayer::Copper1)) {

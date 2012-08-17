@@ -71,6 +71,8 @@ static QHash<QString, QString> ___emptyStringHash___;
 static QDir ___emptyDir___;
 static QByteArray ___emptyByteArray___;
 
+static const QString ResourcePath(":/resources/");
+
 bool isParent(QObject * candidateParent, QObject * candidateChild);
 
 static const QString FritzingSketchExtension(".fz");

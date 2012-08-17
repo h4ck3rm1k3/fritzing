@@ -49,8 +49,6 @@ static bool JustAppendAllPartsInstances = false;
 static bool FirstTime = true;
 static bool FirstTimeWrite = true;
 
-const QString PaletteModel::ResourcePath(":/resources/");
-
 QString PaletteModel::AllPartsBinFilePath;
 QString PaletteModel::NonCorePartsBinFilePath;
 QString PaletteModel::ContribPartsBinFilePath;
