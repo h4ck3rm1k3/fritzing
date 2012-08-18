@@ -8776,3 +8776,53 @@ long SketchWidget::swapStart(SwapThing & swapThing, bool master) {
 void SketchWidget::setPasting(bool pasting) {
     m_pasting = pasting;
 }
+
+void SketchWidget::showUnrouted() {
+
+    // MainWindow::routingStatusLabelMouse uses a different technique for collecting unrouted...
+
+    // what about multiple boards
+
+    QList< QList< ConnectorItem *>* > allPartConnectorItems;
+	QHash<ConnectorItem *, int> indexer;
+	collectAllNets(indexer, allPartConnectorItems, false, routeBothSides());
+    QSet<ConnectorItem *> toShow;
+    foreach (QList<ConnectorItem *> * connectorItems, allPartConnectorItems) {
+		ConnectorPairHash result;
+		GraphUtils::chooseRatsnestGraph(connectorItems, (ViewGeometry::RatsnestFlag | ViewGeometry::NormalFlag | ViewGeometry::PCBTraceFlag | ViewGeometry::SchematicTraceFlag) ^ getTraceFlag(), result);
+        foreach (ConnectorItem * ck, result.uniqueKeys()) {
+            toShow.insert(ck);
+            foreach (ConnectorItem * cv, result.values(ck)) {
+                toShow.insert(cv);
+            }
+        }
+    }
+
+	foreach (ConnectorItem * connectorItem, toShow) {
+		if (connectorItem->isActive() && connectorItem->isVisible() && !connectorItem->hidden()) {
+			connectorItem->showEqualPotential(true);
+		}
+		else {
+			connectorItem = connectorItem->getCrossLayerConnectorItem();
+			if (connectorItem) connectorItem->showEqualPotential(true);
+		}
+	}
+
+    QString message = tr("Unrouted connections are highlighted in yellow.");
+    if (toShow.count() == 0) message = tr("There are no unrouted connections");
+    QMessageBox::information(NULL, tr("Unrouted connections"), 
+        tr("%1\n\n"
+            "Note: you can also trigger this display by mousing down on the routing status text in the status bar.").arg(message));
+
+
+    foreach (ConnectorItem * connectorItem, toShow) {
+		if (connectorItem->isActive() && connectorItem->isVisible() && !connectorItem->hidden()) {
+			connectorItem->showEqualPotential(false);
+		}
+		else {
+			connectorItem = connectorItem->getCrossLayerConnectorItem();
+			if (connectorItem) connectorItem->showEqualPotential(false);
+		}
+	}
+}
+

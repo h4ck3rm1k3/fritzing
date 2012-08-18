@@ -1271,6 +1271,7 @@ void MainWindow::createMenus()
 	m_pcbTraceMenu->addAction(m_excludeFromAutorouteAct);
 	m_pcbTraceMenu->addSeparator();
 
+	m_pcbTraceMenu->addAction(m_showUnroutedAct);
 	m_pcbTraceMenu->addAction(m_selectAllTracesAct);
 	m_pcbTraceMenu->addAction(m_selectAllExcludedTracesAct);
 	m_pcbTraceMenu->addAction(m_selectAllIncludedTracesAct);
@@ -1281,6 +1282,7 @@ void MainWindow::createMenus()
 	m_schematicTraceMenu = menuBar()->addMenu(tr("&Routing"));
 	m_schematicTraceMenu->addAction(m_autorouteAct);
 	m_schematicTraceMenu->addAction(m_excludeFromAutorouteAct);
+	m_schematicTraceMenu->addAction(m_showUnroutedAct);
 	m_schematicTraceMenu->addAction(m_selectAllTracesAct);
 	m_schematicTraceMenu->addAction(m_selectAllExcludedTracesAct);
 	m_schematicTraceMenu->addAction(m_selectAllIncludedTracesAct);
@@ -1291,6 +1293,7 @@ void MainWindow::createMenus()
 #endif
 
 	m_breadboardTraceMenu = menuBar()->addMenu(tr("&Routing"));
+	m_breadboardTraceMenu->addAction(m_showUnroutedAct);
 	m_breadboardTraceMenu->addAction(m_selectAllWiresAct);
 
 	updateTraceMenu();
@@ -1835,6 +1838,7 @@ void MainWindow::updateTraceMenu() {
 	m_changeTraceLayerAct->setEnabled(ctlEnabled);
 	m_autorouteAct->setEnabled(arEnabled && anyOrNo);
 	m_orderFabAct->setEnabled(boardCount > 0);
+	m_showUnroutedAct->setEnabled(true);
 	m_selectAllTracesAct->setEnabled(tEnabled && anyOrNo);
 	m_selectAllWiresAct->setEnabled(tEnabled && anyOrNo);
 	m_selectAllCopperFillAct->setEnabled(gfrEnabled && boardCount >= 1);
@@ -2351,6 +2355,10 @@ void MainWindow::createTraceMenuActions() {
     m_changeTraceLayerAct = new QAction(tr("Move to other side of the board"), this);
 	m_changeTraceLayerAct->setStatusTip(tr("Move selected traces to the other side of the board (note: the 'first' trace will be moved and the rest will follow to the same side)"));
 	connect(m_changeTraceLayerAct, SIGNAL(triggered()), this, SLOT(changeTraceLayer()));
+
+    m_showUnroutedAct = new QAction(tr("Show unrouted"), this);
+	m_showUnroutedAct->setStatusTip(tr("Highlight all unrouted connectors"));
+	connect(m_showUnroutedAct, SIGNAL(triggered()), this, SLOT(showUnrouted()));
 
 	m_selectAllTracesAct = new QAction(tr("Select All Traces"), this);
 	m_selectAllTracesAct->setStatusTip(tr("Select all trace wires"));
@@ -3839,3 +3847,10 @@ void MainWindow::setBackgroundColor()
 void MainWindow::checkLoadedTraces() {
     if (m_pcbGraphicsView) m_pcbGraphicsView->checkLoadedTraces();
 }
+
+void MainWindow::showUnrouted() 
+{
+    m_currentGraphicsView->showUnrouted();
+}
+
+

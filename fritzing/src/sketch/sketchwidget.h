@@ -311,6 +311,7 @@ public:
 	virtual bool sameElectricalLayer2(ViewLayer::ViewLayerID, ViewLayer::ViewLayerID);
 	void deleteMiddle(QSet<ItemBase *> & deletedItems, QUndoCommand * parentCommand);
     void setPasting(bool);
+    void showUnrouted();
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);

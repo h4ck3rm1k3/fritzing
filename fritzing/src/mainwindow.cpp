@@ -754,8 +754,8 @@ ExpandingLabel * MainWindow::createRoutingStatusLabel(SketchAreaWidget * parent)
 	connect(routingStatusLabel, SIGNAL(mouseReleaseSignal(QMouseEvent*)), this, SLOT(routingStatusLabelMouseRelease(QMouseEvent*)));
 
 	routingStatusLabel->setTextInteractionFlags(Qt::NoTextInteraction);
-	routingStatusLabel->setCursor(Qt::ArrowCursor);
-	routingStatusLabel->viewport()->setCursor(Qt::ArrowCursor);
+	routingStatusLabel->setCursor(Qt::WhatsThisCursor);
+	routingStatusLabel->viewport()->setCursor(Qt::WhatsThisCursor);
 
 	routingStatusLabel->setObjectName(SketchAreaWidget::RoutingStateLabelName);
 	parent->setRoutingStatusLabel(routingStatusLabel);
