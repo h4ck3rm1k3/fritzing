@@ -2321,6 +2321,11 @@ void MainWindow::routingStatusLabelMouse(QMouseEvent*, bool show) {
 			if (connectorItem) connectorItem->showEqualPotential(show);
 		}
 	}
+
+    if (!show && toShow.count() == 0) {
+            QMessageBox::information(NULL, tr("Unrouted connections"), 
+            tr("There are no unrouted connections in this view."));
+    }
 }
 
 void MainWindow::setReportMissingModules(bool b) {
