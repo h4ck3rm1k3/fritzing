@@ -11,7 +11,7 @@ the Free Software Foundation, either version 3 of the License, or
 Fritzing is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+GNU General Public License for more details.floadfrom
 
 You should have received a copy of the GNU General Public License
 along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
@@ -419,9 +419,13 @@ bool SqliteReferenceModel::loadFromDB(QSqlDatabase & keep_db, QSqlDatabase & db)
         }
     }
 
+    if (m_root == NULL) {
+        m_root = new ModelPart();
+    }
     foreach (ModelPart * modelPart, m_partHash.values()) {
         modelPart->flipSMDAnd();
         modelPart->initBuses();
+        modelPart->setParent(m_root);
     }
 
     return true;
