@@ -7022,37 +7022,39 @@ void SketchWidget::drawBackground( QPainter * painter, const QRectF & rect )
 	if (m_showGrid) {
         QColor gridColor(0, 0, 0, 20);
 		double gridSize = m_gridSizeInches * GraphicsUtils::SVGDPI;
-
-		double left = int(rect.left() * 10000) - (int(rect.left() * 10000) % int(gridSize * 10000));
-		left /= 10000;
-		double top = int(rect.top() * 10000) - (int(rect.top() * 10000) % int(gridSize * 10000));
-		top /= 10000;
+        int intGridSize = int(gridSize * 10000);
+        if (intGridSize > 0) {
+		    double left = int(rect.left() * 10000) - (int(rect.left() * 10000) % intGridSize);
+		    left /= 10000;
+		    double top = int(rect.top() * 10000) - (int(rect.top() * 10000) % intGridSize);
+		    top /= 10000;
  
-		QVarLengthArray<QLineF, 100> linesX;
-		for (double x = left; x < rect.right(); x += gridSize) {
-			linesX.append(QLineF(x, rect.top(), x, rect.bottom()));
-		}
+		    QVarLengthArray<QLineF, 100> linesX;
+		    for (double x = left; x < rect.right(); x += gridSize) {
+			    linesX.append(QLineF(x, rect.top(), x, rect.bottom()));
+		    }
 
-		QVarLengthArray<QLineF, 100> linesY;
-		for (double  y = top; y < rect.bottom(); y += gridSize) {
-			linesY.append(QLineF(rect.left(), y, rect.right(), y));
-		}
+		    QVarLengthArray<QLineF, 100> linesY;
+		    for (double  y = top; y < rect.bottom(); y += gridSize) {
+			    linesY.append(QLineF(rect.left(), y, rect.right(), y));
+		    }
 
-        //DebugDialog::debug(QString("lines %1 %2").arg(linesX.count()).arg(linesY.count()));
+            //DebugDialog::debug(QString("lines %1 %2").arg(linesX.count()).arg(linesY.count()));
 
-		QPen pen;
-		pen.setColor(gridColor);
-		pen.setWidth(0);
-		pen.setCosmetic(true);
-		//pen.setStyle(Qt::DotLine);            
-		//QVector<double> dashes;                   // removed dash pattern at forum suggestion: http://fritzing.org/forum/thread/855
-		//dashes << 1 << 1;
-		//pen.setDashPattern(dashes);
-		painter->save();
-		painter->setPen(pen);
-		painter->drawLines(linesX.data(), linesX.size());
-		painter->drawLines(linesY.data(), linesY.size());
-		painter->restore();
+		    QPen pen;
+		    pen.setColor(gridColor);
+		    pen.setWidth(0);
+		    pen.setCosmetic(true);
+		    //pen.setStyle(Qt::DotLine);            
+		    //QVector<double> dashes;                   // removed dash pattern at forum suggestion: http://fritzing.org/forum/thread/855
+		    //dashes << 1 << 1;
+		    //pen.setDashPattern(dashes);
+		    painter->save();
+		    painter->setPen(pen);
+		    painter->drawLines(linesX.data(), linesX.size());
+		    painter->drawLines(linesY.data(), linesY.size());
+		    painter->restore();
+        }
 	}
 
 	// always draw the widget in the same place in the window
