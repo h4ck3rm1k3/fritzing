@@ -12,12 +12,17 @@
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='2.3114' x='1.3462' y='9' text-anchor='start'>&gt;VALUE</text>
 <line class='pin' id='connector1pin' connectorname='IN' x1='0.0762' y1='14.842' x2='5.1562' y2='14.842' stroke='#555555' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector1terminal' x='0.0762' y='14.842' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='2.6162' y='14.6896' text-anchor='middle'>2</text>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='5.6134' y='15.1468' text-anchor='start'>IN</text>
 <line class='pin' id='connector2pin' connectorname='OUT' x1='25.4762' y1='14.842' x2='20.3962' y2='14.842' stroke='#555555' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector2terminal' x='25.4762' y='14.842' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='22.9362' y='14.6896' text-anchor='middle'>3</text>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='19.939' y='15.1468' text-anchor='end'>OUT</text>
 <line class='pin' id='connector0pin' connectorname='GND' x1='12.7762' y1='25.002' x2='12.7762' y2='19.922' stroke='#555555' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector0terminal' x='12.7762' y='25.002' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<g transform='translate(12.6238,22.462)'><g transform='rotate(270)'>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='0' y='0' text-anchor='middle'>1</text>
+</g></g>
 <g transform='translate(13.081,19.4648)'><g transform='rotate(270)'>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='0' y='0' text-anchor='start'>GND</text>
 </g></g>

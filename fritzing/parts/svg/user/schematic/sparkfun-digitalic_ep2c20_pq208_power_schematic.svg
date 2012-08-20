@@ -10,6 +10,7 @@
 <line class='other' x1='10.16' y1='43.307' x2='10.16' y2='0.127' stroke='#000000' stroke-width='0.254' stroke-linecap='round'/>
 <line class='pin' id='connector0pin' connectorname='GND' x1='5.08' y1='2.667' x2='10.16' y2='2.667' stroke='#555555' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector0terminal' x='5.08' y='2.667' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='7.62' y='2.5146' text-anchor='middle'>1</text>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='10.6172' y='2.9718' text-anchor='start'>GND</text>
 <line class='pin' id='connector1pin' connectorname='GND' x1='5.08' y1='2.667' x2='10.16' y2='2.667' stroke='#555555' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector1terminal' x='5.08' y='2.667' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
@@ -39,6 +40,7 @@
 <rect class='terminal' id='connector13terminal' x='5.08' y='2.667' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <line class='pin' id='connector14pin' connectorname='VCCINT' x1='40.64' y1='28.067' x2='35.56' y2='28.067' stroke='#555555' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector14terminal' x='40.64' y='28.067' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='38.1' y='27.9146' text-anchor='middle'>15</text>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='35.1028' y='28.3718' text-anchor='end'>VCCINT</text>
 <line class='pin' id='connector15pin' connectorname='VCCINT' x1='40.64' y1='28.067' x2='35.56' y2='28.067' stroke='#555555' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector15terminal' x='40.64' y='28.067' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>

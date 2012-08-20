@@ -10,14 +10,19 @@
 <line class='other' x1='2.6162' y1='0.2032' x2='2.6162' y2='7.8232' stroke='#000000' stroke-width='0.4064' stroke-linecap='round'/>
 <line class='pin' id='connector1pin' connectorname='IN' x1='0.0762' y1='2.7432' x2='2.6162' y2='2.7432' stroke='#555555' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector1terminal' x='0.0762' y='2.7432' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='1.3462' y='2.5908' text-anchor='middle'>2</text>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='3.0734' y='3.048' text-anchor='start'>IN</text>
 <line class='pin' id='connector0pin' connectorname='ADJ' x1='7.6962' y1='10.3632' x2='7.6962' y2='7.8232' stroke='#555555' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector0terminal' x='7.6962' y='10.3632' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<g transform='translate(7.5438,9.0932)'><g transform='rotate(270)'>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='0' y='0' text-anchor='middle'>1</text>
+</g></g>
 <g transform='translate(8.001,7.366)'><g transform='rotate(270)'>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='0' y='0' text-anchor='start'>ADJ</text>
 </g></g>
 <line class='pin' id='connector2pin' connectorname='OUT' x1='15.3162' y1='2.7432' x2='12.7762' y2='2.7432' stroke='#555555' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector2terminal' x='15.3162' y='2.7432' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='14.0462' y='2.5908' text-anchor='middle'>3</text>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='12.319' y='3.048' text-anchor='end'>OUT</text>
 </g>
 </svg>
