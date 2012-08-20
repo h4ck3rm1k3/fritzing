@@ -141,6 +141,15 @@ void PartsEditorMainWindow::setup(long id, ModelPart *modelPart, bool fromTempla
 							CORE_EDITION_ENABLED:
 							(modelPart->isContrib() || modelPart->isAlien()? false: true);
 		m_fwFilename = modelPart->path();
+        QFile file;
+        if (!file.exists()) {
+            QString path = modelPart->path();
+            path.replace("/parts/", "/pdb/");
+            file.setFileName(path);
+            if (file.exists()) {
+                m_fwFilename = path;
+            }
+        }
 		setTitle();
 		UntitledPartIndex--; // TODO Mariano: not good enough
 	}
