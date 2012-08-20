@@ -189,7 +189,7 @@ PanelItem::PanelItem(PanelItem * from) {
 
 /////////////////////////////////////////////////////////////////////////////////
 
-void Panelizer::panelize(FApplication * app, const QString & panelFilename) 
+void Panelizer::panelize(FApplication * app, const QString & panelFilename, bool customPartsOnly) 
 {
 	QFile file(panelFilename);
 
@@ -215,6 +215,11 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 	if (!initPanelParams(root, panelParams)) return;
 
 	QDir outputDir(panelParams.outputFolder);
+    if (customPartsOnly) {
+        outputDir.mkdir("custom");
+        outputDir.cd("custom");
+    }
+
 	outputDir.mkdir("svg");
 	outputDir.mkdir("gerber");
 	outputDir.mkdir("fz");
@@ -295,7 +300,7 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 
 	QList<PanelItem *> refPanelItems;
 	board = boards.firstChildElement("board");
-	if (!openWindows(board, fzzFilePaths, app, panelParams, fzDir, svgDir, refPanelItems, layerThingList)) return;
+	if (!openWindows(board, fzzFilePaths, app, panelParams, fzDir, svgDir, refPanelItems, layerThingList, customPartsOnly)) return;
 
 	QList<PanelItem *> insertPanelItems;
 	int optionalCount = 0;
@@ -311,9 +316,9 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 	planePairs << makePlanePair(panelParams, true);  
 
 	qSort(insertPanelItems.begin(), insertPanelItems.end(), areaGreaterThan);
-	bestFit(insertPanelItems, panelParams, planePairs);
+	bestFit(insertPanelItems, panelParams, planePairs, customPartsOnly);
 
-    shrinkLastPanel(planePairs, insertPanelItems, panelParams);
+    shrinkLastPanel(planePairs, insertPanelItems, panelParams, customPartsOnly);
 
 	addOptional(optionalCount, refPanelItems, insertPanelItems, panelParams, planePairs);
 
@@ -404,14 +409,14 @@ void Panelizer::panelize(FApplication * app, const QString & panelFilename)
 }
 
 
-void Panelizer::bestFit(QList<PanelItem *> & insertPanelItems, PanelParams & panelParams, QList<PlanePair *> & planePairs)
+void Panelizer::bestFit(QList<PanelItem *> & insertPanelItems, PanelParams & panelParams, QList<PlanePair *> & planePairs, bool customPartsOnly)
 {
 	foreach (PanelItem * panelItem, insertPanelItems) {
-		bestFitOne(panelItem, panelParams, planePairs, true);
+		bestFitOne(panelItem, panelParams, planePairs, true, customPartsOnly);
 	}
 }
 
-bool Panelizer::bestFitOne(PanelItem * panelItem, PanelParams & panelParams, QList<PlanePair *> & planePairs, bool createNew)
+bool Panelizer::bestFitOne(PanelItem * panelItem, PanelParams & panelParams, QList<PlanePair *> & planePairs, bool createNew, bool customPartsOnly)
 {
 	//DebugDialog::debug(QString("panel %1").arg(panelItem->boardName));
 	BestPlace bestPlace1, bestPlace2;
@@ -425,6 +430,11 @@ bool Panelizer::bestFitOne(PanelItem * panelItem, PanelParams & panelParams, QLi
 		bestPlace2.plane = planePair->thePlane90;
 		bestPlace1.maxRect = planePair->tilePanelRect;
 		TiSrArea(NULL, planePair->thePlane, &planePair->tilePanelRect, placeBestFit, &bestPlace1);
+        if (customPartsOnly) {
+            // make sure board is rotated
+            bestPlace1.bestTile = NULL;
+            DebugDialog::debug("forcing rotation");
+        }
 		if (bestPlace1.bestTile == NULL) {
 			bestPlace2.maxRect = planePair->tilePanelRect90;
 			TiSrArea(NULL, planePair->thePlane90, &planePair->tilePanelRect90, placeBestFit, &bestPlace2);
@@ -652,7 +662,10 @@ bool Panelizer::checkBoards(QDomElement & board, QHash<QString, QString> & fzzFi
 	return true;
 }
 
-bool Panelizer::openWindows(QDomElement & boardElement, QHash<QString, QString> & fzzFilePaths, FApplication * app, PanelParams & panelParams, QDir & fzDir, QDir & svgDir, QList<PanelItem *> & refPanelItems, QList<LayerThing> & layerThingList)
+bool Panelizer::openWindows(QDomElement & boardElement, QHash<QString, QString> & fzzFilePaths, 
+                    FApplication * app, PanelParams & panelParams, 
+                    QDir & fzDir, QDir & svgDir, QList<PanelItem *> & refPanelItems, 
+                    QList<LayerThing> & layerThingList, bool customPartsOnly)
 {
     QDir rotateDir(svgDir);
     QDir norotateDir(svgDir);
@@ -664,6 +677,10 @@ bool Panelizer::openWindows(QDomElement & boardElement, QHash<QString, QString> 
 	while (!boardElement.isNull()) {
 		int required = boardElement.attribute("requiredCount", "").toInt();
 		int optional = boardElement.attribute("maxOptionalCount", "").toInt();
+        if (customPartsOnly) {
+            optional = 0;
+            if (required > 1) required = 1;
+        }
 		if (required == 0 && optional == 0) {
 			boardElement = boardElement.nextSiblingElement("board"); 
 			continue;
@@ -674,6 +691,7 @@ bool Panelizer::openWindows(QDomElement & boardElement, QHash<QString, QString> 
 		int loaded = 0;
 		MainWindow * mainWindow = app->loadWindows(loaded, false);
 		mainWindow->noBackup();
+        mainWindow->setCloseSilently(true);
 
 		FolderUtils::setOpenSaveFolderAux(fzDir.absolutePath());
 
@@ -681,6 +699,14 @@ bool Panelizer::openWindows(QDomElement & boardElement, QHash<QString, QString> 
 			DebugDialog::debug(QString("failed to load '%1'").arg(path));
 			return false;
 		}
+
+        if (customPartsOnly && !mainWindow->hasAnyAlien()) {
+            mainWindow->close();
+            delete mainWindow,
+			boardElement = boardElement.nextSiblingElement("board"); 
+			continue;
+        }
+        
 
 		mainWindow->showPCBView();
 		foreach (QGraphicsItem * item, mainWindow->pcbView()->scene()->items()) {
@@ -762,7 +788,6 @@ bool Panelizer::openWindows(QDomElement & boardElement, QHash<QString, QString> 
             makeSVGs(mainWindow, boardItem, boardName, layerThingList, rotateDir);
         }
 
-		mainWindow->setCloseSilently(true);
         mainWindow->close();
         delete mainWindow,
 
@@ -1010,7 +1035,7 @@ void Panelizer::addOptional(int optionalCount, QList<PanelItem *> & refPanelItem
 
 			if (ix >= soFar && ix < soFar + panelItem->maxOptional) {
 				PanelItem * copy = new PanelItem(panelItem);
-				if (bestFitOne(copy, panelParams, planePairs, false)) {
+				if (bestFitOne(copy, panelParams, planePairs, false, false)) {
 					// got one
 					panelItem->maxOptional--;
 					optionalCount--;
@@ -1309,7 +1334,7 @@ void Panelizer::doOnePanelItem(PlanePair * planePair, QList<LayerThing> & layerT
 	}
 }
 
-void Panelizer::shrinkLastPanel( QList<PlanePair *> & planePairs, QList<PanelItem *> & insertPanelItems, PanelParams & panelParams) 
+void Panelizer::shrinkLastPanel( QList<PlanePair *> & planePairs, QList<PanelItem *> & insertPanelItems, PanelParams & panelParams, bool customPartsOnly) 
 {
     PlanePair * lastPlanePair = planePairs.last();
     PlanePair * smallPlanePair = makePlanePair(panelParams, false);
@@ -1324,7 +1349,7 @@ void Panelizer::shrinkLastPanel( QList<PlanePair *> & planePairs, QList<PanelIte
         PanelItem * copy = new PanelItem(panelItem);
         smallPanelItems << copy;
 
-		if (!bestFitOne(copy, panelParams, smallPlanePairs, false)) {
+		if (!bestFitOne(copy, panelParams, smallPlanePairs, false, customPartsOnly)) {
             canFitSmaller = false;
         }
 	}

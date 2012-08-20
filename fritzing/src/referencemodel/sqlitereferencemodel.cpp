@@ -1171,3 +1171,4 @@ bool SqliteReferenceModel::createParts(QSqlDatabase & db, bool fullLoad)
     debugError(query.isActive(), query);
     return query.isActive();
 }
+

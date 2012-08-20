@@ -143,6 +143,7 @@ protected:
 	QString m_outputFolder;
 	QString m_panelFilename;
 	QHash<QString, struct LockedFile *> m_lockedFiles;
+    bool m_panelizerCustom;
 
 public:
 	static int RestartNeeded;

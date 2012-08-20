@@ -153,6 +153,7 @@ QString MainWindow::BackupFolder;
 MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel, QWidget * parent) :
     FritzingWindow(untitledFileName(), untitledFileCount(), fileExtension(), parent)
 {
+    m_addedToTemp = false;
     setAcceptDrops(true);
 	m_activeWire = NULL;
 	m_activeConnectorItem = NULL;
@@ -1270,7 +1271,7 @@ void MainWindow::loadBundledSketch(const QString &fileName, bool addToRecent, bo
 	namefilters << "*.svg";
 	QFileInfoList svgEntryInfoList = dir.entryInfoList(namefilters);
 
-    bool addedToTemp = false;
+    m_addedToTemp = false;
 
     foreach (QFileInfo fzpInfo, entryInfoList) {
         QFile file(dir.absoluteFilePath(fzpInfo.fileName()));
@@ -1329,10 +1330,10 @@ void MainWindow::loadBundledSketch(const QString &fileName, bool addToRecent, bo
         }
 
 		m_binManager->addToTempPartsBin(mp);
-        addedToTemp = true;
+        m_addedToTemp = true;
     }
 
-	if (!addedToTemp) {
+	if (!m_addedToTemp) {
 		m_binManager->hideTempPartsBin();
 	}
 
@@ -2535,4 +2536,6 @@ void MainWindow::dropEvent(QDropEvent *event)
     }
 }
 
-
+bool MainWindow::hasAnyAlien() {
+    return m_addedToTemp;
+}

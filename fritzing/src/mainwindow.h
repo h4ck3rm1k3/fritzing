@@ -163,6 +163,7 @@ public:
 	void removeGroundFill(ViewLayer::ViewLayerID, QUndoCommand * parentCommand);
 	void groundFill(ViewLayer::ViewLayerID);
 	void copperFill(ViewLayer::ViewLayerID);
+    bool hasAnyAlien();
 
 public:
 	static void initNames();
@@ -785,6 +786,7 @@ protected:
 	SwapTimer m_swapTimer;
 	QPointer<Wire> m_activeWire;
 	QPointer<ConnectorItem> m_activeConnectorItem;
+    bool m_addedToTemp;
 
 public:
 	static int RestartNeeded;
