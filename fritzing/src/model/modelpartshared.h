@@ -58,10 +58,7 @@ public:
 	ModelPartShared(QDomDocument *, const QString & path);
 	~ModelPartShared();
 
-	bool partlyLoaded();
-	void setPartlyLoaded(bool);
-
-	void setDomDocument(QDomDocument *);
+	bool setDomDocument(QDomDocument *);
 	//QDomDocument * domDocument();
 
 	void copy(ModelPartShared* other);
@@ -192,7 +189,6 @@ protected:
 	bool m_ignoreTerminalPoints;
 
 	bool m_flippedSMD;
-	bool m_partlyLoaded;
 	bool m_needsCopper1;				// for converting pre-two-layer parts
     qulonglong m_dbid;
 

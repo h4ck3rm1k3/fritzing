@@ -34,6 +34,7 @@ $Date$
 #include "debugdialog.h"
 #include "waitpushundostack.h"
 #include "partseditor/partseditormainwindow.h"
+#include "partseditor/pemainwindow.h"
 #include "help/aboutbox.h"
 #include "autoroute/cmrouter/cmrouter.h"
 #include "autoroute/autorouteprogressdialog.h"
@@ -790,10 +791,18 @@ void MainWindow::createPartMenuActions() {
 	m_createNewPart->setStatusTip(tr("Create new part"));
 	connect(m_createNewPart, SIGNAL(triggered()), this, SLOT(createNewPart()));
 
+	m_createNewPartNewAction = new QAction(tr("New (new parts editor)"), this);
+	m_createNewPartNewAction->setStatusTip(tr("Create a new part with new parts editor"));
+	connect(m_createNewPartNewAction, SIGNAL(triggered()), this, SLOT(createNewPartNew()));
+
 	m_openInPartsEditorAct = new QAction(tr("&Edit"), this);
 	m_openInPartsEditorAct->setShortcut(tr("Ctrl+Return"));
-	m_openInPartsEditorAct->setStatusTip(tr("Open the old parts editor"));
+	m_openInPartsEditorAct->setStatusTip(tr("Open the parts editor on an existing part"));
 	connect(m_openInPartsEditorAct, SIGNAL(triggered()), this, SLOT(openInPartsEditor()));
+
+	m_openInPartsEditorNewAct = new QAction(tr("Edit (new parts editor)"), this);
+	m_openInPartsEditorNewAct->setStatusTip(tr("Open the new parts editor on an existing part"));
+	connect(m_openInPartsEditorNewAct, SIGNAL(triggered()), this, SLOT(openInPartsEditorNew()));
 
 	m_addToBinMenu = new QMenu(tr("&Add to bin..."), this);
 	m_addToBinMenu->setStatusTip(tr("Add selected part to bin"));
@@ -1093,6 +1102,16 @@ void MainWindow::createHelpMenuActions() {
 
 void MainWindow::createMenus()
 {
+    createFileMenu();
+    createEditMenu();
+    createPartMenu();
+    createViewMenu();
+    createWindowMenu();
+    createTraceMenus();
+    createHelpMenu();
+}
+
+void MainWindow::createFileMenu() {
     m_fileMenu = menuBar()->addMenu(tr("&File"));
     m_fileMenu->addAction(m_newAct);
     m_fileMenu->addAction(m_openAct);
@@ -1150,7 +1169,10 @@ void MainWindow::createMenus()
 	m_exportMenu->addAction(m_exportNetlistAct);
 
 	//m_exportMenu->addAction(m_exportEagleAct);
+}
 
+void MainWindow::createEditMenu()
+{
     m_editMenu = menuBar()->addMenu(tr("&Edit"));
     m_editMenu->addAction(m_undoAct);
     m_editMenu->addAction(m_redoAct);
@@ -1170,12 +1192,16 @@ void MainWindow::createMenus()
     m_editMenu->addAction(m_preferencesAct);
     updateEditMenu();
     connect(m_editMenu, SIGNAL(aboutToShow()), this, SLOT(updateEditMenu()));
+}
 
+void MainWindow::createPartMenu() {
     m_partMenu = menuBar()->addMenu(tr("&Part"));
     connect(m_partMenu, SIGNAL(aboutToShow()), this, SLOT(updatePartMenu()));
 
     m_partMenu->addAction(m_createNewPart);
+    m_partMenu->addAction(m_createNewPartNewAction);
 	m_partMenu->addAction(m_openInPartsEditorAct);
+	m_partMenu->addAction(m_openInPartsEditorNewAct);
 	m_partMenu->addSeparator();
 
     m_partMenu->addAction(m_saveBundledPart);
@@ -1213,8 +1239,10 @@ void MainWindow::createMenus()
 	m_zOrderWireMenu->addAction(m_bringForwardWireAct);
 	m_zOrderWireMenu->addAction(m_sendBackwardWireAct);
 	m_zOrderWireMenu->addAction(m_sendToBackWireAct);
+}
 
-
+void MainWindow::createViewMenu()
+{
     m_viewMenu = menuBar()->addMenu(tr("&View"));
     m_viewMenu->addAction(m_zoomInAct);
     m_viewMenu->addAction(m_zoomOutAct);
@@ -1238,14 +1266,19 @@ void MainWindow::createMenus()
     m_viewMenu->addSeparator();
     connect(m_viewMenu, SIGNAL(aboutToShow()), this, SLOT(updateLayerMenu()));
     m_numFixedActionsInViewMenu = m_viewMenu->actions().size();
+}
 
+void MainWindow::createWindowMenu() {
     m_windowMenu = menuBar()->addMenu(tr("&Window"));
 	m_windowMenu->addAction(m_minimizeAct);
 	m_windowMenu->addSeparator();
 	//m_windowMenu->addAction(m_toggleToolbarAct);
 	updateWindowMenu();
 	connect(m_windowMenu, SIGNAL(aboutToShow()), this, SLOT(updateWindowMenu()));
+}
 
+void MainWindow::createTraceMenus()
+{
 	m_pcbTraceMenu = menuBar()->addMenu(tr("&Routing"));
 	m_pcbTraceMenu->addAction(m_autorouteAct);
 	m_pcbTraceMenu->addAction(m_designRulesCheckAct);
@@ -1301,9 +1334,11 @@ void MainWindow::createMenus()
 	connect(m_schematicTraceMenu, SIGNAL(aboutToShow()), this, SLOT(updateTraceMenu()));
 	connect(m_breadboardTraceMenu, SIGNAL(aboutToShow()), this, SLOT(updateTraceMenu()));
 
-
     menuBar()->addSeparator();
+}
 
+void MainWindow::createHelpMenu()
+{
     m_helpMenu = menuBar()->addMenu(tr("&Help"));
     m_helpMenu->addAction(m_showInViewHelpAct);
     m_helpMenu->addAction(m_openHelpAct);
@@ -1324,24 +1359,29 @@ void MainWindow::createMenus()
 #endif
 }
 
+
 void MainWindow::updateLayerMenu(bool resetLayout) {
+    if (m_viewMenu == NULL) return;
+    if (m_showAllLayersAct == NULL) return;
 
 	QList<QAction *> actions;
 
-	if (m_binManager) {
-		m_showPartsBinIconViewAct->setEnabled(true);
-		m_showPartsBinListViewAct->setEnabled(true);
-		actions << m_showPartsBinIconViewAct << m_showPartsBinListViewAct;
-		setActionsIcons(m_binManager->currentViewIsIconView() ? 0 : 1, actions);
-	}
-	else {
-		m_showPartsBinIconViewAct->setEnabled(false);
-		m_showPartsBinListViewAct->setEnabled(false);
-	}
+    if (m_showPartsBinIconViewAct) {
+	    if (m_binManager) {
+		    m_showPartsBinIconViewAct->setEnabled(true);
+		    m_showPartsBinListViewAct->setEnabled(true);
+		    actions << m_showPartsBinIconViewAct << m_showPartsBinListViewAct;
+		    setActionsIcons(m_binManager->currentViewIsIconView() ? 0 : 1, actions);
+	    }
+	    else {
+		    m_showPartsBinIconViewAct->setEnabled(false);
+		    m_showPartsBinListViewAct->setEnabled(false);
+	    }
+    }
 
 	removeActionsStartingAt(m_viewMenu, m_numFixedActionsInViewMenu);
-    m_viewMenu->addAction(m_showAllLayersAct);
-    m_viewMenu->addAction(m_hideAllLayersAct);
+    if (m_showAllLayersAct) m_viewMenu->addAction(m_showAllLayersAct);
+    if (m_hideAllLayersAct) m_viewMenu->addAction(m_hideAllLayersAct);
 
 	if (m_currentGraphicsView == NULL) return;
 
@@ -1364,6 +1404,7 @@ void MainWindow::updateLayerMenu(bool resetLayout) {
 			connect(viewLayer->action(), SIGNAL(triggered()), this, SLOT(updateLayerMenu()));
 		}
 	}
+
 
 	m_hideAllLayersAct->setEnabled(false);
 	m_showAllLayersAct->setEnabled(false);
@@ -1625,6 +1666,7 @@ void MainWindow::updateTransformationActions() {
     // update buttons in sketch toolbar at bottom
 
 	if (m_currentGraphicsView == NULL) return;
+    if (m_rotate90cwAct == NULL) return;
 
 	ItemCount itemCount = m_currentGraphicsView->calcItemCount();
 	bool enable = (itemCount.selRotatable > 0);
@@ -1738,6 +1780,8 @@ void MainWindow::updateEditMenu() {
 }
 
 void MainWindow::updateTraceMenu() {
+    if (m_pcbTraceMenu == NULL) return;
+
 	bool jiEnabled = false;
 	bool viaEnabled = false;
 	bool tEnabled = false;
@@ -1957,6 +2001,10 @@ void MainWindow::createNewPart() {
 	openPartsEditor(NULL);
 }
 
+void MainWindow::createNewPartNew() {
+    openNewPartsEditor(NULL);
+}
+
 void MainWindow::openPartsEditor(PaletteItem * paletteItem) {
 	ModelPart* modelPart = paletteItem? paletteItem->modelPart(): NULL;
 	long id = paletteItem? paletteItem->id(): -1;
@@ -1965,6 +2013,21 @@ void MainWindow::openPartsEditor(PaletteItem * paletteItem) {
 
 	partsEditor->show();
 	partsEditor->raise();
+}
+
+void MainWindow::openNewPartsEditor(PaletteItem * paletteItem) {
+    QString moduleID = "generic_ic_dip_8_300mil";
+        
+    if (paletteItem != NULL) {
+	    moduleID =  paletteItem->moduleID();
+    }
+
+    PEMainWindow *peMainWindow = new PEMainWindow(m_paletteModel, m_refModel, NULL);
+    peMainWindow->init(m_paletteModel, m_refModel, NULL);
+    peMainWindow->setInitialModuleID(moduleID);
+
+	peMainWindow->show();
+	peMainWindow->raise();
 }
 
 PartsEditorMainWindow* MainWindow::getPartsEditor(ModelPart *modelPart, long _id, ItemBase * fromItem, class PartsBinPaletteWidget* requester) {
@@ -2030,6 +2093,15 @@ void MainWindow::partsEditorClosed(long id) {
 	m_partsEditorWindows.remove(id);
 	m_binsWithPartsEditorRequests.remove(id);
 }
+
+void MainWindow::openInPartsEditorNew() {
+	if (m_currentGraphicsView == NULL) return;
+
+	PaletteItem *selectedPart = m_currentGraphicsView->getSelectedPart();
+	openNewPartsEditor(selectedPart);
+}
+
+
 
 void MainWindow::openInPartsEditor() {
 	if (m_currentGraphicsView == NULL) return;
@@ -2308,9 +2380,9 @@ void MainWindow::removeActionsStartingAt(QMenu * menu, int start) {
 }
 
 void MainWindow::hideShowTraceMenu() {
-	m_pcbTraceMenu->menuAction()->setVisible(m_currentGraphicsView == m_pcbGraphicsView);
-	m_schematicTraceMenu->menuAction()->setVisible(m_currentGraphicsView == m_schematicGraphicsView);
-	m_breadboardTraceMenu->menuAction()->setVisible(m_currentGraphicsView == m_breadboardGraphicsView);
+    if (m_pcbTraceMenu) m_pcbTraceMenu->menuAction()->setVisible(m_currentGraphicsView == m_pcbGraphicsView);
+	if (m_schematicTraceMenu) m_schematicTraceMenu->menuAction()->setVisible(m_currentGraphicsView == m_schematicGraphicsView);
+	if (m_breadboardTraceMenu) m_breadboardTraceMenu->menuAction()->setVisible(m_currentGraphicsView == m_breadboardGraphicsView);
 }
 
 void MainWindow::createTraceMenuActions() {

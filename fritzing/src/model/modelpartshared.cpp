@@ -94,69 +94,74 @@ ModelPartShared::ModelPartShared(QDomDocument * domDocument, const QString & pat
 	m_path = path;
 
 	if (domDocument) {
-		QDomElement root = domDocument->documentElement();
-		if (root.isNull()) {
-			return;
-		}
-
-		if (root.tagName() != "module") {
-			return;
-		}
-
-		loadTagText(root, "title", m_title);
-		loadTagText(root, "label", m_label);
-		loadTagText(root, "version", m_version);
-		loadTagText(root, "author", m_author);
-		loadTagText(root, "description", m_description);
-		loadTagText(root, "url", m_url);
-		loadTagText(root, "taxonomy", m_taxonomy);
-		loadTagText(root, "date", m_date);
-		QDomElement version = root.firstChildElement("version");
-		if (!version.isNull()) {
-			m_replacedby = version.attribute("replacedby");
-		}
-
-		populateTags(root, m_tags);
-		populateProperties(root, m_properties, m_displayKeys);
-		ensurePartNumberProperty();
-
-		m_moduleID = root.attribute("moduleId", "");
-        m_fritzingVersion = root.attribute("fritzingVersion", "");
-
-		QDomElement views = root.firstChildElement("views");
-		if (!views.isNull()) {
-			QDomElement view = views.firstChildElement();
-			while (!view.isNull()) {
-				ViewIdentifierClass::ViewIdentifier viewIdentifier = ViewIdentifierClass::idFromXmlName(view.nodeName());
-                ViewImage * viewImage = new ViewImage(viewIdentifier);
-                m_viewImages.insert(viewIdentifier, viewImage);
-                viewImage->canFlipHorizontal = view.attribute("fliphorizontal","").compare("true") == 0;
-                viewImage->canFlipVertical = view.attribute("flipvertical","").compare("true") == 0;
-				QDomElement layers = view.firstChildElement("layers");
-				if (!layers.isNull()) {
-                    viewImage->image = layers.attribute("image", "");
-					QDomElement layer = layers.firstChildElement("layer");
-					while (!layer.isNull()) {
-						ViewLayer::ViewLayerID viewLayerID = ViewLayer::viewLayerIDFromXmlString(layer.attribute("layerId"));
-                        qulonglong sticky = (layer.attribute("sticky", "").compare("true") == 0) ? 1 : 0;
-                        qulonglong one = 1;
-                        viewImage->layers |= (one << viewLayerID); 
-                        viewImage->sticky |= (sticky << viewLayerID); 
-						layer = layer.nextSiblingElement("layer");
-					}
-				}
-
-				view = view.nextSiblingElement();
-			}
-		}
-
+        setDomDocument(domDocument);
 	}
+}
+
+bool ModelPartShared::setDomDocument(QDomDocument * domDocument) {
+	QDomElement root = domDocument->documentElement();
+	if (root.isNull()) {
+		return false;
+	}
+
+	if (root.tagName() != "module") {
+		return false;
+	}
+
+	loadTagText(root, "title", m_title);
+	loadTagText(root, "label", m_label);
+	loadTagText(root, "version", m_version);
+	loadTagText(root, "author", m_author);
+	loadTagText(root, "description", m_description);
+	loadTagText(root, "url", m_url);
+	loadTagText(root, "taxonomy", m_taxonomy);
+	loadTagText(root, "date", m_date);
+	QDomElement version = root.firstChildElement("version");
+	if (!version.isNull()) {
+		m_replacedby = version.attribute("replacedby");
+	}
+
+	populateTags(root, m_tags);
+	populateProperties(root, m_properties, m_displayKeys);
+	ensurePartNumberProperty();
+
+	m_moduleID = root.attribute("moduleId", "");
+    m_fritzingVersion = root.attribute("fritzingVersion", "");
+
+	QDomElement views = root.firstChildElement("views");
+	if (!views.isNull()) {
+		QDomElement view = views.firstChildElement();
+		while (!view.isNull()) {
+			ViewIdentifierClass::ViewIdentifier viewIdentifier = ViewIdentifierClass::idFromXmlName(view.nodeName());
+            ViewImage * viewImage = new ViewImage(viewIdentifier);
+            m_viewImages.insert(viewIdentifier, viewImage);
+            viewImage->canFlipHorizontal = view.attribute("fliphorizontal","").compare("true") == 0;
+            viewImage->canFlipVertical = view.attribute("flipvertical","").compare("true") == 0;
+			QDomElement layers = view.firstChildElement("layers");
+			if (!layers.isNull()) {
+                viewImage->image = layers.attribute("image", "");
+				QDomElement layer = layers.firstChildElement("layer");
+				while (!layer.isNull()) {
+					ViewLayer::ViewLayerID viewLayerID = ViewLayer::viewLayerIDFromXmlString(layer.attribute("layerId"));
+                    qulonglong sticky = (layer.attribute("sticky", "").compare("true") == 0) ? 1 : 0;
+                    qulonglong one = 1;
+                    viewImage->layers |= (one << viewLayerID); 
+                    viewImage->sticky |= (sticky << viewLayerID); 
+					layer = layer.nextSiblingElement("layer");
+				}
+			}
+
+			view = view.nextSiblingElement();
+		}
+	}
+
+    return true;
 }
 
 void ModelPartShared::commonInit() {
 	m_moduleID = "";
     m_dbid = 0;
-	m_flippedSMD = m_connectorsInitialized = m_ignoreTerminalPoints = m_partlyLoaded = m_needsCopper1 = false;
+	m_flippedSMD = m_connectorsInitialized = m_ignoreTerminalPoints = m_needsCopper1 = false;
 }
 
 ModelPartShared::~ModelPartShared() {
@@ -211,26 +216,6 @@ void ModelPartShared::populateProperties(QDomElement parent, QHash<QString,QStri
 		prop = prop.nextSiblingElement("property");
 	}
 }
-
-void ModelPartShared::setDomDocument(QDomDocument * domDocument) {
-
-    DebugDialog::debug("set dom document no longer implemented");
-
-}
-
-    /*
-QDomDocument* ModelPartShared::domDocument() {
-
-
-	if (m_partlyLoaded) {
-		loadDocument();
-	}
-
-	return m_domDocument;
-
-
-}
-    */
 
 const QString & ModelPartShared::title() {
 	return m_title;
@@ -394,18 +379,6 @@ void ModelPartShared::initConnectors() {
 	QDomDocument doc;
     doc.setContent(&file, &errorStr, &errorLine, &errorColumn);
 
-    /*
-	if (m_partlyLoaded) {
-		loadDocument();
-	}
-
-	if (m_domDocument == NULL) {
-		return;
-	}
-    */
-
-	//QString deleteMe = m_domDocument->toString();
-
 	m_connectorsInitialized = true;
 	QDomElement root = doc.documentElement();
 	if (root.isNull()) {
@@ -516,12 +489,7 @@ void ModelPartShared::connectorIDs(ViewIdentifierClass::ViewIdentifier viewIdent
 	}
 }
 
-void ModelPartShared::setPartlyLoaded(bool partlyLoaded) {
-	m_partlyLoaded = partlyLoaded;
-}
-
 void ModelPartShared::loadDocument() {
-	m_partlyLoaded = false;
 
 	//DebugDialog::debug("loading document " + m_moduleID);
 

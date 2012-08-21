@@ -153,6 +153,12 @@ QString MainWindow::BackupFolder;
 MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel, QWidget * parent) :
     FritzingWindow(untitledFileName(), untitledFileCount(), fileExtension(), parent)
 {
+    m_settingsPrefix = "main/";
+    m_showPartsBinIconViewAct = m_showAllLayersAct = m_hideAllLayersAct = m_showInViewHelpAct = m_rotate90cwAct = m_showBreadboardAct = m_showSchematicAct = m_showPCBAct = NULL;
+    m_pcbTraceMenu = m_schematicTraceMenu= m_breadboardTraceMenu = m_viewMenu = NULL;
+    m_dockManager = NULL;
+    m_miniViewContainerBreadboard = NULL;
+    m_infoView = NULL;
     m_addedToTemp = false;
     setAcceptDrops(true);
 	m_activeWire = NULL;
@@ -265,103 +271,18 @@ void MainWindow::init(PaletteModel * paletteModel, ReferenceModel *refModel, boo
 		m_fileProgressDialog->setValue(2);
 	}
 
-	LockManager::initLockedFiles("fzz", m_fzzFolder, m_fzzFiles, lockFiles ? LockManager::SlowTime : 0);
-	if (lockFiles) {
-		QFileInfoList backupList;
-		LockManager::checkLockedFiles("fzz", backupList, m_fzzFiles, true, LockManager::SlowTime);
-	}
+    initLockedFiles(lockFiles);
 
-	DebugDialog::debug("init sketch widgets");
-
-	// all this belongs in viewLayer.xml
-	m_breadboardGraphicsView = new BreadboardSketchWidget(ViewIdentifierClass::BreadboardView, this);
-	initSketchWidget(m_breadboardGraphicsView);
-	m_breadboardWidget = new SketchAreaWidget(m_breadboardGraphicsView,this);
-	m_tabWidget->addWidget(m_breadboardWidget);
-
-	if (m_fileProgressDialog) {
-		m_fileProgressDialog->setValue(11);
-	}
-
-
-	m_schematicGraphicsView = new SchematicSketchWidget(ViewIdentifierClass::SchematicView, this);
-	initSketchWidget(m_schematicGraphicsView);
-	m_schematicWidget = new SketchAreaWidget(m_schematicGraphicsView, this);
-	m_tabWidget->addWidget(m_schematicWidget);
-
-	if (m_fileProgressDialog) {
-		m_fileProgressDialog->setValue(20);
-	}
-
-	m_pcbGraphicsView = new PCBSketchWidget(ViewIdentifierClass::PCBView, this);
-	initSketchWidget(m_pcbGraphicsView);
-	m_pcbWidget = new SketchAreaWidget(m_pcbGraphicsView, this);
-	m_tabWidget->addWidget(m_pcbWidget);
-
-	if (m_fileProgressDialog) {
-		m_fileProgressDialog->setValue(29);
-	}
+    initSketchWidgets();
 
     m_undoView = new QUndoView();
     m_undoGroup = new QUndoGroup(this);
     m_undoView->setGroup(m_undoGroup);
     m_undoGroup->setActiveStack(m_undoStack);
 
-	m_layerPalette = new LayerPalette(this);
-
-	DebugDialog::debug("before creating dock");
-
-    m_dockManager = new DockManager(this);
-	DebugDialog::debug("before creating bins");
-
-	m_dockManager->createBinAndInfoViewDocks();
-
-	DebugDialog::debug("after creating bins");
-	if (m_fileProgressDialog) {
-		m_fileProgressDialog->setValue(89);
-	}
-
-
-
-	// This is the magic translation that changes all the shortcut text on the menu items
-	// to the native language instead of "Ctrl", so the German menu items will now read "Strg"
-	// You don't actually have to translate every menu item in the .ts file, you can just leave it as "Ctrl".
-	QShortcut::tr("Ctrl", "for naming shortcut keys on menu items");
-	QShortcut::tr("Alt", "for naming shortcut keys on menu items");
-	QShortcut::tr("Shift", "for naming shortcut keys on menu items");
-	QShortcut::tr("Meta", "for naming shortcut keys on menu items");
-
-	DebugDialog::debug("create menus");
-
-    createActions();
-    createMenus();
-
-	DebugDialog::debug("create toolbars");
-
-    createToolBars();
-    createStatusBar();
-
-	DebugDialog::debug("after creating status bar");
-
-	if (m_fileProgressDialog) {
-		m_fileProgressDialog->setValue(91);
-	}
-
-	DebugDialog::debug("create view switcher");
-
-	m_layerPalette->setShowAllLayersAction(m_showAllLayersAct);
-	m_layerPalette->setHideAllLayersAction(m_hideAllLayersAct);
-
-	m_viewSwitcher = new ViewSwitcher();
-	connect(m_viewSwitcher, SIGNAL(viewSwitched(int)), this, SLOT(viewSwitchedTo(int)));
-	connect(this, SIGNAL(viewSwitched(int)), m_viewSwitcher, SLOT(viewSwitchedTo(int)));
-	m_viewSwitcher->viewSwitchedTo(0);
-
-    m_dockManager->createDockWindows();
-
-	if (m_fileProgressDialog) {
-		m_fileProgressDialog->setValue(93);
-	}
+    initDock();
+    initMenus();
+    moreInitDock();
 
 	createZoomOptions(m_breadboardWidget);
 	createZoomOptions(m_schematicWidget);
@@ -411,20 +332,24 @@ void MainWindow::init(PaletteModel * paletteModel, ReferenceModel *refModel, boo
     m_schematicGraphicsView->setItemMenu(schematicItemMenu());
     m_schematicGraphicsView->setWireMenu(schematicWireMenu());
 
-    m_breadboardGraphicsView->setInfoView(m_infoView);
-    m_pcbGraphicsView->setInfoView(m_infoView);
-    m_schematicGraphicsView->setInfoView(m_infoView);
+    if (m_infoView) {
+        m_breadboardGraphicsView->setInfoView(m_infoView);
+        m_pcbGraphicsView->setInfoView(m_infoView);
+        m_schematicGraphicsView->setInfoView(m_infoView);
+    }
 
 	// make sure to set the connections after the views have been created
 	connect(m_tabWidget, SIGNAL(currentChanged ( int )), this, SLOT(tabWidget_currentChanged( int )));
 
 	connectPairs();
 
-	m_helper = new Helper(this, true);
+	initHelper();
 
 	// do this the first time, since the current_changed signal wasn't sent
 	int tab = 0;
-	currentNavigatorChanged(m_navigators[tab]);
+    if (m_navigators.count() > 0) {
+	    currentNavigatorChanged(m_navigators[tab]);
+    }
 	tabWidget_currentChanged(tab+1);
 	tabWidget_currentChanged(tab);
 
@@ -435,27 +360,35 @@ void MainWindow::init(PaletteModel * paletteModel, ReferenceModel *refModel, boo
 	}
 
 	QSettings settings;
-    m_viewSwitcherDock->prestorePreference();
-	if(!settings.value("main/state").isNull()) {
-		restoreState(settings.value("main/state").toByteArray());
-		restoreGeometry(settings.value("main/geometry").toByteArray());
+    if (m_viewSwitcherDock) {
+        m_viewSwitcherDock->prestorePreference();
+    }
+	if(!settings.value(m_settingsPrefix + "state").isNull()) {
+		restoreState(settings.value(m_settingsPrefix + "state").toByteArray());
+		restoreGeometry(settings.value(m_settingsPrefix + "geometry").toByteArray());
 	}
-    m_viewSwitcherDock->restorePreference();
-    m_viewSwitcherDock->setViewSwitcher(m_viewSwitcher);
+    if (m_viewSwitcherDock) {
+        m_viewSwitcherDock->restorePreference();
+        m_viewSwitcherDock->setViewSwitcher(m_viewSwitcher);
+    }
 
 	setMinimumSize(0,0);
 	m_tabWidget->setMinimumWidth(500);
 	m_tabWidget->setMinimumWidth(0);
 
-	m_miniViewContainerBreadboard->setView(m_breadboardGraphicsView);
-	m_miniViewContainerSchematic->setView(m_schematicGraphicsView);
-	m_miniViewContainerPCB->setView(m_pcbGraphicsView);
+    if (m_miniViewContainerBreadboard) {
+	    m_miniViewContainerBreadboard->setView(m_breadboardGraphicsView);
+	    m_miniViewContainerSchematic->setView(m_schematicGraphicsView);
+	    m_miniViewContainerPCB->setView(m_pcbGraphicsView);
+    }
 
 	connect(this, SIGNAL(readOnlyChanged(bool)), this, SLOT(applyReadOnlyChange(bool)));
 
-	m_setUpDockManagerTimer.setSingleShot(true);
-	connect(&m_setUpDockManagerTimer, SIGNAL(timeout()), m_dockManager, SLOT(keepMargins()));
-    m_setUpDockManagerTimer.start(1000);
+    if (m_dockManager) {
+	    m_setUpDockManagerTimer.setSingleShot(true);
+	    connect(&m_setUpDockManagerTimer, SIGNAL(timeout()), m_dockManager, SLOT(keepMargins()));
+        m_setUpDockManagerTimer.start(1000);
+    }
 
 	if (m_fileProgressDialog) {
 		m_fileProgressDialog->setValue(98);
@@ -463,13 +396,121 @@ void MainWindow::init(PaletteModel * paletteModel, ReferenceModel *refModel, boo
 
 }
 
+void MainWindow::initHelper() {
+    m_helper = new Helper(this, true);
+}
+
+void MainWindow::initLockedFiles(bool lockFiles) {
+	LockManager::initLockedFiles("fzz", m_fzzFolder, m_fzzFiles, lockFiles ? LockManager::SlowTime : 0);
+	if (lockFiles) {
+		QFileInfoList backupList;
+		LockManager::checkLockedFiles("fzz", backupList, m_fzzFiles, true, LockManager::SlowTime);
+	}
+}
+
+void MainWindow::initSketchWidgets() {
+	//DebugDialog::debug("init sketch widgets");
+
+	// all this belongs in viewLayer.xml
+	m_breadboardGraphicsView = new BreadboardSketchWidget(ViewIdentifierClass::BreadboardView, this);
+	initSketchWidget(m_breadboardGraphicsView);
+	m_breadboardWidget = new SketchAreaWidget(m_breadboardGraphicsView,this);
+	m_tabWidget->addWidget(m_breadboardWidget);
+
+	if (m_fileProgressDialog) {
+		m_fileProgressDialog->setValue(11);
+	}
+
+
+	m_schematicGraphicsView = new SchematicSketchWidget(ViewIdentifierClass::SchematicView, this);
+	initSketchWidget(m_schematicGraphicsView);
+	m_schematicWidget = new SketchAreaWidget(m_schematicGraphicsView, this);
+	m_tabWidget->addWidget(m_schematicWidget);
+
+	if (m_fileProgressDialog) {
+		m_fileProgressDialog->setValue(20);
+	}
+
+	m_pcbGraphicsView = new PCBSketchWidget(ViewIdentifierClass::PCBView, this);
+	initSketchWidget(m_pcbGraphicsView);
+	m_pcbWidget = new SketchAreaWidget(m_pcbGraphicsView, this);
+	m_tabWidget->addWidget(m_pcbWidget);
+
+	if (m_fileProgressDialog) {
+		m_fileProgressDialog->setValue(29);
+	}
+}
+
+void MainWindow::initDock() {
+	m_layerPalette = new LayerPalette(this);
+
+	DebugDialog::debug("before creating dock");
+
+    m_dockManager = new DockManager(this);
+	DebugDialog::debug("before creating bins");
+
+	m_dockManager->createBinAndInfoViewDocks();
+
+	DebugDialog::debug("after creating bins");
+	if (m_fileProgressDialog) {
+		m_fileProgressDialog->setValue(89);
+	}
+}
+
+void MainWindow::moreInitDock() {
+	DebugDialog::debug("create view switcher");
+
+	m_layerPalette->setShowAllLayersAction(m_showAllLayersAct);
+	m_layerPalette->setHideAllLayersAction(m_hideAllLayersAct);
+
+	m_viewSwitcher = new ViewSwitcher();
+	connect(m_viewSwitcher, SIGNAL(viewSwitched(int)), this, SLOT(viewSwitchedTo(int)));
+	connect(this, SIGNAL(viewSwitched(int)), m_viewSwitcher, SLOT(viewSwitchedTo(int)));
+	m_viewSwitcher->viewSwitchedTo(0);
+
+    m_dockManager->createDockWindows();
+
+	if (m_fileProgressDialog) {
+		m_fileProgressDialog->setValue(93);
+	}
+}
+
+void MainWindow::initMenus() {
+	// This is the magic translation that changes all the shortcut text on the menu items
+	// to the native language instead of "Ctrl", so the German menu items will now read "Strg"
+	// You don't actually have to translate every menu item in the .ts file, you can just leave it as "Ctrl".
+	QShortcut::tr("Ctrl", "for naming shortcut keys on menu items");
+	QShortcut::tr("Alt", "for naming shortcut keys on menu items");
+	QShortcut::tr("Shift", "for naming shortcut keys on menu items");
+	QShortcut::tr("Meta", "for naming shortcut keys on menu items");
+
+	DebugDialog::debug("create menus");
+
+    createActions();
+    createMenus();
+
+	DebugDialog::debug("create toolbars");
+
+    createStatusBar();
+
+	DebugDialog::debug("after creating status bar");
+
+	if (m_fileProgressDialog) {
+		m_fileProgressDialog->setValue(91);
+	}
+}
+
+
+
 MainWindow::~MainWindow()
 {
     // Delete backup of this sketch if one exists.
     QFile::remove(m_backupFileNameAndPath);	
 	
 	delete m_sketchModel;
-	m_dockManager->dontKeepMargins();
+    if (m_dockManager) {
+	    m_dockManager->dontKeepMargins();
+    }
 	m_setUpDockManagerTimer.stop();
 
 	foreach (LinkedFile * linkedFile, m_linkedProgramFiles) {
@@ -708,46 +749,6 @@ void MainWindow::createZoomOptions(SketchAreaWidget* parent) {
     connect(parent->graphicsView(), SIGNAL(zoomOutOfRange(double)), this, SLOT(updateZoomOptionsNoMatterWhat(double)));
 }
 
-void MainWindow::createToolBars() {
-	/* TODO: Mariano this is too hacky and requires some styling
-	 * around here and some else in the qss file
-	 */
-	/*m_toolbar = new QToolBar(this);
-	m_toolbar->setObjectName("fake_tabbar");
-	m_toolbar->setFloatable(false);
-	m_toolbar->setMovable(false);
-	int height = 0; //  m_tabWidget->tabBar()->height();
-	m_toolbar->layout()->setMargin(0);
-	m_toolbar->setFixedHeight(height+10);
-	m_toolbar->setMinimumWidth(400); // connect to tabwidget resize event
-	m_toolbar->toggleViewAction()->setVisible(false);
-	// m_tabWidget->tabBar()->setParent(m_toolbar);
-	addToolBar(m_toolbar);*/
-
-	/*	QToolBar *tb2 = new QToolBar(this);
-	tb2->setFloatable(false);
-	tb2->setMovable(false);
-	QToolButton *dummyButton = new QToolButton();
-	dummyButton->setIcon(QIcon(":/resources/images/toolbar_icons/toolbarExport_pdf_icon.png"));
-	tb2->addWidget(dummyButton);
-	QToolButton *dummyButton2 = new QToolButton();
-	dummyButton2->setIcon(QIcon(":/resources/images/toolbar_icons/toolbarOrder_icon.png"));
-	tb2->addWidget(dummyButton2);
-	addToolBar(tb2);*/
-
-	/*
-    m_fileToolBar = addToolBar(tr("File"));
-    m_fileToolBar->setObjectName("fileToolBar");
-    m_fileToolBar->addAction(m_saveAct);
-    m_fileToolBar->addAction(m_printAct);
-
-    m_editToolBar = addToolBar(tr("Edit"));
-    m_editToolBar->setObjectName("editToolBar");
-    m_editToolBar->addAction(m_undoAct);
-    m_editToolBar->addWidget(m_zoomOptsComboBox);
-    */
-}
-
 ExpandingLabel * MainWindow::createRoutingStatusLabel(SketchAreaWidget * parent) {
 	ExpandingLabel * routingStatusLabel = new ExpandingLabel(m_pcbWidget);
 
@@ -982,9 +983,11 @@ void MainWindow::tabWidget_currentChanged(int index) {
 	}
 
 	updateLayerMenu(true);
-	QList<QAction *> actions;
-	actions << m_showBreadboardAct << m_showSchematicAct << m_showPCBAct;
-	setActionsIcons(index, actions);
+    if (m_showBreadboardAct) {
+	    QList<QAction *> actions;
+	    actions << m_showBreadboardAct << m_showSchematicAct << m_showPCBAct;
+	    setActionsIcons(index, actions);
+    }
 
 	hideShowTraceMenu();
 	updateTraceMenu();
@@ -993,17 +996,23 @@ void MainWindow::tabWidget_currentChanged(int index) {
 	setTitle();
 
 	// triggers a signal to the navigator widget
-	m_navigators[index]->miniViewMousePressedSlot();
+    if (m_navigators.count() > index) {
+	    m_navigators[index]->miniViewMousePressedSlot();
+    }
 	emit viewSwitched(index);
 
-	if (m_helper == NULL) {
-		m_showInViewHelpAct->setChecked(false);
-	}
-	else {
-		m_showInViewHelpAct->setChecked(m_helper->helpVisible(m_tabWidget->currentIndex()));
-	}
+    if (m_showInViewHelpAct) {
+	    if (m_helper == NULL) {
+		    m_showInViewHelpAct->setChecked(false);
+	    }
+	    else {
+		    m_showInViewHelpAct->setChecked(m_helper->helpVisible(m_tabWidget->currentIndex()));
+	    }
+    }
 
-	m_currentGraphicsView->updateInfoView();
+    if (m_infoView) {
+	    m_currentGraphicsView->updateInfoView();
+    }
 
 	// update issue with 4.5.1?: is this still valid (4.6.x?)
 	m_currentGraphicsView->updateConnectors();
@@ -1073,8 +1082,8 @@ void MainWindow::closeEvent(QCloseEvent *event) {
 	}
 
 	QSettings settings;
-	settings.setValue("main/state",saveState());
-	settings.setValue("main/geometry",saveGeometry());
+	settings.setValue(m_settingsPrefix + "state",saveState());
+	settings.setValue(m_settingsPrefix + "geometry",saveGeometry());
 
 	QMainWindow::closeEvent(event);
 }
@@ -1735,7 +1744,9 @@ bool MainWindow::event(QEvent * e) {
 }
 
 void MainWindow::resizeEvent(QResizeEvent * event) {
-	m_sizeGrip->rearrange();
+    if (m_sizeGrip) {
+	    m_sizeGrip->rearrange();
+    }
 	FritzingWindow::resizeEvent(event);
 }
 
@@ -2126,6 +2137,8 @@ void MainWindow::changeBoardLayers(int layers, bool doEmit) {
 }
 
 void MainWindow::updateActiveLayerButtons() {
+    if (m_activeLayerButtonWidget == NULL) return;
+
 	int index = activeLayerIndex();
 	bool enabled = index >= 0;
 

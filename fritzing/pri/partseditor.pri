@@ -51,7 +51,10 @@ HEADERS += \
     src/partseditor/partseditorconnectorslayerkinpaletteitem.h \
     src/partseditor/partseditorview.h \
     src/partseditor/partseditorviewswidget.h \
-    src/partseditor/fixfontsdialog.h
+    src/partseditor/fixfontsdialog.h \
+    \
+    src/partseditor/pemainwindow.h \
+    
 
 SOURCES += \
     src/partseditor/editabledatewidget.cpp \
@@ -75,5 +78,7 @@ SOURCES += \
     src/partseditor/partseditorconnectorsconnectoritem.cpp \
     src/partseditor/partseditorview.cpp \
     src/partseditor/partseditorviewswidget.cpp \
-    src/partseditor/fixfontsdialog.cpp
-    
+    src/partseditor/fixfontsdialog.cpp \
+     \
+    src/partseditor/pemainwindow.cpp \
+   

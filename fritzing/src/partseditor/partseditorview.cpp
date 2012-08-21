@@ -324,12 +324,16 @@ ModelPart *PartsEditorView::createFakeModelPart(const QHash<QString,ConnectorTer
 						QString("</views></connector>\n");
 	}
 	fakeFzFile += QString("</connectors></module>\n");
+
+    QString path = m_tempFolder.absolutePath()+"/"+FolderUtils::getRandText()+".fz";
+    TextUtils::writeUtf8(path, fakeFzFile);
+
   	domDoc->setContent(fakeFzFile, &errorStr, &errorLine, &errorColumn);
 
   	ModelPart *retval = m_sketchModel->root();
   	retval->modelPartShared()->setDomDocument(domDoc);
   	retval->modelPartShared()->resetConnectorsInitialization();
-	retval->modelPartShared()->setPath(FolderUtils::getUserDataStorePath("parts")+"/svg/user");
+	retval->modelPartShared()->setPath(path);
   	retval->initConnectors(true /*redo connectors*/);
 	
 	return retval;

@@ -239,6 +239,7 @@ protected slots:
 	void updateRecentFileActions();
     void tabWidget_currentChanged(int index);
     void createNewPart();
+    void createNewPartNew();
     void createNewSketch();
     void minimize();
     void toggleToolbar(bool toggle);
@@ -279,7 +280,9 @@ protected slots:
 	void disconnectAll();
 
 	void openInPartsEditor();
+	void openInPartsEditorNew();
 	void openPartsEditor(PaletteItem *);
+	void openNewPartsEditor(PaletteItem *);
 
 	void updateZoomSlider(double zoom);
 	void updateZoomOptionsNoMatterWhat(double zoom);
@@ -381,7 +384,7 @@ protected slots:
 protected:
 	void initSketchWidget(SketchWidget *);
 
-    void createActions();
+    virtual void createActions();
     void createFileMenuActions();
     void createExportActions();
     void createOrderFabAct();
@@ -396,10 +399,9 @@ protected:
     void createViewMenuActions();
     void createWindowMenuActions();
     void createHelpMenuActions();
-    void createMenus();
-    void createToolBars();
+    virtual void createMenus();
     void createStatusBar();
-	void connectPairs();
+	virtual void connectPairs();
 	void connectPair(SketchWidget * signaller, SketchWidget * slotter);
 	void closeEvent(QCloseEvent * event);
 	void saveAsAuxAux(const QString & fileName);
@@ -416,7 +418,7 @@ protected:
 	void exportSvgWatermark(QString & svg, double res);
 	void exportEtchable(bool wantPDF, bool wantSVG);
 
-	QList<QWidget*> getButtonsForView(ViewIdentifierClass::ViewIdentifier viewId);
+	virtual QList<QWidget*> getButtonsForView(ViewIdentifierClass::ViewIdentifier viewId);
 	const QString untitledFileName();
 	int &untitledFileCount();
 	const QString fileExtension();
@@ -438,12 +440,12 @@ protected:
 	void recoverBackupedFiles();
 	void resetTempFolder();
 
-	QMenu *breadboardItemMenu();
-	QMenu *schematicItemMenu();
-	QMenu *pcbItemMenu();
-	QMenu *pcbWireMenu();
-	QMenu *schematicWireMenu();
-	QMenu *breadboardWireMenu();
+	virtual QMenu *breadboardItemMenu();
+	virtual QMenu *schematicItemMenu();
+	virtual QMenu *pcbItemMenu();
+	virtual QMenu *pcbWireMenu();
+	virtual QMenu *schematicWireMenu();
+	virtual QMenu *breadboardWireMenu();
 
 	QMenu *viewItemMenuAux(QMenu* menu);
 
@@ -502,6 +504,19 @@ protected:
     bool updateExportActions();
 	QWidget * createGridSizeForm(GridSizeThing *);
     void massageOutput(QString & svg, bool doMask, bool doSilk, bool doPaste, QString & maskTop, QString & maskBottom, const QString & fileName, ItemBase * board, int dpi, const LayerList &);
+    virtual void initLockedFiles(bool lockFiles);
+    virtual void initSketchWidgets();
+    virtual void initDock();
+    virtual void initMenus();
+    virtual void moreInitDock();
+    virtual void initHelper();
+    virtual void createFileMenu();
+    virtual void createEditMenu();
+    virtual void createPartMenu();
+    virtual void createViewMenu();
+    virtual void createWindowMenu();
+    virtual void createTraceMenus();
+    virtual void createHelpMenu();
 
 protected:
 	static void removeActionsStartingAt(QMenu *menu, int start=0);
@@ -617,10 +632,12 @@ protected:
     // Part Menu
     QMenu *m_partMenu;
     QAction *m_createNewPart;
+    QAction *m_createNewPartNewAction;
 	QAction *m_infoViewOnHoverAction;
 	QAction *m_exportNormalizedSvgAction;
 	QAction *m_exportNormalizedFlattenedSvgAction;
     QAction *m_openInPartsEditorAct;
+    QAction *m_openInPartsEditorNewAct;
     QMenu *m_addToBinMenu;
 
 
@@ -787,6 +804,7 @@ protected:
 	QPointer<Wire> m_activeWire;
 	QPointer<ConnectorItem> m_activeConnectorItem;
     bool m_addedToTemp;
+    QString m_settingsPrefix;
 
 public:
 	static int RestartNeeded;

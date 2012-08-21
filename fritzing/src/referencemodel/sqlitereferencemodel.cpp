@@ -204,6 +204,8 @@ bool SqliteReferenceModel::loadFromDB(QSqlDatabase & keep_db, QSqlDatabase & db)
                 CoreList << moduleID;
                 continue;
             }
+
+            path.replace("/parts/", "/pdb/");
         }
 
 		ModelPart * modelPart = new ModelPart();
@@ -227,7 +229,6 @@ bool SqliteReferenceModel::loadFromDB(QSqlDatabase & keep_db, QSqlDatabase & db)
         modelPartShared->setPath(path);
         modelPart->setCore(true);
 
-        modelPartShared->setPartlyLoaded(false);
         modelPartShared->setConnectorsInitialized(true);
 
         m_partHash.insert(modelPartShared->moduleID(), modelPart);
