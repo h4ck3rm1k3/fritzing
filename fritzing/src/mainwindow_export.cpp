@@ -528,7 +528,14 @@ void MainWindow::exportAux(QString fileName, QImage::Format format, bool removeB
 {
     double resMultiplier = 3;
 
-	QRectF source = m_currentGraphicsView->scene()->itemsBoundingRect();
+    QRectF itemsBoundingRect;
+	foreach(QGraphicsItem *item,  m_currentGraphicsView->scene()->items()) {
+		if (!item->isVisible()) continue;
+
+        itemsBoundingRect |= item->sceneBoundingRect();
+	}
+
+	QRectF source = itemsBoundingRect;  // m_currentGraphicsView->scene()->itemsBoundingRect();
 	QGraphicsItem * watermark = m_currentGraphicsView->addWatermark(":resources/images/watermark_fritzing_outline.svg");
 	if (watermark) {
 		watermark->setPos(source.right() - watermark->boundingRect().width(), source.bottom());
@@ -602,8 +609,17 @@ void MainWindow::printAux(QPrinter &printer, bool removeBackground, bool paginat
 	//QPointF oSceneStart = m_currentGraphicsView->mapToScene(QPoint(0,0));
 	//QPointF oSceneEnd = m_currentGraphicsView->mapToScene(QPoint(m_currentGraphicsView->viewport()->width(), m_currentGraphicsView->viewport()->height()));
 	//QRectF source(oSceneStart, oSceneEnd);
-	
-	QRectF source = m_currentGraphicsView->scene()->itemsBoundingRect();
+
+    QRectF itemsBoundingRect;
+	foreach(QGraphicsItem *item,  m_currentGraphicsView->scene()->items()) {
+		if (!item->isVisible()) continue;
+
+        itemsBoundingRect |= item->sceneBoundingRect();
+	}
+
+	QRectF source = itemsBoundingRect;  // m_currentGraphicsView->scene()->itemsBoundingRect();
+    DebugDialog::debug("items bounding rect", source);
+    DebugDialog::debug("scene items bounding rect", m_currentGraphicsView->scene()->itemsBoundingRect());
 	QGraphicsItem * watermark = m_currentGraphicsView->addWatermark(":resources/images/watermark_fritzing_outline.svg");
 	if (watermark) {
 		watermark->setPos(source.right() - watermark->boundingRect().width(), source.bottom());
