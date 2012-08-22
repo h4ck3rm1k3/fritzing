@@ -84,7 +84,7 @@ class HashRemoveButton : public BaseRemoveButton {
 class HashPopulateWidget : public QFrame {
 	Q_OBJECT
 	public:
-		HashPopulateWidget(QString title, QHash<QString,QString> &initValues, const QStringList &readOnlyKeys, QUndoStack *undoStack, QWidget *parent = 0);
+		HashPopulateWidget(QString title, QHash<QString,QString> &initValues, const QStringList &readOnlyKeys, QUndoStack *undoStack, bool keysOnly, QWidget *parent);
 		const QHash<QString,QString> & hash();
 		HashLineEdit* lineEditAt(int row, int col);
 
@@ -105,8 +105,8 @@ class HashPopulateWidget : public QFrame {
 		HashLineEdit *m_lastLabel;
 		HashLineEdit *m_lastValue;
 
-		int m_currRow;
 		QUndoStack *m_undoStack;
+        bool m_keysOnly;
 };
 
 #endif /* HASHPOPULATEWIDGET_H_ */

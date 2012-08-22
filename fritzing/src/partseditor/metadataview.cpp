@@ -98,10 +98,16 @@ MetadataView::MetadataView(QWidget * parent) : QScrollArea(parent)
 	readOnlyKeys;
 	QHash<QString,QString> initValues;
 
-    HashPopulateWidget * propertiesEdit = new HashPopulateWidget("test", initValues, readOnlyKeys, NULL, this);
+    HashPopulateWidget * propertiesEdit = new HashPopulateWidget("", initValues, readOnlyKeys, NULL, false, this);
 	propertiesEdit->setObjectName("PartsEditorPropertiesEdit");
     propertiesEdit->setStatusTip(tr("Set the part's properties"));
     formLayout->addRow(tr("Properties"), propertiesEdit);
+
+    HashPopulateWidget * tagsEdit = new HashPopulateWidget("", initValues, readOnlyKeys, NULL, true, this);
+	tagsEdit->setObjectName("PartsEditorPropertiesEdit");
+    tagsEdit->setStatusTip(tr("Set the part's tags"));
+    formLayout->addRow(tr("Tags"), tagsEdit);
+
 
     formFrame->setLayout(formLayout);
     mainFrame->setLayout(mainLayout);

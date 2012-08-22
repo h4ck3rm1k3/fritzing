@@ -309,7 +309,7 @@ void PartsEditorMainWindow::createCenter(ModelPart *modelPart, ItemBase * fromIt
 		//initValues["type"] = "Through-Hole";
 	}
 
-	m_properties = new HashPopulateWidget(tr("Properties"),initValues,readOnlyKeys,m_undoStack,this);
+	m_properties = new HashPopulateWidget(tr("Properties"),initValues,readOnlyKeys,m_undoStack,false, this);
 
 	QString tags = modelPart ? modelPart->tags().join(", ") : TagsFreshStartText;
 	m_tags = new EditableLineWidget(tags,m_undoStack,this,tr("Tags"),modelPart);

@@ -90,9 +90,9 @@ void HashLineEdit::focusOutEvent(QFocusEvent * event) {
 	QLineEdit::focusOutEvent(event);
 }
 
-HashPopulateWidget::HashPopulateWidget(QString title, QHash<QString,QString> &initValues, const QStringList &readOnlyKeys, QUndoStack *undoStack, QWidget *parent) : QFrame(parent) {
-	m_undoStack = undoStack;
-	m_currRow = 0;
+HashPopulateWidget::HashPopulateWidget(QString title, QHash<QString,QString> &initValues, const QStringList &readOnlyKeys, QUndoStack *undoStack, bool keysOnly, QWidget *parent) : QFrame(parent) {
+	m_keysOnly = keysOnly;
+    m_undoStack = undoStack;
 	m_lastLabel = NULL;
 	m_lastValue = NULL;
 
@@ -102,8 +102,7 @@ HashPopulateWidget::HashPopulateWidget(QString title, QHash<QString,QString> &in
 	layout->setColumnStretch(2,0);
 
     if (!title.isEmpty()) {
-	    layout->addWidget(new QLabel(title),m_currRow,m_currRow,0);
-	    m_currRow++;
+	    layout->addWidget(new QLabel(title),0,0,0);
     }
 
 	QList<QString> keys = initValues.keys();
@@ -111,19 +110,20 @@ HashPopulateWidget::HashPopulateWidget(QString title, QHash<QString,QString> &in
 
 	for(int i=0; i < keys.count(); i++) {
 		HashLineEdit *name = new HashLineEdit(m_undoStack,keys[i],false,this);
-		HashLineEdit *value = new HashLineEdit(m_undoStack,initValues[keys[i]],false,this);
+        HashLineEdit *value = new HashLineEdit(m_undoStack,initValues[keys[i]],false,this);
+        if (m_keysOnly) value->hide();
+
+        int ix = layout->rowCount();
 
 		if(readOnlyKeys.contains(keys[i])) {
 			name->setEnabled(false);
 		} else {
 			HashRemoveButton *button = createRemoveButton(name, value);
-			layout->addWidget(button,m_currRow,3);
+			layout->addWidget(button,ix,3);
 		}
 
-		layout->addWidget(name,m_currRow,0);
-		layout->addWidget(value,m_currRow,1,1,2);
-
-		m_currRow++;
+		layout->addWidget(name,ix,0);
+		layout->addWidget(value,ix,1,1,2);
 	}
 
 	addRow(layout);
@@ -160,7 +160,7 @@ const QHash<QString,QString> &HashPopulateWidget::hash() {
 
 HashLineEdit* HashPopulateWidget::lineEditAt(int row, int col) {
 	QLayoutItem *litem = gridLayout()->itemAtPosition(row,col);
-	return litem ? (HashLineEdit*)litem->widget() : NULL;
+	return litem ? qobject_cast<HashLineEdit*>(litem->widget()) : NULL;
 }
 
 void HashPopulateWidget::addRow(QGridLayout *layout) {
@@ -176,16 +176,16 @@ void HashPopulateWidget::addRow(QGridLayout *layout) {
 		disconnect(m_lastValue,SIGNAL(editingFinished()),this,SLOT(lastRowEditionCompleted()));
 	}
 
+    int ix = layout->rowCount();
 
 	m_lastLabel = new HashLineEdit(m_undoStack,QObject::tr("a label"),true,this);
-	layout->addWidget(m_lastLabel,m_currRow,0);
+	layout->addWidget(m_lastLabel,ix,0);
 	connect(m_lastLabel,SIGNAL(editingFinished()),this,SLOT(lastRowEditionCompleted()));
 
 	m_lastValue = new HashLineEdit(m_undoStack,QObject::tr("a value"),true,this);
-	layout->addWidget(m_lastValue,m_currRow,1,1,2);
+	layout->addWidget(m_lastValue,ix,1,1,2);
 	connect(m_lastValue,SIGNAL(editingFinished()),this,SLOT(lastRowEditionCompleted()));
-
-	m_currRow++;
+    if (m_keysOnly) m_lastValue->hide();
 
 	emit editionStarted();
 }
@@ -200,7 +200,13 @@ void HashPopulateWidget::lastRowEditionCompleted() {
 			// removeRow() ?;
 		} else {
 			HashRemoveButton *button = createRemoveButton(m_lastLabel, m_lastValue);
-			gridLayout()->addWidget(button,m_currRow-1,3);
+            for (int i = 0; i < gridLayout()->rowCount(); i++) {
+                HashLineEdit * label = lineEditAt(i, 0);
+                if (m_lastLabel == label) {
+                    gridLayout()->addWidget(button,i,3);
+                    break;
+                }
+            }
 			addRow();
 		}
 	}
@@ -218,6 +224,4 @@ void HashPopulateWidget::removeRow(HashRemoveButton* button) {
 		w->hide();
 	}
 	lo->update();
-
-	m_currRow--;
 }
