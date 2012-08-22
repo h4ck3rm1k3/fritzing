@@ -396,7 +396,7 @@ protected:
     void createOpenRecentMenu();
     void createEditMenuActions();
     void createPartMenuActions();
-    void createViewMenuActions();
+    virtual void createViewMenuActions();
     void createWindowMenuActions();
     void createHelpMenuActions();
     virtual void createMenus();

@@ -66,7 +66,9 @@ void HashLineEdit::updateObjectName() {
 
 void HashLineEdit::updateStackState() {
 	if(hasChanged()) {
-		m_undoStack->push(new QUndoCommand("dummy parts editor command"));
+        if (m_undoStack) {
+		    m_undoStack->push(new QUndoCommand("dummy parts editor command"));
+        }
 	}
 }
 
@@ -99,8 +101,10 @@ HashPopulateWidget::HashPopulateWidget(QString title, QHash<QString,QString> &in
 	layout->setColumnStretch(1,1);
 	layout->setColumnStretch(2,0);
 
-	layout->addWidget(new QLabel(title),m_currRow,m_currRow,0);
-	m_currRow++;
+    if (!title.isEmpty()) {
+	    layout->addWidget(new QLabel(title),m_currRow,m_currRow,0);
+	    m_currRow++;
+    }
 
 	QList<QString> keys = initValues.keys();
 	qSort(keys);
@@ -203,7 +207,9 @@ void HashPopulateWidget::lastRowEditionCompleted() {
 }
 
 void HashPopulateWidget::removeRow(HashRemoveButton* button) {
-	m_undoStack->push(new QUndoCommand("dummy parts editor command"));
+    if (m_undoStack) {
+	    m_undoStack->push(new QUndoCommand("dummy parts editor command"));
+    }
 	QLayout *lo = layout();
 	QList<QWidget*> widgs;
 	widgs << button->label() << button->value() << button;

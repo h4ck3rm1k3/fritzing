@@ -1261,9 +1261,11 @@ void MainWindow::createViewMenu()
     m_viewMenu->addAction(m_showSchematicAct);
     m_viewMenu->addAction(m_showPCBAct);
     m_viewMenu->addSeparator();
-    m_viewMenu->addAction(m_showPartsBinIconViewAct);
-    m_viewMenu->addAction(m_showPartsBinListViewAct);
-    m_viewMenu->addSeparator();
+    if (m_binManager) {
+        m_viewMenu->addAction(m_showPartsBinIconViewAct);
+        m_viewMenu->addAction(m_showPartsBinListViewAct);
+        m_viewMenu->addSeparator();
+    }
     connect(m_viewMenu, SIGNAL(aboutToShow()), this, SLOT(updateLayerMenu()));
     m_numFixedActionsInViewMenu = m_viewMenu->actions().size();
 }

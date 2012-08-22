@@ -60,9 +60,13 @@ protected:
 	QMenu *schematicWireMenu();
 	QMenu *breadboardWireMenu();
     bool eventFilter(QObject *obj, QEvent *event);
+	void setTitle();
+    void createViewMenuActions();
+    void createViewMenu();
 
 protected slots:
     void initZoom();
+    void showMetadataView();
 
 protected:
     QDomDocument m_fzpDocument;
@@ -70,6 +74,9 @@ protected:
     QDomDocument m_breadboardDocument;
     QDomDocument m_schematicDocument;
     QDomDocument m_pcbDocument;
+
+    class MetadataView * m_metadataView;
+    QAction * m_showMetadataAct;
 };
 
 #endif /* PEMAINWINDOW_H_ */

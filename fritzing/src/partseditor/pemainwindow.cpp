@@ -24,8 +24,85 @@ $Date: 2012-08-20 14:36:09 +0200 (Mon, 20 Aug 2012) $
 
 ********************************************************************/
 
+/* TO DO ******************************************
+
+	clean up menus
+
+	add connectors tab
+
+	underlying data structure
+
+	first time help?
+
+	disable dragging wires
+
+	icon view
+
+	change pin count
+
+	add status bar to connectors tab
+
+    on svg import detect all connector IDs
+        if any are invisible, tell user this is obsolete
+
+    allow user to select connectors by driving through svg elements
+
+    eagle lbr
+    eagle brd
+    kicad footprint and mod?
+    gEDA footprint
+
+    for schematic view 
+        offer generate option
+        offer pins, rects (or lines), and a selection of standard schematic icons
+        text?
+
+    for breadboard view
+        import 
+        generate ICs, dips, sips, breakouts
+
+    for pcb view
+        pads, pins (circle, rect, oblong)
+        lines and curves?
+        import silkscreen
+        text?
+
+    allow but discourage png imports
+
+    for svg import check for flaws:
+        internal coords
+        corel draw not saved for presentation
+        inkscape not saved as plain
+        inkscape scaling?
+        illustrator px
+        <gradient>, <pattern>, <marker>, <tspan>, etc.
+
+    holes
+
+    smd vs. tht
+
+    buses
+
+    bendable legs
+
+    flip and rotate
+
+    terminal points
+
+    undo/redo as xml file: use index + guid for uniqueness
+
+    nudge via arrow keys
+
+
+
+
+***************************************************/
+
+
+
 
 #include "pemainwindow.h"
+#include "metadataview.h"
 #include "../debugdialog.h"
 #include "../model/palettemodel.h"
 #include "../sketch/breadboardsketchwidget.h"
@@ -61,6 +138,8 @@ void PEMainWindow::initLockedFiles(bool) {
 void PEMainWindow::initSketchWidgets()
 {
     MainWindow::initSketchWidgets();
+    m_metadataView = new MetadataView(this);
+	m_tabWidget->addWidget(m_metadataView);
 }
 
 void PEMainWindow::initDock()
@@ -145,4 +224,36 @@ void PEMainWindow::initZoom() {
     m_breadboardGraphicsView->fitInWindow();
     m_schematicGraphicsView->fitInWindow();
     m_pcbGraphicsView->fitInWindow();
+}
+
+void PEMainWindow::setTitle() {
+    setWindowTitle(tr("New Parts Editor"));
+}
+
+void PEMainWindow::createViewMenuActions() {
+    MainWindow::createViewMenuActions();
+
+	m_showMetadataAct = new QAction(tr("&Show Metatdata"), this);
+	m_showMetadataAct->setShortcut(tr("Ctrl+4"));
+	m_showMetadataAct->setStatusTip(tr("Show the breadboard view"));
+	connect(m_showMetadataAct, SIGNAL(triggered()), this, SLOT(showMetadataView()));
+}
+
+void PEMainWindow::createViewMenu() {
+    MainWindow::createViewMenu();
+
+    bool afterNext = false;
+    foreach (QAction * action, m_viewMenu->actions()) {
+        if (action == m_showPCBAct) {
+            afterNext = true;
+        }
+        else if (afterNext) {
+            m_viewMenu->insertAction(action, m_showMetadataAct);
+            break;
+        }
+    }
+}
+
+void PEMainWindow::showMetadataView() {
+    this->m_tabWidget->setCurrentIndex(3);
 }

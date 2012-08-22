@@ -54,6 +54,7 @@ HEADERS += \
     src/partseditor/fixfontsdialog.h \
     \
     src/partseditor/pemainwindow.h \
+    src/partseditor/metadataview.h \
     
 
 SOURCES += \
@@ -81,4 +82,5 @@ SOURCES += \
     src/partseditor/fixfontsdialog.cpp \
      \
     src/partseditor/pemainwindow.cpp \
-   
+    src/partseditor/metadataview.cpp \
+  
