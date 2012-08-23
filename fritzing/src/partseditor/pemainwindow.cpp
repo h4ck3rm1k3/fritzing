@@ -79,7 +79,7 @@ $Date: 2012-08-20 14:36:09 +0200 (Mon, 20 Aug 2012) $
 
     smd vs. tht
 
-    buses
+    buses: connect bus by drawing a wire...
 
     bendable legs
 

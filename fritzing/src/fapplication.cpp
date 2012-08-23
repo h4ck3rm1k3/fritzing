@@ -65,6 +65,7 @@ $Date$
 #include "lib/qtsysteminfo/QtSystemInfo.h"
 #include "processeventblocker.h"
 #include "autoroute/cmrouter/panelizer.h"
+#include "sketch/sketchwidget.h"
 
 // dependency injection :P
 #include "referencemodel/sqlitereferencemodel.h"

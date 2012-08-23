@@ -59,9 +59,11 @@ protected slots:
     void descrEntry();
     void labelEntry();
     void familyEntry();
+    void dateEntry();
 
 protected:
     QPointer<QLineEdit> m_titleEdit;
+    QPointer<QLineEdit> m_dateEdit;
     QPointer<QLineEdit> m_authorEdit;
     QPointer<QLineEdit> m_familyEdit;
     QPointer<QLineEdit> m_labelEdit;

@@ -87,6 +87,13 @@ MetadataView::MetadataView(QWidget * parent) : QScrollArea(parent)
     m_titleEdit->setStatusTip(tr("Set the part's title"));
     formLayout->addRow(tr("Title"), m_titleEdit);
 
+    m_dateEdit = new QLineEdit();
+	connect(m_dateEdit, SIGNAL(editingFinished()), this, SLOT(dateEntry()));
+	m_dateEdit->setObjectName("PartsEditorLineEdit");
+    m_dateEdit->setStatusTip(tr("Set the part's date"));
+    formLayout->addRow(tr("Date"), m_dateEdit);
+    m_dateEdit->setEnabled(false);
+
     m_authorEdit = new QLineEdit();
 	connect(m_authorEdit, SIGNAL(editingFinished()), this, SLOT(authorEntry()));
 	m_authorEdit->setObjectName("PartsEditorLineEdit");
@@ -154,6 +161,10 @@ void MetadataView::familyEntry() {
     DebugDialog::debug("family entry");
 }
 
+void MetadataView::dateEntry() {
+    DebugDialog::debug("date entry");
+}
+
 void MetadataView::initMetadata(const QDomDocument & doc) {
     QDomElement root = doc.documentElement();
 
@@ -169,12 +180,16 @@ void MetadataView::initMetadata(const QDomDocument & doc) {
     QDomElement title = root.firstChildElement("title");
     m_titleEdit->setText(title.text());
 
-    QDomElement tags = root.firstChildElement("tags");
-    QStringList tagStrings = tags.text().split(",", QString::SkipEmptyParts);
+    QDomElement date = root.firstChildElement("date");
+    m_dateEdit->setText(date.text());
+
     QStringList readOnlyKeys;
-    QHash<QString, QString> hash;
-    foreach (QString string, tagStrings) {
-        hash.insert(string.trimmed(), "");
+    QHash<QString, QString> hash;    
+    QDomElement tags = root.firstChildElement("tags");
+    QDomElement tag = tags.firstChildElement("tag");
+    while (!tag.isNull()) {
+        hash.insert(tag.text(), "");
+        tag = tag.nextSiblingElement("tag");
     }
     m_tagsEdit->reinit("", hash, readOnlyKeys, true, NULL);
     

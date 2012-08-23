@@ -40,6 +40,7 @@ $Date$
 #include "../dockmanager.h"
 #include "../utils/flineedit.h"
 #include "../items/moduleidnames.h"
+#include "../items/paletteitem.h"
 
 
 #define HTML_EOF "</body>\n</html>"

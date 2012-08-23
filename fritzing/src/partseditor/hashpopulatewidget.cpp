@@ -104,19 +104,11 @@ HashPopulateWidget::HashPopulateWidget(const QString & title, const QHash<QStrin
 void HashPopulateWidget::reinit(const QString & title, const QHash<QString, QString> &initValues, const QStringList &readOnlyKeys, bool keysOnly, QGridLayout * layout)
 {
     if (layout == NULL) layout = gridLayout(); 
-    for (int row = 0; row < layout->rowCount(); row++) {
-        for (int i = 0; i < layout->columnCount(); ++i) {
-            QLayoutItem* item = layout->itemAtPosition(row, i);
-            if (!item) continue;
-
-            if (item->widget()) {
-                layout->removeWidget(item->widget());
-            } else {
-                layout->removeItem(item);
-            }
-        }   
+    while (layout->count() > 0) {
+        QWidget* widget = layout->itemAt(0)->widget();
+        layout->removeWidget(widget);
+        delete widget;
     }
-
 
     m_keysOnly = keysOnly;
 	m_lastLabel = NULL;
