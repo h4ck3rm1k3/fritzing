@@ -51,6 +51,8 @@ public:
 	MetadataView(QWidget * parent = 0);
 	~MetadataView();
 
+    void initMetadata(const QDomDocument &);
+
 protected slots:
     void titleEntry();
     void authorEntry();
@@ -58,6 +60,14 @@ protected slots:
     void labelEntry();
     void familyEntry();
 
+protected:
+    QPointer<QLineEdit> m_titleEdit;
+    QPointer<QLineEdit> m_authorEdit;
+    QPointer<QLineEdit> m_familyEdit;
+    QPointer<QLineEdit> m_labelEdit;
+    QPointer<QTextEdit> m_descriptionEdit;
+    QPointer<class HashPopulateWidget> m_propertiesEdit;
+    QPointer<class HashPopulateWidget> m_tagsEdit;
 };
 
 

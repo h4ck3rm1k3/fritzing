@@ -34,6 +34,17 @@ $Date: 2012-07-04 15:38:22 +0200 (Wed, 04 Jul 2012) $
 #include "metadataview.h"
 #include "hashpopulatewidget.h"
 
+
+//////////////////////////////////////
+
+/****************************************
+
+TODO:
+
+    don't allow users to enter "family" into properties
+
+****************************************/
+
 //////////////////////////////////////
 
 FocusOutTextEdit::FocusOutTextEdit(QWidget * parent) : QTextEdit(parent)
@@ -70,50 +81,50 @@ MetadataView::MetadataView(QWidget * parent) : QScrollArea(parent)
     QFrame * formFrame = new QFrame;
     mainLayout->addWidget(formFrame);
 
-    QLineEdit * titleEdit = new QLineEdit();
-	connect(titleEdit, SIGNAL(editingFinished()), this, SLOT(titleEntry()));
-	titleEdit->setObjectName("PartsEditorLineEdit");
-    titleEdit->setStatusTip(tr("Set the part's title"));
-    formLayout->addRow(tr("Title"), titleEdit);
+    m_titleEdit = new QLineEdit();
+	connect(m_titleEdit, SIGNAL(editingFinished()), this, SLOT(titleEntry()));
+	m_titleEdit->setObjectName("PartsEditorLineEdit");
+    m_titleEdit->setStatusTip(tr("Set the part's title"));
+    formLayout->addRow(tr("Title"), m_titleEdit);
 
-    QLineEdit * authorEdit = new QLineEdit();
-	connect(authorEdit, SIGNAL(editingFinished()), this, SLOT(authorEntry()));
-	authorEdit->setObjectName("PartsEditorLineEdit");
-    authorEdit->setStatusTip(tr("Set the part's author"));
-    formLayout->addRow(tr("Author"), authorEdit);
+    m_authorEdit = new QLineEdit();
+	connect(m_authorEdit, SIGNAL(editingFinished()), this, SLOT(authorEntry()));
+	m_authorEdit->setObjectName("PartsEditorLineEdit");
+    m_authorEdit->setStatusTip(tr("Set the part's author"));
+    formLayout->addRow(tr("Author"), m_authorEdit);
 
-    QTextEdit * descrEdit = new FocusOutTextEdit();
-	connect(descrEdit, SIGNAL(focusOut()), this, SLOT(descrEntry()));
-	descrEdit->setObjectName("PartsEditorTextEdit");
-    descrEdit->setStatusTip(tr("Set the part's description--you can use simple html (as defined by Qt's Rich Text)"));
-    formLayout->addRow(tr("Description"), descrEdit);
+    m_descriptionEdit = new FocusOutTextEdit();
+	connect(m_descriptionEdit, SIGNAL(focusOut()), this, SLOT(descrEntry()));
+	m_descriptionEdit->setObjectName("PartsEditorTextEdit");
+    m_descriptionEdit->setStatusTip(tr("Set the part's description--you can use simple html (as defined by Qt's Rich Text)"));
+    formLayout->addRow(tr("Description"), m_descriptionEdit);
 
-    QLineEdit * labelEdit = new QLineEdit();
-	connect(labelEdit, SIGNAL(editingFinished()), this, SLOT(labelEntry()));
-	labelEdit->setObjectName("PartsEditorLineEdit");
-    labelEdit->setStatusTip(tr("Set the default part label prefix"));
-    formLayout->addRow(tr("Label"), labelEdit);
+    m_labelEdit = new QLineEdit();
+	connect(m_labelEdit, SIGNAL(editingFinished()), this, SLOT(labelEntry()));
+	m_labelEdit->setObjectName("PartsEditorLineEdit");
+    m_labelEdit->setStatusTip(tr("Set the default part label prefix"));
+    formLayout->addRow(tr("Label"), m_labelEdit);
 
-    QLineEdit * familyEdit = new QLineEdit();
-	connect(familyEdit, SIGNAL(editingFinished()), this, SLOT(familyEntry()));
-	familyEdit->setObjectName("PartsEditorLineEdit");
-    descrEdit->setStatusTip(tr("Set the part's family--what other parts is this part related to"));
-    formLayout->addRow(tr("Family"), familyEdit);
+    m_familyEdit = new QLineEdit();
+	connect(m_familyEdit, SIGNAL(editingFinished()), this, SLOT(familyEntry()));
+	m_familyEdit->setObjectName("PartsEditorLineEdit");
+    m_familyEdit->setStatusTip(tr("Set the part's family--what other parts is this part related to"));
+    formLayout->addRow(tr("Family"), m_familyEdit);
+    m_familyEdit->setEnabled(false);
 
 	QStringList readOnlyKeys;
 	readOnlyKeys;
 	QHash<QString,QString> initValues;
 
-    HashPopulateWidget * propertiesEdit = new HashPopulateWidget("", initValues, readOnlyKeys, NULL, false, this);
-	propertiesEdit->setObjectName("PartsEditorPropertiesEdit");
-    propertiesEdit->setStatusTip(tr("Set the part's properties"));
-    formLayout->addRow(tr("Properties"), propertiesEdit);
+    m_propertiesEdit = new HashPopulateWidget("", initValues, readOnlyKeys, NULL, false, this);
+	m_propertiesEdit->setObjectName("PartsEditorPropertiesEdit");
+    m_propertiesEdit->setStatusTip(tr("Set the part's properties"));
+    formLayout->addRow(tr("Properties"), m_propertiesEdit);
 
-    HashPopulateWidget * tagsEdit = new HashPopulateWidget("", initValues, readOnlyKeys, NULL, true, this);
-	tagsEdit->setObjectName("PartsEditorPropertiesEdit");
-    tagsEdit->setStatusTip(tr("Set the part's tags"));
-    formLayout->addRow(tr("Tags"), tagsEdit);
-
+    m_tagsEdit = new HashPopulateWidget("", initValues, readOnlyKeys, NULL, true, this);
+	m_tagsEdit->setObjectName("PartsEditorPropertiesEdit");
+    m_tagsEdit->setStatusTip(tr("Set the part's tags"));
+    formLayout->addRow(tr("Tags"), m_tagsEdit);
 
     formFrame->setLayout(formLayout);
     mainFrame->setLayout(mainLayout);
@@ -143,4 +154,45 @@ void MetadataView::familyEntry() {
     DebugDialog::debug("family entry");
 }
 
+void MetadataView::initMetadata(const QDomDocument & doc) {
+    QDomElement root = doc.documentElement();
 
+    QDomElement author = root.firstChildElement("author");
+    m_authorEdit->setText(author.text());
+
+    QDomElement label = root.firstChildElement("label");
+    m_labelEdit->setText(label.text());
+
+    QDomElement descr = root.firstChildElement("description");
+    m_descriptionEdit->setText(descr.text());
+
+    QDomElement title = root.firstChildElement("title");
+    m_titleEdit->setText(title.text());
+
+    QDomElement tags = root.firstChildElement("tags");
+    QStringList tagStrings = tags.text().split(",", QString::SkipEmptyParts);
+    QStringList readOnlyKeys;
+    QHash<QString, QString> hash;
+    foreach (QString string, tagStrings) {
+        hash.insert(string.trimmed(), "");
+    }
+    m_tagsEdit->reinit("", hash, readOnlyKeys, true, NULL);
+    
+    hash.clear();
+    QDomElement properties = root.firstChildElement("properties");
+    QDomElement prop = properties.firstChildElement("property");
+    while (!prop.isNull()) {
+        QString name = prop.attribute("name");
+        QString value = prop.text();
+        if (name.compare("family", Qt::CaseInsensitive) == 0) {
+            m_familyEdit->setText(value);
+        }
+        else {
+            hash.insert(name, value);
+        }
+
+        prop = prop.nextSiblingElement("property");
+    }
+
+    m_propertiesEdit->reinit("", hash, readOnlyKeys, false, NULL); 
+}

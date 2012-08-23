@@ -36,8 +36,6 @@ $Date: 2012-08-20 14:36:09 +0200 (Mon, 20 Aug 2012) $
 
 	disable dragging wires
 
-	icon view
-
 	change pin count
 
 	add status bar to connectors tab
@@ -97,9 +95,17 @@ $Date: 2012-08-20 14:36:09 +0200 (Mon, 20 Aug 2012) $
 
     new schematic layout specs
 
-    deal with modified svgs (pin labels, chip label, pin size, etc...)
+    deal with customized svgs
+        chip label
+        * pin label
+        * resistance
+        * led color
+        pin header stuff
+        pin size
 
     disable family entry?  should always be "custom_"  + original family (unless it already starts with custom_)
+
+    allow rulers and other tools?
 
 
 ***************************************************/
@@ -113,6 +119,9 @@ $Date: 2012-08-20 14:36:09 +0200 (Mon, 20 Aug 2012) $
 #include "../sketch/pcbsketchwidget.h"
 #include "../sketchareawidget.h"
 #include "../referencemodel/referencemodel.h"
+#include "../utils/graphicsutils.h"
+#include "../utils/textutils.h"
+#include "../utils/folderutils.h"
 
 
 #ifdef QT_NO_DEBUG
@@ -226,23 +235,129 @@ QMenu *PEMainWindow::pcbItemMenu() {
 }
 
 void PEMainWindow::setInitialItem(PaletteItem * paletteItem) {
-    ModelPart * modelPart = NULL;
-
+    ModelPart * originalModelPart = NULL;
     if (paletteItem == NULL) {
-        modelPart = m_paletteModel->retrieveModelPart("generic_ic_dip_8_300mil");
+        originalModelPart = m_paletteModel->retrieveModelPart("generic_ic_dip_8_300mil");
     }
     else {
-        modelPart = paletteItem->modelPart();
+        originalModelPart = paletteItem->modelPart();
     }
 
     long newID = ItemBase::getNextID();
 	ViewGeometry viewGeometry;
 	viewGeometry.setLoc(QPointF(0, 0));
 
+    QFile file(originalModelPart->path());
+	QString errorStr;
+	int errorLine;
+	int errorColumn;
+	bool result = m_fzpDocument.setContent(&file, &errorStr, &errorLine, &errorColumn);
+	if (!result) {
+        QMessageBox::critical(NULL, tr("Parts Editor"), QString("Unable to load fzp from %1").arg(originalModelPart->path()));
+		return;
+	}
+
+    QDomElement fzpRoot = m_fzpDocument.documentElement();
+    QDomElement views = fzpRoot.firstChildElement("views");
+    QDomElement author = fzpRoot.firstChildElement("author");
+    if (author.isNull()) {
+        author = m_fzpDocument.createElement("author");
+        fzpRoot.appendChild(author);
+    }
+    TextUtils::replaceChildText(m_fzpDocument, author, QString(getenvUser()));
+    QDomElement date = fzpRoot.firstChildElement("date");
+    if (date.isNull()) {
+        date = m_fzpDocument.createElement("date");
+        fzpRoot.appendChild(date);
+    }
+    TextUtils::replaceChildText(m_fzpDocument, date, QDate::currentDate().toString());
+
+
+
+	QString userPartsFolderPath = FolderUtils::getUserDataStorePath("parts")+"/user/";
+	QString userPartsFolderSvgPath = FolderUtils::getUserDataStorePath("parts")+"/svg/user/";
+    QString guid = FolderUtils::getRandText();
+    fzpRoot.setAttribute("moduleId", guid);
+    QString family = originalModelPart->family();
+    if (family.isEmpty()) {
+        family = guid;
+    }
+    else if (!family.startsWith("custom_")) {
+        family = "custom_" + family;
+    }
+    QDomElement properties = fzpRoot.firstChildElement("properties");
+    QDomElement prop = properties.firstChildElement("property");
+    bool gotProp = false;
+    while (!prop.isNull()) {
+        QString name = prop.attribute("name");
+        if (name.compare("hole size", Qt::CaseInsensitive) == 0) {
+            gotProp = true;
+            TextUtils::replaceChildText(m_fzpDocument, prop, family);
+            break;
+        }
+
+        prop = prop.nextSiblingElement("property");
+    }
+    if (!gotProp) {
+        QDomElement prop = m_fzpDocument.createElement("property");
+        properties.appendChild(prop);
+        prop.setAttribute("name", "family");
+        TextUtils::replaceChildText(m_fzpDocument, prop, family);
+    }
+
+    QHash<SketchWidget *, QString> sketchWidgets;
+    sketchWidgets.insert(m_breadboardGraphicsView, "breadboard");
+    sketchWidgets.insert(m_schematicGraphicsView, "schematic"),
+    sketchWidgets.insert(m_pcbGraphicsView, "pcb");
+    sketchWidgets.insert(m_iconGraphicsView, "icon");
+    foreach (SketchWidget * sketchWidget, sketchWidgets.keys()) {
+        ItemBase * itemBase = originalModelPart->viewItem(sketchWidget->viewIdentifier());
+        if (itemBase == NULL) continue;
+        if (!itemBase->hasCustomSVG()) continue;
+
+        QHash<QString, QString> svgHash;
+        QString svg = "";
+		foreach (ViewLayer * vl, sketchWidget->viewLayers().values()) {
+			svg += itemBase->retrieveSvg(vl->viewLayerID(), svgHash, false, GraphicsUtils::StandardFritzingDPI);
+		}
+
+        if (svg.isEmpty()) {
+            DebugDialog::debug(QString("pe: missing custom svg %1").arg(originalModelPart->moduleID()));
+            continue;
+        }
+
+        QString prefix = sketchWidgets.value(sketchWidget);
+        QString prefixPath = prefix + "/" + guid + ".svg";
+		QSizeF size = itemBase->size();
+		svg = TextUtils::makeSVGHeader(GraphicsUtils::SVGDPI, GraphicsUtils::StandardFritzingDPI, size.width(), size.height()) + svg + "</svg>";
+        QString svgPath = userPartsFolderSvgPath + prefixPath;
+        result = TextUtils::writeUtf8(svgPath, svg);
+        if (!result) {
+            QMessageBox::critical(NULL, tr("Parts Editor"), QString("Unable to write svg to  %1").arg(svgPath));
+		    return;
+        }
+
+        QDomElement view = views.firstChildElement(prefix + "View");
+        QDomElement layers = view.firstChildElement("layers");
+        if (layers.isNull()) {
+            QMessageBox::critical(NULL, tr("Parts Editor"), QString("Unable to parse fzp file  %1").arg(originalModelPart->path()));
+		    return;
+        }
+
+        layers.setAttribute("image", prefixPath);
+    }
+
+    QString fzpPath = userPartsFolderPath + guid + ".fzp";
+    TextUtils::writeUtf8(fzpPath, m_fzpDocument.toString());
+
+    ModelPart * modelPart = new ModelPart(&m_fzpDocument, fzpPath, ModelPart::Part);
+
     m_iconGraphicsView->addItem(modelPart, m_iconGraphicsView->defaultViewLayerSpec(), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
     m_breadboardGraphicsView->addItem(modelPart, m_breadboardGraphicsView->defaultViewLayerSpec(), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
     m_schematicGraphicsView->addItem(modelPart, m_schematicGraphicsView->defaultViewLayerSpec(), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
     m_pcbGraphicsView->addItem(modelPart, m_pcbGraphicsView->defaultViewLayerSpec(), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
+    m_metadataView->initMetadata(m_fzpDocument);
+
     QTimer::singleShot(10, this, SLOT(initZoom()));
 }
 

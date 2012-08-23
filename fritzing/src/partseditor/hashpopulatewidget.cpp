@@ -90,16 +90,38 @@ void HashLineEdit::focusOutEvent(QFocusEvent * event) {
 	QLineEdit::focusOutEvent(event);
 }
 
-HashPopulateWidget::HashPopulateWidget(QString title, QHash<QString,QString> &initValues, const QStringList &readOnlyKeys, QUndoStack *undoStack, bool keysOnly, QWidget *parent) : QFrame(parent) {
-	m_keysOnly = keysOnly;
+HashPopulateWidget::HashPopulateWidget(const QString & title, const QHash<QString,QString> &initValues, const QStringList &readOnlyKeys, QUndoStack *undoStack, bool keysOnly, QWidget *parent) : QFrame(parent) {
     m_undoStack = undoStack;
-	m_lastLabel = NULL;
-	m_lastValue = NULL;
-
 	QGridLayout *layout = new QGridLayout();
 	layout->setColumnStretch(0,0);
 	layout->setColumnStretch(1,1);
 	layout->setColumnStretch(2,0);
+
+    reinit(title, initValues, readOnlyKeys, keysOnly, layout);
+	this->setLayout(layout);  
+}
+
+void HashPopulateWidget::reinit(const QString & title, const QHash<QString, QString> &initValues, const QStringList &readOnlyKeys, bool keysOnly, QGridLayout * layout)
+{
+    if (layout == NULL) layout = gridLayout(); 
+    for (int row = 0; row < layout->rowCount(); row++) {
+        for (int i = 0; i < layout->columnCount(); ++i) {
+            QLayoutItem* item = layout->itemAtPosition(row, i);
+            if (!item) continue;
+
+            if (item->widget()) {
+                layout->removeWidget(item->widget());
+            } else {
+                layout->removeItem(item);
+            }
+        }   
+    }
+
+
+    m_keysOnly = keysOnly;
+	m_lastLabel = NULL;
+	m_lastValue = NULL;
+
 
     if (!title.isEmpty()) {
 	    layout->addWidget(new QLabel(title),0,0,0);
@@ -128,7 +150,6 @@ HashPopulateWidget::HashPopulateWidget(QString title, QHash<QString,QString> &in
 
 	addRow(layout);
 
-	this->setLayout(layout);
 }
 
 HashRemoveButton *HashPopulateWidget::createRemoveButton(HashLineEdit* label, HashLineEdit* value) {
@@ -191,7 +212,7 @@ void HashPopulateWidget::addRow(QGridLayout *layout) {
 }
 
 QGridLayout * HashPopulateWidget::gridLayout() {
-	return (QGridLayout*)this->layout();
+	return qobject_cast<QGridLayout *>(this->layout());
 }
 
 void HashPopulateWidget::lastRowEditionCompleted() {
@@ -220,8 +241,9 @@ void HashPopulateWidget::removeRow(HashRemoveButton* button) {
 	QList<QWidget*> widgs;
 	widgs << button->label() << button->value() << button;
 	foreach(QWidget* w, widgs) {
-		lo->removeWidget(w);
-		w->hide();
+		lo->removeWidget(w);   
+		//w->hide();
+        //delete w;
 	}
 	lo->update();
 }
