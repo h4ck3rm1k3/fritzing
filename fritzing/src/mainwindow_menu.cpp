@@ -70,6 +70,7 @@ $Date$
 #include "program/programwindow.h"
 #include "utils/autoclosemessagebox.h"
 #include "processeventblocker.h"
+#include "sketchtoolbutton.h"
 
 ////////////////////////////////////////////////////////
 
@@ -2018,15 +2019,10 @@ void MainWindow::openPartsEditor(PaletteItem * paletteItem) {
 }
 
 void MainWindow::openNewPartsEditor(PaletteItem * paletteItem) {
-    QString moduleID = "generic_ic_dip_8_300mil";
-        
-    if (paletteItem != NULL) {
-	    moduleID =  paletteItem->moduleID();
-    }
 
     PEMainWindow *peMainWindow = new PEMainWindow(m_paletteModel, m_refModel, NULL);
     peMainWindow->init(m_paletteModel, m_refModel, NULL);
-    peMainWindow->setInitialModuleID(moduleID);
+    peMainWindow->setInitialItem(paletteItem);
 
 	peMainWindow->show();
 	peMainWindow->raise();

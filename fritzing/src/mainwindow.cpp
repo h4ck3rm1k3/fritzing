@@ -74,6 +74,7 @@ $Date$
 #include "processeventblocker.h"
 #include "help/helper.h"
 #include "dockmanager.h"
+#include "sketchtoolbutton.h"
 
 #include "partsbinpalette/binmanager/binmanager.h"
 
@@ -288,9 +289,9 @@ void MainWindow::init(PaletteModel * paletteModel, ReferenceModel *refModel, boo
 	createZoomOptions(m_schematicWidget);
 	createZoomOptions(m_pcbWidget);
 
-    m_breadboardWidget->setToolbarWidgets(getButtonsForView(m_breadboardWidget->viewIdentifier()));
-    m_schematicWidget->setToolbarWidgets(getButtonsForView(m_schematicWidget->viewIdentifier()));
-	m_pcbWidget->setToolbarWidgets(getButtonsForView(m_pcbWidget->viewIdentifier()));
+    m_breadboardWidget->setToolbarWidgets(getButtonsForView(ViewIdentifierClass::BreadboardView));
+    m_schematicWidget->setToolbarWidgets(getButtonsForView(ViewIdentifierClass::SchematicView));
+	m_pcbWidget->setToolbarWidgets(getButtonsForView(ViewIdentifierClass::PCBView));
 
 	QFile styleSheet(":/resources/styles/fritzing.qss");
     if (!styleSheet.open(QIODevice::ReadOnly)) {
@@ -420,7 +421,6 @@ void MainWindow::initSketchWidgets() {
 	if (m_fileProgressDialog) {
 		m_fileProgressDialog->setValue(11);
 	}
-
 
 	m_schematicGraphicsView = new SchematicSketchWidget(ViewIdentifierClass::SchematicView, this);
 	initSketchWidget(m_schematicGraphicsView);
@@ -745,8 +745,8 @@ void MainWindow::setCurrentFile(const QString &filename, bool addToRecent, bool 
 
 void MainWindow::createZoomOptions(SketchAreaWidget* parent) {
 
-    connect(parent->graphicsView(), SIGNAL(zoomChanged(double)), this, SLOT(updateZoomSlider(double)));
-    connect(parent->graphicsView(), SIGNAL(zoomOutOfRange(double)), this, SLOT(updateZoomOptionsNoMatterWhat(double)));
+    connect(parent->contentView(), SIGNAL(zoomChanged(double)), this, SLOT(updateZoomSlider(double)));
+    connect(parent->contentView(), SIGNAL(zoomOutOfRange(double)), this, SLOT(updateZoomOptionsNoMatterWhat(double)));
 }
 
 ExpandingLabel * MainWindow::createRoutingStatusLabel(SketchAreaWidget * parent) {
@@ -763,7 +763,7 @@ ExpandingLabel * MainWindow::createRoutingStatusLabel(SketchAreaWidget * parent)
 	parent->setRoutingStatusLabel(routingStatusLabel);
 	RoutingStatus routingStatus;
 	routingStatus.zero();
-	routingStatusSlot(parent->graphicsView(), routingStatus);
+	routingStatusSlot(qobject_cast<SketchWidget *>(parent->contentView()), routingStatus);
 	return routingStatusLabel;
 }
 
@@ -947,7 +947,7 @@ void MainWindow::tabWidget_currentChanged(int index) {
 	if (m_schematicGraphicsView) m_schematicGraphicsView->setCurrent(false);
 	if (m_pcbGraphicsView) m_pcbGraphicsView->setCurrent(false);
 
-	SketchWidget *widget = widgetParent->graphicsView();
+	SketchWidget *widget = qobject_cast<SketchWidget *>(widgetParent->contentView());
 
 	if(m_currentGraphicsView) {
 		m_currentGraphicsView->saveZoom(m_zoomSlider->value());

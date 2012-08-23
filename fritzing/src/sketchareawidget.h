@@ -34,16 +34,12 @@ $Date$
 #include <QStatusBar>
 #include <QMainWindow>
 
-#include "sketch/sketchwidget.h"
-
-
 class SketchAreaWidget : public QFrame {
 public:
-	SketchAreaWidget(SketchWidget *graphicsView, QMainWindow *parent);
+	SketchAreaWidget(QWidget *contentView, QMainWindow *parent);
 	virtual ~SketchAreaWidget();
 
-	ViewIdentifierClass::ViewIdentifier viewIdentifier();
-	SketchWidget* graphicsView();
+	QWidget* contentView();
 
 	void setToolbarWidgets(QList<QWidget*> buttons);
 	void addStatusBar(QStatusBar *);
@@ -59,7 +55,7 @@ public:
 	static const QString RoutingStateLabelName;
 
 protected:
-	SketchWidget *m_graphicsView;
+	QWidget *m_contentView;
 
 	QFrame *m_toolbar;
 	QHBoxLayout *m_buttonsContainer;

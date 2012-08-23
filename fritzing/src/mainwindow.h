@@ -37,14 +37,16 @@ $Date$
 #include <QSizeGrip>
 #include <QProcess>
 #include <QDockWidget>
+#include <QXMLStreamWriter>
 
 #include "fritzingwindow.h"
 #include "sketchareawidget.h"
 #include "viewlayer.h"
-#include "sketchtoolbutton.h"
+#include "viewidentifierclass.h"
 #include "program/programwindow.h"
 #include "svg/svg2gerber.h"
 #include "viewswitcher/viewswitcher.h"
+#include "routingstatus.h"
 
 QT_BEGIN_NAMESPACE
 class QAction;
@@ -56,7 +58,7 @@ class Helper;
 class DockManager;
 class FSizeGrip;
 
-bool sortPartList(ItemBase * b1, ItemBase * b2);
+bool sortPartList(class ItemBase * b1, class ItemBase * b2);
 
 static const QString ORDERFABENABLED = "OrderFabEnabled";
 
@@ -109,7 +111,7 @@ class MainWindow : public FritzingWindow
 {
     Q_OBJECT
 public:
-    MainWindow(class PaletteModel *, ReferenceModel *refModel, QWidget * parent);
+    MainWindow(class PaletteModel *, class ReferenceModel *refModel, QWidget * parent);
     MainWindow(QFile & fileToLoad);
 	~MainWindow();
 
@@ -148,7 +150,7 @@ public:
 	
 	void setCurrentFile(const QString &fileName, bool addToRecent, bool setAsLastOpened);
 	void setReportMissingModules(bool);
-	QList<SketchWidget *> sketchWidgets();
+	QList<class SketchWidget *> sketchWidgets();
 	void setCloseSilently(bool);
 	void exportToGerber(const QString & outputDir);
 	class PCBSketchWidget * pcbView();
@@ -281,7 +283,7 @@ protected slots:
 
 	void openInPartsEditor();
 	void openInPartsEditorNew();
-	void openPartsEditor(PaletteItem *);
+	void openPartsEditor(class PaletteItem *);
 	void openNewPartsEditor(PaletteItem *);
 
 	void updateZoomSlider(double zoom);
@@ -315,7 +317,7 @@ protected slots:
 	QStringList saveBundledAux(ModelPart *mp, const QDir &destFolder);
 
 	void binSaved(bool hasAlienParts);
-	void routingStatusSlot(SketchWidget *, const RoutingStatus &);
+	void routingStatusSlot(class SketchWidget *, const RoutingStatus &);
 
 	void applyReadOnlyChange(bool isReadOnly);
 	void currentNavigatorChanged(class MiniViewContainer *);
@@ -331,7 +333,7 @@ protected slots:
 	void changeWireColor(bool checked);
 
 	void startSaveInstancesSlot(const QString & fileName, ModelPart *, QXmlStreamWriter &);
-	void loadedViewsSlot(ModelBase *, QDomElement & views);
+	void loadedViewsSlot(class ModelBase *, QDomElement & views);
 	void loadedRootSlot(const QString & filename, ModelBase *, QDomElement & views);
 	void exportNormalizedSVG();
 	void exportNormalizedFlattenedSVG();
@@ -375,8 +377,8 @@ protected slots:
 	void swapSelectedTimeout();
 	void filenameIfSlot(QString & filename);
 	void openURL();
-	void setActiveWire(Wire *);
-	void setActiveConnectorItem(ConnectorItem *);
+	void setActiveWire(class Wire *);
+	void setActiveConnectorItem(class ConnectorItem *);
 	void gridUnits(bool);
 	void restoreDefaultGrid();
     void checkLoadedTraces();
@@ -450,7 +452,7 @@ protected:
 	QMenu *viewItemMenuAux(QMenu* menu);
 
 	void createZoomOptions(SketchAreaWidget* parent);
-	SketchToolButton *createRotateButton(SketchAreaWidget *parent);
+	class SketchToolButton *createRotateButton(SketchAreaWidget *parent);
 	SketchToolButton *createShareButton(SketchAreaWidget *parent);
 	SketchToolButton *createFlipButton(SketchAreaWidget *parent);
 	SketchToolButton *createAutorouteButton(SketchAreaWidget *parent);

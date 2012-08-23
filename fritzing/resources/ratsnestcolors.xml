@@ -1,4 +1,6 @@
 <colors>
+	<view name="iconView" background="#C2C2C2">
+	</view>
 	<view name="breadboardView" background="#CCCCCC">
 		<color name="blue" ratsnest="#157de6" wire="#418dd9" shadow="#1b5bb3" />
 		<color name="red" ratsnest="#cc1414"  wire="#cc1414" shadow="#8c0000" >

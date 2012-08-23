@@ -6144,6 +6144,11 @@ void SketchWidget::addBreadboardViewLayers() {
 	addViewLayersAux(ViewIdentifierClass::layersForView(ViewIdentifierClass::BreadboardView));
 }
 
+void SketchWidget::addIconViewLayers() {
+	setViewLayerIDs(ViewLayer::Icon, ViewLayer::Icon, ViewLayer::Icon, ViewLayer::Icon, ViewLayer::Icon);
+	addViewLayersAux(ViewIdentifierClass::layersForView(ViewIdentifierClass::IconView));
+}
+
 void SketchWidget::addSchematicViewLayers() {
 	setViewLayerIDs(ViewLayer::Schematic, ViewLayer::SchematicTrace, ViewLayer::Schematic, ViewLayer::SchematicRuler, ViewLayer::SchematicNote);
 	addViewLayersAux(ViewIdentifierClass::layersForView(ViewIdentifierClass::SchematicView));

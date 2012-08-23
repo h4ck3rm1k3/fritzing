@@ -31,6 +31,18 @@ $Date: 2011-07-27 15:02:24 +0200 (Wed, 27 Jul 2011) $
 
 #include "../mainwindow.h"
 #include "../model/modelpartshared.h"
+#include "../sketch/sketchwidget.h"
+
+class IconSketchWidget : public SketchWidget
+{
+	Q_OBJECT
+
+public:
+    IconSketchWidget(ViewIdentifierClass::ViewIdentifier, QWidget *parent=0);
+
+	void addViewLayers();
+};
+
 
 class PEMainWindow : public MainWindow
 {
@@ -40,7 +52,7 @@ public:
 	PEMainWindow(class PaletteModel * paletteModel, class ReferenceModel * referenceModel, QWidget * parent);
 	~PEMainWindow();
 
-    void setInitialModuleID(const QString & moduleID);
+    void setInitialItem(class PaletteItem *);
 
 protected:
 	void closeEvent(QCloseEvent * event);
@@ -67,6 +79,7 @@ protected:
 protected slots:
     void initZoom();
     void showMetadataView();
+    void showIconView();
 
 protected:
     QDomDocument m_fzpDocument;
@@ -75,8 +88,13 @@ protected:
     QDomDocument m_schematicDocument;
     QDomDocument m_pcbDocument;
 
-    class MetadataView * m_metadataView;
     QAction * m_showMetadataAct;
+    QAction * m_showIconAct;
+
+	QPointer<SketchAreaWidget> m_iconWidget;
+	QPointer<class IconSketchWidget> m_iconGraphicsView;
+    class MetadataView * m_metadataView;
+
 };
 
 #endif /* PEMAINWINDOW_H_ */

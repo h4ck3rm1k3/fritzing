@@ -55,8 +55,8 @@ protected slots:
     void titleEntry();
     void authorEntry();
     void descrEntry();
-
-
+    void labelEntry();
+    void familyEntry();
 
 };
 

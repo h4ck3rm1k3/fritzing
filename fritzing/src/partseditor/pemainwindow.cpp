@@ -93,13 +93,16 @@ $Date: 2012-08-20 14:36:09 +0200 (Mon, 20 Aug 2012) $
 
     nudge via arrow keys
 
+    taxonomy?
 
+    new schematic layout specs
+
+    deal with modified svgs (pin labels, chip label, pin size, etc...)
+
+    disable family entry?  should always be "custom_"  + original family (unless it already starts with custom_)
 
 
 ***************************************************/
-
-
-
 
 #include "pemainwindow.h"
 #include "metadataview.h"
@@ -108,6 +111,7 @@ $Date: 2012-08-20 14:36:09 +0200 (Mon, 20 Aug 2012) $
 #include "../sketch/breadboardsketchwidget.h"
 #include "../sketch/schematicsketchwidget.h"
 #include "../sketch/pcbsketchwidget.h"
+#include "../sketchareawidget.h"
 #include "../referencemodel/referencemodel.h"
 
 
@@ -117,6 +121,21 @@ $Date: 2012-08-20 14:36:09 +0200 (Mon, 20 Aug 2012) $
 	#define CORE_EDITION_ENABLED false
 #endif
 
+////////////////////////////////////////////////////
+
+IconSketchWidget::IconSketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, QWidget *parent)
+    : SketchWidget(viewIdentifier, parent)
+{
+	m_shortName = QObject::tr("ii");
+	m_viewName = QObject::tr("Icon View");
+	initBackgroundColor();
+}
+
+void IconSketchWidget::addViewLayers() {
+	addIconViewLayers();
+}
+
+/////////////////////////////////////////////////////
 
 PEMainWindow::PEMainWindow(PaletteModel * paletteModel, ReferenceModel * referenceModel, QWidget * parent)
 	: MainWindow(paletteModel, referenceModel, parent)
@@ -138,8 +157,16 @@ void PEMainWindow::initLockedFiles(bool) {
 void PEMainWindow::initSketchWidgets()
 {
     MainWindow::initSketchWidgets();
+
+	m_iconGraphicsView = new IconSketchWidget(ViewIdentifierClass::IconView, this);
+	initSketchWidget(m_iconGraphicsView);
+	m_iconWidget = new SketchAreaWidget(m_iconGraphicsView,this);
+	m_tabWidget->addWidget(m_iconWidget);
+    initSketchWidget(m_iconGraphicsView);
+
     m_metadataView = new MetadataView(this);
-	m_tabWidget->addWidget(m_metadataView);
+	SketchAreaWidget * sketchAreaWidget = new SketchAreaWidget(m_metadataView, this);
+	m_tabWidget->addWidget(sketchAreaWidget);
 }
 
 void PEMainWindow::initDock()
@@ -198,13 +225,21 @@ QMenu *PEMainWindow::pcbItemMenu() {
     return NULL;
 }
 
-void PEMainWindow::setInitialModuleID(const QString & moduleID) {
+void PEMainWindow::setInitialItem(PaletteItem * paletteItem) {
+    ModelPart * modelPart = NULL;
+
+    if (paletteItem == NULL) {
+        modelPart = m_paletteModel->retrieveModelPart("generic_ic_dip_8_300mil");
+    }
+    else {
+        modelPart = paletteItem->modelPart();
+    }
 
     long newID = ItemBase::getNextID();
 	ViewGeometry viewGeometry;
 	viewGeometry.setLoc(QPointF(0, 0));
 
-    ModelPart * modelPart = m_paletteModel->retrieveModelPart(moduleID);
+    m_iconGraphicsView->addItem(modelPart, m_iconGraphicsView->defaultViewLayerSpec(), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
     m_breadboardGraphicsView->addItem(modelPart, m_breadboardGraphicsView->defaultViewLayerSpec(), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
     m_schematicGraphicsView->addItem(modelPart, m_schematicGraphicsView->defaultViewLayerSpec(), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
     m_pcbGraphicsView->addItem(modelPart, m_pcbGraphicsView->defaultViewLayerSpec(), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
@@ -224,6 +259,7 @@ void PEMainWindow::initZoom() {
     m_breadboardGraphicsView->fitInWindow();
     m_schematicGraphicsView->fitInWindow();
     m_pcbGraphicsView->fitInWindow();
+    m_iconGraphicsView->fitInWindow();
 }
 
 void PEMainWindow::setTitle() {
@@ -233,9 +269,14 @@ void PEMainWindow::setTitle() {
 void PEMainWindow::createViewMenuActions() {
     MainWindow::createViewMenuActions();
 
-	m_showMetadataAct = new QAction(tr("&Show Metatdata"), this);
-	m_showMetadataAct->setShortcut(tr("Ctrl+4"));
-	m_showMetadataAct->setStatusTip(tr("Show the breadboard view"));
+	m_showIconAct = new QAction(tr("Show Icon"), this);
+	m_showIconAct->setShortcut(tr("Ctrl+4"));
+	m_showIconAct->setStatusTip(tr("Show the icon view"));
+	connect(m_showIconAct, SIGNAL(triggered()), this, SLOT(showIconView()));
+
+	m_showMetadataAct = new QAction(tr("Show Metatdata"), this);
+	m_showMetadataAct->setShortcut(tr("Ctrl+5"));
+	m_showMetadataAct->setStatusTip(tr("Show the metadata view"));
 	connect(m_showMetadataAct, SIGNAL(triggered()), this, SLOT(showMetadataView()));
 }
 
@@ -248,6 +289,7 @@ void PEMainWindow::createViewMenu() {
             afterNext = true;
         }
         else if (afterNext) {
+            m_viewMenu->insertAction(action, m_showIconAct);
             m_viewMenu->insertAction(action, m_showMetadataAct);
             break;
         }
@@ -255,5 +297,9 @@ void PEMainWindow::createViewMenu() {
 }
 
 void PEMainWindow::showMetadataView() {
+    this->m_tabWidget->setCurrentIndex(4);
+}
+
+void PEMainWindow::showIconView() {
     this->m_tabWidget->setCurrentIndex(3);
 }

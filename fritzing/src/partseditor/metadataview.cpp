@@ -88,6 +88,12 @@ MetadataView::MetadataView(QWidget * parent) : QScrollArea(parent)
     descrEdit->setStatusTip(tr("Set the part's description--you can use simple html (as defined by Qt's Rich Text)"));
     formLayout->addRow(tr("Description"), descrEdit);
 
+    QLineEdit * labelEdit = new QLineEdit();
+	connect(labelEdit, SIGNAL(editingFinished()), this, SLOT(labelEntry()));
+	labelEdit->setObjectName("PartsEditorLineEdit");
+    labelEdit->setStatusTip(tr("Set the default part label prefix"));
+    formLayout->addRow(tr("Label"), labelEdit);
+
     QLineEdit * familyEdit = new QLineEdit();
 	connect(familyEdit, SIGNAL(editingFinished()), this, SLOT(familyEntry()));
 	familyEdit->setObjectName("PartsEditorLineEdit");
@@ -127,6 +133,14 @@ void MetadataView::authorEntry() {
 
 void MetadataView::descrEntry() {
     DebugDialog::debug("descr entry");
+}
+
+void MetadataView::labelEntry() {
+    DebugDialog::debug("label entry");
+}
+
+void MetadataView::familyEntry() {
+    DebugDialog::debug("family entry");
 }
 
 

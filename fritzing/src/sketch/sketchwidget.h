@@ -182,6 +182,7 @@ public:
 	void addPcbViewLayers();
 	void addSchematicViewLayers();
 	void addBreadboardViewLayers();
+	void addIconViewLayers();
 
 	void changeWireColor(long wireId, const QString& color, double opacity);
 	void changeWireWidth(long wireId, double width);

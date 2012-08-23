@@ -32,18 +32,18 @@ $Date$
 
 const QString SketchAreaWidget::RoutingStateLabelName = "routingStateLabel";
 
-SketchAreaWidget::SketchAreaWidget(SketchWidget *graphicsView, QMainWindow *parent)
+SketchAreaWidget::SketchAreaWidget(QWidget *contentView, QMainWindow *parent)
 	: QFrame(parent)
 {
-	m_graphicsView = graphicsView;
-	graphicsView->setParent(this);
+	m_contentView = contentView;
+	contentView->setParent(this);
 
 	createLayout();
 
 	QVBoxLayout *layout = new QVBoxLayout(this);
 	layout->setMargin(0);
 	layout->setSpacing(0);
-	layout->addWidget(m_graphicsView);
+	layout->addWidget(contentView);
 	layout->addWidget(m_toolbar);
 	layout->addWidget(m_statusBarArea);
 	m_statusBarArea->setFixedHeight(parent->statusBar()->height()*3/4);
@@ -53,12 +53,8 @@ SketchAreaWidget::~SketchAreaWidget() {
 	// TODO Auto-generated destructor stub
 }
 
-ViewIdentifierClass::ViewIdentifier SketchAreaWidget::viewIdentifier() {
-	return m_graphicsView->viewIdentifier();
-}
-
-SketchWidget *SketchAreaWidget::graphicsView() {
-	return m_graphicsView;
+QWidget *SketchAreaWidget::contentView() {
+	return m_contentView;
 }
 
 void SketchAreaWidget::createLayout() {
