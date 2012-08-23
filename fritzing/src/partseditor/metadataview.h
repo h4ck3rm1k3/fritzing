@@ -34,6 +34,7 @@ $Date: 2012-07-04 15:38:22 +0200 (Wed, 04 Jul 2012) $
 #include <QLabel>
 #include <QScrollArea>
 #include <QGridLayout>
+#include <QFormLayout>
 #include <QVBoxLayout>
 #include <QComboBox>
 #include <QCheckBox>

@@ -87,7 +87,6 @@ class HashPopulateWidget : public QFrame {
 		HashPopulateWidget(const QString & title, const QHash<QString,QString> &initValues, const QStringList &readOnlyKeys, QUndoStack *undoStack, bool keysOnly, QWidget *parent);
 		const QHash<QString,QString> & hash();
 		HashLineEdit* lineEditAt(int row, int col);
-        void reinit(const QString & title, const QHash<QString,QString> &initValues, const QStringList &readOnlyKeys, bool keysOnly, QGridLayout *);
 
 	protected slots:
 		void lastRowEditionCompleted();

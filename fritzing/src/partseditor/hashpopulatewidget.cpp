@@ -92,28 +92,14 @@ void HashLineEdit::focusOutEvent(QFocusEvent * event) {
 
 HashPopulateWidget::HashPopulateWidget(const QString & title, const QHash<QString,QString> &initValues, const QStringList &readOnlyKeys, QUndoStack *undoStack, bool keysOnly, QWidget *parent) : QFrame(parent) {
     m_undoStack = undoStack;
-	QGridLayout *layout = new QGridLayout();
-	layout->setColumnStretch(0,0);
-	layout->setColumnStretch(1,1);
-	layout->setColumnStretch(2,0);
-
-    reinit(title, initValues, readOnlyKeys, keysOnly, layout);
-	this->setLayout(layout);  
-}
-
-void HashPopulateWidget::reinit(const QString & title, const QHash<QString, QString> &initValues, const QStringList &readOnlyKeys, bool keysOnly, QGridLayout * layout)
-{
-    if (layout == NULL) layout = gridLayout(); 
-    while (layout->count() > 0) {
-        QWidget* widget = layout->itemAt(0)->widget();
-        layout->removeWidget(widget);
-        delete widget;
-    }
-
     m_keysOnly = keysOnly;
 	m_lastLabel = NULL;
 	m_lastValue = NULL;
 
+    QGridLayout *layout = new QGridLayout();
+	layout->setColumnStretch(0,0);
+	layout->setColumnStretch(1,1);
+	layout->setColumnStretch(2,0);
 
     if (!title.isEmpty()) {
 	    layout->addWidget(new QLabel(title),0,0,0);
@@ -142,6 +128,8 @@ void HashPopulateWidget::reinit(const QString & title, const QHash<QString, QStr
 
 	addRow(layout);
 
+
+	this->setLayout(layout);  
 }
 
 HashRemoveButton *HashPopulateWidget::createRemoveButton(HashLineEdit* label, HashLineEdit* value) {
