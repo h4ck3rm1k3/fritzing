@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-LED-LED_RING-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-LED' LED_RING  -->
 <version>4</version>
-<date>2012-08-17</date>
+<date>2012-08-23</date>
 <label>LED</label>
 <author>www.fritzing.org</author>
 <description>&lt;h3&gt;16 LED Ring&lt;/h3&gt;
@@ -36,7 +36,7 @@ http://dlnmh9ip6v2uc.cloudfront.net/datasheets/Components/LED/Top-Up%20LED%20Rin
 </layers>
 </pcbView>
 <iconView>
-<layers image='breadboard/sparkfun-led_led_ring_breadboard.svg'>
+<layers image='icon/LED_RING.svg'>
 <layer layerId='icon'/>
 </layers>
 </iconView>

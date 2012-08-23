@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-PowerIC-ADM1087-SC-70'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-PowerIC' ADM1087 SC-70 -->
 <version>4</version>
-<date>2012-08-17</date>
+<date>2012-08-23</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>The ADM1085-ADM1088 are Simple Sequencing™ circuits which provide a time delay between the enabling of voltage regulators at power-up in multiple supply systems. When the output voltage of the first regulator reaches a preset threshold, a time delay is initiated before an enable signal allows subsequent regulators to power-up. Any number of these devices can be cascaded with regulators to allow sequencing of multiple power supplies.

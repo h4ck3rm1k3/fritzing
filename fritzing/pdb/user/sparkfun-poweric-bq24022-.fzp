@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-PowerIC-BQ24022-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-PowerIC' BQ24022  -->
 <version>4</version>
-<date>2012-08-17</date>
+<date>2012-08-23</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Single-chip, Li-ion and Li-pol charger IC with autonomous USB-port and AC-adapter supply management.&lt;br&gt;
