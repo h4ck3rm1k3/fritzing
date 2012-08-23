@@ -33,20 +33,18 @@ $Date$
 #include <QHash>
 #include <QLineEdit>
 #include <QGridLayout>
-#include <QUndoStack>
 
 #include "baseremovebutton.h"
 
 class HashLineEdit : public QLineEdit {
 	Q_OBJECT
 	public:
-		HashLineEdit(QUndoStack *undoStack, const QString &text, bool defaultValue = false, QWidget *parent = 0);
+		HashLineEdit(const QString &text, bool defaultValue = false, QWidget *parent = 0);
 		bool hasChanged();
 		QString textIfSetted();
 
 	protected slots:
 		void updateObjectName();
-		void updateStackState();
 
 	protected:
 		void mousePressEvent(QMouseEvent * event);
@@ -54,7 +52,6 @@ class HashLineEdit : public QLineEdit {
 
 		QString m_firstText;
 		bool m_isDefaultValue;
-		QUndoStack *m_undoStack;
 };
 
 class HashRemoveButton : public BaseRemoveButton {
@@ -84,16 +81,18 @@ class HashRemoveButton : public BaseRemoveButton {
 class HashPopulateWidget : public QFrame {
 	Q_OBJECT
 	public:
-		HashPopulateWidget(const QString & title, const QHash<QString,QString> &initValues, const QStringList &readOnlyKeys, QUndoStack *undoStack, bool keysOnly, QWidget *parent);
+		HashPopulateWidget(const QString & title, const QHash<QString,QString> &initValues, const QStringList &readOnlyKeys, bool keysOnly, QWidget *parent);
 		const QHash<QString,QString> & hash();
 		HashLineEdit* lineEditAt(int row, int col);
 
 	protected slots:
 		void lastRowEditionCompleted();
 		void removeRow(HashRemoveButton*);
+        void lineEditChanged();
 
 	signals:
 		void editionStarted();
+        void changed();
 
 	protected:
 		void addRow(QGridLayout *layout = 0);
@@ -105,7 +104,6 @@ class HashPopulateWidget : public QFrame {
 		HashLineEdit *m_lastLabel;
 		HashLineEdit *m_lastValue;
 
-		QUndoStack *m_undoStack;
         bool m_keysOnly;
 };
 

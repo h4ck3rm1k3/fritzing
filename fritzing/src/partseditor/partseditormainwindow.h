@@ -71,6 +71,7 @@ public slots:
 
 protected slots:
 	void updateDateAndAuthor();
+    void propertiesChanged();
 
 protected:
 	bool saveAs();

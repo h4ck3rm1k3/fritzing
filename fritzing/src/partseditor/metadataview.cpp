@@ -192,12 +192,12 @@ void MetadataView::initMetadata(const QDomDocument & doc) {
     m_familyEdit->setEnabled(false);
     formLayout->addRow(tr("Family"), m_familyEdit);
 
-    m_propertiesEdit = new HashPopulateWidget("", propertyHash, readOnlyKeys, NULL, false, this);
+    m_propertiesEdit = new HashPopulateWidget("", propertyHash, readOnlyKeys, false, this);
 	m_propertiesEdit->setObjectName("PartsEditorPropertiesEdit");
     m_propertiesEdit->setStatusTip(tr("Set the part's properties"));
     formLayout->addRow(tr("Properties"), m_propertiesEdit);
 
-    m_tagsEdit = new HashPopulateWidget("", tagHash, readOnlyKeys, NULL, true, this);
+    m_tagsEdit = new HashPopulateWidget("", tagHash, readOnlyKeys, true, this);
 	m_tagsEdit->setObjectName("PartsEditorPropertiesEdit");
     m_tagsEdit->setStatusTip(tr("Set the part's tags"));
     formLayout->addRow(tr("Tags"), m_tagsEdit);

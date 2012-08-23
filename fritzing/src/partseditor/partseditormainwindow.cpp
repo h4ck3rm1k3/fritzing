@@ -309,7 +309,8 @@ void PartsEditorMainWindow::createCenter(ModelPart *modelPart, ItemBase * fromIt
 		//initValues["type"] = "Through-Hole";
 	}
 
-	m_properties = new HashPopulateWidget(tr("Properties"),initValues,readOnlyKeys,m_undoStack,false, this);
+	m_properties = new HashPopulateWidget(tr("Properties"),initValues,readOnlyKeys,false, this);
+    connect(m_properties, SIGNAL(changed()), this, SLOT(propertiesChanged()));
 
 	QString tags = modelPart ? modelPart->tags().join(", ") : TagsFreshStartText;
 	m_tags = new EditableLineWidget(tags,m_undoStack,this,tr("Tags"),modelPart);
@@ -828,3 +829,8 @@ QStringList PartsEditorMainWindow::getExtensions() {
 	return extensions;
 }
 
+void PartsEditorMainWindow::propertiesChanged() {
+    if (m_undoStack) {
+	    m_undoStack->push(new QUndoCommand("dummy parts editor command"));
+    }
+}

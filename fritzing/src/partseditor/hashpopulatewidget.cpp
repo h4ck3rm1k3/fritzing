@@ -32,7 +32,9 @@ $Date$
 #include "../debugdialog.h"
 #include "../utils/misc.h"
 
-HashLineEdit::HashLineEdit(QUndoStack *undoStack, const QString &text, bool defaultValue, QWidget *parent) : QLineEdit(text, parent) {
+HashLineEdit::HashLineEdit(const QString &text, bool defaultValue, QWidget *parent) : QLineEdit(text, parent) 
+{
+    connect(this, SIGNAL(editingFinished()), parent, SLOT(lineEditChanged()));
 	m_firstText = text;
 	m_isDefaultValue = defaultValue;
 	if(defaultValue) {
@@ -41,9 +43,6 @@ HashLineEdit::HashLineEdit(QUndoStack *undoStack, const QString &text, bool defa
 	} else {
 		setStyleSheet("font-style: normal;");
 	}
-	m_undoStack = undoStack;
-
-	connect(this,SIGNAL(editingFinished()),this,SLOT(updateStackState()));
 }
 
 QString HashLineEdit::textIfSetted() {
@@ -61,14 +60,6 @@ void HashLineEdit::updateObjectName() {
 		} else {
 			setStyleSheet("font-style: normal;");
 		}
-	}
-}
-
-void HashLineEdit::updateStackState() {
-	if(hasChanged()) {
-        if (m_undoStack) {
-		    m_undoStack->push(new QUndoCommand("dummy parts editor command"));
-        }
 	}
 }
 
@@ -90,8 +81,7 @@ void HashLineEdit::focusOutEvent(QFocusEvent * event) {
 	QLineEdit::focusOutEvent(event);
 }
 
-HashPopulateWidget::HashPopulateWidget(const QString & title, const QHash<QString,QString> &initValues, const QStringList &readOnlyKeys, QUndoStack *undoStack, bool keysOnly, QWidget *parent) : QFrame(parent) {
-    m_undoStack = undoStack;
+HashPopulateWidget::HashPopulateWidget(const QString & title, const QHash<QString,QString> &initValues, const QStringList &readOnlyKeys, bool keysOnly, QWidget *parent) : QFrame(parent) {
     m_keysOnly = keysOnly;
 	m_lastLabel = NULL;
 	m_lastValue = NULL;
@@ -109,8 +99,8 @@ HashPopulateWidget::HashPopulateWidget(const QString & title, const QHash<QStrin
 	qSort(keys);
 
 	for(int i=0; i < keys.count(); i++) {
-		HashLineEdit *name = new HashLineEdit(m_undoStack,keys[i],false,this);
-        HashLineEdit *value = new HashLineEdit(m_undoStack,initValues[keys[i]],false,this);
+		HashLineEdit *name = new HashLineEdit(keys[i],false,this);
+        HashLineEdit *value = new HashLineEdit(initValues[keys[i]],false,this);
         if (m_keysOnly) value->hide();
 
         int ix = layout->rowCount();
@@ -179,11 +169,11 @@ void HashPopulateWidget::addRow(QGridLayout *layout) {
 
     int ix = layout->rowCount();
 
-	m_lastLabel = new HashLineEdit(m_undoStack,QObject::tr("a label"),true,this);
+	m_lastLabel = new HashLineEdit(QObject::tr("a label"),true,this);
 	layout->addWidget(m_lastLabel,ix,0);
 	connect(m_lastLabel,SIGNAL(editingFinished()),this,SLOT(lastRowEditionCompleted()));
 
-	m_lastValue = new HashLineEdit(m_undoStack,QObject::tr("a value"),true,this);
+	m_lastValue = new HashLineEdit(QObject::tr("a value"),true,this);
 	layout->addWidget(m_lastValue,ix,1,1,2);
 	connect(m_lastValue,SIGNAL(editingFinished()),this,SLOT(lastRowEditionCompleted()));
     if (m_keysOnly) m_lastValue->hide();
@@ -214,9 +204,6 @@ void HashPopulateWidget::lastRowEditionCompleted() {
 }
 
 void HashPopulateWidget::removeRow(HashRemoveButton* button) {
-    if (m_undoStack) {
-	    m_undoStack->push(new QUndoCommand("dummy parts editor command"));
-    }
 	QLayout *lo = layout();
 	QList<QWidget*> widgs;
 	widgs << button->label() << button->value() << button;
@@ -226,4 +213,9 @@ void HashPopulateWidget::removeRow(HashRemoveButton* button) {
         //delete w;
 	}
 	lo->update();
+    emit changed();
+}
+
+void HashPopulateWidget::lineEditChanged() {
+    emit changed();
 }
