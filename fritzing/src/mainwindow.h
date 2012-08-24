@@ -37,7 +37,7 @@ $Date$
 #include <QSizeGrip>
 #include <QProcess>
 #include <QDockWidget>
-#include <QXMLStreamWriter>
+#include <QXmlStreamWriter>
 
 #include "fritzingwindow.h"
 #include "sketchareawidget.h"
