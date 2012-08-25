@@ -254,6 +254,7 @@ void SketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseComma
 		sceneCorner.setY(sceneCenter.y() - (boundingRect->height() / 2));
 	}
 
+    QList<ModelPart *> zeroLength;
 	// make parts
 	foreach (ModelPart * mp, modelParts) {
 		QDomElement instance = mp->instanceDomElement();
@@ -271,6 +272,16 @@ void SketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseComma
 		if (geometry.isNull()) continue;
 
 		ViewGeometry viewGeometry(geometry);
+        if (mp->itemType() == ModelPart::Wire) {
+            QLineF l = viewGeometry.line();
+            if (l.p1().x() == 0 && l.p1().y() == 0 && l.p2().x() == 0 && l.p2().y() == 0) {  
+                if (view.firstChildElement("connectors").isNull() && view.nextSiblingElement().isNull()) {
+                    DebugDialog::debug(QString("wire has zero length %1 in %2").arg(mp->moduleID()).arg(m_viewIdentifier));
+                    zeroLength.append(mp);
+                    continue;
+                }
+            }
+        }
 
 		QDomElement labelGeometry = view.firstChildElement("titleGeometry");
 		
@@ -401,6 +412,12 @@ void SketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseComma
 		}
 	}
 
+    foreach (ModelPart * mp, zeroLength) {
+        modelParts.removeOne(mp);
+        m_sketchModel->removeModelPart(mp);
+        delete mp;
+    }
+
 	foreach (long id, newIDs) {
 		new CheckStickyCommand(this, crossViewType, id, false, CheckStickyCommand::RemoveOnly, parentCommand);
 	}
@@ -432,7 +449,9 @@ void SketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseComma
 		if (view.isNull()) continue;
 
 		QDomElement connectors = view.firstChildElement("connectors");
-		if (connectors.isNull()) continue;
+		if (connectors.isNull()) {
+            continue;
+        }
 
 		QDomElement connector = connectors.firstChildElement("connector");
 		while (!connector.isNull()) {
@@ -510,6 +529,8 @@ void SketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseComma
 			bIndex++;
 		}
 	}
+
+
 
 	if (parentCommand == NULL) {
 		foreach (ItemBase * item, newItems) {

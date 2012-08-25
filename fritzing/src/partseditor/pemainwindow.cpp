@@ -44,6 +44,11 @@ $Date: 2012-08-20 14:36:09 +0200 (Mon, 20 Aug 2012) $
         if any are invisible, tell user this is obsolete
 
     allow user to select connectors by driving through svg elements
+    
+    move connectors with arrow keys, or typed coordinates
+	drag and drop later
+	
+    connector metadata as palette?
 
     eagle lbr
     eagle brd
@@ -79,13 +84,18 @@ $Date: 2012-08-20 14:36:09 +0200 (Mon, 20 Aug 2012) $
 
     smd vs. tht
 
-    buses: connect bus by drawing a wire...
+    buses 
+        connect bus by drawing a wire
+        can this be modal? i.e. turn bus mode on and off
 
     bendable legs
 
     flip and rotate
 
     terminal points
+        display as part of connectorItem
+        move only with arrow keys (maybe cntl-arrow if arrow is used for connector)
+        give presets: center, N, E, S, W, NE, NW, SE, SW
 
     undo/redo as xml file: use index + guid for uniqueness
 
