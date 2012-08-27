@@ -2,20 +2,20 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-SCANTOOL-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DigitalIC' SCANTOOL  -->
 <version>4</version>
-<date>2012-08-23</date>
+<date>2012-08-27</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;h1&gt;STN1110 - Multiprotocol OBD II to UART Interpreter, QFN Package&lt;/h1&gt;
 
 &lt;p&gt;
 &lt;table&gt;
-&lt;tr&gt;&lt;td&gt;&lt;h2&gt;Change Log&lt;/h2&gt;&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;
-&lt;th&gt;Date&lt;/th&gt;&lt;th&gt;Author&lt;/th&gt;&lt;th&gt;Change&lt;/th&gt;
-&lt;tr&gt;
-&lt;td&gt;Aug 23, 2010&lt;/td&gt;&lt;td&gt;vit@scantool.net&lt;/td&gt;&lt;td&gt;Created device&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;h2&gt;Change Log&lt;/h2&gt;&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;th&gt;Date&lt;/th&gt;&lt;th&gt;Author&lt;/th&gt;&lt;th&gt;Change&lt;/th&gt;
+  &lt;tr&gt;
+    &lt;td&gt;Aug 23, 2010&lt;/td&gt;&lt;td&gt;vit@scantool.net&lt;/td&gt;&lt;td&gt;Created device&lt;/td&gt;
+  &lt;/tr&gt;
+ &lt;/tr&gt;
 &lt;/table&gt;
 &lt;/p&gt;
 

@@ -2,12 +2,12 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-DCM01-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Sensors' DCM01  -->
 <version>4</version>
-<date>2012-08-23</date>
+<date>2012-08-27</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;DCM01 Reflective Blood Sensor&lt;/b&gt;&lt;br&gt;
 UNPROVEN&lt;br&gt;
-Sensor head for Pulse Oximeter. Contains IR and visible red LEDs, and PIN photodiode.&lt;br&gt;
+Sensor head for Pulse Oximeter.  Contains IR and visible red LEDs, and PIN photodiode.&lt;br&gt;
 &lt;href=http://www.apmkr.com/bio-device/DCM01_datasheet.pdf&gt;http://www.apmkr.com/bio-device/DCM01_datasheet.pdf&lt;/a&gt;</description>
 <title>DCM01 Reflective Blood Sensor</title>
 <tags>
