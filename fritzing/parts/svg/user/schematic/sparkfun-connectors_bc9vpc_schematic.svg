@@ -12,13 +12,13 @@
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='2.3114' x='0' y='9' text-anchor='start'>&gt;NAME</text>
 <line class='pin' id='connector0pin' connectorname='V+' x1='10.16' y1='4.936' x2='10.16' y2='10.016' stroke='#555555' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector0terminal' x='10.16' y='4.936' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<g transform='translate(10.4648,10.4732)'><g transform='rotate(270)'>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='0' y='0' text-anchor='end'>V+</text>
+<g transform='translate(10.0076,7.476)'><g transform='rotate(270)'>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='0' y='0' text-anchor='middle'>1</text>
 </g></g>
 <line class='pin' id='connector1pin' connectorname='V-' x1='10.16' y1='22.716' x2='10.16' y2='17.636' stroke='#555555' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector1terminal' x='10.16' y='22.716' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<g transform='translate(10.4648,17.1788)'><g transform='rotate(270)'>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='0' y='0' text-anchor='start'>V-</text>
+<g transform='translate(10.0076,20.176)'><g transform='rotate(270)'>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='0' y='0' text-anchor='middle'>2</text>
 </g></g>
 </g>
 </svg>

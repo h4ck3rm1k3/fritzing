@@ -305,7 +305,7 @@ protected:
 	void saveLocAndTransform(QXmlStreamWriter & streamWriter);
     QPixmap * getPixmap(ViewIdentifierClass::ViewIdentifier, bool swappingEnabled, QSize size);
     virtual ViewIdentifierClass::ViewIdentifier useViewIdentifierForPixmap(ViewIdentifierClass::ViewIdentifier, bool swappingEnabled);
-    virtual void makeLocalMods(QByteArray & svg, const QString & filename);
+    virtual void makeLocalModifications(QByteArray & svg, const QString & filename);
 
 protected:
 	static bool getFlipDoc(ModelPart * modelPart, const QString & filename, ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec, QDomDocument &);

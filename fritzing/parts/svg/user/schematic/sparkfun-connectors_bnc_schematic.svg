@@ -8,11 +8,11 @@
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='2.3114' x='5.207' y='9' text-anchor='start'>OUT</text>
 <line class='pin' id='connector1pin' connectorname='OUT' x1='7.747' y1='9' x2='2.667' y2='9' stroke='#555555' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector1terminal' x='7.747' y='9' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='2.2098' y='9.3048' text-anchor='end'>OUT</text>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='5.207' y='8.8476' text-anchor='middle'>2</text>
 <line class='pin' id='connector0pin' connectorname='GND' x1='2.667' y1='14.08' x2='2.667' y2='11.54' stroke='#555555' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector0terminal' x='2.667' y='14.08' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<g transform='translate(2.9718,11.0828)'><g transform='rotate(270)'>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='0' y='0' text-anchor='start'>GND</text>
+<g transform='translate(2.5146,12.81)'><g transform='rotate(270)'>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='0' y='0' text-anchor='middle'>1</text>
 </g></g>
 </g>
 </svg>

@@ -10,18 +10,18 @@
 </g></g>
 <line class='pin' id='connector0pin' connectorname='D+' x1='0.0762' y1='27.904' x2='2.6162' y2='27.904' stroke='#555555' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector0terminal' x='0.0762' y='27.904' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='3.0734' y='28.2088' text-anchor='start'>D+</text>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='1.3462' y='27.7516' text-anchor='middle'>1</text>
 <line class='pin' id='connector1pin' connectorname='D-' x1='0.0762' y1='30.444' x2='2.6162' y2='30.444' stroke='#555555' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector1terminal' x='0.0762' y='30.444' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='3.0734' y='30.7488' text-anchor='start'>D-</text>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='1.3462' y='30.2916' text-anchor='middle'>2</text>
 <line class='pin' id='connector4pin' connectorname='VBUS' x1='0.0762' y1='32.984' x2='2.6162' y2='32.984' stroke='#555555' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector4terminal' x='0.0762' y='32.984' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='3.0734' y='33.2888' text-anchor='start'>VBUS</text>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='1.3462' y='32.8316' text-anchor='middle'>5</text>
 <line class='pin' id='connector2pin' connectorname='GND' x1='0.0762' y1='22.824' x2='2.6162' y2='22.824' stroke='#555555' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector2terminal' x='0.0762' y='22.824' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='3.0734' y='23.1288' text-anchor='start'>GND</text>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='1.3462' y='22.6716' text-anchor='middle'>3</text>
 <line class='pin' id='connector3pin' connectorname='USBID' x1='0.0762' y1='25.364' x2='2.6162' y2='25.364' stroke='#555555' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector3terminal' x='0.0762' y='25.364' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='3.0734' y='25.6688' text-anchor='start'>USBID</text>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='1.3462' y='25.2116' text-anchor='middle'>4</text>
 </g>
 </svg>

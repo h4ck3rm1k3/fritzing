@@ -34,45 +34,45 @@
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='2.3114' x='11.5062' y='37.956' text-anchor='start'>&gt;VALUE</text>
 <line class='pin' id='connector1pin' connectorname='A' x1='33.0962' y1='14.842' x2='28.0162' y2='14.842' stroke='#555555' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector1terminal' x='33.0962' y='14.842' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='27.559' y='15.1468' text-anchor='end'>A</text>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='30.5562' y='14.6896' text-anchor='middle'>2</text>
 <line class='pin' id='connector2pin' connectorname='B' x1='33.0962' y1='17.382' x2='28.0162' y2='17.382' stroke='#555555' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector2terminal' x='33.0962' y='17.382' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='27.559' y='17.6868' text-anchor='end'>B</text>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='30.5562' y='17.2296' text-anchor='middle'>3</text>
 <line class='pin' id='connector13pin' connectorname='Z' x1='33.0962' y1='25.002' x2='28.0162' y2='25.002' stroke='#555555' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector13terminal' x='33.0962' y='25.002' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='27.559' y='25.3068' text-anchor='end'>Z</text>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='30.5562' y='24.8496' text-anchor='middle'>14</text>
 <line class='pin' id='connector12pin' connectorname='Y' x1='33.0962' y1='27.542' x2='28.0162' y2='27.542' stroke='#555555' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector12terminal' x='33.0962' y='27.542' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='27.559' y='27.8468' text-anchor='end'>Y</text>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='30.5562' y='27.3896' text-anchor='middle'>13</text>
 <line class='pin' id='connector10pin' connectorname='R' x1='0.0762' y1='17.382' x2='5.1562' y2='17.382' stroke='#555555' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector10terminal' x='0.0762' y='17.382' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='5.6134' y='17.6868' text-anchor='start'>R</text>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='2.6162' y='17.2296' text-anchor='middle'>11</text>
 <line class='pin' id='connector0pin' connectorname='/RE' x1='0.0762' y1='19.922' x2='5.1562' y2='19.922' stroke='#555555' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector0terminal' x='0.0762' y='19.922' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='5.6134' y='20.2268' text-anchor='start'>/RE</text>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='2.6162' y='19.7696' text-anchor='middle'>1</text>
 <line class='pin' id='connector4pin' connectorname='DE' x1='0.0762' y1='25.002' x2='5.1562' y2='25.002' stroke='#555555' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector4terminal' x='0.0762' y='25.002' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='5.6134' y='25.3068' text-anchor='start'>DE</text>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='2.6162' y='24.8496' text-anchor='middle'>5</text>
 <line class='pin' id='connector3pin' connectorname='D' x1='0.0762' y1='27.542' x2='5.1562' y2='27.542' stroke='#555555' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector3terminal' x='0.0762' y='27.542' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='5.6134' y='27.8468' text-anchor='start'>D</text>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='2.6162' y='27.3896' text-anchor='middle'>4</text>
 <line class='pin' id='connector5pin' connectorname='GND1' x1='0.0762' y1='30.082' x2='5.1562' y2='30.082' stroke='#555555' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector5terminal' x='0.0762' y='30.082' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='5.6134' y='30.3868' text-anchor='start'>GND1</text>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='2.6162' y='29.9296' text-anchor='middle'>6</text>
 <line class='pin' id='connector6pin' connectorname='GND2' x1='0.0762' y1='32.622' x2='5.1562' y2='32.622' stroke='#555555' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector6terminal' x='0.0762' y='32.622' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='5.6134' y='32.9268' text-anchor='start'>GND2</text>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='2.6162' y='32.4696' text-anchor='middle'>7</text>
 <line class='pin' id='connector11pin' connectorname='VCC' x1='33.0962' y1='12.302' x2='28.0162' y2='12.302' stroke='#555555' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector11terminal' x='33.0962' y='12.302' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='27.559' y='12.6068' text-anchor='end'>VCC</text>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='30.5562' y='12.1496' text-anchor='middle'>12</text>
 <line class='pin' id='connector8pin' connectorname='NC2' x1='0.0762' y1='14.842' x2='5.1562' y2='14.842' stroke='#555555' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector8terminal' x='0.0762' y='14.842' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='5.6134' y='15.1468' text-anchor='start'>NC2</text>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='2.6162' y='14.6896' text-anchor='middle'>9</text>
 <line class='pin' id='connector7pin' connectorname='NC1' x1='0.0762' y1='12.302' x2='5.1562' y2='12.302' stroke='#555555' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector7terminal' x='0.0762' y='12.302' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='5.6134' y='12.6068' text-anchor='start'>NC1</text>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='2.6162' y='12.1496' text-anchor='middle'>8</text>
 <line class='pin' id='connector9pin' connectorname='NC3' x1='33.0962' y1='32.622' x2='28.0162' y2='32.622' stroke='#555555' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector9terminal' x='33.0962' y='32.622' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='27.559' y='32.9268' text-anchor='end'>NC3</text>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='30.5562' y='32.4696' text-anchor='middle'>10</text>
 </g>
 </svg>

@@ -4,7 +4,7 @@
 <g id='schematic'>
 <line class='pin' id='connector0pin' connectorname='VDD' x1='0.0762' y1='0.0762' x2='5.1562' y2='0.0762' stroke='#555555' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector0terminal' x='0.0762' y='0.0762' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='5.6134' y='0.381' text-anchor='start'>VDD</text>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='2.6162' y='-0.0762' text-anchor='middle'>1</text>
 <line class='pin' id='connector1pin' connectorname='VDD' x1='0.0762' y1='0.0762' x2='5.1562' y2='0.0762' stroke='#555555' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector1terminal' x='0.0762' y='0.0762' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <line class='pin' id='connector2pin' connectorname='VDD' x1='0.0762' y1='0.0762' x2='5.1562' y2='0.0762' stroke='#555555' stroke-width='0' stroke-linecap='round'/>
@@ -13,7 +13,7 @@
 <rect class='terminal' id='connector3terminal' x='0.0762' y='0.0762' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <line class='pin' id='connector4pin' connectorname='VSS' x1='17.8562' y1='0.0762' x2='12.7762' y2='0.0762' stroke='#555555' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector4terminal' x='17.8562' y='0.0762' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='12.319' y='0.381' text-anchor='end'>VSS</text>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='15.3162' y='-0.0762' text-anchor='middle'>5</text>
 <line class='pin' id='connector5pin' connectorname='VSS' x1='17.8562' y1='0.0762' x2='12.7762' y2='0.0762' stroke='#555555' stroke-width='0' stroke-linecap='round'/>
 <rect class='terminal' id='connector5terminal' x='17.8562' y='0.0762' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <line class='pin' id='connector6pin' connectorname='VSS' x1='17.8562' y1='0.0762' x2='12.7762' y2='0.0762' stroke='#555555' stroke-width='0' stroke-linecap='round'/>

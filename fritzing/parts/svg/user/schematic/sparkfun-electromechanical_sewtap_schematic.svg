@@ -6,8 +6,6 @@
 <path class='other' fill='none' d='M3.3782,0.0762 A0.762,0.762 0 1 0 3.3782,1.6002' stroke-width='0.1524' stroke='#000000' />
 <line class='pin' id='connector0pin' connectorname='1' x1='0.0762' y1='0.8382' x2='0.0762' y2='0.8382' stroke='#555555' stroke-width='0.1524' stroke-linecap='round'/>
 <rect class='terminal' id='connector0terminal' x='0.0762' y='0.8382' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<g transform='translate(0.381,1.2954)'><g transform='rotate(270)'>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='0' y='0' text-anchor='end'>1</text>
-</g></g>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='0.0762' y='0.6858' text-anchor='middle'>1</text>
 </g>
 </svg>

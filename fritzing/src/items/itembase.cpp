@@ -1331,7 +1331,7 @@ FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::
 
     QByteArray resultBytes; 
     if (!bytesToLoad.isEmpty()) {
-        makeLocalMods(bytesToLoad, filename);
+        makeLocalModifications(bytesToLoad, filename);
         resultBytes = newRenderer->loadSvg(bytesToLoad, filename, connectorIDs, terminalIDs, legIDs, setColor, colorElementID, viewIdentifier == ViewIdentifierClass::PCBView);
     }
 
@@ -2089,5 +2089,5 @@ ViewIdentifierClass::ViewIdentifier ItemBase::useViewIdentifierForPixmap(ViewIde
     return vid;
 }
 
-void ItemBase::makeLocalMods(QByteArray &, const QString &) {
+void ItemBase::makeLocalModifications(QByteArray &, const QString &) {
 }

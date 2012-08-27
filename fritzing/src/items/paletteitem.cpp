@@ -1429,37 +1429,25 @@ bool PaletteItem::changeDiameter(HoleSettings & holeSettings, QObject * sender)
 	return (newValue != oldValue);
 }
 
-void PaletteItem::makeLocalMods(QByteArray & svg, const QString & filename) {
-    // at the moment, this is only for chip labels and pin labels for saved-as-new-part parts (i.e. that are no longer MysteryParts)
+void PaletteItem::makeLocalModifications(QByteArray & svg, const QString & filename) {
+    // for saved-as-new-part parts (i.e. that are no longer MysteryParts) that still have a chip-label or custom pin names
+    // also handles adding a title if there is a label id in the 
     switch (m_viewIdentifier) {
-        case ViewIdentifierClass::IconView:
         case ViewIdentifierClass::PCBView:
             return;
             
         default:
             if (itemType() != ModelPart::Part) return;
+            if (filename.startsWith("icon")) return;
+
             break;
     }
-    
-    bool isMystery = (filename.contains("mystery") || filename.contains("sip") || filename.contains("dip"));
-    if (!isMystery) {
-        int rix = svg.indexOf("label");
-        if (rix >= 0) {
-            rix = qMax(0, rix - 4);     // backup for id="
-            int ix = svg.indexOf("id=\"label\"", rix);
-            if (ix < 0) {
-                ix = svg.indexOf("id='label'", rix);
-            }
-            if (ix >= 0) {
-                svg = TextUtils::replaceTextElement(svg, "label", modelPart()->title());
-            }
-        }
-        return;
-    }
 
+    bool gotChipLabel = false;
     QString chipLabel = modelPart()->properties().value("chip label", ""); 
     if (!chipLabel.isEmpty()) {
         svg = TextUtils::replaceTextElement(svg, "label", chipLabel);
+        gotChipLabel = true;
     }
 
     if (m_viewIdentifier == ViewIdentifierClass::SchematicView) {
@@ -1469,6 +1457,25 @@ void PaletteItem::makeLocalMods(QByteArray & svg, const QString & filename) {
             QStringList labels = sipOrDipOr(hasLayout, sip);
             if (labels.count() > 0) {
                 svg = PartFactory::makeSipOrDipOr(labels, hasLayout, sip).toUtf8();
+            }
+        }
+        gotChipLabel = true;
+    }
+
+    if (gotChipLabel) return;
+
+    int rix = svg.indexOf("label");
+    if (rix >= 0) {
+        rix = qMax(0, rix - 4);     // backup for id="
+        int ix = svg.indexOf("id=\"label\"", rix);
+        if (ix < 0) {
+            ix = svg.indexOf("id='label'", rix);
+        }
+        if (ix >= 0) {
+            int tix = svg.lastIndexOf("<text", ix);
+            int lix = svg.lastIndexOf("<", ix);
+            if (tix == lix) {
+                svg = TextUtils::replaceTextElement(svg, "label", modelPart()->title());
             }
         }
     }

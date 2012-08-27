@@ -150,7 +150,7 @@ protected:
     QString hackFzpHoleSize(const QString & moduleID, const QString & pcbFilename, const QString & holeSize);
     QString appendHoleSize(const QString & moduleID, const QString & holeSize, const QString & ringThickness);
     void generateSwap(const QString & text, GenModuleID, GenFzp, GenSvg makeBreadboardSvg, GenSvg makeSchematicSvg, GenSvg makePcbSvg);
-    void makeLocalMods(QByteArray & svg, const QString & filename);
+    void makeLocalModifications(QByteArray & svg, const QString & filename);
 
 protected:
     void setUpHoleSizes(const QString & type, HoleClassThing &);

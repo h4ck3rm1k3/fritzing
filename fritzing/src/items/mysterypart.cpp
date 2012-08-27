@@ -634,5 +634,5 @@ QString MysteryPart::makePcbDipSvg(const QString & expectedFileName)
 	return svg;
 }
 
-void MysteryPart::makeLocalMods(QByteArray &, const QString &) {
+void MysteryPart::makeLocalModifications(QByteArray &, const QString &) {
 }

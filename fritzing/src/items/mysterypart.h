@@ -77,7 +77,7 @@ protected:
 	virtual bool otherPropsChange(const QMap<QString, QString> & propsMap);
 	virtual const QStringList & spacings();
 	virtual QString retrieveSchematicSvg(QString & svg);
-    void makeLocalMods(QByteArray & svg, const QString & filename);
+    void makeLocalModifications(QByteArray & svg, const QString & filename);
 
 protected:
     static QString hackFzpHoleSize(const QString & fzp, const QString & moduleid); 
