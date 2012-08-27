@@ -18,9 +18,9 @@ along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
 
 ********************************************************************
 
-$Revision: 5291 $:
-$Author: cohen@irascible.com $:
-$Date: 2011-07-27 15:02:24 +0200 (Wed, 27 Jul 2011) $
+$Revision$:
+$Author$:
+$Date$
 
 ********************************************************************/
 
@@ -53,6 +53,9 @@ public:
 	~PEMainWindow();
 
     void setInitialItem(class PaletteItem *);
+    void changeTags(const QStringList &);
+    void changeProperties(const QHash<QString, QString> &);
+    void changeMetadata(const QString & name, const QString & value);
 
 protected:
 	void closeEvent(QCloseEvent * event);
@@ -75,6 +78,11 @@ protected:
 	void setTitle();
     void createViewMenuActions();
     void createViewMenu();
+
+public slots:
+    void metadataChanged(const QString & name, const QString & value);
+    void propertiesChanged(const QHash<QString, QString> &);
+    void tagsChanged(const QStringList &);
 
 protected slots:
     void initZoom();

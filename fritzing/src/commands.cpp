@@ -43,7 +43,7 @@ int BaseCommand::nextIndex = 0;
 BaseCommand::BaseCommand(BaseCommand::CrossViewType crossViewType, SketchWidget* sketchWidget, QUndoCommand *parent)
 	: QUndoCommand(parent)
 {
-	m_undoOnly = m_redoOnly = false;
+	m_skipFirstRedo = m_undoOnly = m_redoOnly = false;
 	m_crossViewType = crossViewType;
 	m_sketchWidget = sketchWidget;
 	m_parentCommand = parent;
@@ -80,6 +80,10 @@ void BaseCommand::setUndoOnly() {
 void BaseCommand::setRedoOnly()
 {
 	m_redoOnly = true;
+}
+
+void BaseCommand::setSkipFirstRedo() {
+    m_skipFirstRedo = true;
 }
 
 QString BaseCommand::getParamString() const {
@@ -180,7 +184,6 @@ SketchWidget * AddDeleteItemCommand::dropOrigin() {
 AddItemCommand::AddItemCommand(SketchWidget* sketchWidget, BaseCommand::CrossViewType crossViewType, QString moduleID, ViewLayer::ViewLayerSpec viewLayerSpec, ViewGeometry & viewGeometry, qint64 id, bool updateInfoView, long modelIndex, QUndoCommand *parent)
     : AddDeleteItemCommand(sketchWidget, crossViewType, moduleID, viewLayerSpec, viewGeometry, id, modelIndex, parent)
 {
-	m_doFirstRedo = m_firstRedo = true;
 	m_module = false;
 	m_updateInfoView = updateInfoView;
 }
@@ -192,14 +195,10 @@ void AddItemCommand::undo()
 
 void AddItemCommand::redo()
 {
-	if (!m_firstRedo || m_doFirstRedo) {
+	if (!m_skipFirstRedo) {
 		m_sketchWidget->addItem(m_moduleID, m_viewLayerSpec, m_crossViewType, m_viewGeometry, m_itemID, m_modelIndex, this);
 	}
-	m_firstRedo = false;
-}
-
-void AddItemCommand::turnOffFirstRedo() {
-	m_doFirstRedo = false;
+	m_skipFirstRedo = false;
 }
 
 QString AddItemCommand::getParamString() const {
@@ -504,7 +503,6 @@ ChangeWireCurveCommand::ChangeWireCurveCommand(SketchWidget* sketchWidget, long 
 									 QUndoCommand *parent)
     : BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
 {
-	m_firstTime = false;
     m_fromID = fromID;
 	m_oldBezier = m_newBezier = NULL;
 	if (oldBezier) {
@@ -527,17 +525,13 @@ void ChangeWireCurveCommand::undo()
 void ChangeWireCurveCommand::redo()
 {
 	if (!m_undoOnly) {
-		if (m_firstTime) {
-			m_firstTime = false;
+		if (m_skipFirstRedo) {
+			m_skipFirstRedo = false;
 		}
 		else {
 			m_sketchWidget->changeWireCurve(m_fromID, m_newBezier);
 		}
 	}
-}
-
-void ChangeWireCurveCommand::setFirstTime() {
-	m_firstTime = true;
 }
 
 QString ChangeWireCurveCommand::getParamString() const {
@@ -671,7 +665,6 @@ ChangeLegCurveCommand::ChangeLegCurveCommand(SketchWidget* sketchWidget, long fr
 									 const Bezier * oldBezier, const Bezier * newBezier, QUndoCommand *parent)
     : BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
 {
-	m_firstTime = false;
     m_fromID = fromID;
 	m_oldBezier = m_newBezier = NULL;
 	if (oldBezier) {
@@ -694,16 +687,12 @@ void ChangeLegCurveCommand::undo()
 
 void ChangeLegCurveCommand::redo()
 {
-	if (m_firstTime) {
-		m_firstTime = false;
+	if (m_skipFirstRedo) {
+		m_skipFirstRedo = false;
 	}
 	else if (!m_undoOnly) {
 		m_sketchWidget->changeLegCurve(m_fromID, m_fromConnectorID, m_index, m_newBezier);
 	}
-}
-
-void ChangeLegCurveCommand::setFirstTime() {
-	m_firstTime = true;
 }
 
 QString ChangeLegCurveCommand::getParamString() const {
@@ -734,7 +723,6 @@ ChangeLegBendpointCommand::ChangeLegBendpointCommand(SketchWidget* sketchWidget,
 									const Bezier * bezier0, const Bezier * bezier1, const Bezier * bezier2, QUndoCommand *parent)
     : BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
 {
-	m_firstTime = false;
     m_fromID = fromID;
 	m_bezier0 = m_bezier1 = m_bezier2 = NULL;
 	if (bezier0 != NULL) {
@@ -769,8 +757,8 @@ void ChangeLegBendpointCommand::undo()
 
 void ChangeLegBendpointCommand::redo()
 {
-	if (m_firstTime) {
-		m_firstTime = false;
+	if (m_skipFirstRedo) {
+		m_skipFirstRedo = false;
 	}
 	else {
 		if (m_newCount > m_oldCount) {
@@ -780,10 +768,6 @@ void ChangeLegBendpointCommand::redo()
 			m_sketchWidget->removeLegBendpoint(m_fromID, m_fromConnectorID, m_index, m_bezier2);
 		}
 	}
-}
-
-void ChangeLegBendpointCommand::setFirstTime() {
-	m_firstTime = true;
 }
 
 QString ChangeLegBendpointCommand::getParamString() const {
@@ -1037,7 +1021,7 @@ CheckStickyCommand::CheckStickyCommand(SketchWidget* sketchWidget, BaseCommand::
 : BaseCommand(crossViewType, sketchWidget, parent)
 {
 	m_itemID = itemID;
-	m_firstTime = true;
+	m_skipFirstRedo = true;
 	m_checkType = checkType;
 	m_checkCurrent = checkCurrent;
 }
@@ -1068,9 +1052,9 @@ void CheckStickyCommand::redo()
 {
 	if (m_checkType == UndoOnly) return;
 
-	if (m_firstTime) {
+	if (m_skipFirstRedo) {
 		m_sketchWidget->checkSticky(m_itemID, m_crossViewType == BaseCommand::CrossView, m_checkCurrent, this);
-		m_firstTime = false;
+		m_skipFirstRedo = false;
 	}
 	else {
 		foreach (StickyThing * stickyThing, m_stickyList) {
@@ -1087,7 +1071,6 @@ QString CheckStickyCommand::getParamString() const {
 }
 
 void CheckStickyCommand::stick(SketchWidget * sketchWidget, long fromID, long toID, bool stickem) {
-	m_firstTime = false;
 	StickyThing * stickyThing = new StickyThing;
 	stickyThing->sketchWidget = sketchWidget;
 	stickyThing->fromID = fromID;
@@ -1434,7 +1417,6 @@ IncLabelTextCommand::IncLabelTextCommand(SketchWidget *sketchWidget, long id,  Q
 	: BaseCommand(BaseCommand::CrossView, sketchWidget, parent)
 {
     m_itemID = id;
-	m_firstTime = true;
 }
 
 void IncLabelTextCommand::undo() { 
@@ -1442,7 +1424,7 @@ void IncLabelTextCommand::undo() {
 }
 
 void IncLabelTextCommand::redo() {
-	if (m_firstTime) {
+	if (!m_skipFirstRedo) {
 		m_sketchWidget->incInstanceTitle(m_itemID);
 	}
 }
@@ -1465,7 +1447,6 @@ ChangeNoteTextCommand::ChangeNoteTextCommand(SketchWidget *sketchWidget, long id
     m_newText = newText;
 	m_oldSize = oldSize;
 	m_newSize = newSize;
-	m_firstTime = true;
 }
 
 void ChangeNoteTextCommand::undo() {
@@ -1476,8 +1457,8 @@ void ChangeNoteTextCommand::undo() {
 }
 
 void ChangeNoteTextCommand::redo() {
-	if (m_firstTime) {
-		m_firstTime = false;
+	if (m_skipFirstRedo) {
+		m_skipFirstRedo = false;
 		return;
 	}
 
@@ -1485,11 +1466,6 @@ void ChangeNoteTextCommand::redo() {
 	if (m_oldSize != m_newSize) {
 		m_sketchWidget->resizeNote(m_itemID, m_newSize);
 	}
-
-}
-
-void ChangeNoteTextCommand::setFirstTime(bool f) {
-	m_firstTime = f;
 }
 
 int ChangeNoteTextCommand::id() const {

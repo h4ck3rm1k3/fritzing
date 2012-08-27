@@ -18,9 +18,9 @@ along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
 
 ********************************************************************
 
-$Revision: 6140 $:
-$Author: cohen@irascible.com $:
-$Date: 2012-07-04 15:38:22 +0200 (Wed, 04 Jul 2012) $
+$Revision$:
+$Author$:
+$Date$
 
 ********************************************************************/
 
@@ -54,13 +54,23 @@ public:
 
     void initMetadata(const QDomDocument &);
 
+signals:
+    void metadataChanged(const QString & name, const QString & value);
+    void propertiesChanged(const QHash<QString, QString> &);
+    void tagsChanged(const QStringList &);
+
 protected slots:
     void titleEntry();
     void authorEntry();
-    void descrEntry();
+    void descriptionEntry();
     void labelEntry();
     void familyEntry();
     void dateEntry();
+    void propertiesEntry();
+    void tagsEntry();
+
+protected:
+    class PEMainWindow * peMainWindow();
 
 protected:
     QPointer<QLineEdit> m_titleEdit;
@@ -71,6 +81,7 @@ protected:
     QPointer<QTextEdit> m_descriptionEdit;
     QPointer<class HashPopulateWidget> m_propertiesEdit;
     QPointer<class HashPopulateWidget> m_tagsEdit;
+    QPointer<QFrame> m_mainFrame;
 };
 
 

@@ -18,9 +18,9 @@ along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
 
 ********************************************************************
 
-$Revision: 6140 $:
-$Author: cohen@irascible.com $:
-$Date: 2012-07-04 15:38:22 +0200 (Wed, 04 Jul 2012) $
+$Revision$:
+$Author$:
+$Date$
 
 ********************************************************************/
 
@@ -67,6 +67,7 @@ void FocusOutTextEdit::focusOutEvent(QFocusEvent * e) {
 
 MetadataView::MetadataView(QWidget * parent) : QScrollArea(parent) 
 {
+    m_mainFrame = NULL;
 	this->setWidgetResizable(true);
 	this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 }
@@ -76,19 +77,19 @@ MetadataView::~MetadataView() {
 }
 
 void MetadataView::titleEntry() {
-    DebugDialog::debug("title entry");
+    emit metadataChanged("title", m_titleEdit->text());
 }
 
 void MetadataView::authorEntry() {
-    DebugDialog::debug("author entry");
+    emit metadataChanged("author", m_authorEdit->text());
 }
 
-void MetadataView::descrEntry() {
-    DebugDialog::debug("descr entry");
+void MetadataView::descriptionEntry() {
+    emit metadataChanged("description", m_descriptionEdit->toHtml());
 }
 
 void MetadataView::labelEntry() {
-    DebugDialog::debug("label entry");
+    emit metadataChanged("label", m_labelEdit->text());
 }
 
 void MetadataView::familyEntry() {
@@ -96,10 +97,25 @@ void MetadataView::familyEntry() {
 }
 
 void MetadataView::dateEntry() {
-    DebugDialog::debug("date entry");
 }
 
-void MetadataView::initMetadata(const QDomDocument & doc) {
+void MetadataView::propertiesEntry() {
+    emit propertiesChanged(m_propertiesEdit->hash());
+}
+
+void MetadataView::tagsEntry() {
+    static QStringList keys;
+    keys = m_tagsEdit->hash().keys();
+    emit tagsChanged(keys);
+}
+
+void MetadataView::initMetadata(const QDomDocument & doc) 
+{
+    if (m_mainFrame) {
+        this->setWidget(NULL);
+        delete m_mainFrame;
+        m_mainFrame = NULL;
+    }
 
     QDomElement root = doc.documentElement();
     QDomElement label = root.firstChildElement("label");
@@ -136,9 +152,9 @@ void MetadataView::initMetadata(const QDomDocument & doc) {
     }
 
 
-	QFrame * mainFrame = new QFrame(this);
-	mainFrame->setObjectName("metadataMainFrame");
-	QVBoxLayout *mainLayout = new QVBoxLayout(mainFrame);
+	m_mainFrame = new QFrame(this);
+	m_mainFrame->setObjectName("metadataMainFrame");
+	QVBoxLayout *mainLayout = new QVBoxLayout(m_mainFrame);
     mainLayout->setSizeConstraint( QLayout::SetMinAndMaxSize );
 
     QLabel *explanation = new QLabel(tr("This is where you edit the metadata for the part ..."));
@@ -172,7 +188,7 @@ void MetadataView::initMetadata(const QDomDocument & doc) {
 
     m_descriptionEdit = new FocusOutTextEdit();
     m_descriptionEdit->setText(descr.text());
-	connect(m_descriptionEdit, SIGNAL(focusOut()), this, SLOT(descrEntry()));
+	connect(m_descriptionEdit, SIGNAL(focusOut()), this, SLOT(descriptionEntry()));
 	m_descriptionEdit->setObjectName("PartsEditorTextEdit");
     m_descriptionEdit->setStatusTip(tr("Set the part's description--you can use simple html (as defined by Qt's Rich Text)"));
     formLayout->addRow(tr("Description"), m_descriptionEdit);
@@ -195,15 +211,17 @@ void MetadataView::initMetadata(const QDomDocument & doc) {
     m_propertiesEdit = new HashPopulateWidget("", propertyHash, readOnlyKeys, false, this);
 	m_propertiesEdit->setObjectName("PartsEditorPropertiesEdit");
     m_propertiesEdit->setStatusTip(tr("Set the part's properties"));
+    connect(m_propertiesEdit, SIGNAL(changed()), this, SLOT(propertiesEntry()));
     formLayout->addRow(tr("Properties"), m_propertiesEdit);
 
     m_tagsEdit = new HashPopulateWidget("", tagHash, readOnlyKeys, true, this);
 	m_tagsEdit->setObjectName("PartsEditorPropertiesEdit");
     m_tagsEdit->setStatusTip(tr("Set the part's tags"));
+    connect(m_tagsEdit, SIGNAL(changed()), this, SLOT(tagsEntry()));
     formLayout->addRow(tr("Tags"), m_tagsEdit);
 
     formFrame->setLayout(formLayout);
-    mainFrame->setLayout(mainLayout);
+    m_mainFrame->setLayout(mainLayout);
 
-    this->setWidget(mainFrame);
+    this->setWidget(m_mainFrame);
 }

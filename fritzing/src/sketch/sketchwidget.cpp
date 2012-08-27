@@ -361,8 +361,7 @@ void SketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseComma
 				}
 			}
 			else if (mp->itemType() == ModelPart::Note) {
-				ChangeNoteTextCommand * changeNoteTextCommand = new ChangeNoteTextCommand(this, newID, mp->instanceText(), mp->instanceText(), viewGeometry.rect().size(), viewGeometry.rect().size(), parentCommand);
-				changeNoteTextCommand->setFirstTime(false);
+				new ChangeNoteTextCommand(this, newID, mp->instanceText(), mp->instanceText(), viewGeometry.rect().size(), viewGeometry.rect().size(), parentCommand);
 			}
 			else if (mp->itemType() == ModelPart::Ruler) {
 				QString w = mp->localProp("width").toString();
@@ -3419,7 +3418,7 @@ void SketchWidget::prepLegCurveChange(ConnectorItem * from, int index, const cla
 
 	ChangeLegCurveCommand * clcc = new ChangeLegCurveCommand(this, fromID, fromConnectorID, index, oldB, newB, parentCommand);
 	if (!triggerFirstTime) {
-		clcc->setFirstTime();
+		clcc->setSkipFirstRedo();
 	}
 
 	m_undoStack->push(parentCommand);
@@ -3445,7 +3444,7 @@ void SketchWidget::prepLegBendpointChange(ConnectorItem * from, int oldCount, in
 
 	ChangeLegBendpointCommand * clbc = new ChangeLegBendpointCommand(this, fromID, fromConnectorID, oldCount, newCount, index, p, bezier0, bezier1, bezier2, parentCommand);
 	if (!triggerFirstTime) {
-		clbc->setFirstTime();
+		clbc->setSkipFirstRedo();
 	}
 
 	m_undoStack->push(parentCommand);
@@ -4061,9 +4060,9 @@ double SketchWidget::fitInWindow() {
 	double wRelation = (viewRect.width() - this->verticalScrollBar()->width() - 5)  / itemsRect.width();
 	double hRelation = (viewRect.height() - this->horizontalScrollBar()->height() - 5) / itemsRect.height();
 
-	DebugDialog::debug(QString("scen rect: w%1 h%2").arg(itemsRect.width()).arg(itemsRect.height()));
-	DebugDialog::debug(QString("view rect: w%1 h%2").arg(viewRect.width()).arg(viewRect.height()));
-	DebugDialog::debug(QString("relations (v/s): w%1 h%2").arg(wRelation).arg(hRelation));
+	//DebugDialog::debug(QString("scen rect: w%1 h%2").arg(itemsRect.width()).arg(itemsRect.height()));
+	//DebugDialog::debug(QString("view rect: w%1 h%2").arg(viewRect.width()).arg(viewRect.height()));
+	//DebugDialog::debug(QString("relations (v/s): w%1 h%2").arg(wRelation).arg(hRelation));
 
 	if(wRelation < hRelation) {
 		m_scaleValue = (wRelation * 100);
@@ -4867,7 +4866,8 @@ void SketchWidget::makeDeleteItemCommandPrepSlot(ItemBase * itemBase, bool forei
 
 	Note * note = qobject_cast<Note *>(itemBase);
 	if (note != NULL) {
-		new ChangeNoteTextCommand(this, note->id(), note->text(), note->text(), QSizeF(), QSizeF(), parentCommand);
+		ChangeNoteTextCommand * cntc = new ChangeNoteTextCommand(this, note->id(), note->text(), note->text(), QSizeF(), QSizeF(), parentCommand);
+        cntc->setSkipFirstRedo();
 	}
 	else {
 		new ChangeLabelTextCommand(this, itemBase->id(), itemBase->instanceTitle(), itemBase->instanceTitle(), parentCommand);
@@ -8370,7 +8370,7 @@ void SketchWidget::wireChangedCurveSlot(Wire* wire, const Bezier * oldB, const B
 	ChangeWireCurveCommand * cwcc = new ChangeWireCurveCommand(this, wire->id(), oldB, newB, NULL);
 	cwcc->setText("Change wire curvature");
 	if (!triggerFirstTime) {
-		cwcc->setFirstTime();
+		cwcc->setSkipFirstRedo();
 	}
 	m_undoStack->push(cwcc);
 }

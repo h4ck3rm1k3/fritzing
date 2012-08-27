@@ -66,6 +66,7 @@ public:
 	int index() const;
 	void setUndoOnly();
 	void setRedoOnly();
+    void setSkipFirstRedo();
 
 protected:
 	virtual QString getParamString() const;
@@ -80,6 +81,7 @@ protected:
 	int m_index;
 	bool m_undoOnly;
 	bool m_redoOnly;
+    bool m_skipFirstRedo;
 };
 
 /////////////////////////////////////////////
@@ -113,7 +115,6 @@ public:
     AddItemCommand(class SketchWidget *sketchWidget, BaseCommand::CrossViewType, QString moduleID, ViewLayer::ViewLayerSpec, ViewGeometry &, qint64 id, bool updateInfoView, long modelIndex, QUndoCommand *parent);
     void undo();
     void redo();
-	void turnOffFirstRedo();
 	void addRestoreIndexesCommand(class RestoreIndexesCommand *);
 
 protected:
@@ -121,8 +122,6 @@ protected:
 
 protected:
 	bool m_updateInfoView;
-	bool m_firstRedo;
-	bool m_doFirstRedo;
 	bool m_module;
 	RestoreIndexesCommand * m_restoreIndexesCommand;
 };
@@ -321,7 +320,6 @@ public:
     					QUndoCommand *parent);
     void undo();
     void redo();
-	void setFirstTime();
 
 protected:
 	QString getParamString() const;
@@ -330,7 +328,6 @@ protected:
     long m_fromID;
     class Bezier * m_newBezier;
     class Bezier * m_oldBezier;
-    bool m_firstTime;
 };
 
 /////////////////////////////////////////////
@@ -389,7 +386,6 @@ public:
     					QUndoCommand *parent);
     void undo();
     void redo();
-	void setFirstTime();
 
 protected:
 	QString getParamString() const;
@@ -398,7 +394,6 @@ protected:
     long m_fromID;
     class Bezier * m_newBezier;
     class Bezier * m_oldBezier;
-    bool m_firstTime;
 	QString m_fromConnectorID;
 	int m_index;
 };
@@ -413,7 +408,6 @@ public:
 						const class Bezier *, const class Bezier *, const class Bezier *, QUndoCommand *parent);
     void undo();
     void redo();
-	void setFirstTime();
 
 protected:
 	QString getParamString() const;
@@ -423,7 +417,6 @@ protected:
     class Bezier * m_bezier0;
     class Bezier * m_bezier1;
     class Bezier * m_bezier2;
-    bool m_firstTime;
 	QString m_fromConnectorID;
 	int m_index;
 	int m_oldCount;
@@ -572,7 +565,6 @@ protected:
 protected:
 	long m_itemID;
 	QList<StickyThing *> m_stickyList;
-	bool m_firstTime;
 	bool m_checkCurrent;
 	CheckType m_checkType;
 };
@@ -765,7 +757,6 @@ protected:
 
 protected:
     long m_itemID;
-	bool m_firstTime;
 };
 
 /////////////////////////////////////////////
@@ -794,7 +785,6 @@ public:
     ChangeNoteTextCommand(class SketchWidget *sketchWidget, long id, const QString & oldText, const QString & newText, QSizeF oldSize, QSizeF newSize, QUndoCommand *parent);
     void undo();
     void redo();
-	void setFirstTime(bool);
 	int id() const;
 	bool mergeWith(const QUndoCommand *other);
 
@@ -807,7 +797,6 @@ protected:
     QString m_newText;
 	QSizeF m_oldSize;
 	QSizeF m_newSize;
-	bool m_firstTime;
 
 	static int changeNoteTextCommandID;
 };

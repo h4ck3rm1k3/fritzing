@@ -18,9 +18,9 @@ along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
 
 ********************************************************************
 
-$Revision: 6319 $:
-$Author: cohen@irascible.com $:
-$Date: 2012-08-20 14:36:09 +0200 (Mon, 20 Aug 2012) $
+$Revision$:
+$Author$:
+$Date$
 
 ********************************************************************/
 
@@ -122,6 +122,7 @@ $Date: 2012-08-20 14:36:09 +0200 (Mon, 20 Aug 2012) $
 
 #include "pemainwindow.h"
 #include "metadataview.h"
+#include "pecommands.h"
 #include "../debugdialog.h"
 #include "../model/palettemodel.h"
 #include "../sketch/breadboardsketchwidget.h"
@@ -186,6 +187,9 @@ void PEMainWindow::initSketchWidgets()
     m_metadataView = new MetadataView(this);
 	SketchAreaWidget * sketchAreaWidget = new SketchAreaWidget(m_metadataView, this);
 	m_tabWidget->addWidget(sketchAreaWidget);
+    connect(m_metadataView, SIGNAL(metadataChanged(const QString &, const QString &)), this, SLOT(metadataChanged(const QString &, const QString &)));
+    connect(m_metadataView, SIGNAL(tagsChanged(const QStringList &)), this, SLOT(tagsChanged(const QStringList &)));
+    connect(m_metadataView, SIGNAL(propertiesChanged(const QHash<QString, QString> &)), this, SLOT(propertiesChanged(const QHash<QString, QString> &)));
 }
 
 void PEMainWindow::initDock()
@@ -427,4 +431,105 @@ void PEMainWindow::showMetadataView() {
 
 void PEMainWindow::showIconView() {
     this->m_tabWidget->setCurrentIndex(3);
+}
+
+void PEMainWindow::metadataChanged(const QString & name, const QString & value)
+{
+    // called from metadataView
+    QDomElement root = m_fzpDocument.documentElement();
+    QDomElement element = root.firstChildElement(name);
+    QString oldValue = element.text();
+    ChangeMetadataCommand * cmc = new ChangeMetadataCommand(this, name, oldValue, value, NULL);
+    cmc->setText(tr("Change %1 to '%2'").arg(name).arg(value));
+    cmc->setSkipFirstRedo();
+    m_undoStack->waitPush(cmc, SketchWidget::PropChangeDelay);
+}
+
+void PEMainWindow::changeMetadata(const QString & name, const QString & value)
+{
+    // called from command object
+    QDomElement root = m_fzpDocument.documentElement();
+    QDomElement element = root.firstChildElement(name);
+    QString oldValue = element.text();
+    TextUtils::replaceChildText(m_fzpDocument, element, value);
+
+    m_metadataView->initMetadata(m_fzpDocument);
+}
+
+void PEMainWindow::tagsChanged(const QStringList & newTags)
+{
+    // called from metadataView
+    QDomElement root = m_fzpDocument.documentElement();
+    QDomElement tags = root.firstChildElement("tags");
+    QDomElement tag = tags.firstChildElement("tag");
+    QStringList oldTags;
+    while (!tag.isNull()) {
+        oldTags << tag.text();
+        tag = tag.nextSiblingElement("tag");
+    }
+
+    ChangeTagsCommand * ctc = new ChangeTagsCommand(this, oldTags, newTags, NULL);
+    ctc->setText(tr("Change tags"));
+    ctc->setSkipFirstRedo();
+    m_undoStack->waitPush(ctc, SketchWidget::PropChangeDelay);
+}
+
+void PEMainWindow::changeTags(const QStringList & newTags)
+{
+    QDomElement root = m_fzpDocument.documentElement();
+    QDomElement tags = root.firstChildElement("tags");
+    QDomElement tag = tags.firstChildElement("tag");
+    while (!tag.isNull()) {
+        tags.removeChild(tag);
+        tag = tags.firstChildElement("tag");
+    }
+
+    foreach (QString newTag, newTags) {
+        QDomElement tag = m_fzpDocument.createElement("tag");
+        tags.appendChild(tag);
+        TextUtils::replaceChildText(m_fzpDocument, tag, newTag);
+    }
+
+    m_metadataView->initMetadata(m_fzpDocument);
+}
+
+void PEMainWindow::propertiesChanged(const QHash<QString, QString> & newProperties)
+{
+    // called from metadataView
+    QDomElement root = m_fzpDocument.documentElement();
+    QDomElement tags = root.firstChildElement("properties");
+    QDomElement prop = tags.firstChildElement("property");
+    QHash<QString, QString> oldProperties;
+    while (!prop.isNull()) {
+        QString name = prop.attribute("name");
+        QString value = prop.text();
+        oldProperties.insert(name, value);
+        prop = prop.nextSiblingElement("property");
+    }
+
+    ChangePropertiesCommand * cpc = new ChangePropertiesCommand(this, oldProperties, newProperties, NULL);
+    cpc->setText(tr("Change properties"));
+    cpc->setSkipFirstRedo();
+    m_undoStack->waitPush(cpc, SketchWidget::PropChangeDelay);
+}
+
+
+void PEMainWindow::changeProperties(const QHash<QString, QString> & newProperties)
+{
+    QDomElement root = m_fzpDocument.documentElement();
+    QDomElement properties = root.firstChildElement("properties");
+    QDomElement prop = properties.firstChildElement("property");
+    while (!prop.isNull()) {
+        properties.removeChild(prop);
+        prop = properties.firstChildElement("property");
+    }
+
+    foreach (QString name, newProperties.keys()) {
+        QDomElement prop = m_fzpDocument.createElement("property");
+        properties.appendChild(prop);
+        prop.setAttribute("name", name);
+        TextUtils::replaceChildText(m_fzpDocument, prop, newProperties.value(name));
+    }
+
+    m_metadataView->initMetadata(m_fzpDocument);
 }
