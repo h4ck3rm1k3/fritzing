@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-FKIT-RIBBON_CONNECTOR--2MM_L_REV2'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Electromechanical' FKIT-RIBBON_CONNECTOR -2MM_L_REV2 -->
 <version>4</version>
-<date>2012-08-27</date>
+<date>2012-08-28</date>
 <label>J</label>
 <author>www.fritzing.org</author>
 <description>&lt;h3&gt;fabrick.it Conductive Ribbon Connector&lt;/h3&gt;</description>
