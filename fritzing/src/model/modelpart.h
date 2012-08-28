@@ -184,6 +184,8 @@ public:
     const QList<ViewImage *> viewImages();
     void addConnector(Connector *);
     void flipSMDAnd();
+    void lookForZeroConnector();
+    bool hasZeroConnector();
 
 public:
 	static long nextIndex();

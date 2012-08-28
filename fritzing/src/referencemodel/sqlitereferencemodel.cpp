@@ -338,6 +338,7 @@ bool SqliteReferenceModel::loadFromDB(QSqlDatabase & keep_db, QSqlDatabase & db)
 
             connectors[cid] = connector;
         }
+        modelPart->lookForZeroConnector();
     }
 
     query = db.exec("SELECT view, layer, svgid, hybrid, terminalid, legid, connector_id FROM connectorlayers");

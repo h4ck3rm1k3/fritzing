@@ -965,3 +965,14 @@ void ModelPart::flipSMDAnd() {
 void ModelPart::setImageFileName(ViewIdentifierClass::ViewIdentifier viewIdentifier, const QString & filename) {
     if (m_modelPartShared) m_modelPartShared->setImageFileName(viewIdentifier, filename);
 }
+
+void ModelPart::lookForZeroConnector() {
+    if (m_modelPartShared) m_modelPartShared->lookForZeroConnector();
+}
+
+bool ModelPart::hasZeroConnector() {
+    if (m_modelPartShared) return m_modelPartShared->hasZeroConnector();
+
+    return false;
+}
+

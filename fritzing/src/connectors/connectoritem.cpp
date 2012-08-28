@@ -1470,11 +1470,39 @@ void ConnectorItem::collectPart(ConnectorItem * connectorItem, QList<ConnectorIt
 }
 
 void ConnectorItem::updateTooltip() {
-	QList<ConnectorItem *> connectors;
-	if (!attachedToItemType() == ModelPart::Wire) {
-		connectors.append(this);
+	if (attachedToItemType() != ModelPart::Wire) {
+		QString name = connectorSharedName();
+		QString descr = connectorSharedDescription();
+        if (name == descr) {
+            descr = "";
+        }
+        else {
+            descr = ":" + descr;
+        }
+        QString id = connectorSharedID();
+        int ix = IntegerFinder.indexIn(id);
+        if (ix < 0) {
+            id = "";
+        }
+        else {
+            if (attachedTo()->modelPart()->hasZeroConnector()) {
+                id = QString::number(IntegerFinder.cap(0).toInt() + 1) + " ";
+            }
+            else {
+                id = IntegerFinder.cap(0) + " ";
+            }
+        }
+       
+        QString tt = QString("%1<b>%2</b>%3<br /><span style='font-size:small;'>%4</span>")
+                .arg(id)
+                .arg(name)
+                .arg(descr)
+                .arg(attachedToTitle());
+		setToolTip(tt);
+		return;
 	}
 
+	QList<ConnectorItem *> connectors;
 	foreach(ConnectorItem * toConnectorItem, m_connectedTo) {
 		if (!toConnectorItem->attachedToItemType() == ModelPart::Wire) {
 			connectors.append(toConnectorItem);
@@ -1486,19 +1514,6 @@ void ConnectorItem::updateTooltip() {
 		return;
 	}
 
-	if (connectors.count() == 1) {
-		QString name = connectors[0]->connectorSharedName();
-		QString descr = connectors[0]->connectorSharedDescription();
-		if (name.compare(descr) == 0) {
-			name = connectors[0]->connectorSharedID();
-		}
-        QString tt = QString("<b>%1</b>: %2<br /><span style='font-size:small;'>%3</span>")
-                .arg(name)
-                .arg(descr)
-                .arg(connectors[0]->attachedToTitle());
-		setToolTip(tt);
-		return;
-	}
 
 	QString connections = QString("<ul style='margin-left:0;padding-left:0;'>");
 	foreach(ConnectorItem * connectorItem, connectors) {

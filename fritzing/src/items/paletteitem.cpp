@@ -73,7 +73,6 @@ QString HoleSettings::holeSize() {
 static QRegExp LabelFinder("id=['|\"]label['|\"]");
 
 static bool ByIDParseSuccessful = true;
-static QRegExp IntegerFinder("\\d+");
 
 static QRegExp ConnectorFinder("connector\\d+pin");
 const QString PaletteItem::HoleSizePrefix("_hs_");

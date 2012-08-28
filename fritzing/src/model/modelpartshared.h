@@ -142,6 +142,8 @@ public:
     void setViewImage(ViewImage *);
     void addConnector(ConnectorShared *);
     void insertBus(class BusShared *);
+    void lookForZeroConnector();
+    bool hasZeroConnector();
 
 protected:
 	void loadTagText(QDomElement parent, QString tagName, QString &field);
@@ -191,7 +193,7 @@ protected:
 	bool m_flippedSMD;
 	bool m_needsCopper1;				// for converting pre-two-layer parts
     qulonglong m_dbid;
-
+    bool m_hasZeroConnector;
 };
 
 class ModelPartSharedRoot : public ModelPartShared
