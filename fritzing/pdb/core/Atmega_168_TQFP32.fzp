@@ -51,18 +51,7 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector15pad"/>
-                    <p layer="copper0" svgId="connector15pad"/>
-                    <p layer="copper0" svgId="connector15pad"/>
-                    <p layer="copper0" svgId="connector15pad"/>
-                    <p layer="copper0" svgId="connector15pad"/>
-                    <p layer="copper0" svgId="connector15pad"/>
                     <p layer="copper1" svgId="connector15pad"/>
-                    <p layer="copper0" svgId="connector15pad"/>
-                    <p layer="copper0" svgId="connector15pad"/>
-                    <p layer="copper0" svgId="connector15pad"/>
-                    <p layer="copper0" svgId="connector15pad"/>
-                    <p layer="copper0" svgId="connector15pad"/>
-                    <p layer="copper0" svgId="connector15pad"/>
                 </pcbView>
             </views>
         </connector>
@@ -77,18 +66,7 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector7pad"/>
-                    <p layer="copper0" svgId="connector7pad"/>
-                    <p layer="copper0" svgId="connector7pad"/>
-                    <p layer="copper0" svgId="connector7pad"/>
-                    <p layer="copper0" svgId="connector7pad"/>
-                    <p layer="copper0" svgId="connector7pad"/>
                     <p layer="copper1" svgId="connector7pad"/>
-                    <p layer="copper0" svgId="connector7pad"/>
-                    <p layer="copper0" svgId="connector7pad"/>
-                    <p layer="copper0" svgId="connector7pad"/>
-                    <p layer="copper0" svgId="connector7pad"/>
-                    <p layer="copper0" svgId="connector7pad"/>
-                    <p layer="copper0" svgId="connector7pad"/>
                 </pcbView>
             </views>
         </connector>
@@ -103,18 +81,7 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector16pad"/>
-                    <p layer="copper0" svgId="connector16pad"/>
-                    <p layer="copper0" svgId="connector16pad"/>
-                    <p layer="copper0" svgId="connector16pad"/>
-                    <p layer="copper0" svgId="connector16pad"/>
-                    <p layer="copper0" svgId="connector16pad"/>
                     <p layer="copper1" svgId="connector16pad"/>
-                    <p layer="copper0" svgId="connector16pad"/>
-                    <p layer="copper0" svgId="connector16pad"/>
-                    <p layer="copper0" svgId="connector16pad"/>
-                    <p layer="copper0" svgId="connector16pad"/>
-                    <p layer="copper0" svgId="connector16pad"/>
-                    <p layer="copper0" svgId="connector16pad"/>
                 </pcbView>
             </views>
         </connector>
@@ -129,18 +96,7 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector8pad"/>
-                    <p layer="copper0" svgId="connector8pad"/>
-                    <p layer="copper0" svgId="connector8pad"/>
-                    <p layer="copper0" svgId="connector8pad"/>
-                    <p layer="copper0" svgId="connector8pad"/>
-                    <p layer="copper0" svgId="connector8pad"/>
                     <p layer="copper1" svgId="connector8pad"/>
-                    <p layer="copper0" svgId="connector8pad"/>
-                    <p layer="copper0" svgId="connector8pad"/>
-                    <p layer="copper0" svgId="connector8pad"/>
-                    <p layer="copper0" svgId="connector8pad"/>
-                    <p layer="copper0" svgId="connector8pad"/>
-                    <p layer="copper0" svgId="connector8pad"/>
                 </pcbView>
             </views>
         </connector>
@@ -155,18 +111,7 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector17pad"/>
-                    <p layer="copper0" svgId="connector17pad"/>
-                    <p layer="copper0" svgId="connector17pad"/>
-                    <p layer="copper0" svgId="connector17pad"/>
-                    <p layer="copper0" svgId="connector17pad"/>
-                    <p layer="copper0" svgId="connector17pad"/>
                     <p layer="copper1" svgId="connector17pad"/>
-                    <p layer="copper0" svgId="connector17pad"/>
-                    <p layer="copper0" svgId="connector17pad"/>
-                    <p layer="copper0" svgId="connector17pad"/>
-                    <p layer="copper0" svgId="connector17pad"/>
-                    <p layer="copper0" svgId="connector17pad"/>
-                    <p layer="copper0" svgId="connector17pad"/>
                 </pcbView>
             </views>
         </connector>
@@ -181,18 +126,7 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector9pad"/>
-                    <p layer="copper0" svgId="connector9pad"/>
-                    <p layer="copper0" svgId="connector9pad"/>
-                    <p layer="copper0" svgId="connector9pad"/>
-                    <p layer="copper0" svgId="connector9pad"/>
-                    <p layer="copper0" svgId="connector9pad"/>
                     <p layer="copper1" svgId="connector9pad"/>
-                    <p layer="copper0" svgId="connector9pad"/>
-                    <p layer="copper0" svgId="connector9pad"/>
-                    <p layer="copper0" svgId="connector9pad"/>
-                    <p layer="copper0" svgId="connector9pad"/>
-                    <p layer="copper0" svgId="connector9pad"/>
-                    <p layer="copper0" svgId="connector9pad"/>
                 </pcbView>
             </views>
         </connector>
@@ -207,18 +141,7 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector18pad"/>
-                    <p layer="copper0" svgId="connector18pad"/>
-                    <p layer="copper0" svgId="connector18pad"/>
-                    <p layer="copper0" svgId="connector18pad"/>
-                    <p layer="copper0" svgId="connector18pad"/>
-                    <p layer="copper0" svgId="connector18pad"/>
                     <p layer="copper1" svgId="connector18pad"/>
-                    <p layer="copper0" svgId="connector18pad"/>
-                    <p layer="copper0" svgId="connector18pad"/>
-                    <p layer="copper0" svgId="connector18pad"/>
-                    <p layer="copper0" svgId="connector18pad"/>
-                    <p layer="copper0" svgId="connector18pad"/>
-                    <p layer="copper0" svgId="connector18pad"/>
                 </pcbView>
             </views>
         </connector>
@@ -233,18 +156,7 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector19pad"/>
-                    <p layer="copper0" svgId="connector19pad"/>
-                    <p layer="copper0" svgId="connector19pad"/>
-                    <p layer="copper0" svgId="connector19pad"/>
-                    <p layer="copper0" svgId="connector19pad"/>
-                    <p layer="copper0" svgId="connector19pad"/>
                     <p layer="copper1" svgId="connector19pad"/>
-                    <p layer="copper0" svgId="connector19pad"/>
-                    <p layer="copper0" svgId="connector19pad"/>
-                    <p layer="copper0" svgId="connector19pad"/>
-                    <p layer="copper0" svgId="connector19pad"/>
-                    <p layer="copper0" svgId="connector19pad"/>
-                    <p layer="copper0" svgId="connector19pad"/>
                 </pcbView>
             </views>
         </connector>
@@ -259,18 +171,7 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector20pad"/>
-                    <p layer="copper0" svgId="connector20pad"/>
-                    <p layer="copper0" svgId="connector20pad"/>
-                    <p layer="copper0" svgId="connector20pad"/>
-                    <p layer="copper0" svgId="connector20pad"/>
-                    <p layer="copper0" svgId="connector20pad"/>
                     <p layer="copper1" svgId="connector20pad"/>
-                    <p layer="copper0" svgId="connector20pad"/>
-                    <p layer="copper0" svgId="connector20pad"/>
-                    <p layer="copper0" svgId="connector20pad"/>
-                    <p layer="copper0" svgId="connector20pad"/>
-                    <p layer="copper0" svgId="connector20pad"/>
-                    <p layer="copper0" svgId="connector20pad"/>
                 </pcbView>
             </views>
         </connector>
@@ -285,18 +186,7 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector21pad"/>
-                    <p layer="copper0" svgId="connector21pad"/>
-                    <p layer="copper0" svgId="connector21pad"/>
-                    <p layer="copper0" svgId="connector21pad"/>
-                    <p layer="copper0" svgId="connector21pad"/>
-                    <p layer="copper0" svgId="connector21pad"/>
                     <p layer="copper1" svgId="connector21pad"/>
-                    <p layer="copper0" svgId="connector21pad"/>
-                    <p layer="copper0" svgId="connector21pad"/>
-                    <p layer="copper0" svgId="connector21pad"/>
-                    <p layer="copper0" svgId="connector21pad"/>
-                    <p layer="copper0" svgId="connector21pad"/>
-                    <p layer="copper0" svgId="connector21pad"/>
                 </pcbView>
             </views>
         </connector>
@@ -311,18 +201,7 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector22pad"/>
-                    <p layer="copper0" svgId="connector22pad"/>
-                    <p layer="copper0" svgId="connector22pad"/>
-                    <p layer="copper0" svgId="connector22pad"/>
-                    <p layer="copper0" svgId="connector22pad"/>
-                    <p layer="copper0" svgId="connector22pad"/>
                     <p layer="copper1" svgId="connector22pad"/>
-                    <p layer="copper0" svgId="connector22pad"/>
-                    <p layer="copper0" svgId="connector22pad"/>
-                    <p layer="copper0" svgId="connector22pad"/>
-                    <p layer="copper0" svgId="connector22pad"/>
-                    <p layer="copper0" svgId="connector22pad"/>
-                    <p layer="copper0" svgId="connector22pad"/>
                 </pcbView>
             </views>
         </connector>
@@ -337,18 +216,7 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector23pad"/>
-                    <p layer="copper0" svgId="connector23pad"/>
-                    <p layer="copper0" svgId="connector23pad"/>
-                    <p layer="copper0" svgId="connector23pad"/>
-                    <p layer="copper0" svgId="connector23pad"/>
-                    <p layer="copper0" svgId="connector23pad"/>
                     <p layer="copper1" svgId="connector23pad"/>
-                    <p layer="copper0" svgId="connector23pad"/>
-                    <p layer="copper0" svgId="connector23pad"/>
-                    <p layer="copper0" svgId="connector23pad"/>
-                    <p layer="copper0" svgId="connector23pad"/>
-                    <p layer="copper0" svgId="connector23pad"/>
-                    <p layer="copper0" svgId="connector23pad"/>
                 </pcbView>
             </views>
         </connector>
@@ -363,18 +231,7 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector24pad"/>
-                    <p layer="copper0" svgId="connector24pad"/>
-                    <p layer="copper0" svgId="connector24pad"/>
-                    <p layer="copper0" svgId="connector24pad"/>
-                    <p layer="copper0" svgId="connector24pad"/>
-                    <p layer="copper0" svgId="connector24pad"/>
                     <p layer="copper1" svgId="connector24pad"/>
-                    <p layer="copper0" svgId="connector24pad"/>
-                    <p layer="copper0" svgId="connector24pad"/>
-                    <p layer="copper0" svgId="connector24pad"/>
-                    <p layer="copper0" svgId="connector24pad"/>
-                    <p layer="copper0" svgId="connector24pad"/>
-                    <p layer="copper0" svgId="connector24pad"/>
                 </pcbView>
             </views>
         </connector>
@@ -389,18 +246,7 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector25pad"/>
-                    <p layer="copper0" svgId="connector25pad"/>
-                    <p layer="copper0" svgId="connector25pad"/>
-                    <p layer="copper0" svgId="connector25pad"/>
-                    <p layer="copper0" svgId="connector25pad"/>
-                    <p layer="copper0" svgId="connector25pad"/>
                     <p layer="copper1" svgId="connector25pad"/>
-                    <p layer="copper0" svgId="connector25pad"/>
-                    <p layer="copper0" svgId="connector25pad"/>
-                    <p layer="copper0" svgId="connector25pad"/>
-                    <p layer="copper0" svgId="connector25pad"/>
-                    <p layer="copper0" svgId="connector25pad"/>
-                    <p layer="copper0" svgId="connector25pad"/>
                 </pcbView>
             </views>
         </connector>
@@ -415,18 +261,7 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector26pad"/>
-                    <p layer="copper0" svgId="connector26pad"/>
-                    <p layer="copper0" svgId="connector26pad"/>
-                    <p layer="copper0" svgId="connector26pad"/>
-                    <p layer="copper0" svgId="connector26pad"/>
-                    <p layer="copper0" svgId="connector26pad"/>
                     <p layer="copper1" svgId="connector26pad"/>
-                    <p layer="copper0" svgId="connector26pad"/>
-                    <p layer="copper0" svgId="connector26pad"/>
-                    <p layer="copper0" svgId="connector26pad"/>
-                    <p layer="copper0" svgId="connector26pad"/>
-                    <p layer="copper0" svgId="connector26pad"/>
-                    <p layer="copper0" svgId="connector26pad"/>
                 </pcbView>
             </views>
         </connector>
@@ -441,18 +276,7 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector27pad"/>
-                    <p layer="copper0" svgId="connector27pad"/>
-                    <p layer="copper0" svgId="connector27pad"/>
-                    <p layer="copper0" svgId="connector27pad"/>
-                    <p layer="copper0" svgId="connector27pad"/>
-                    <p layer="copper0" svgId="connector27pad"/>
                     <p layer="copper1" svgId="connector27pad"/>
-                    <p layer="copper0" svgId="connector27pad"/>
-                    <p layer="copper0" svgId="connector27pad"/>
-                    <p layer="copper0" svgId="connector27pad"/>
-                    <p layer="copper0" svgId="connector27pad"/>
-                    <p layer="copper0" svgId="connector27pad"/>
-                    <p layer="copper0" svgId="connector27pad"/>
                 </pcbView>
             </views>
         </connector>
@@ -467,18 +291,7 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector28pad"/>
-                    <p layer="copper0" svgId="connector28pad"/>
-                    <p layer="copper0" svgId="connector28pad"/>
-                    <p layer="copper0" svgId="connector28pad"/>
-                    <p layer="copper0" svgId="connector28pad"/>
-                    <p layer="copper0" svgId="connector28pad"/>
                     <p layer="copper1" svgId="connector28pad"/>
-                    <p layer="copper0" svgId="connector28pad"/>
-                    <p layer="copper0" svgId="connector28pad"/>
-                    <p layer="copper0" svgId="connector28pad"/>
-                    <p layer="copper0" svgId="connector28pad"/>
-                    <p layer="copper0" svgId="connector28pad"/>
-                    <p layer="copper0" svgId="connector28pad"/>
                 </pcbView>
             </views>
         </connector>
@@ -493,18 +306,7 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector29pad"/>
-                    <p layer="copper0" svgId="connector29pad"/>
-                    <p layer="copper0" svgId="connector29pad"/>
-                    <p layer="copper0" svgId="connector29pad"/>
-                    <p layer="copper0" svgId="connector29pad"/>
-                    <p layer="copper0" svgId="connector29pad"/>
                     <p layer="copper1" svgId="connector29pad"/>
-                    <p layer="copper0" svgId="connector29pad"/>
-                    <p layer="copper0" svgId="connector29pad"/>
-                    <p layer="copper0" svgId="connector29pad"/>
-                    <p layer="copper0" svgId="connector29pad"/>
-                    <p layer="copper0" svgId="connector29pad"/>
-                    <p layer="copper0" svgId="connector29pad"/>
                 </pcbView>
             </views>
         </connector>
@@ -519,18 +321,7 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector30pad"/>
-                    <p layer="copper0" svgId="connector30pad"/>
-                    <p layer="copper0" svgId="connector30pad"/>
-                    <p layer="copper0" svgId="connector30pad"/>
-                    <p layer="copper0" svgId="connector30pad"/>
-                    <p layer="copper0" svgId="connector30pad"/>
                     <p layer="copper1" svgId="connector30pad"/>
-                    <p layer="copper0" svgId="connector30pad"/>
-                    <p layer="copper0" svgId="connector30pad"/>
-                    <p layer="copper0" svgId="connector30pad"/>
-                    <p layer="copper0" svgId="connector30pad"/>
-                    <p layer="copper0" svgId="connector30pad"/>
-                    <p layer="copper0" svgId="connector30pad"/>
                 </pcbView>
             </views>
         </connector>
@@ -545,18 +336,7 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector31pad"/>
-                    <p layer="copper0" svgId="connector31pad"/>
-                    <p layer="copper0" svgId="connector31pad"/>
-                    <p layer="copper0" svgId="connector31pad"/>
-                    <p layer="copper0" svgId="connector31pad"/>
-                    <p layer="copper0" svgId="connector31pad"/>
                     <p layer="copper1" svgId="connector31pad"/>
-                    <p layer="copper0" svgId="connector31pad"/>
-                    <p layer="copper0" svgId="connector31pad"/>
-                    <p layer="copper0" svgId="connector31pad"/>
-                    <p layer="copper0" svgId="connector31pad"/>
-                    <p layer="copper0" svgId="connector31pad"/>
-                    <p layer="copper0" svgId="connector31pad"/>
                 </pcbView>
             </views>
         </connector>
@@ -571,18 +351,7 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector0pad"/>
-                    <p layer="copper0" svgId="connector0pad"/>
-                    <p layer="copper0" svgId="connector0pad"/>
-                    <p layer="copper0" svgId="connector0pad"/>
-                    <p layer="copper0" svgId="connector0pad"/>
-                    <p layer="copper0" svgId="connector0pad"/>
                     <p layer="copper1" svgId="connector0pad"/>
-                    <p layer="copper0" svgId="connector0pad"/>
-                    <p layer="copper0" svgId="connector0pad"/>
-                    <p layer="copper0" svgId="connector0pad"/>
-                    <p layer="copper0" svgId="connector0pad"/>
-                    <p layer="copper0" svgId="connector0pad"/>
-                    <p layer="copper0" svgId="connector0pad"/>
                 </pcbView>
             </views>
         </connector>
@@ -597,18 +366,7 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector1pad"/>
-                    <p layer="copper0" svgId="connector1pad"/>
-                    <p layer="copper0" svgId="connector1pad"/>
-                    <p layer="copper0" svgId="connector1pad"/>
-                    <p layer="copper0" svgId="connector1pad"/>
-                    <p layer="copper0" svgId="connector1pad"/>
                     <p layer="copper1" svgId="connector1pad"/>
-                    <p layer="copper0" svgId="connector1pad"/>
-                    <p layer="copper0" svgId="connector1pad"/>
-                    <p layer="copper0" svgId="connector1pad"/>
-                    <p layer="copper0" svgId="connector1pad"/>
-                    <p layer="copper0" svgId="connector1pad"/>
-                    <p layer="copper0" svgId="connector1pad"/>
                 </pcbView>
             </views>
         </connector>
@@ -623,18 +381,7 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector10pad"/>
-                    <p layer="copper0" svgId="connector10pad"/>
-                    <p layer="copper0" svgId="connector10pad"/>
-                    <p layer="copper0" svgId="connector10pad"/>
-                    <p layer="copper0" svgId="connector10pad"/>
-                    <p layer="copper0" svgId="connector10pad"/>
                     <p layer="copper1" svgId="connector10pad"/>
-                    <p layer="copper0" svgId="connector10pad"/>
-                    <p layer="copper0" svgId="connector10pad"/>
-                    <p layer="copper0" svgId="connector10pad"/>
-                    <p layer="copper0" svgId="connector10pad"/>
-                    <p layer="copper0" svgId="connector10pad"/>
-                    <p layer="copper0" svgId="connector10pad"/>
                 </pcbView>
             </views>
         </connector>
@@ -649,18 +396,7 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector2pad"/>
-                    <p layer="copper0" svgId="connector2pad"/>
-                    <p layer="copper0" svgId="connector2pad"/>
-                    <p layer="copper0" svgId="connector2pad"/>
-                    <p layer="copper0" svgId="connector2pad"/>
-                    <p layer="copper0" svgId="connector2pad"/>
                     <p layer="copper1" svgId="connector2pad"/>
-                    <p layer="copper0" svgId="connector2pad"/>
-                    <p layer="copper0" svgId="connector2pad"/>
-                    <p layer="copper0" svgId="connector2pad"/>
-                    <p layer="copper0" svgId="connector2pad"/>
-                    <p layer="copper0" svgId="connector2pad"/>
-                    <p layer="copper0" svgId="connector2pad"/>
                 </pcbView>
             </views>
         </connector>
@@ -675,18 +411,7 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector3pad"/>
-                    <p layer="copper0" svgId="connector3pad"/>
-                    <p layer="copper0" svgId="connector3pad"/>
-                    <p layer="copper0" svgId="connector3pad"/>
-                    <p layer="copper0" svgId="connector3pad"/>
-                    <p layer="copper0" svgId="connector3pad"/>
                     <p layer="copper1" svgId="connector3pad"/>
-                    <p layer="copper0" svgId="connector3pad"/>
-                    <p layer="copper0" svgId="connector3pad"/>
-                    <p layer="copper0" svgId="connector3pad"/>
-                    <p layer="copper0" svgId="connector3pad"/>
-                    <p layer="copper0" svgId="connector3pad"/>
-                    <p layer="copper0" svgId="connector3pad"/>
                 </pcbView>
             </views>
         </connector>
@@ -701,18 +426,7 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector11pad"/>
-                    <p layer="copper0" svgId="connector11pad"/>
-                    <p layer="copper0" svgId="connector11pad"/>
-                    <p layer="copper0" svgId="connector11pad"/>
-                    <p layer="copper0" svgId="connector11pad"/>
-                    <p layer="copper0" svgId="connector11pad"/>
                     <p layer="copper1" svgId="connector11pad"/>
-                    <p layer="copper0" svgId="connector11pad"/>
-                    <p layer="copper0" svgId="connector11pad"/>
-                    <p layer="copper0" svgId="connector11pad"/>
-                    <p layer="copper0" svgId="connector11pad"/>
-                    <p layer="copper0" svgId="connector11pad"/>
-                    <p layer="copper0" svgId="connector11pad"/>
                 </pcbView>
             </views>
         </connector>
@@ -727,18 +441,7 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector4pad"/>
-                    <p layer="copper0" svgId="connector4pad"/>
-                    <p layer="copper0" svgId="connector4pad"/>
-                    <p layer="copper0" svgId="connector4pad"/>
-                    <p layer="copper0" svgId="connector4pad"/>
-                    <p layer="copper0" svgId="connector4pad"/>
                     <p layer="copper1" svgId="connector4pad"/>
-                    <p layer="copper0" svgId="connector4pad"/>
-                    <p layer="copper0" svgId="connector4pad"/>
-                    <p layer="copper0" svgId="connector4pad"/>
-                    <p layer="copper0" svgId="connector4pad"/>
-                    <p layer="copper0" svgId="connector4pad"/>
-                    <p layer="copper0" svgId="connector4pad"/>
                 </pcbView>
             </views>
         </connector>
@@ -753,18 +456,7 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector12pad"/>
-                    <p layer="copper0" svgId="connector12pad"/>
-                    <p layer="copper0" svgId="connector12pad"/>
-                    <p layer="copper0" svgId="connector12pad"/>
-                    <p layer="copper0" svgId="connector12pad"/>
-                    <p layer="copper0" svgId="connector12pad"/>
                     <p layer="copper1" svgId="connector12pad"/>
-                    <p layer="copper0" svgId="connector12pad"/>
-                    <p layer="copper0" svgId="connector12pad"/>
-                    <p layer="copper0" svgId="connector12pad"/>
-                    <p layer="copper0" svgId="connector12pad"/>
-                    <p layer="copper0" svgId="connector12pad"/>
-                    <p layer="copper0" svgId="connector12pad"/>
                 </pcbView>
             </views>
         </connector>
@@ -779,18 +471,7 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector5pad"/>
-                    <p layer="copper0" svgId="connector5pad"/>
-                    <p layer="copper0" svgId="connector5pad"/>
-                    <p layer="copper0" svgId="connector5pad"/>
-                    <p layer="copper0" svgId="connector5pad"/>
-                    <p layer="copper0" svgId="connector5pad"/>
                     <p layer="copper1" svgId="connector5pad"/>
-                    <p layer="copper0" svgId="connector5pad"/>
-                    <p layer="copper0" svgId="connector5pad"/>
-                    <p layer="copper0" svgId="connector5pad"/>
-                    <p layer="copper0" svgId="connector5pad"/>
-                    <p layer="copper0" svgId="connector5pad"/>
-                    <p layer="copper0" svgId="connector5pad"/>
                 </pcbView>
             </views>
         </connector>
@@ -805,18 +486,7 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector13pad"/>
-                    <p layer="copper0" svgId="connector13pad"/>
-                    <p layer="copper0" svgId="connector13pad"/>
-                    <p layer="copper0" svgId="connector13pad"/>
-                    <p layer="copper0" svgId="connector13pad"/>
-                    <p layer="copper0" svgId="connector13pad"/>
                     <p layer="copper1" svgId="connector13pad"/>
-                    <p layer="copper0" svgId="connector13pad"/>
-                    <p layer="copper0" svgId="connector13pad"/>
-                    <p layer="copper0" svgId="connector13pad"/>
-                    <p layer="copper0" svgId="connector13pad"/>
-                    <p layer="copper0" svgId="connector13pad"/>
-                    <p layer="copper0" svgId="connector13pad"/>
                 </pcbView>
             </views>
         </connector>
@@ -831,18 +501,7 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector14pad"/>
-                    <p layer="copper0" svgId="connector14pad"/>
-                    <p layer="copper0" svgId="connector14pad"/>
-                    <p layer="copper0" svgId="connector14pad"/>
-                    <p layer="copper0" svgId="connector14pad"/>
-                    <p layer="copper0" svgId="connector14pad"/>
                     <p layer="copper1" svgId="connector14pad"/>
-                    <p layer="copper0" svgId="connector14pad"/>
-                    <p layer="copper0" svgId="connector14pad"/>
-                    <p layer="copper0" svgId="connector14pad"/>
-                    <p layer="copper0" svgId="connector14pad"/>
-                    <p layer="copper0" svgId="connector14pad"/>
-                    <p layer="copper0" svgId="connector14pad"/>
                 </pcbView>
             </views>
         </connector>
@@ -857,18 +516,7 @@
                 </schematicView>
                 <pcbView>
                     <p layer="copper0" svgId="connector6pad"/>
-                    <p layer="copper0" svgId="connector6pad"/>
-                    <p layer="copper0" svgId="connector6pad"/>
-                    <p layer="copper0" svgId="connector6pad"/>
-                    <p layer="copper0" svgId="connector6pad"/>
-                    <p layer="copper0" svgId="connector6pad"/>
                     <p layer="copper1" svgId="connector6pad"/>
-                    <p layer="copper0" svgId="connector6pad"/>
-                    <p layer="copper0" svgId="connector6pad"/>
-                    <p layer="copper0" svgId="connector6pad"/>
-                    <p layer="copper0" svgId="connector6pad"/>
-                    <p layer="copper0" svgId="connector6pad"/>
-                    <p layer="copper0" svgId="connector6pad"/>
                 </pcbView>
             </views>
         </connector>
