@@ -93,7 +93,7 @@ void MetadataView::labelEntry() {
 }
 
 void MetadataView::familyEntry() {
-    DebugDialog::debug("family entry");
+    emit metadataChanged("family", m_familyEdit->text());
 }
 
 void MetadataView::dateEntry() {

@@ -78,15 +78,18 @@ protected:
 	void setTitle();
     void createViewMenuActions();
     void createViewMenu();
+    QHash<QString, QString> getOldProperties();
 
 public slots:
     void metadataChanged(const QString & name, const QString & value);
     void propertiesChanged(const QHash<QString, QString> &);
     void tagsChanged(const QStringList &);
+    void connectorsChanged(QList<struct ConnectorMetadata *> &);
 
 protected slots:
     void initZoom();
     void showMetadataView();
+    void showConnectorsView();
     void showIconView();
 
 protected:
@@ -96,12 +99,14 @@ protected:
     QDomDocument m_schematicDocument;
     QDomDocument m_pcbDocument;
 
-    QAction * m_showMetadataAct;
+    QAction * m_showMetadataViewAct;
+    QAction * m_showConnectorsViewAct;
     QAction * m_showIconAct;
 
 	QPointer<SketchAreaWidget> m_iconWidget;
 	QPointer<class IconSketchWidget> m_iconGraphicsView;
     class MetadataView * m_metadataView;
+    class ConnectorsView * m_connectorsView;
 
 };
 

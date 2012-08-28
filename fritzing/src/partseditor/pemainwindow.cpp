@@ -122,6 +122,7 @@ $Date$
 
 #include "pemainwindow.h"
 #include "metadataview.h"
+#include "connectorsview.h"
 #include "pecommands.h"
 #include "../debugdialog.h"
 #include "../model/palettemodel.h"
@@ -190,6 +191,11 @@ void PEMainWindow::initSketchWidgets()
     connect(m_metadataView, SIGNAL(metadataChanged(const QString &, const QString &)), this, SLOT(metadataChanged(const QString &, const QString &)));
     connect(m_metadataView, SIGNAL(tagsChanged(const QStringList &)), this, SLOT(tagsChanged(const QStringList &)));
     connect(m_metadataView, SIGNAL(propertiesChanged(const QHash<QString, QString> &)), this, SLOT(propertiesChanged(const QHash<QString, QString> &)));
+
+    m_connectorsView = new ConnectorsView(this);
+	sketchAreaWidget = new SketchAreaWidget(m_connectorsView, this);
+	m_tabWidget->addWidget(sketchAreaWidget);
+    connect(m_connectorsView, SIGNAL(connectorsChanged(QList<ConnectorMetadata *> &)), this, SLOT(connectorsChanged(QList<ConnectorMetadata *> &)), Qt::DirectConnection);
 }
 
 void PEMainWindow::initDock()
@@ -371,6 +377,8 @@ void PEMainWindow::setInitialItem(PaletteItem * paletteItem) {
     m_schematicGraphicsView->addItem(modelPart, m_schematicGraphicsView->defaultViewLayerSpec(), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
     m_pcbGraphicsView->addItem(modelPart, m_pcbGraphicsView->defaultViewLayerSpec(), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
     m_metadataView->initMetadata(m_fzpDocument);
+    m_connectorsView->initConnectors(m_fzpDocument);
+
 
     QTimer::singleShot(10, this, SLOT(initZoom()));
 }
@@ -403,10 +411,16 @@ void PEMainWindow::createViewMenuActions() {
 	m_showIconAct->setStatusTip(tr("Show the icon view"));
 	connect(m_showIconAct, SIGNAL(triggered()), this, SLOT(showIconView()));
 
-	m_showMetadataAct = new QAction(tr("Show Metatdata"), this);
-	m_showMetadataAct->setShortcut(tr("Ctrl+5"));
-	m_showMetadataAct->setStatusTip(tr("Show the metadata view"));
-	connect(m_showMetadataAct, SIGNAL(triggered()), this, SLOT(showMetadataView()));
+	m_showMetadataViewAct = new QAction(tr("Show Metatdata"), this);
+	m_showMetadataViewAct->setShortcut(tr("Ctrl+5"));
+	m_showMetadataViewAct->setStatusTip(tr("Show the metadata view"));
+	connect(m_showMetadataViewAct, SIGNAL(triggered()), this, SLOT(showMetadataView()));
+
+    m_showConnectorsViewAct = new QAction(tr("Show Connectors"), this);
+	m_showConnectorsViewAct->setShortcut(tr("Ctrl+6"));
+	m_showConnectorsViewAct->setStatusTip(tr("Show the connector metatdata in a list view"));
+	connect(m_showConnectorsViewAct, SIGNAL(triggered()), this, SLOT(showConnectorsView()));
+
 }
 
 void PEMainWindow::createViewMenu() {
@@ -419,7 +433,8 @@ void PEMainWindow::createViewMenu() {
         }
         else if (afterNext) {
             m_viewMenu->insertAction(action, m_showIconAct);
-            m_viewMenu->insertAction(action, m_showMetadataAct);
+            m_viewMenu->insertAction(action, m_showMetadataViewAct);
+            m_viewMenu->insertAction(action, m_showConnectorsViewAct);
             break;
         }
     }
@@ -429,12 +444,29 @@ void PEMainWindow::showMetadataView() {
     this->m_tabWidget->setCurrentIndex(4);
 }
 
+void PEMainWindow::showConnectorsView() {
+    this->m_tabWidget->setCurrentIndex(5);
+}
+
 void PEMainWindow::showIconView() {
     this->m_tabWidget->setCurrentIndex(3);
 }
 
 void PEMainWindow::metadataChanged(const QString & name, const QString & value)
 {
+    if (name.compare("family") == 0) {
+        QHash<QString, QString> oldProperties = getOldProperties();
+        QHash<QString, QString> newProperties(oldProperties);
+        newProperties.insert("family", value);
+    
+        ChangePropertiesCommand * cpc = new ChangePropertiesCommand(this, oldProperties, newProperties, NULL);
+        cpc->setText(tr("Change family to %1").arg(value));
+        cpc->setSkipFirstRedo();
+        m_undoStack->waitPush(cpc, SketchWidget::PropChangeDelay);
+
+        return;
+    }
+
     // called from metadataView
     QDomElement root = m_fzpDocument.documentElement();
     QDomElement element = root.firstChildElement(name);
@@ -496,16 +528,7 @@ void PEMainWindow::changeTags(const QStringList & newTags)
 void PEMainWindow::propertiesChanged(const QHash<QString, QString> & newProperties)
 {
     // called from metadataView
-    QDomElement root = m_fzpDocument.documentElement();
-    QDomElement tags = root.firstChildElement("properties");
-    QDomElement prop = tags.firstChildElement("property");
-    QHash<QString, QString> oldProperties;
-    while (!prop.isNull()) {
-        QString name = prop.attribute("name");
-        QString value = prop.text();
-        oldProperties.insert(name, value);
-        prop = prop.nextSiblingElement("property");
-    }
+    QHash<QString, QString> oldProperties = getOldProperties();
 
     ChangePropertiesCommand * cpc = new ChangePropertiesCommand(this, oldProperties, newProperties, NULL);
     cpc->setText(tr("Change properties"));
@@ -532,4 +555,24 @@ void PEMainWindow::changeProperties(const QHash<QString, QString> & newPropertie
     }
 
     m_metadataView->initMetadata(m_fzpDocument);
+}
+
+QHash<QString, QString> PEMainWindow::getOldProperties() 
+{
+    QDomElement root = m_fzpDocument.documentElement();
+    QDomElement properties = root.firstChildElement("properties");
+    QDomElement prop = properties.firstChildElement("property");
+    QHash<QString, QString> oldProperties;
+    while (!prop.isNull()) {
+        QString name = prop.attribute("name");
+        QString value = prop.text();
+        oldProperties.insert(name, value);
+        prop = prop.nextSiblingElement("property");
+    }
+
+    return oldProperties;
+}
+
+void PEMainWindow::connectorsChanged(QList<ConnectorMetadata *> & connectorMetadataList)
+{
 }

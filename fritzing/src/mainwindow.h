@@ -241,7 +241,6 @@ protected slots:
 	void updateRecentFileActions();
     void tabWidget_currentChanged(int index);
     void createNewPart();
-    void createNewPartNew();
     void createNewSketch();
     void minimize();
     void toggleToolbar(bool toggle);
@@ -634,7 +633,6 @@ protected:
     // Part Menu
     QMenu *m_partMenu;
     QAction *m_createNewPart;
-    QAction *m_createNewPartNewAction;
 	QAction *m_infoViewOnHoverAction;
 	QAction *m_exportNormalizedSvgAction;
 	QAction *m_exportNormalizedFlattenedSvgAction;

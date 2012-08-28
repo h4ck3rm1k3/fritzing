@@ -792,10 +792,6 @@ void MainWindow::createPartMenuActions() {
 	m_createNewPart->setStatusTip(tr("Create new part"));
 	connect(m_createNewPart, SIGNAL(triggered()), this, SLOT(createNewPart()));
 
-	m_createNewPartNewAction = new QAction(tr("New (new parts editor)"), this);
-	m_createNewPartNewAction->setStatusTip(tr("Create a new part with new parts editor"));
-	connect(m_createNewPartNewAction, SIGNAL(triggered()), this, SLOT(createNewPartNew()));
-
 	m_openInPartsEditorAct = new QAction(tr("&Edit"), this);
 	m_openInPartsEditorAct->setShortcut(tr("Ctrl+Return"));
 	m_openInPartsEditorAct->setStatusTip(tr("Open the parts editor on an existing part"));
@@ -1200,7 +1196,6 @@ void MainWindow::createPartMenu() {
     connect(m_partMenu, SIGNAL(aboutToShow()), this, SLOT(updatePartMenu()));
 
     m_partMenu->addAction(m_createNewPart);
-    m_partMenu->addAction(m_createNewPartNewAction);
 	m_partMenu->addAction(m_openInPartsEditorAct);
 	m_partMenu->addAction(m_openInPartsEditorNewAct);
 	m_partMenu->addSeparator();
@@ -2002,10 +1997,6 @@ void MainWindow::enableDebug() {
 
 void MainWindow::createNewPart() {
 	openPartsEditor(NULL);
-}
-
-void MainWindow::createNewPartNew() {
-    openNewPartsEditor(NULL);
 }
 
 void MainWindow::openPartsEditor(PaletteItem * paletteItem) {

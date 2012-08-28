@@ -1,0 +1,9 @@
+/* new parts editor  */
+
+#connector0Frame {
+	background-color: #dddddd;
+}
+
+#connector1Frame {
+	background-color: #ffffff;
+}

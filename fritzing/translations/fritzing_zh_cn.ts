@@ -602,6 +602,77 @@ in order to fix this connector</source>
     </message>
 </context>
 <context>
+    <name>ConnectorsView</name>
+    <message>
+        <source>This is where you edit the connector metadata for the part</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>number of connectors:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change Connectors Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change Connector Count</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">取消</translation>
+    </message>
+    <message>
+        <source>Connector number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Type:&lt;/b&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SMD-pad</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Name:&lt;/b&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set the connectors&apos;s title</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Description:&lt;/b&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set the connectors&apos;s description</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Connectors will be removed from the end of the list, so you may lose some work. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Connectors will be added the end of the list. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rather than changing the number of connectors here, it may be better to begin with a part that already has the right number of connectors.
+
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>Change to %n connectors?</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
+</context>
+<context>
     <name>DebugDialog</name>
     <message>
         <source>for debugging</source>
@@ -1013,18 +1084,6 @@ It is also possible to choose a connector as a ground fill seed by right-clickin
         <translation>模型元件问题</translation>
     </message>
     <message>
-        <source>part xml missing</source>
-        <translation>元件xml缺失</translation>
-    </message>
-    <message>
-        <source>missing xml for view %1 layer %2</source>
-        <translation>视图%1层%2丢失了xml</translation>
-    </message>
-    <message>
-        <source>file %1 not found</source>
-        <translation>文件%1未找到</translation>
-    </message>
-    <message>
         <source>capacitance</source>
         <translation>电容</translation>
     </message>
@@ -1113,7 +1172,7 @@ It is also possible to choose a connector as a ground fill seed by right-clickin
         <translation>不能为svg%1创建渲染</translation>
     </message>
     <message>
-        <source>dom document problem</source>
+        <source>file for %1 %2 not found</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1654,10 +1713,6 @@ We&apos;re working to avoid this message, and only let you choose between proper
     <message>
         <source>Ctrl+Return</source>
         <translation>Ctrl+回车</translation>
-    </message>
-    <message>
-        <source>Open the old parts editor</source>
-        <translation>打开旧元件编辑器</translation>
     </message>
     <message>
         <source>&amp;Add to bin...</source>
@@ -2967,6 +3022,105 @@ Go ahead and revert?</source>
         <source>Select any traces where the screen location doesn&apos;t match their actual location.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Unrouted connections</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>There are no unrouted connections in this view.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open the parts editor on an existing part</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit (new parts editor)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open the new parts editor on an existing part</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show unrouted</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Highlight all unrouted connectors</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MetadataView</name>
+    <message>
+        <source>This is where you edit the metadata for the part ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set the part&apos;s title</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Title</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set the part&apos;s date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Date</source>
+        <translation type="unfinished">日期</translation>
+    </message>
+    <message>
+        <source>Set the part&apos;s author</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Author</source>
+        <translation type="unfinished">作者</translation>
+    </message>
+    <message>
+        <source>Set the part&apos;s description--you can use simple html (as defined by Qt&apos;s Rich Text)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation type="unfinished">描述</translation>
+    </message>
+    <message>
+        <source>Set the default part label prefix</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Label</source>
+        <translation type="unfinished">标签</translation>
+    </message>
+    <message>
+        <source>Set the part&apos;s family--what other parts is this part related to</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Family</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set the part&apos;s properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Properties</source>
+        <translation type="unfinished">属性</translation>
+    </message>
+    <message>
+        <source>Set the part&apos;s tags</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tags</source>
+        <translation type="unfinished">关键词</translation>
+    </message>
 </context>
 <context>
     <name>MismatchingConnectorWidget</name>
@@ -3131,6 +3285,69 @@ Reason: %2 (errcode %3)</source>
     </message>
     <message>
         <source>Unable to convert this via to a bendpoint because it is connected to a part that is only on the bottom layer and another part that is only on the top layer.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PEMainWindow</name>
+    <message>
+        <source>Parts Editor</source>
+        <translation type="unfinished">元件编辑器</translation>
+    </message>
+    <message>
+        <source>New Parts Editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show Icon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ctrl+4</source>
+        <translation type="unfinished">Ctrl+4</translation>
+    </message>
+    <message>
+        <source>Show the icon view</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show Metatdata</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ctrl+5</source>
+        <translation type="unfinished">Ctrl+5</translation>
+    </message>
+    <message>
+        <source>Show the metadata view</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show Connectors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ctrl+6</source>
+        <translation type="unfinished">Ctrl+6</translation>
+    </message>
+    <message>
+        <source>Show the connector metatdata in a list view</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change family to %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change %1 to &apos;%2&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change tags</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change properties</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4861,6 +5078,14 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
         <source>paste mask layer(s), </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>ii</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Icon View</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QShortcut</name>
@@ -5292,6 +5517,24 @@ Fritzing仍然在工作，但不能改变元件的属性.</translation>
     </message>
     <message>
         <source>Note text change</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unrouted connections are highlighted in yellow.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>There are no unrouted connections</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unrouted connections</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1
+
+Note: you can also trigger this display by mousing down on the routing status text in the status bar.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

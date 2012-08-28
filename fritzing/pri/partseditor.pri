@@ -56,6 +56,7 @@ HEADERS += \
     src/partseditor/pemainwindow.h \
     src/partseditor/metadataview.h \
     src/partseditor/pecommands.h \
+    src/partseditor/connectorsview.h \
     
 
 SOURCES += \
@@ -85,3 +86,4 @@ SOURCES += \
     src/partseditor/pemainwindow.cpp \
     src/partseditor/metadataview.cpp \
     src/partseditor/pecommands.cpp \
+    src/partseditor/connectorsview.cpp \
