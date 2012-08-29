@@ -854,10 +854,6 @@ bool ModelPart::isObsolete() {
 	return false;
 }
 
-void ModelPart::setFlippedSMD(bool f) {
-	if (m_modelPartShared != NULL) m_modelPartShared->setFlippedSMD(f);
-}
-
 bool ModelPart::flippedSMD() {
 	if (m_modelPartShared != NULL) {
 		return m_modelPartShared->flippedSMD();

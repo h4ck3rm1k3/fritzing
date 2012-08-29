@@ -181,7 +181,6 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel, QW
 	m_currentGraphicsView = NULL;
 	m_comboboxChanged = false;
 	m_helper = NULL;
-	m_smdOneSideWarningGiven = false;
 
     // Add a timer for autosaving
 	m_backingUp = m_autosaveNeeded = false;
@@ -574,11 +573,6 @@ void MainWindow::connectPairs() {
 						this, SLOT(swapSelectedDelay(const QString &, const QString &, QMap<QString, QString> &, ItemBase *)));
 	succeeded =  succeeded && connect(m_pcbGraphicsView, SIGNAL(swapSignal(const QString &, const QString &, QMap<QString, QString> &, ItemBase *)), 
 						this, SLOT(swapSelectedDelay(const QString &, const QString &, QMap<QString, QString> &, ItemBase *)));
-
-	succeeded =  succeeded && connect(m_breadboardGraphicsView, SIGNAL(warnSMDSignal(const QString &)), this, SLOT(warnSMD(const QString &)), Qt::QueuedConnection);
-	succeeded =  succeeded && connect(m_pcbGraphicsView, SIGNAL(warnSMDSignal(const QString &)), this, SLOT(warnSMD(const QString &)), Qt::QueuedConnection);
-	succeeded =  succeeded && connect(m_schematicGraphicsView, SIGNAL(warnSMDSignal(const QString &)), this, SLOT(warnSMD(const QString &)), Qt::QueuedConnection);
-
 
 	succeeded =  succeeded && connect(m_breadboardGraphicsView, SIGNAL(dropPasteSignal(SketchWidget *)), 
 						this, SLOT(dropPaste(SketchWidget *)));
@@ -1843,7 +1837,7 @@ void MainWindow::swapSelectedMap(const QString & family, const QString & prop, Q
 			}
 		}
 
-		swapSelectedAux(itemBase->layerKinChief(), generatedModuleID);
+		swapSelectedAux(itemBase->layerKinChief(), generatedModuleID, false, ViewLayer::UnknownSpec);
 		return;
 	}
 
@@ -1860,6 +1854,18 @@ void MainWindow::swapSelectedMap(const QString & family, const QString & prop, Q
 	bool exactMatch = m_refModel->lastWasExactMatch();
 
 	if(moduleID.isEmpty()) {
+        if (prop.compare("layer") == 0 && itemBase->modelPart()->flippedSMD()) {
+            ItemBase * viewItem = itemBase->modelPart()->viewItem(ViewIdentifierClass::PCBView);
+            if (viewItem) {
+                ViewLayer::ViewLayerID wantViewLayerID = ViewLayer::viewLayerIDFromXmlString(currPropsMap.value(prop));
+                if (viewItem->viewLayerID() != wantViewLayerID) {
+                    ViewLayer::ViewLayerSpec viewLayerSpec = (wantViewLayerID == ViewLayer::Copper0) ? ViewLayer::ThroughHoleThroughTop_OneLayer : ViewLayer::ThroughHoleThroughTop_TwoLayers;
+                    swapSelectedAux(itemBase->layerKinChief(), itemBase->moduleID(), true, viewLayerSpec);
+                    return;
+                }
+            }
+        }
+
 		QMessageBox::information(
 			this,
 			tr("Sorry!"),
@@ -1878,7 +1884,7 @@ void MainWindow::swapSelectedMap(const QString & family, const QString & prop, Q
 		AutoCloseMessageBox::showMessage(this, tr("No exactly matching part found; Fritzing chose the closest match."));
 	}
 
-	swapSelectedAux(itemBase, moduleID);
+	swapSelectedAux(itemBase, moduleID, false, ViewLayer::UnknownSpec);
 }
 
 bool MainWindow::swapSpecial(const QString & theProp, QMap<QString, QString> & currPropsMap) {
@@ -1913,11 +1919,10 @@ bool MainWindow::swapSpecial(const QString & theProp, QMap<QString, QString> & c
         currPropsMap.insert("layers", QString::number(layers));
         if (theProp.compare("layers") == 0) {
             QString msg = (layers == 1) ? tr("Change to single layer pcb") : tr("Change to two layer pcb");
-            swapLayers(itemBase, layers, msg, true, SketchWidget::PropChangeDelay);
+            swapLayers(itemBase, layers, msg, SketchWidget::PropChangeDelay);
             return true;
         }
 	}
-
 
 	if (!resistance.isEmpty() || !pinSpacing.isEmpty()) {
 		if (theProp.contains("band", Qt::CaseInsensitive)) {
@@ -1935,24 +1940,33 @@ bool MainWindow::swapSpecial(const QString & theProp, QMap<QString, QString> & c
 	return false;
 }
 
-void MainWindow::swapLayers(ItemBase * itemBase, int layers, const QString & msg, bool flip, int delay) {
+void MainWindow::swapLayers(ItemBase * itemBase, int layers, const QString & msg, int delay) {
     QUndoCommand* parentCommand = new QUndoCommand(msg);
 	new CleanUpWiresCommand(m_breadboardGraphicsView, CleanUpWiresCommand::UndoOnly, parentCommand);
-    m_pcbGraphicsView->swapLayers(itemBase, layers, flip, parentCommand);
+    m_pcbGraphicsView->swapLayers(itemBase, layers, parentCommand);
 	// need to defer execution so the content of the info view doesn't change during an event that started in the info view
 	m_undoStack->waitPush(parentCommand, delay);
 }
 
-void MainWindow::swapSelectedAux(ItemBase * itemBase, const QString & moduleID) {
+void MainWindow::swapSelectedAux(ItemBase * itemBase, const QString & moduleID, bool useViewLayerSpec, ViewLayer::ViewLayerSpec overrideViewLayerSpec) {
 
 	QUndoCommand* parentCommand = new QUndoCommand(tr("Swapped %1 with module %2").arg(itemBase->instanceTitle()).arg(moduleID));
 	new CleanUpWiresCommand(m_breadboardGraphicsView, CleanUpWiresCommand::UndoOnly, parentCommand);
-	swapSelectedAuxAux(itemBase, moduleID, itemBase->viewLayerSpec(), parentCommand);
+
+    ViewLayer::ViewLayerSpec viewLayerSpec = itemBase->viewLayerSpec();
+    if (m_pcbGraphicsView->boardLayers() == 2) {
+        ModelPart * modelPart = m_paletteModel->retrieveModelPart(moduleID);
+        if (modelPart->flippedSMD()) {
+            viewLayerSpec = m_pcbGraphicsView->layerIsActive(ViewLayer::Copper1) ? ViewLayer::ThroughHoleThroughTop_TwoLayers : ViewLayer::ThroughHoleThroughTop_OneLayer;
+            if (useViewLayerSpec) viewLayerSpec = overrideViewLayerSpec;
+        }
+    }
+
+	swapSelectedAuxAux(itemBase, moduleID, viewLayerSpec, parentCommand);
     
 	// need to defer execution so the content of the info view doesn't change during an event that started in the info view
 	m_undoStack->waitPush(parentCommand, SketchWidget::PropChangeDelay);
 
-	warnSMD(moduleID);
 }
 
 void MainWindow::swapBoardImageSlot(SketchWidget * sketchWidget, ItemBase * itemBase, const QString & filename, const QString & moduleID, bool addName) {
@@ -2348,58 +2362,6 @@ void MainWindow::setReportMissingModules(bool b) {
 	}
 }
 
-void MainWindow::warnSMD(const QString & moduleID) {
-
-	ModelPart * mp = m_refModel->retrieveModelPart(moduleID);
-	if (mp == NULL) return;
-
-	if (!mp->flippedSMD()) return;
-
-	if (m_pcbGraphicsView->routeBothSides()) {
-		if (!m_pcbGraphicsView->layerIsActive(ViewLayer::Copper1)) {
-			activeLayerBoth();
-		}
-		return;
-	}
-
-	if (m_smdOneSideWarningGiven) return;
-
-    int boardCount;
-	ItemBase * board = m_pcbGraphicsView->findSelectedBoard(boardCount);
-	if (board == NULL) return;
-
-	m_smdOneSideWarningGiven = true;
-	// don't want to trigger the message box and subsequent swap from within the original event
-	QTimer::singleShot(15, this, SLOT(warnSMDReally()));
-}
-
-void MainWindow::warnSMDReally() 
-{
-	QMessageBox messageBox(this);
-    messageBox.setWindowTitle(tr("Using SMD parts"));
-    messageBox.setInformativeText(tr("When using SMD parts, a double-sided board is usually desired. "
-									"On the default single-sided board, SMD parts will end up on the back of the board."));
-	messageBox.setText(tr("Do you want to swap to a double-sided board now?"));
-    messageBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-    messageBox.setDefaultButton(QMessageBox::Yes);
-    messageBox.setIcon(QMessageBox::Information);
-    messageBox.setWindowModality(Qt::WindowModal);
-    messageBox.setButtonText(QMessageBox::Yes, tr("Swap"));
-    messageBox.setButtonText(QMessageBox::No, tr("Don't Swap"));
-    messageBox.button(QMessageBox::No)->setShortcut(tr("Ctrl+D"));
-
-	int ret = messageBox.exec();
-	switch (ret) {
-		case QMessageBox::Yes:
-			break;
-		default:
-			return;
-	}
-
-    int boardCount;
-	ItemBase * board = m_pcbGraphicsView->findSelectedBoard(boardCount);
-	swapLayers(board, 2, tr("Change to two layer pcb"), true, SketchWidget::PropChangeDelay);
-}
 
 
 void MainWindow::boardDeletedSlot() 

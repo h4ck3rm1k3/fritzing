@@ -883,7 +883,7 @@ void PCBSketchWidget::setBoardLayers(int layers, bool redraw) {
 	}
 }
 
-void PCBSketchWidget::swapLayers(ItemBase *, int newLayers, bool flip, QUndoCommand * parentCommand) 
+void PCBSketchWidget::swapLayers(ItemBase *, int newLayers, QUndoCommand * parentCommand) 
 {
 	QList<ItemBase *> smds;
 	QList<ItemBase *> pads;
@@ -895,7 +895,7 @@ void PCBSketchWidget::swapLayers(ItemBase *, int newLayers, bool flip, QUndoComm
         new SetPropCommand(this, board->id(), "layers", QString::number(m_boardLayers), QString::number(newLayers), true, parentCommand);
     }
 
-    if (!flip) {
+    if (newLayers == 2) {
 		new CleanUpWiresCommand(this, CleanUpWiresCommand::RedoOnly, parentCommand);
 		return;
 	}
@@ -917,22 +917,7 @@ void PCBSketchWidget::swapLayers(ItemBase *, int newLayers, bool flip, QUndoComm
 		smds.append(smd);
 	}
 
-	clearSmdTraces(smds, already, changeBoardCommand);
-
-	if (newLayers == 1) {
-		// remove traces on the top layer
-		foreach (QGraphicsItem * item, scene()->items()) {
-			TraceWire * tw = dynamic_cast<TraceWire *>(item);
-			if (tw == NULL) continue;
-
-			if (!tw->isTraceType(getTraceFlag())) continue;
-			if (tw->viewLayerID() != ViewLayer::Copper1Trace) continue;
-			if (already.contains(tw)) continue;
-				
-			QList<ConnectorItem *> ends;
-			removeWire(tw, ends, already, changeBoardCommand);
-		}
-	}
+	changeTraceLayer(true, changeBoardCommand);
 
 	foreach (ItemBase * smd, smds) {
         long newID;
@@ -954,41 +939,6 @@ void PCBSketchWidget::swapLayers(ItemBase *, int newLayers, bool flip, QUndoComm
         new ResizeBoardCommand(this, newID, w, h, w, h, parentCommand);
 	}
 
-}
-
-void PCBSketchWidget::clearSmdTraces(QList<ItemBase *> & smds, 	QList<Wire *> & already, QUndoCommand * parentCommand) {
-
-	foreach (ItemBase * smd, smds) {
-		foreach (ConnectorItem * ci, smd->cachedConnectorItems()) {
-			//ci->debugInfo("smd from");
-
-			foreach (ConnectorItem * toci, ci->connectedToItems()) {
-				//toci->debugInfo(" smd to");
-				TraceWire * tw = qobject_cast<TraceWire *>(toci->attachedTo());
-				if (tw == NULL) continue;
-				if (already.contains(tw)) continue;
-				if (!tw->isTraceType(getTraceFlag())) continue;
-
-				QList<ConnectorItem *> ends;
-				removeWire(tw, ends, already, parentCommand);		
-			}
-		}
-	}
-
-	// remove these trace connections now so they're not added back in when the part is swapped
-	QList<ConnectorItem *> ends;
-	foreach (Wire * wire, already) {
-		ends.append(wire->connector0());				
-		ends.append(wire->connector1());
-	}
-	foreach (ConnectorItem * end, ends) {
-		//end->debugInfo("end from");
-		foreach (ConnectorItem * endTo, end->connectedToItems()) {
-			//endTo->debugInfo("   end to");
-			end->tempRemove(endTo, false);
-			endTo->tempRemove(end, false);
-		}
-	}
 }
 
 bool PCBSketchWidget::isBoardLayerChange(ItemBase * itemBase, const QString & newModuleID, int & newLayers)
@@ -1096,10 +1046,10 @@ bool PCBSketchWidget::sameElectricalLayer2(ViewLayer::ViewLayerID id1, ViewLayer
 	return false;
 }
 
-void PCBSketchWidget::changeTraceLayer() {
+void PCBSketchWidget::changeTraceLayer(bool force, QUndoCommand * parentCommand) {
 	QList<Wire *> visitedWires;
 	QList<Wire *> changeWires;
-	foreach (QGraphicsItem * item, scene()->selectedItems()) {
+	foreach (QGraphicsItem * item, force ? scene()->items() : scene()->selectedItems()) {
 		TraceWire * tw = dynamic_cast<TraceWire *>(item);
 		if (tw == NULL) continue;
 
@@ -1111,21 +1061,27 @@ void PCBSketchWidget::changeTraceLayer() {
 		tw->collectChained(wires, ends);
 		visitedWires.append(wires);
 
-		bool canChange = true;
-		foreach(ConnectorItem * end, ends) {
-			if (end->getCrossLayerConnectorItem() == NULL) {
-				canChange = false;
-				break;
-			}
-		}
-		if (!canChange) continue;
+        if (!force) {
+		    bool canChange = true;
+		    foreach(ConnectorItem * end, ends) {
+			    if (end->getCrossLayerConnectorItem() == NULL) {
+				    canChange = false;
+				    break;
+			    }
+		    }
+		    if (!canChange) continue;
+        }
 
 		changeWires.append(tw);
 	}
 
 	if (changeWires.count() == 0) return;
 
-	QUndoCommand * parentCommand = new QUndoCommand(tr("Change trace layer"));
+    bool createNew = false;
+    if (parentCommand == NULL) {
+	    parentCommand = new QUndoCommand(tr("Change trace layer"));
+        createNew = true;
+    }
 
 	ViewLayer::ViewLayerID newViewLayerID = (changeWires.at(0)->viewLayerID() == ViewLayer::Copper0Trace) ? ViewLayer::Copper1Trace : ViewLayer::Copper0Trace;;
 	foreach (Wire * wire, changeWires) {
@@ -1172,12 +1128,14 @@ void PCBSketchWidget::changeTraceLayer() {
 			new ChangeConnectionCommand(this, BaseCommand::SingleView,
 								targetConnectorItem->attachedToID(), targetConnectorItem->connectorSharedID(),
 								end->attachedToID(), end->connectorSharedID(),
-								ViewLayer::specFromID(end->getCrossLayerConnectorItem()->attachedToViewLayerID()), 
+								ViewLayer::specFromID(newViewLayerID), 
 								true, parentCommand);
 		}
 	}
 
-	m_undoStack->waitPush(parentCommand, PropChangeDelay);
+    if (createNew) {
+	    m_undoStack->waitPush(parentCommand, PropChangeDelay);
+    }
 }
 
 void PCBSketchWidget::changeLayer(long id, double z, ViewLayer::ViewLayerID viewLayerID) {

@@ -155,8 +155,8 @@ public:
 	void exportToGerber(const QString & outputDir);
 	class PCBSketchWidget * pcbView();
 	void noBackup();
-	void swapSelectedAux(ItemBase * itemBase, const QString & moduleID);
-    void swapLayers(ItemBase * itemBase, int layers, const QString & msg, bool flip, int delay);
+	void swapSelectedAux(ItemBase * itemBase, const QString & moduleID, bool useViewLayerSpec, ViewLayer::ViewLayerSpec);
+    void swapLayers(ItemBase * itemBase, int layers, const QString & msg, int delay);
 	bool saveAsAux(const QString & fileName);
 	void swapObsolete(bool displayFeedback);
 	void selectAllObsolete(bool displayFeedback);
@@ -188,7 +188,6 @@ public slots:
 	void importFilesFromPrevInstall();
 	void acceptAlienFiles();
 	void statusMessage(QString message, int timeout);
-	void warnSMD(const QString & moduleID);
     void showPCBView();
 	void groundFill();
 	void removeGroundFill();
@@ -367,7 +366,6 @@ protected slots:
 	void setSticky();
 	void showNavigator();
 	void autorouterSettings();
-	void warnSMDReally();
 	void boardDeletedSlot();
 	void cursorLocationSlot(double, double);
 	void locationLabelClicked();
@@ -795,7 +793,6 @@ protected:
 	bool m_backingUp;
 	QString m_bundledSketchName;
 	RoutingStatus m_routingStatus;
-	bool m_smdOneSideWarningGiven;
 	bool m_orderFabEnabled;		
 	bool m_closeSilently;
 	QString m_fzzFolder;

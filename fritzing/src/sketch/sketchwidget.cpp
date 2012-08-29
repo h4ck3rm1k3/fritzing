@@ -1876,7 +1876,12 @@ void SketchWidget::dropItemEvent(QDropEvent *event) {
 		default:
 			break;				
 	}
-	AddItemCommand * addItemCommand = newAddItemCommand(crossViewType, modelPart->moduleID(), defaultViewLayerSpec(), viewGeometry, fromID, true, -1, parentCommand);
+
+    ViewLayer::ViewLayerSpec viewLayerSpec = defaultViewLayerSpec();
+    if (modelPart->flippedSMD() && boardLayers() == 2 && !layerIsActive(ViewLayer::Copper1)) {
+        viewLayerSpec = ViewLayer::ThroughHoleThroughTop_OneLayer;
+    }
+	AddItemCommand * addItemCommand = newAddItemCommand(crossViewType, modelPart->moduleID(), viewLayerSpec, viewGeometry, fromID, true, -1, parentCommand);
 	addItemCommand->setDropOrigin(this);
 
 	new SetDropOffsetCommand(this, fromID, m_droppingOffset, parentCommand);
@@ -1935,7 +1940,6 @@ void SketchWidget::dropItemEvent(QDropEvent *event) {
     event->acceptProposedAction();
 
 	emit dropSignal(event->pos(), modelPart);
-	emit warnSMDSignal(modelPart->moduleID());
 }
 
 SelectItemCommand* SketchWidget::stackSelectionState(bool pushIt, QUndoCommand * parentCommand) {

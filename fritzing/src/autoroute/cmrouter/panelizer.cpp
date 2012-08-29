@@ -1188,7 +1188,7 @@ MainWindow * Panelizer::inscribeBoard(QDomElement & board, QHash<QString, QStrin
         mainWindow->pcbView()->selectAllItems(false, false);
         boardItem->setSelected(true);
 	    if (boardItem->prop("layers").compare("1") == 0) {
-            mainWindow->swapLayers(boardItem, 2, "", false, 0);
+            mainWindow->swapLayers(boardItem, 2, "", 0);
             ProcessEventBlocker::processEvents();
             wasOne = true;
         }

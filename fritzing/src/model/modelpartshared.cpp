@@ -531,6 +531,10 @@ void ModelPartShared::flipSMDAnd() {
 
 	setFlippedSMD(true);
     // DebugDialog::debug("set flipped smd " + moduleID());
+    if (!m_properties.keys().contains("layer")) {
+        // used for swapping part from copper1 to copper0
+        m_properties.insert("layer", "");
+    }
 
     qulonglong one = 1;
     ViewImage * viewImage = m_viewImages.value(ViewIdentifierClass::PCBView);

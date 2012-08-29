@@ -38,6 +38,10 @@ $Date$
 
 	change pin count
 
+    connector duplicate op
+
+    swap connector metadata op
+
 	add status bar to connectors tab
 
     on svg import detect all connector IDs

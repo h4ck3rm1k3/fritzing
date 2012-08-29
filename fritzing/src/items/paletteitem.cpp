@@ -588,6 +588,28 @@ bool PaletteItem::collectExtraInfo(QWidget * parent, const QString & family, con
 	return PaletteItemBase::collectExtraInfo(parent, family, prop, value, swappingEnabled, returnProp, returnValue, returnWidget);
 }
 
+QStringList PaletteItem::collectValues(const QString & family, const QString & prop, QString & value) {
+    if (modelPart()->flippedSMD() && prop.compare("layer") == 0) {
+        QStringList values = PaletteItemBase::collectValues(family, prop, value);
+        if (values.count() == 0) {
+            ItemBase * itemBase = modelPart()->viewItem(ViewIdentifierClass::PCBView);
+            if (itemBase) {
+                values << "copper0" << "copper1";
+                if (itemBase->viewLayerID() == ViewLayer::Copper0) {
+                    value = values.at(0);
+                }
+                else {
+                    value = values.at(1);
+                }
+            }
+        }
+        return values;
+    }
+
+   return PaletteItemBase::collectValues(family, prop, value);
+}
+
+
 void PaletteItem::openPinLabelDialog() {
 	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infoGraphicsView == NULL) {

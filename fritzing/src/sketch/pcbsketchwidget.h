@@ -72,13 +72,13 @@ public:
 	double getRatsnestWidth();
 
 	void setBoardLayers(int, bool redraw);
-    void swapLayers(ItemBase * itemBase, int newLayers, bool flip, QUndoCommand * parentCommand);
+    void swapLayers(ItemBase * itemBase, int newLayers, QUndoCommand * parentCommand);
 	void loadFromModelParts(QList<ModelPart *> & modelParts, BaseCommand::CrossViewType, QUndoCommand * parentCommand, 
 							bool offsetPaste, const QRectF * boundingRect, bool seekOutsideConnections, QList<long> & newIDs);
 	virtual bool isInLayers(ConnectorItem *, ViewLayer::ViewLayerSpec);
 	bool routeBothSides();
 	bool sameElectricalLayer2(ViewLayer::ViewLayerID, ViewLayer::ViewLayerID);
-	void changeTraceLayer();
+	void changeTraceLayer(bool force, QUndoCommand * parentCommand);
 	void changeLayer(long id, double z, ViewLayer::ViewLayerID viewLayerID);
 	void updateNet(Wire*);
 	bool acceptsTrace(const ViewGeometry & viewGeometry);
@@ -154,7 +154,6 @@ protected:
 	void resizeJumperItem();
 	QPoint calcFixedToCenterItemOffset(const QRect & viewPortRect, const QSizeF & helpSize);
 	void dealWithDefaultParts();
-	void clearSmdTraces(QList<ItemBase *> & smds, 	QList<Wire *> & already, QUndoCommand * parentCommand);
 	bool connectorItemHasSpec(ConnectorItem * connectorItem, ViewLayer::ViewLayerSpec spec);
 	ViewLayer::ViewLayerSpec createWireViewLayerSpec(ConnectorItem * from, ConnectorItem * to);
 	Wire * createTempWireForDragging(Wire * fromWire, ModelPart * wireModel, ConnectorItem * connectorItem, ViewGeometry & viewGeometry, ViewLayer::ViewLayerSpec);

@@ -171,7 +171,6 @@ public:
 	const QString & replacedby();
 	bool isObsolete();
 
-	void setFlippedSMD(bool);
 	bool flippedSMD();
 	bool needsCopper1();
 	bool hasViewFor(ViewIdentifierClass::ViewIdentifier);
