@@ -488,11 +488,15 @@ ReferenceModel * FApplication::loadReferenceModel(const QString & databaseName, 
 	connect(m_referenceModel, SIGNAL(loadedPart(int, int)), this, SLOT(loadedPart(int, int)));
     if (databaseName.isEmpty()) {
         QDir * dir = FolderUtils::getApplicationSubFolder("parts");
-        QFile file(dir->absoluteFilePath("parts.db"));
-        if (file.exists()) {
-            m_referenceModel->loadFromDB(dir->absoluteFilePath("parts.db"));
+        if (dir == NULL) {
         }
-        delete dir;
+        else {
+            QFile file(dir->absoluteFilePath("parts.db"));
+            if (file.exists()) {
+                m_referenceModel->loadFromDB(dir->absoluteFilePath("parts.db"));
+            }
+            delete dir;
+        }
     }
 
 	m_referenceModel->loadAll(databaseName, fullLoad);								// loads local parts, resource parts, and any other parts in files not in the db
