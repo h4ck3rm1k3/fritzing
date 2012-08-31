@@ -39,7 +39,9 @@ win32 {
         INCLUDEPATH += $$[QT_INSTALL_PREFIX]/src/3rdparty/zlib
         #INCLUDEPATH += C:/QtSDK/QtSources/4.7.2/src/3rdparty/zlib
 	DEFINES += _CRT_SECURE_NO_DEPRECATE
+        DEFINES += _WINDOWS
     LIBS += setupapi.lib
+    LIBS += advapi32.lib
 }
 macx {
         MOC_DIR = build/moc
