@@ -332,13 +332,11 @@ bool SqliteReferenceModel::loadFromDB(QSqlDatabase & keep_db, QSqlDatabase & db)
             connectorShared->setSharedName(name);
             connectorShared->setId(connectorid);
 
-            ModelPart * modelPart = parts.at(dbid);
             Connector * connector = new Connector(connectorShared, modelPart);
             modelPart->addConnector(connector);
 
             connectors[cid] = connector;
         }
-        modelPart->lookForZeroConnector();
     }
 
     query = db.exec("SELECT view, layer, svgid, hybrid, terminalid, legid, connector_id FROM connectorlayers");
@@ -428,6 +426,7 @@ bool SqliteReferenceModel::loadFromDB(QSqlDatabase & keep_db, QSqlDatabase & db)
         modelPart->flipSMDAnd();
         modelPart->initBuses();
         modelPart->setParent(m_root);
+        modelPart->lookForZeroConnector();
     }
 
     return true;
