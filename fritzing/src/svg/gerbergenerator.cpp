@@ -447,6 +447,27 @@ QString GerberGenerator::clipToBoard(QString svgString, QRectF & boardRect, cons
 		anyConverted = true;
     }
 
+    // can't handle scaled paths very well.
+    QDomNodeList nodeList = root1.elementsByTagName("path");
+    for (int i = 0; i < nodeList.count(); i++) {
+        QDomNode parent = nodeList.at(i);
+        while (!parent.isNull()) {
+            QString transformString = parent.toElement().attribute("transform");
+            if (!transformString.isNull()) {
+                QMatrix matrix = TextUtils::transformStringToMatrix(transformString);
+                QTransform transform(matrix);
+                if (transform.isScaling()) {
+                    nodeList.at(i).toElement().setTagName("g");
+                    anyConverted = true;
+                    break;
+                }
+
+            }
+
+            parent = parent.parentNode();
+        }
+    }
+
 	QVector <QDomElement> leaves1;
 	int transformCount1 = 0;
     QDomElement e1 = domDocument1.documentElement();
