@@ -449,6 +449,9 @@ QString PinHeader::makePcbSvg(const QString & originalExpectedFileName)
     int pins = TextUtils::getPinsAndSpacing(expectedFileName, spacingString);
     if (pins == 0) return "";
 
+    // only one spacing for mystery parts.
+    if (expectedFileName.contains("mystery")) spacingString = "100mil";
+
     QString svg;
 
 	if (expectedFileName.contains("shrouded")) {
