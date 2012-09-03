@@ -1,17 +1,45 @@
-<?xml version='1.0' encoding='UTF-8' standalone='no'?>
-<!-- Created with Fritzing (http://www.fritzing.org/) -->
-<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='1.07437in' height='0.969567in' viewBox='0 0 27.289 24.627' >
-<g id='breadboard'>
-<path fill='#1F7A34' stroke='none' stroke-width='0' d='M0,0l27.289,0 0,24.627 -27.289,0 0,-24.627z
-M0.464,12.3135a0.425,0.425 0 1 0 0.85,0 0.425,0.425 0 1 0 -0.85,0z
-M24.464,12.3135a0.425,0.425 0 1 0 0.85,0 0.425,0.425 0 1 0 -0.85,0z
-'/>
-<circle id='connector0pin' connectorname='NEG' cx='0.889' cy='12.3135' r='0.657' stroke='#9A916C' stroke-width='0.464' fill='none' />
-<circle id='connector1pin' connectorname='POS' cx='24.889' cy='12.3135' r='0.657' stroke='#9A916C' stroke-width='0.464' fill='none' />
-<path stroke='none' stroke-width='0' d='m24,11.4245 1.778,0 0,1.778 -1.778,0 0,-3zM24.464,12.3135a0.425,0.425 0 1 0 0.85,0 0.425,0.425 0 1 0 -0.85,0z
-' fill='#9A916C' />
-<circle class='other' cx='12.889' cy='12.3135' r='12.25' stroke='#f8f8f8' stroke-width='0.127' fill='none' />
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#f8f8f8' font-size='3.302' x='21.289' y='13.1635' text-anchor='start'>+</text>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#f8f8f8' font-size='3.302' x='2.439' y='13.2135' text-anchor='start'>-</text>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 15.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Ebene_1" xmlns:svg="http://www.w3.org/2000/svg"
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="72.414px"
+	 height="74.959px" viewBox="0 0 72.414 74.959" enable-background="new 0 0 72.414 74.959" xml:space="preserve">
+<g id="breadboard">
+	<circle id="connector0pin" fill="none" cx="2.52" cy="34.905" r="1.862"/>
+	<circle id="connector1pin" fill="none" cx="70.551" cy="34.905" r="1.862"/>
+</g>
+<g>
+	<circle fill="#4D4D4D" cx="36.028" cy="38.932" r="36.028"/>
+	<circle fill="#666666" cx="36.028" cy="36.028" r="36.028"/>
+	<g>
+		<path fill="#CCCCCC" d="M0,36.078C0,16.154,16.128,0,36.079,0C13.99,1.206,0.516,17.966,0,36.078z"/>
+		<g transform="translate(100,171.639)">
+			<circle fill="#1A1A1A" cx="-64.055" cy="-135.397" r="34.884"/>
+			<path fill="#4D4D4D" d="M-62.843-168.734c18.414,0,33.341,14.927,33.341,33.34c0,18.412-14.927,33.34-33.341,33.34"/>
+			<circle fill="#B3B3B3" cx="-64.054" cy="-135.397" r="33.339"/>
+			<path fill="#FFFFFF" d="M-53.313-135.967h6.345v-6.118h1.038v6.118h6.4v1.109h-6.4v6.119h-1.038v-6.117h-6.345V-135.967z"/>
+		</g>
+		<path fill="#F2F2F2" d="M23.964,5.081c0,0,4.057-1.35,5.49-1.602c2.08-0.892,29.904-5.571,39.234,23.794
+			c0.334,1.049,0.233,2.529,0.233,2.529l0.956-0.246c0,0-0.778-3.034-0.857-3.258C65.728,16.71,55.814-0.988,29.322,2.526
+			L23.964,5.081z"/>
+		<g>
+			<path fill="#F2F2F2" d="M24.001,67.393c0,0,4.055,1.352,5.488,1.604c2.08,0.889,29.69,5.525,39.022-23.836
+				c0.334-1.051,0.444-2.49,0.444-2.49l0.958,0.246c0,0-0.478,2.178-0.86,3.258c-3.372,9.561-13.206,27.287-39.696,23.773
+				L24.001,67.393z"/>
+			
+				<path fill="none" stroke="#CCCCCC" stroke-width="0.25" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+				M23.964,5.081c0,0,4.057-1.35,5.49-1.602c2.08-0.892,26.336-5.163,37.802,19.431c1.212,2.6,2.025,7.063,2.025,7.063"/>
+			
+				<path fill="none" stroke="#B3B3B3" stroke-width="0.25" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+				M69.915,42.92c0,0-0.478,2.18-0.86,3.256c-3.372,9.563-13.206,27.291-39.696,23.773l-5.36-2.559"/>
+			<rect x="68.561" y="29.331" fill="#F2F2F2" width="2.959" height="13.97"/>
+		</g>
+		
+			<path opacity="0.41" fill="none" stroke="#E6E6E6" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" enable-background="new    " d="
+			M5.065,36.244c0-17.055,13.825-30.88,30.876-30.88c17.053,0,30.879,13.825,30.879,30.88"/>
+		
+			<path opacity="0.41" fill="none" stroke="#999999" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" enable-background="new    " d="
+			M66.821,36.244c0,17.051-13.826,30.875-30.879,30.875c-17.052,0-30.876-13.824-30.876-30.875"/>
+	</g>
 </g>
 </svg>

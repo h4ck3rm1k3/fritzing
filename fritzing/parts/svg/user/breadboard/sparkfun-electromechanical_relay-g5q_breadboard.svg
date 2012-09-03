@@ -1,22 +1,83 @@
-<?xml version='1.0' encoding='UTF-8' standalone='no'?>
-<!-- Created with Fritzing (http://www.fritzing.org/) -->
-<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.2' baseProfile='tiny' x='0in' y='0in' width='0.808in' height='0.408in' viewBox='0 0 20.5232 10.3632' >
-<g id='breadboard'>
-<path fill='#1F7A34' stroke='none' stroke-width='0' d='M0,0l20.5232,0 0,10.3632 -20.5232,0 0,-10.3632z
-M3.2616,8.9916a0.65,0.65 0 1 0 1.3,0 0.65,0.65 0 1 0 -1.3,0z
-M18.5016,8.9916a0.65,0.65 0 1 0 1.3,0 0.65,0.65 0 1 0 -1.3,0z
-M18.5016,1.3716a0.65,0.65 0 1 0 1.3,0 0.65,0.65 0 1 0 -1.3,0z
-M0.7216,1.3716a0.65,0.65 0 1 0 1.3,0 0.65,0.65 0 1 0 -1.3,0z
-M8.3416,1.3716a0.65,0.65 0 1 0 1.3,0 0.65,0.65 0 1 0 -1.3,0z
-'/>
-<circle id='connector3pin' connectorname='4' cx='3.9116' cy='8.9916' r='0.777' stroke='#9A916C' stroke-width='0.254' fill='none' />
-<circle id='connector4pin' connectorname='5' cx='19.1516' cy='8.9916' r='0.777' stroke='#9A916C' stroke-width='0.254' fill='none' />
-<circle id='connector0pin' connectorname='1' cx='19.1516' cy='1.3716' r='0.777' stroke='#9A916C' stroke-width='0.254' fill='none' />
-<circle id='connector2pin' connectorname='3' cx='1.3716' cy='1.3716' r='0.777' stroke='#9A916C' stroke-width='0.254' fill='none' />
-<circle id='connector1pin' connectorname='2' cx='8.9916' cy='1.3716' r='0.777' stroke='#9A916C' stroke-width='0.254' fill='none' />
-<line class='other' x1='20.4216' y1='0.1016' x2='20.4216' y2='10.2616' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line class='other' x1='20.4216' y1='10.2616' x2='0.1016' y2='10.2616' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line class='other' x1='0.1016' y1='10.2616' x2='0.1016' y2='0.1016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
-<line class='other' x1='0.1016' y1='0.1016' x2='20.4216' y2='0.1016' stroke='#f8f8f8' stroke-width='0.2032' stroke-linecap='round'/>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 15.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Ebene_1" xmlns:svg="http://www.w3.org/2000/svg"
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="58.176px" height="63.3px"
+	 viewBox="0 0 58.176 63.3" enable-background="new 0 0 58.176 63.3" xml:space="preserve">
+<g>
+	<rect x="10.614" y="57.896" fill="#CCCCCC" width="0.948" height="5.404"/>
+	<rect x="53.814" y="57.896" fill="#CCCCCC" width="0.948" height="5.404"/>
+	<g id="breadboard">
+		<circle id="connector3pin" fill="none" cx="11.088" cy="62.988" r="2.202"/>
+		<circle id="connector4pin" fill="none" cx="54.288" cy="62.988" r="2.202"/>
+		<circle id="connector0pin" fill="none" cx="54.288" cy="41.388" r="2.202"/>
+		<circle id="connector2pin" fill="none" cx="3.888" cy="41.388" r="2.202"/>
+		<circle id="connector1pin" fill="none" cx="25.488" cy="41.388" r="2.202"/>
+	</g>
+	<g>
+		<path fill="#1A1A1A" d="M58.176,57.75c0,0.55-0.45,1-1,1H1c-0.55,0-1-0.45-1-1V27.688c0-0.55,0.45-1,1-1h56.176c0.55,0,1,0.45,1,1
+			V57.75z"/>
+	</g>
+	<g>
+		<path fill="#333333" d="M58.176,28.375c0,0.55-0.45,1-1,1H1c-0.55,0-1-0.45-1-1V1c0-0.55,0.45-1,1-1h56.176c0.55,0,1,0.45,1,1
+			V28.375z"/>
+		<circle fill="#1A1A1A" cx="29.088" cy="14.688" r="4.042"/>
+		<g>
+			<circle fill="#1A1A1A" cx="29.088" cy="14.688" r="4.042"/>
+			<circle cx="29.088" cy="15.105" r="0.95"/>
+			<path d="M29.088,11.48c2.09,0,3.789,1.591,4,3.625c0.015-0.139,0.042-0.274,0.042-0.417c0-2.232-1.81-4.042-4.042-4.042
+				s-4.042,1.81-4.042,4.042c0,0.143,0.027,0.278,0.042,0.417C25.299,13.072,26.998,11.48,29.088,11.48z"/>
+		</g>
+		<g>
+			<circle fill="#1A1A1A" cx="46.921" cy="4.188" r="1.964"/>
+			<path d="M46.921,2.628c1.016,0,1.841,0.773,1.943,1.762c0.008-0.068,0.021-0.134,0.021-0.203c0-1.085-0.879-1.964-1.964-1.964
+				s-1.964,0.879-1.964,1.964c0,0.069,0.013,0.135,0.021,0.203C45.08,3.402,45.905,2.628,46.921,2.628z"/>
+		</g>
+		<g>
+			<circle cx="46.921" cy="4.187" r="0.81"/>
+			<path d="M46.921,3.545c0.419,0,0.759,0.318,0.801,0.726c0.003-0.028,0.009-0.055,0.009-0.083c0-0.447-0.362-0.809-0.81-0.809
+				s-0.81,0.362-0.81,0.809c0,0.029,0.006,0.056,0.009,0.083C46.162,3.863,46.503,3.545,46.921,3.545z"/>
+		</g>
+		<rect x="46.117" y="3.75" width="1.613" height="0.521"/>
+		<g>
+			<circle cx="46.921" cy="3.824" r="0.81"/>
+			<circle fill="#1A1A1A" cx="46.921" cy="3.824" r="0.311"/>
+			<path fill="#333333" d="M46.921,3.098c0.419,0,0.759,0.318,0.801,0.726c0.003-0.028,0.009,0.029,0.009,0
+				c0-0.447-0.362-0.809-0.81-0.809s-0.81,0.362-0.81,0.809c0,0.029,0.006-0.028,0.009,0C46.162,3.417,46.503,3.098,46.921,3.098z"
+				/>
+		</g>
+	</g>
+	<text transform="matrix(1 0 0 1 1.6855 4.9966)"><tspan x="0" y="0" fill="#808080" font-family="'ArialMT'" font-size="3.62">OMRON</tspan><tspan x="0" y="4.344" fill="#808080" font-family="'ArialMT'" font-size="3.62">G5Q-EU</tspan><tspan x="0" y="8.688" fill="#808080" font-family="'ArialMT'" font-size="3.62">12VDC</tspan></text>
+	<text transform="matrix(1 0 0 1 11.4224 22.8394)"><tspan x="0" y="0" fill="#808080" font-family="'ArialMT'" font-size="3.62">CHINA</tspan><tspan x="-1.819" y="4.345" fill="#808080" font-family="'ArialMT'" font-size="3.62">2360YC</tspan></text>
+	<text transform="matrix(1 0 0 1 36.708 22.8394)"><tspan x="0" y="0" fill="#808080" font-family="'ArialMT'" font-size="3.62">5A30VDC</tspan><tspan x="-3.827" y="4.345" fill="#808080" font-family="'ArialMT'" font-size="3.62">10A250VAC</tspan></text>
 </g>
+<polyline fill="none" stroke="#808080" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
+	41.319,13.771 41.319,17.903 39.153,17.903 39.153,13.771 36.782,13.771 36.782,15.532 39.05,15.532 36.782,17.903 "/>
+<g>
+	<g>
+		
+			<path fill="none" stroke="#808080" stroke-width="0.3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+			M45.469,17.549c-0.184,0.205-0.109,0.372,0.166,0.372h9.306c0.275,0,0.35-0.167,0.165-0.372l-4.484-4.982
+			c-0.184-0.204-0.484-0.204-0.668,0L45.469,17.549z"/>
+	</g>
+	<text transform="matrix(1 0 0 1 47.0957 17.6919)" fill="#808080" font-family="'ArialMT'" font-size="3.1742">VDE</text>
+</g>
+<g>
+	<g>
+		
+			<line fill="none" stroke="#808080" stroke-width="0.3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="53.521" y1="20.88" x2="55.771" y2="20.88"/>
+		
+			<line fill="none" stroke="#808080" stroke-width="0.3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="54.979" y1="21.954" x2="55.771" y2="21.954"/>
+		
+			<line fill="none" stroke="#808080" stroke-width="0.3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="53.521" y1="21.954" x2="54.293" y2="21.954"/>
+	</g>
+	<path fill="none" stroke="#808080" stroke-width="0.3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+		M53.334,26.089c0,0,0.165-0.563,0.623-0.563s0.583,1.052,1.052,1.052s0.511-0.525,0.511-0.525"/>
+</g>
+<path opacity="0.2" fill="#FFFFFF" d="M0,1c0-0.55,0.45-1,1-1h56.176c0.55,0,1,0.45,1,1v0.5c0-0.55-0.45-1-1-1H1c-0.55,0-1,0.45-1,1
+	V1z"/>
+<path opacity="0.75" d="M58.176,28.375c0,0.55-0.45,1-1,1H1c-0.55,0-1-0.45-1-1v-0.5c0,0.55,0.45,1,1,1h56.176c0.55,0,1-0.45,1-1
+	V28.375z"/>
+<path opacity="0.75" d="M58.176,57.75c0,0.55-0.45,1-1,1H1c-0.55,0-1-0.45-1-1v-0.5c0,0.55,0.45,1,1,1h56.176c0.55,0,1-0.45,1-1
+	V57.75z"/>
 </svg>
