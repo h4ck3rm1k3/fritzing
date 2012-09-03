@@ -447,7 +447,8 @@ QString GerberGenerator::clipToBoard(QString svgString, QRectF & boardRect, cons
 		anyConverted = true;
     }
 
-    // can't handle scaled paths very well.
+    // can't handle scaled paths very well. There is probably a deeper bug that needs to be chased down.
+    // is this only necessary for contour view?
     QDomNodeList nodeList = root1.elementsByTagName("path");
     for (int i = 0; i < nodeList.count(); i++) {
         QDomNode parent = nodeList.at(i);
