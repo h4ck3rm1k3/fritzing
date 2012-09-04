@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DiscreteSemi-DIODE-1N4148'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DiscreteSemi' DIODE 1N4148 -->
 <version>4</version>
-<date>2012-08-28</date>
+<date>2012-09-04</date>
 <label>D</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Diode&lt;/b&gt;
@@ -20,7 +20,7 @@ These are standard reverse protection diodes and small signal diodes. SMA packag
 </properties>
 <views>
 <breadboardView>
-<layers image='breadboard/sparkfun-discretesemi_diode-1n4148_breadboard.svg'>
+<layers image='breadboard/diode.svg'>
 <layer layerId='breadboard'/>
 </layers>
 </breadboardView>
@@ -37,7 +37,7 @@ These are standard reverse protection diodes and small signal diodes. SMA packag
 </layers>
 </pcbView>
 <iconView>
-<layers image='breadboard/sparkfun-discretesemi_diode-1n4148_breadboard.svg'>
+<layers image='breadboard/diode.svg'>
 <layer layerId='icon'/>
 </layers>
 </iconView>

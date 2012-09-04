@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-BMP085-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Sensors' BMP085  -->
 <version>4</version>
-<date>2012-08-28</date>
+<date>2012-09-04</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;BMP085 Pressure Sensor&lt;/b&gt; Great little MEMS pressure sensor. SKU: COM-09603</description>
