@@ -491,6 +491,7 @@ void ModelPartShared::connectorIDs(ViewIdentifierClass::ViewIdentifier viewIdent
 }
 
 void ModelPartShared::flipSMDAnd() {
+    // needs to be called after initConnectors()
     LayerList layerList = viewLayers(ViewIdentifierClass::PCBView);
     if (layerList.isEmpty()) return;
     if (!layerList.contains(ViewLayer::Copper0) && !layerList.contains(ViewLayer::Copper1)) return;

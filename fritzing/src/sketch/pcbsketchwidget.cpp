@@ -2259,6 +2259,16 @@ QString PCBSketchWidget::checkDroppedModuleID(const QString & moduleID) {
         return ModuleIDNames::Copper0PadModuleIDName;
     }
 
+    if (moduleID.endsWith(ModuleIDNames::RectanglePCBModuleIDName)) {
+        if (boardLayers() == 2) return ModuleIDNames::TwoSidedRectanglePCBModuleIDName;
+        return ModuleIDNames::RectanglePCBModuleIDName;
+    }
+
+    if (moduleID.endsWith(ModuleIDNames::EllipsePCBModuleIDName)) {
+        if (boardLayers() == 2) return ModuleIDNames::TwoSidedEllipsePCBModuleIDName;
+        return ModuleIDNames::EllipsePCBModuleIDName;
+    }
+
     return moduleID;
 }
 
