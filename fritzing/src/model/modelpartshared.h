@@ -92,7 +92,7 @@ public:
     QString imageFileName(ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerID);
     void setImageFileName(ViewIdentifierClass::ViewIdentifier, const QString & filename);
     QString imageFileName(ViewIdentifierClass::ViewIdentifier);
-    bool isSticky(ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerID);
+    bool anySticky(ViewIdentifierClass::ViewIdentifier);
     bool hasMultipleLayers(ViewIdentifierClass::ViewIdentifier);
     bool canFlipHorizontal(ViewIdentifierClass::ViewIdentifier);
     bool canFlipVertical(ViewIdentifierClass::ViewIdentifier);

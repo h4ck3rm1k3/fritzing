@@ -721,12 +721,11 @@ bool ModelPartShared::canFlipVertical(ViewIdentifierClass::ViewIdentifier viewId
     return viewImage->canFlipVertical;
 }
 
-bool ModelPartShared::isSticky(ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID) {
+bool ModelPartShared::anySticky(ViewIdentifierClass::ViewIdentifier viewIdentifier) {
     ViewImage * viewImage = m_viewImages.value(viewIdentifier);
     if (viewImage == NULL) return false;
 
-    qulonglong one = 1;
-    return ((viewImage->sticky & (one << viewLayerID)) != 0);
+    return (viewImage->sticky != 0);
 }
 
 void ModelPartShared::addConnector(ConnectorShared * connectorShared)

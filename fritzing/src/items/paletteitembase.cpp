@@ -390,7 +390,7 @@ bool PaletteItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::Vie
 	m_canFlipHorizontal = modelPart->canFlipHorizontal(viewIdentifier);
 	m_filename = layerAttributes.filename();
 	//DebugDialog::debug(QString("filename %1").arg(m_filename) );
-	setSticky(modelPart->isSticky(viewIdentifier, viewLayerID));
+	setSticky(modelPart->anySticky(viewIdentifier));
 	QString elementID = ViewLayer::viewLayerXmlNameFromID(viewLayerID);
 	setViewLayerID(elementID, viewLayers);
 

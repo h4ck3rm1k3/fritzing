@@ -296,7 +296,7 @@ void SketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseComma
 					itemBase->setMoveLock(true);
 				}
 
-                if (itemBase->isSticky()) {
+                if (itemBase->isBaseSticky()) {
                     // make sure the icon is displayed
                     itemBase->setLocalSticky(true);
                 }
@@ -534,7 +534,7 @@ void SketchWidget::loadFromModelParts(QList<ModelPart *> & modelParts, BaseComma
 	if (parentCommand == NULL) {
 		foreach (ItemBase * item, newItems) {
 			item->doneLoading();
-			if (item->isSticky()) {
+			if (item->isBaseSticky()) {
 				stickyScoop(item, false, NULL);
 			}
 		}
@@ -767,7 +767,7 @@ void SketchWidget::checkSticky(long id, bool doEmit, bool checkCurrent, CheckSti
 	ItemBase * itemBase = findItem(id);
 	if (itemBase == NULL) return;
 
-	if (itemBase->isSticky()) {
+	if (itemBase->isBaseSticky()) {
 		stickyScoop(itemBase, checkCurrent, checkStickyCommand);
 	}
 	else {
@@ -5112,7 +5112,7 @@ void SketchWidget::rememberSticky(ItemBase * itemBase, QUndoCommand * parentComm
 	if (stickyList.count() <= 0) return;
 
 	CheckStickyCommand * checkStickyCommand = new CheckStickyCommand(this, BaseCommand::SingleView, itemBase->id(), false, CheckStickyCommand::UndoOnly, parentCommand);
-	if (itemBase->isSticky()) {
+	if (itemBase->isBaseSticky()) {
 		foreach (ItemBase * sticking, stickyList) {
 			checkStickyCommand->stick(this, itemBase->id(), sticking->id(), true);
 		}
@@ -5188,7 +5188,7 @@ ItemBase * SketchWidget::overSticky(ItemBase * itemBase) {
 		ItemBase * s = dynamic_cast<ItemBase *>(item);
 		if (s == NULL) continue;
 		if (s == itemBase) continue;
-		if (!s->isSticky()) continue;
+		if (!s->isBaseSticky()) continue;
 
 		return s->layerKinChief();
 	}
@@ -5228,7 +5228,7 @@ void SketchWidget::stickyScoop(ItemBase * stickyOne, bool checkCurrent, CheckSti
 
 		if (!itemBase->stickyEnabled()) continue;
 		if (added.contains(itemBase)) continue;
-		if (itemBase->isSticky()) continue;
+		if (itemBase->isBaseSticky()) continue;
 		if (stickyOne->alreadySticking(itemBase)) {
 			already.append(itemBase);
 			continue;

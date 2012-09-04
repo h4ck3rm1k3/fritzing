@@ -649,8 +649,8 @@ QString ModelPart::imageFileName(ViewIdentifierClass::ViewIdentifier viewIdentif
     return "";
 }
 
-bool ModelPart::isSticky(ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID) {
-    if (m_modelPartShared) return m_modelPartShared->isSticky(viewIdentifier, viewLayerID);
+bool ModelPart::anySticky(ViewIdentifierClass::ViewIdentifier viewIdentifier) {
+    if (m_modelPartShared) return m_modelPartShared->anySticky(viewIdentifier);
 
     return false;
 }

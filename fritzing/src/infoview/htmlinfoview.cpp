@@ -425,7 +425,7 @@ void HtmlInfoView::appendItemStuff(ItemBase * itemBase, ModelPart * modelPart, b
 	m_lockCheckbox->setChecked(itemBase->moveLock());
     if (itemBase->isBaseSticky()) {
 	    m_stickyCheckbox->setVisible(true);
-        m_stickyCheckbox->setChecked(itemBase->isLocalSticky());
+        m_stickyCheckbox->setChecked(itemBase->isSticky());
     }
     else {
 	    m_stickyCheckbox->setVisible(false);

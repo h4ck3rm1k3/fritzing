@@ -834,7 +834,7 @@ void ItemBase::addSticky(ItemBase * stickyBase, bool stickem) {
 	//this->debugInfo(QString("add sticky %1:").arg(stickem));
 	//sticky->debugInfo(QString("  to"));
 	if (stickem) {
-		if (!isSticky()) {
+		if (!isBaseSticky()) {
 			foreach (ItemBase * oldstickingTo, m_stickyList.values()) {
 				if (oldstickingTo == stickyBase) continue;
 
@@ -851,7 +851,7 @@ void ItemBase::addSticky(ItemBase * stickyBase, bool stickem) {
 
 
 ItemBase * ItemBase::stickingTo() {
-	if (isSticky()) return NULL;
+	if (isBaseSticky()) return NULL;
 
 	if (m_stickyList.count() < 1) return NULL;
 
@@ -1839,7 +1839,7 @@ void ItemBase::debugInfo2(const QString & msg) const
 void ItemBase::addedToScene(bool temporary) {
 	if (this->scene() && instanceTitle().isEmpty() && !temporary) {
 		setTooltip();
-        if (isSticky()) {
+        if (isBaseSticky()) {
             // ensure icon is visible
             setLocalSticky(true);
         }
