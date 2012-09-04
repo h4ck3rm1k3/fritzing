@@ -486,7 +486,9 @@ ReferenceModel * FApplication::loadReferenceModel(const QString & databaseName, 
 	m_referenceModel = new CurrentReferenceModel();	
 	ItemBase::setReferenceModel(m_referenceModel);
 	connect(m_referenceModel, SIGNAL(loadedPart(int, int)), this, SLOT(loadedPart(int, int)));
-    if (databaseName.isEmpty()) {
+
+	bool ok = m_referenceModel->loadAll(databaseName, fullLoad);		// loads local parts, resource parts, and any other parts in files not in the db--these part override db parts with the same moduleID
+    if (ok && databaseName.isEmpty()) {
         QDir * dir = FolderUtils::getApplicationSubFolder("parts");
         if (dir == NULL) {
         }
@@ -499,7 +501,6 @@ ReferenceModel * FApplication::loadReferenceModel(const QString & databaseName, 
         }
     }
 
-	m_referenceModel->loadAll(databaseName, fullLoad);								// loads local parts, resource parts, and any other parts in files not in the db
 	m_paletteBinModel = new PaletteModel(true, false);
     m_paletteBinModel->setReferenceModel(m_referenceModel);
 	//DebugDialog::debug("after new palette model");

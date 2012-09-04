@@ -41,7 +41,7 @@ class SqliteReferenceModel : public ReferenceModel {
 		SqliteReferenceModel();
 		~SqliteReferenceModel();
 
-		void loadAll(const QString & databaseName, bool fullLoad);
+		bool loadAll(const QString & databaseName, bool fullLoad);
 		bool loadFromDB(const QString & databaseName);
 		ModelPart *loadPart(const QString & path, bool update);
 
@@ -97,6 +97,7 @@ protected:
 		volatile bool m_lastWasExactMatch;
         volatile bool m_keepGoing;
 		bool m_init;
+        QSqlDatabase m_database;
 		QMultiHash<QString /*name*/, QString /*value*/> m_recordedProperties;
 };
 

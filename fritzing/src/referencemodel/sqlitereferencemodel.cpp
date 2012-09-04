@@ -95,7 +95,7 @@ SqliteReferenceModel::SqliteReferenceModel() {
 	m_lastWasExactMatch = true;
 }
 
-void SqliteReferenceModel::loadAll(const QString & databaseName, bool fullLoad)
+bool SqliteReferenceModel::loadAll(const QString & databaseName, bool fullLoad)
 {
     m_fullLoad = fullLoad;
 	initParts();
@@ -116,21 +116,18 @@ void SqliteReferenceModel::loadAll(const QString & databaseName, bool fullLoad)
 	if(!m_swappingEnabled) {
         noSwappingMessage();
 	}
+    return m_swappingEnabled;
 
 }
 
 bool SqliteReferenceModel::loadFromDB(const QString & databaseName) 
 {
-    QSqlDatabase keep_db = QSqlDatabase::addDatabase("QSQLITE");
-    keep_db.setDatabaseName(":memory:");
-
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE", "temporary");
 	db.setDatabaseName(databaseName);
 
-    m_swappingEnabled = loadFromDB(keep_db, db);
+    m_swappingEnabled = loadFromDB(m_database, db);
     if (db.isOpen()) db.close();
     if (!m_swappingEnabled) {
-        if (keep_db.isOpen()) keep_db.close();
         killParts();
         noSwappingMessage();
     }
@@ -141,22 +138,6 @@ bool SqliteReferenceModel::loadFromDB(const QString & databaseName)
 bool SqliteReferenceModel::loadFromDB(QSqlDatabase & keep_db, QSqlDatabase & db) 
 {
     bool opened = false;
-    for (int i = 0; i < MAX_CONN_TRIES; i++) {
-	    if (!keep_db.open()) continue;
-
-        opened = true;
-        break;
-    }
-
-    if (!opened) return false;
-
-    bool result = createProperties(keep_db);
-    if (!result) return false;
-
-    result = createParts(keep_db, false);
-    if (!result) return false;
-
-    opened = false;
     for (int i = 0; i < MAX_CONN_TRIES; i++) {
 	    if (!db.open()) continue;
 
@@ -179,13 +160,14 @@ bool SqliteReferenceModel::loadFromDB(QSqlDatabase & keep_db, QSqlDatabase & db)
 
 
     QVector<ModelPart *> parts(count + 1, NULL);
+    QVector<qulonglong > oldToNew(count + 1, 0);
 
     query = db.exec("SELECT path, moduleID, id, family, version, fritzingversion, author, title, label, date, description, taxonomy, itemtype FROM parts");
     debugError(query.isActive(), query);
     if (!query.isActive()) return false;
 
     QSqlQuery q2(keep_db);
-    result = q2.prepare("INSERT INTO parts(moduleID, family, core) VALUES (:moduleID, :family, :core)");
+    bool result = q2.prepare("INSERT INTO parts(moduleID, family, core) VALUES (:moduleID, :family, :core)");
     debugError(result, q2);
 
     QFileInfo info(db.databaseName());
@@ -196,6 +178,12 @@ bool SqliteReferenceModel::loadFromDB(QSqlDatabase & keep_db, QSqlDatabase & db)
 
         QString path = query.value(ix++).toString();
         QString moduleID = query.value(ix++).toString();
+        qulonglong dbid = query.value(ix++).toULongLong();
+
+        if (m_partHash.value(moduleID, NULL) != NULL) {
+            // a part with this moduleID was already loaded--the file version overrides the db version
+            continue;
+        }
 
         if (!path.startsWith(ResourcePath)) {        // not the resources path
             path = partsDir.absoluteFilePath(path);
@@ -213,7 +201,6 @@ bool SqliteReferenceModel::loadFromDB(QSqlDatabase & keep_db, QSqlDatabase & db)
         modelPart->setModelPartShared(modelPartShared);
         
         modelPartShared->setModuleID(moduleID);
-        qulonglong dbid = query.value(ix++).toULongLong();
         modelPartShared->setDBID(dbid);
         QString family = query.value(ix++).toString();
         modelPartShared->setFamily(family);
@@ -239,6 +226,9 @@ bool SqliteReferenceModel::loadFromDB(QSqlDatabase & keep_db, QSqlDatabase & db)
 	    q2.bindValue(":core", "1");
         bool result = q2.exec();
         if (!result) debugExec("unable to add part to memory", q2);
+
+        qulonglong newid = q2.lastInsertId().toULongLong();
+        oldToNew[dbid] = newid;
 	}
 
     query = db.exec("SELECT viewid, image, layers, sticky, flipvertical, fliphorizontal, part_id FROM viewimages");
@@ -294,8 +284,8 @@ bool SqliteReferenceModel::loadFromDB(QSqlDatabase & keep_db, QSqlDatabase & db)
             parts.at(dbid)->setProperty(name, value);
 	        q3.bindValue(":name", name.toLower().trimmed());
 	        q3.bindValue(":value", value);
-	        q3.bindValue(":part_id", dbid);
-            result = q3.exec();
+	        q3.bindValue(":part_id", oldToNew[dbid]);
+            bool result = q3.exec();
             if (!result) debugExec("unable to add property to memory", q3);
         }
     }
@@ -423,10 +413,12 @@ bool SqliteReferenceModel::loadFromDB(QSqlDatabase & keep_db, QSqlDatabase & db)
         m_root = new ModelPart();
     }
     foreach (ModelPart * modelPart, m_partHash.values()) {
-        modelPart->flipSMDAnd();
-        modelPart->initBuses();
-        modelPart->setParent(m_root);
-        modelPart->lookForZeroConnector();
+        if (modelPart->dbid() != 0) {
+            modelPart->flipSMDAnd();
+            modelPart->initBuses();
+            modelPart->setParent(m_root);
+            modelPart->lookForZeroConnector();
+        }
     }
 
     return true;
@@ -445,13 +437,13 @@ void SqliteReferenceModel::initParts() {
 
 bool SqliteReferenceModel::createConnection(const QString & databaseName, bool fullLoad) {
 	m_swappingEnabled = true;
-	QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-	db.setDatabaseName(databaseName.isEmpty() ? ":memory:" : databaseName);
-	if (!db.open()) {
+	m_database = QSqlDatabase::addDatabase("QSQLITE");
+	m_database.setDatabaseName(databaseName.isEmpty() ? ":memory:" : databaseName);
+	if (!m_database.open()) {
 		m_swappingEnabled = false;
 	} else {
         m_keepGoing = false;
-		bool result = createParts(db, fullLoad);
+		bool result = createParts(m_database, fullLoad);
 
         QSqlQuery query;
         result = query.exec("CREATE TABLE viewimages (\n"
@@ -523,7 +515,7 @@ bool SqliteReferenceModel::createConnection(const QString & databaseName, bool f
 		result = query.exec("CREATE INDEX idx_tag_part_id ON tags (part_id ASC)");
         debugError(result, query);
 
-        result = createProperties(db);
+        result = createProperties(m_database);
 
 		result = query.exec("CREATE TRIGGER unique_part__moduleID \n"
 			"BEFORE INSERT ON parts \n"
@@ -543,7 +535,7 @@ bool SqliteReferenceModel::createConnection(const QString & databaseName, bool f
 			addPartAux(mp, fullLoad);
 		}
 
-		db.commit();
+		m_database.commit();
 
 	}
 	return m_swappingEnabled;
