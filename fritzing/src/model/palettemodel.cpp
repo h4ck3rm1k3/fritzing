@@ -489,8 +489,6 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update) {
    	}
 
     if (!m_fullLoad) {
-	    modelPart->flipSMDAnd();
-
 	    if (FirstTime) {
 		    // make sure saving to the common bin takes place after fastLoad
 		    //DebugDialog::debug(QString("all parts %1").arg(JustAppendAllPartsInstances));

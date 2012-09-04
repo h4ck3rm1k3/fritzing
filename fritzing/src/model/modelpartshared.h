@@ -151,7 +151,6 @@ protected:
 	void populateTags(QDomElement parent, QStringList &list);
 	void populateProperties(QDomElement parent, QHash<QString,QString> &hash, QStringList & displayKeys);
 	void commonInit();
-	void loadDocument();
 	void ensurePartNumberProperty();
     void copyPins(ViewLayer::ViewLayerID from, ViewLayer::ViewLayerID to);
     LayerList viewLayersAux(ViewIdentifierClass::ViewIdentifier viewIdentifier, qulonglong (*accessor)(ViewImage *));

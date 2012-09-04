@@ -327,6 +327,7 @@ ModelPart * ModelBase::addModelPart(ModelPart * parent, ModelPart * copyChild) {
 	modelPart->copyNew(copyChild);
 	modelPart->setParent(parent);
 	modelPart->initConnectors();
+    modelPart->flipSMDAnd();
 	return modelPart;
 }
 

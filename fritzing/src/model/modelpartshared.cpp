@@ -490,24 +490,6 @@ void ModelPartShared::connectorIDs(ViewIdentifierClass::ViewIdentifier viewIdent
 	}
 }
 
-void ModelPartShared::loadDocument() {
-
-	//DebugDialog::debug("loading document " + m_moduleID);
-
-	QFile file(m_path);
-	QString errorStr;
-	int errorLine;
-	int errorColumn;
-	QDomDocument doc;
-	if (!doc.setContent(&file, true, &errorStr, &errorLine, &errorColumn)) {
-		DebugDialog::debug(QString("ModelPartShared load document failed: %1 line:%2 col:%3 on file '%4'").arg(errorStr).arg(errorLine).arg(errorColumn).arg(m_path));
-		QMessageBox::critical(NULL, tr("Fritzing"), tr("Unable to parse '%1': %2: line %3 column %4.").arg(m_path).arg(errorStr).arg(errorLine).arg(errorColumn));
-	}
-	else {
-		flipSMDAnd();
-	}
-}
-
 void ModelPartShared::flipSMDAnd() {
     LayerList layerList = viewLayers(ViewIdentifierClass::PCBView);
     if (layerList.isEmpty()) return;
