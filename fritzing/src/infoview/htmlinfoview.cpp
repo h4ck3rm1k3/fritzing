@@ -37,7 +37,6 @@ $Date$
 #include "../connectors/connectorshared.h"
 #include "../connectors/connector.h"
 #include "../fsvgrenderer.h"
-#include "../dockmanager.h"
 #include "../utils/flineedit.h"
 #include "../items/moduleidnames.h"
 #include "../items/paletteitem.h"
@@ -464,7 +463,7 @@ void HtmlInfoView::setContent()
 }
 
 QSize HtmlInfoView::sizeHint() const {
-	return QSize(DockManager::DockDefaultWidth, DockManager::InfoViewDefaultHeight);
+	return QSize(DockDefaultWidth, InfoViewDefaultHeight);
 }
 
 void HtmlInfoView::setCurrentItem(ItemBase * item) {

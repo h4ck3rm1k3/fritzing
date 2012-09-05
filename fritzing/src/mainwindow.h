@@ -55,8 +55,9 @@ class QMenu;
 QT_END_NAMESPACE
 
 class Helper;
-class DockManager;
 class FSizeGrip;
+
+typedef class FDockWidget * (*DockFactory)(const QString & title, QWidget * parent);
 
 bool sortPartList(class ItemBase * b1, class ItemBase * b2);
 
@@ -380,6 +381,9 @@ protected slots:
 	void restoreDefaultGrid();
     void checkLoadedTraces();
 
+    void keepMargins();
+	void dockChangeActivation(bool activate, QWidget * originator);
+
 protected:
 	void initSketchWidget(SketchWidget *);
 
@@ -516,6 +520,19 @@ protected:
     virtual void createWindowMenu();
     virtual void createTraceMenus();
     virtual void createHelpMenu();
+
+    // dock management
+	void createDockWindows();
+	void dontKeepMargins();
+	class FDockWidget * makeDock(const QString & title, QWidget * widget, int dockMinHeight, int dockDefaultHeight, Qt::DockWidgetArea area = Qt::RightDockWidgetArea, DockFactory dockFactory = NULL);
+	class FDockWidget * dockIt(FDockWidget* dock, int dockMinHeight, int dockDefaultHeight, Qt::DockWidgetArea area = Qt::RightDockWidgetArea);
+	FDockWidget *newTopWidget();
+	FDockWidget *newBottomWidget();
+	void removeMargin(FDockWidget* dock);
+	void addTopMargin(FDockWidget* dock);
+	void addBottomMargin(FDockWidget* dock);
+	void dockMarginAux(FDockWidget* dock, const QString &name, const QString &style);
+
 
 protected:
 	static void removeActionsStartingAt(QMenu *menu, int start=0);
@@ -769,14 +786,12 @@ protected:
 	QPointer<class FSizeGrip> m_sizeGrip;
 
 	friend class Helper;
-	friend class DockManager;
 
 	QPointer<class ViewSwitcher> m_viewSwitcher;
 	QPointer<class ViewSwitcherDockWidget> m_viewSwitcherDock;
 
 	QPointer<Helper> m_helper;
 	QTimer m_setUpDockManagerTimer;
-	QPointer<class DockManager> m_dockManager;
 	QPointer<class FileProgressDialog> m_fileProgressDialog;
 	QPointer<class ZoomSlider> m_zoomSlider;
 	QPointer<QLabel> m_locationLabel;
@@ -803,11 +818,22 @@ protected:
     bool m_addedToTemp;
     QString m_settingsPrefix;
 
+    // dock management
+	QList<FDockWidget*> m_docks;
+	FDockWidget* m_topDock;
+	FDockWidget* m_bottomDock;
+	QString m_oldTopDockStyle;
+	QString m_oldBottomDockStyle;
+	bool m_dontKeepMargins;
+
+
 public:
 	static int RestartNeeded;
 	static int AutosaveTimeoutMinutes;
 	static bool AutosaveEnabled;
 	static QString BackupFolder;
+    static const int DockMinWidth;
+    static const int DockMinHeight;
 
 
 protected:

@@ -46,7 +46,6 @@ $Date$
 #include "../connectors/connector.h"
 #include "../referencemodel/referencemodel.h"
 
-
 struct ConnectorMetadata {
     Connector::ConnectorType connectorType;
     QString connectorName;
@@ -64,7 +63,7 @@ public:
     void initConnectors(const QDomDocument &);
 
 signals:
-    void connectorsChanged(QList<ConnectorMetadata *> &);
+    void connectorMetadataChanged(const ConnectorMetadata *);
 
 protected slots:
     void nameEntry();
@@ -74,7 +73,7 @@ protected slots:
 
 protected:
     QWidget * makeConnectorForm(const QDomElement & connector, int index);
-    void changeConnectors();
+    void changeConnector();
 
 protected:
     QPointer<QFrame> m_mainFrame;

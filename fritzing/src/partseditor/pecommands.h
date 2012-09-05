@@ -28,6 +28,8 @@ $Date$
 #define PECOMMANDS_H
 
 #include "../commands.h"
+#include "connectorsview.h"
+
 
 /////////////////////////////////////////////
 
@@ -60,6 +62,23 @@ protected:
 	QString m_name;
 	QString m_oldValue;
 	QString m_newValue;
+};
+
+/////////////////////////////////////////////
+
+class ChangeConnectorMetadataCommand : public PEBaseCommand
+{
+public:
+	ChangeConnectorMetadataCommand(class PEMainWindow *, const ConnectorMetadata & oldcm, const ConnectorMetadata & newcm, QUndoCommand *parent);
+	void undo();
+	void redo();
+
+protected:
+	QString getParamString() const;
+
+protected:
+	ConnectorMetadata m_oldcm;
+	ConnectorMetadata m_newcm;
 };
 
 /////////////////////////////////////////////

@@ -32,6 +32,7 @@ $Date$
 #include "../mainwindow.h"
 #include "../model/modelpartshared.h"
 #include "../sketch/sketchwidget.h"
+#include "connectorsview.h"
 
 class IconSketchWidget : public SketchWidget
 {
@@ -56,6 +57,7 @@ public:
     void changeTags(const QStringList &, bool updateDisplay);
     void changeProperties(const QHash<QString, QString> &, bool updateDisplay);
     void changeMetadata(const QString & name, const QString & value, bool updateDisplay);
+    void changeConnectorMetadata(const ConnectorMetadata &, bool updateDisplay);
 
 protected:
 	void closeEvent(QCloseEvent * event);
@@ -79,12 +81,14 @@ protected:
     void createViewMenuActions();
     void createViewMenu();
     QHash<QString, QString> getOldProperties();
+    QDomElement findConnector(const QString & id);
+    void changeConnectorElement(QDomElement & connector, const ConnectorMetadata & cmd);
 
 public slots:
     void metadataChanged(const QString & name, const QString & value);
     void propertiesChanged(const QHash<QString, QString> &);
     void tagsChanged(const QStringList &);
-    void connectorsChanged(QList<struct ConnectorMetadata *> &);
+    void connectorMetadataChanged(const struct ConnectorMetadata *);
 
 protected slots:
     void initZoom();
@@ -107,6 +111,7 @@ protected:
 	QPointer<class IconSketchWidget> m_iconGraphicsView;
     class MetadataView * m_metadataView;
     class ConnectorsView * m_connectorsView;
+    class PEToolView * m_peToolView;
 
 };
 

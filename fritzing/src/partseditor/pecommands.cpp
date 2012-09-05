@@ -145,3 +145,35 @@ QString ChangePropertiesCommand::getParamString() const {
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+ChangeConnectorMetadataCommand::ChangeConnectorMetadataCommand(PEMainWindow * peMainWindow, const ConnectorMetadata  & oldValue, const ConnectorMetadata & newValue, QUndoCommand *parent)
+    : PEBaseCommand(peMainWindow, parent)
+{
+	m_oldcm = oldValue;
+	m_newcm = newValue;
+}
+
+void ChangeConnectorMetadataCommand::undo()
+{
+    m_peMainWindow->changeConnectorMetadata(m_oldcm, true);
+}
+
+void ChangeConnectorMetadataCommand::redo()
+{
+    if (m_skipFirstRedo) {
+        m_skipFirstRedo = false;
+    }
+    else {
+        m_peMainWindow->changeConnectorMetadata(m_newcm, true);
+    }
+}
+
+QString ChangeConnectorMetadataCommand::getParamString() const {
+	return "ChangeConnectorMetadataCommand " + 
+        QString(" name:%1, old:%2, new:%3")
+            .arg(m_oldcm.connectorName)
+            .arg(m_newcm.connectorName)
+        ;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////

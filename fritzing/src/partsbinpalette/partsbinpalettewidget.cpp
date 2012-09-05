@@ -44,11 +44,11 @@ $Date$
 #include "searchlineedit.h"
 #include "../utils/misc.h"
 #include "../debugdialog.h"
-#include "../dockmanager.h"
 #include "../infoview/htmlinfoview.h"
 #include "../utils/fileprogressdialog.h"
 #include "../utils/folderutils.h"
 #include "../utils/textutils.h"
+#include "../mainwindow.h"          // TODO: PartsBinPaletteWidget should not call MainWindow functions
 
 
 static QString CustomIconName = "Custom1.png";
@@ -157,7 +157,7 @@ void PartsBinPaletteWidget::cleanup() {
 
 
 QSize PartsBinPaletteWidget::sizeHint() const {
-	return QSize(DockManager::DockDefaultWidth, DockManager::PartsBinDefaultHeight);
+	return QSize(DockDefaultWidth, PartsBinDefaultHeight);
 }
 
 QString PartsBinPaletteWidget::title() const {

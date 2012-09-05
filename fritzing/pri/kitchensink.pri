@@ -19,7 +19,6 @@
 HEADERS += \
     src/commands.h \
     src/debugdialog.h \
-    src/dockmanager.h \
     src/fapplication.h \
     src/fdockwidget.h \
     src/fgraphicsscene.h \
@@ -43,7 +42,6 @@ HEADERS += \
 SOURCES += \
     src/commands.cpp \
     src/debugdialog.cpp \
-    src/dockmanager.cpp \
     src/fapplication.cpp \
     src/fdockwidget.cpp \
     src/fgraphicsscene.cpp \
@@ -57,6 +55,7 @@ SOURCES += \
     src/mainwindow.cpp \
     src/mainwindow_export.cpp \    
     src/mainwindow_menu.cpp \
+    src/mainwindow_dock.cpp \
     src/processeventblocker.cpp \
     src/sketchareawidget.cpp \
     src/sketchtoolbutton.cpp \

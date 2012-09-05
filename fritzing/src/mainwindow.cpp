@@ -73,7 +73,6 @@ $Date$
 #include "items/dip.h"
 #include "processeventblocker.h"
 #include "help/helper.h"
-#include "dockmanager.h"
 #include "sketchtoolbutton.h"
 
 #include "partsbinpalette/binmanager/binmanager.h"
@@ -154,10 +153,17 @@ QString MainWindow::BackupFolder;
 MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel, QWidget * parent) :
     FritzingWindow(untitledFileName(), untitledFileCount(), fileExtension(), parent)
 {
+	setCorner(Qt::BottomRightCorner, Qt::RightDockWidgetArea);
+	setDockOptions(QMainWindow::AnimatedDocks);
+	m_sizeGrip = new FSizeGrip(this);
+
+	m_topDock = NULL;
+	m_bottomDock = NULL;
+	m_dontKeepMargins = true;
+
     m_settingsPrefix = "main/";
     m_showPartsBinIconViewAct = m_showAllLayersAct = m_hideAllLayersAct = m_showInViewHelpAct = m_rotate90cwAct = m_showBreadboardAct = m_showSchematicAct = m_showPCBAct = NULL;
-    m_pcbTraceMenu = m_schematicTraceMenu= m_breadboardTraceMenu = m_viewMenu = NULL;
-    m_dockManager = NULL;
+    m_windowMenu = m_pcbTraceMenu = m_schematicTraceMenu= m_breadboardTraceMenu = m_viewMenu = NULL;
     m_miniViewContainerBreadboard = NULL;
     m_infoView = NULL;
     m_addedToTemp = false;
@@ -384,11 +390,9 @@ void MainWindow::init(PaletteModel * paletteModel, ReferenceModel *refModel, boo
 
 	connect(this, SIGNAL(readOnlyChanged(bool)), this, SLOT(applyReadOnlyChange(bool)));
 
-    if (m_dockManager) {
-	    m_setUpDockManagerTimer.setSingleShot(true);
-	    connect(&m_setUpDockManagerTimer, SIGNAL(timeout()), m_dockManager, SLOT(keepMargins()));
-        m_setUpDockManagerTimer.start(1000);
-    }
+	m_setUpDockManagerTimer.setSingleShot(true);
+	connect(&m_setUpDockManagerTimer, SIGNAL(timeout()), this, SLOT(keepMargins()));
+    m_setUpDockManagerTimer.start(1000);
 
 	if (m_fileProgressDialog) {
 		m_fileProgressDialog->setValue(98);
@@ -443,12 +447,11 @@ void MainWindow::initSketchWidgets() {
 void MainWindow::initDock() {
 	m_layerPalette = new LayerPalette(this);
 
-	DebugDialog::debug("before creating dock");
+	m_infoView = new HtmlInfoView();
+    connect(m_infoView, SIGNAL(clickObsoleteSignal()), this, SLOT(selectAllObsolete()));
+	//DebugDialog::debug("after html view");
 
-    m_dockManager = new DockManager(this);
-	DebugDialog::debug("before creating bins");
-
-	m_dockManager->createBinAndInfoViewDocks();
+	m_binManager = new BinManager(m_refModel, m_infoView, m_undoStack, this);
 
 	DebugDialog::debug("after creating bins");
 	if (m_fileProgressDialog) {
@@ -467,7 +470,7 @@ void MainWindow::moreInitDock() {
 	connect(this, SIGNAL(viewSwitched(int)), m_viewSwitcher, SLOT(viewSwitchedTo(int)));
 	m_viewSwitcher->viewSwitchedTo(0);
 
-    m_dockManager->createDockWindows();
+    createDockWindows();
 
 	if (m_fileProgressDialog) {
 		m_fileProgressDialog->setValue(93);
@@ -507,9 +510,8 @@ MainWindow::~MainWindow()
     QFile::remove(m_backupFileNameAndPath);	
 	
 	delete m_sketchModel;
-    if (m_dockManager) {
-	    m_dockManager->dontKeepMargins();
-    }
+
+	dontKeepMargins();
 	m_setUpDockManagerTimer.stop();
 
 	foreach (LinkedFile * linkedFile, m_linkedProgramFiles) {

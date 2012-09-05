@@ -128,6 +128,7 @@ $Date$
 #include "metadataview.h"
 #include "connectorsview.h"
 #include "pecommands.h"
+#include "petoolview.h"
 #include "../debugdialog.h"
 #include "../model/palettemodel.h"
 #include "../sketch/breadboardsketchwidget.h"
@@ -138,6 +139,7 @@ $Date$
 #include "../utils/graphicsutils.h"
 #include "../utils/textutils.h"
 #include "../utils/folderutils.h"
+#include "../fdockwidget.h"
 
 
 #ifdef QT_NO_DEBUG
@@ -199,7 +201,7 @@ void PEMainWindow::initSketchWidgets()
     m_connectorsView = new ConnectorsView(this);
 	sketchAreaWidget = new SketchAreaWidget(m_connectorsView, this);
 	m_tabWidget->addWidget(sketchAreaWidget);
-    connect(m_connectorsView, SIGNAL(connectorsChanged(QList<ConnectorMetadata *> &)), this, SLOT(connectorsChanged(QList<ConnectorMetadata *> &)), Qt::DirectConnection);
+    connect(m_connectorsView, SIGNAL(connectorMetadataChanged(const ConnectorMetadata *)), this, SLOT(connectorMetadataChanged(const ConnectorMetadata *)), Qt::DirectConnection);
 }
 
 void PEMainWindow::initDock()
@@ -208,6 +210,9 @@ void PEMainWindow::initDock()
 
 void PEMainWindow::moreInitDock()
 {
+    m_peToolView = new PEToolView();
+    makeDock(tr("Tools"), m_peToolView, DockMinWidth, DockMinHeight);
+    m_peToolView->setMinimumSize(DockMinWidth, DockMinHeight);
 }
 
 void PEMainWindow::createActions()
@@ -589,6 +594,61 @@ QHash<QString, QString> PEMainWindow::getOldProperties()
     return oldProperties;
 }
 
-void PEMainWindow::connectorsChanged(QList<ConnectorMetadata *> & connectorMetadataList)
+void PEMainWindow::connectorMetadataChanged(const ConnectorMetadata * cmd)
 {
+    ConnectorMetadata oldcmd;
+
+    QDomElement connector = findConnector(cmd->connectorID);
+    if (connector.isNull()) return;
+
+    oldcmd.connectorID = connector.attribute("id");
+    oldcmd.connectorType = Connector::Male;
+    if (connector.attribute("type").compare("female", Qt::CaseInsensitive) == 0) oldcmd.connectorType = Connector::Female;
+    else if (connector.attribute("type").compare("pad", Qt::CaseInsensitive) == 0) oldcmd.connectorType = Connector::Pad;
+    oldcmd.connectorName = connector.attribute("name");
+    QDomElement description = connector.firstChildElement("description");
+    oldcmd.connectorDescription = description.text();
+
+    ChangeConnectorMetadataCommand * ccmc = new ChangeConnectorMetadataCommand(this, oldcmd, *cmd, NULL);
+    ccmc->setText(tr("Change connector %1").arg(cmd->connectorName));
+    ccmc->setSkipFirstRedo();
+    changeConnectorElement(connector, *cmd);
+    m_undoStack->waitPush(ccmc, SketchWidget::PropChangeDelay);
+}
+
+QDomElement PEMainWindow::findConnector(const QString & id) 
+{
+    QDomElement root = m_fzpDocument.documentElement();
+    QDomElement connectors = root.firstChildElement("connectors");
+    QDomElement connector = connectors.firstChildElement("connector");
+    while (!connector.isNull()) {
+        if (id.compare(connector.attribute("id")) == 0) {
+            return connector;
+        }
+        connector = connector.nextSiblingElement("connector");
+    }
+
+    return QDomElement();
+}
+
+
+void PEMainWindow::changeConnectorMetadata(const ConnectorMetadata & cmd, bool updateDisplay) {
+    QDomElement connector = findConnector(cmd.connectorID);
+    if (connector.isNull()) return;
+
+    changeConnectorElement(connector, cmd);
+    if (updateDisplay) {
+        m_connectorsView->initConnectors(m_fzpDocument);
+    }
+}
+
+void PEMainWindow::changeConnectorElement(QDomElement & connector, const ConnectorMetadata & cmd)
+{
+    connector.setAttribute("name", cmd.connectorName);
+    QString type = "male";
+    if (cmd.connectorType == Connector::Female) type = "female";
+    else if (cmd.connectorType == Connector::Pad) type = "pad";
+    connector.setAttribute("type", type);
+    QDomElement description = connector.firstChildElement("description");
+    TextUtils::replaceElementChildText(m_fzpDocument, connector, "description", cmd.connectorDescription);
 }

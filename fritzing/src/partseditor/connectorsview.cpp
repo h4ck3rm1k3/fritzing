@@ -140,15 +140,15 @@ void ConnectorsView::initConnectors(const QDomDocument & doc)
 }
 
 void ConnectorsView::nameEntry() {
-    changeConnectors();
+    changeConnector();
 }
 
 void ConnectorsView::typeEntry() {
-    changeConnectors();
+    changeConnector();
 }
 
 void ConnectorsView::descriptionEntry() {
-    changeConnectors();
+    changeConnector();
 }
 
 void ConnectorsView::connectorCountEntry() {
@@ -297,12 +297,12 @@ QWidget * ConnectorsView::makeConnectorForm(const QDomElement & connector, int i
     return frame;
 }
 
-void ConnectorsView::changeConnectors() {
-    QList<ConnectorMetadata *> connectorMetadataList;
+void ConnectorsView::changeConnector() {
+    bool ok;
+    int senderIndex = sender()->property("index").toInt(&ok);
+    if (!ok) return;
 
-    for (int i = 0; i < m_connectorCount; i++) {
-        connectorMetadataList.append(new ConnectorMetadata());
-    }
+    ConnectorMetadata cmd;
 
     QList<QWidget *> widgets = m_mainFrame->findChildren<QWidget *>();
     foreach (QWidget * widget, widgets) {
@@ -310,37 +310,31 @@ void ConnectorsView::changeConnectors() {
         int index = widget->property("index").toInt(&ok);
         if (!ok) continue;
 
-        if (index >= m_connectorCount) continue;
+        if (index != senderIndex) continue;
 
         QString type = widget->property("type").toString();
         if (type == "name") {
             QLineEdit * lineEdit = qobject_cast<QLineEdit *>(widget);
             if (lineEdit == NULL) continue;
 
-            connectorMetadataList.at(index)->connectorName = lineEdit->text();
-            connectorMetadataList.at(index)->connectorID = widget->property("id").toString();
+            cmd.connectorName = lineEdit->text();
+            cmd.connectorID = widget->property("id").toString();
         }
         else if (type == "radio") {
             QRadioButton * radioButton = qobject_cast<QRadioButton *>(widget);
             if (radioButton == NULL) continue;
             if (!radioButton->isChecked()) continue;
 
-            connectorMetadataList.at(index)->connectorType = (Connector::ConnectorType) radioButton->property("value").toInt();
+            cmd.connectorType = (Connector::ConnectorType) radioButton->property("value").toInt();
         }
         else if (type == "description") {
             QLineEdit * lineEdit = qobject_cast<QLineEdit *>(widget);
             if (lineEdit == NULL) continue;
 
-            connectorMetadataList.at(index)->connectorDescription = lineEdit->text();
+            cmd.connectorDescription = lineEdit->text();
         }
 
     }
 
-    // make sure to used Qt::DirectConnection, since we will delete the list items after the emit
-    emit connectorsChanged(connectorMetadataList);
-
-    foreach (ConnectorMetadata * cm, connectorMetadataList) {
-        delete cm;
-    }
-
+    emit connectorMetadataChanged(&cmd);
 }
