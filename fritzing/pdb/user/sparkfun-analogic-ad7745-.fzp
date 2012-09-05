@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-AnalogIC-AD7745-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-AnalogIC' AD7745  -->
 <version>4</version>
-<date>2012-09-04</date>
+<date>2012-09-05</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>24-bit capacitance to digital converter</description>

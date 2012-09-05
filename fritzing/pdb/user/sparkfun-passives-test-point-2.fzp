@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Passives-TEST-POINT-2'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Passives' TEST-POINT 2 -->
 <version>4</version>
-<date>2012-09-04</date>
+<date>2012-09-05</date>
 <label>TP</label>
 <author>www.fritzing.org</author>
 <description>Bare copper test points for troubleshooting or ICT</description>
