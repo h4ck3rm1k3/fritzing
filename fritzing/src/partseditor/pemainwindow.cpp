@@ -466,22 +466,26 @@ void PEMainWindow::metadataChanged(const QString & name, const QString & value)
         ChangePropertiesCommand * cpc = new ChangePropertiesCommand(this, oldProperties, newProperties, NULL);
         cpc->setText(tr("Change family to %1").arg(value));
         cpc->setSkipFirstRedo();
+        changeProperties(newProperties, false);
         m_undoStack->waitPush(cpc, SketchWidget::PropChangeDelay);
 
         return;
     }
+
+    QString menuText = (name.compare("description") == 0) ? tr("Change description") : tr("Change %1 to '%2'").arg(name).arg(value);
 
     // called from metadataView
     QDomElement root = m_fzpDocument.documentElement();
     QDomElement element = root.firstChildElement(name);
     QString oldValue = element.text();
     ChangeMetadataCommand * cmc = new ChangeMetadataCommand(this, name, oldValue, value, NULL);
-    cmc->setText(tr("Change %1 to '%2'").arg(name).arg(value));
+    cmc->setText(menuText);
     cmc->setSkipFirstRedo();
+    changeMetadata(name, value, false);
     m_undoStack->waitPush(cmc, SketchWidget::PropChangeDelay);
 }
 
-void PEMainWindow::changeMetadata(const QString & name, const QString & value)
+void PEMainWindow::changeMetadata(const QString & name, const QString & value, bool updateDisplay)
 {
     // called from command object
     QDomElement root = m_fzpDocument.documentElement();
@@ -489,7 +493,9 @@ void PEMainWindow::changeMetadata(const QString & name, const QString & value)
     QString oldValue = element.text();
     TextUtils::replaceChildText(m_fzpDocument, element, value);
 
-    m_metadataView->initMetadata(m_fzpDocument);
+    if (updateDisplay) {
+        m_metadataView->initMetadata(m_fzpDocument);
+    }
 }
 
 void PEMainWindow::tagsChanged(const QStringList & newTags)
@@ -507,10 +513,11 @@ void PEMainWindow::tagsChanged(const QStringList & newTags)
     ChangeTagsCommand * ctc = new ChangeTagsCommand(this, oldTags, newTags, NULL);
     ctc->setText(tr("Change tags"));
     ctc->setSkipFirstRedo();
+    changeTags(newTags, false);
     m_undoStack->waitPush(ctc, SketchWidget::PropChangeDelay);
 }
 
-void PEMainWindow::changeTags(const QStringList & newTags)
+void PEMainWindow::changeTags(const QStringList & newTags, bool updateDisplay)
 {
     QDomElement root = m_fzpDocument.documentElement();
     QDomElement tags = root.firstChildElement("tags");
@@ -526,7 +533,9 @@ void PEMainWindow::changeTags(const QStringList & newTags)
         TextUtils::replaceChildText(m_fzpDocument, tag, newTag);
     }
 
-    m_metadataView->initMetadata(m_fzpDocument);
+    if (updateDisplay) {
+        m_metadataView->initMetadata(m_fzpDocument);
+    }
 }
 
 void PEMainWindow::propertiesChanged(const QHash<QString, QString> & newProperties)
@@ -537,11 +546,12 @@ void PEMainWindow::propertiesChanged(const QHash<QString, QString> & newProperti
     ChangePropertiesCommand * cpc = new ChangePropertiesCommand(this, oldProperties, newProperties, NULL);
     cpc->setText(tr("Change properties"));
     cpc->setSkipFirstRedo();
+    changeProperties(newProperties, false);
     m_undoStack->waitPush(cpc, SketchWidget::PropChangeDelay);
 }
 
 
-void PEMainWindow::changeProperties(const QHash<QString, QString> & newProperties)
+void PEMainWindow::changeProperties(const QHash<QString, QString> & newProperties, bool updateDisplay)
 {
     QDomElement root = m_fzpDocument.documentElement();
     QDomElement properties = root.firstChildElement("properties");
@@ -558,7 +568,9 @@ void PEMainWindow::changeProperties(const QHash<QString, QString> & newPropertie
         TextUtils::replaceChildText(m_fzpDocument, prop, newProperties.value(name));
     }
 
-    m_metadataView->initMetadata(m_fzpDocument);
+    if (updateDisplay) {
+        m_metadataView->initMetadata(m_fzpDocument);
+    }
 }
 
 QHash<QString, QString> PEMainWindow::getOldProperties() 

@@ -53,9 +53,9 @@ public:
 	~PEMainWindow();
 
     void setInitialItem(class PaletteItem *);
-    void changeTags(const QStringList &);
-    void changeProperties(const QHash<QString, QString> &);
-    void changeMetadata(const QString & name, const QString & value);
+    void changeTags(const QStringList &, bool updateDisplay);
+    void changeProperties(const QHash<QString, QString> &, bool updateDisplay);
+    void changeMetadata(const QString & name, const QString & value, bool updateDisplay);
 
 protected:
 	void closeEvent(QCloseEvent * event);

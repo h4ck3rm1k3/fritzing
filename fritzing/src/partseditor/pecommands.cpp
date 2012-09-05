@@ -58,7 +58,7 @@ ChangeMetadataCommand::ChangeMetadataCommand(PEMainWindow * peMainWindow, const 
 
 void ChangeMetadataCommand::undo()
 {
-    m_peMainWindow->changeMetadata(m_name, m_oldValue);
+    m_peMainWindow->changeMetadata(m_name, m_oldValue, true);
 }
 
 void ChangeMetadataCommand::redo()
@@ -67,7 +67,7 @@ void ChangeMetadataCommand::redo()
         m_skipFirstRedo = false;
     }
     else {
-        m_peMainWindow->changeMetadata(m_name, m_newValue);
+        m_peMainWindow->changeMetadata(m_name, m_newValue, true);
     }
 }
 
@@ -91,7 +91,7 @@ ChangeTagsCommand::ChangeTagsCommand(PEMainWindow * peMainWindow, const QStringL
 
 void ChangeTagsCommand::undo()
 {
-    m_peMainWindow->changeTags(m_old);
+    m_peMainWindow->changeTags(m_old, true);
 }
 
 void ChangeTagsCommand::redo()
@@ -100,7 +100,7 @@ void ChangeTagsCommand::redo()
         m_skipFirstRedo = false;
     }
     else {
-        m_peMainWindow->changeTags(m_new);
+        m_peMainWindow->changeTags(m_new, true);
     }
 }
 
@@ -123,7 +123,7 @@ ChangePropertiesCommand::ChangePropertiesCommand(PEMainWindow * peMainWindow, co
 
 void ChangePropertiesCommand::undo()
 {
-    m_peMainWindow->changeProperties(m_old);
+    m_peMainWindow->changeProperties(m_old, true);
 }
 
 void ChangePropertiesCommand::redo()
@@ -132,7 +132,7 @@ void ChangePropertiesCommand::redo()
         m_skipFirstRedo = false;
     }
     else {
-        m_peMainWindow->changeProperties(m_new);
+        m_peMainWindow->changeProperties(m_new, true);
     }
 }
 
