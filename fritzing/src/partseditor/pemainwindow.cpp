@@ -141,6 +141,7 @@ $Date$
 #include "../utils/folderutils.h"
 #include "../fdockwidget.h"
 
+#include <QCoreApplication>
 
 #ifdef QT_NO_DEBUG
 	#define CORE_EDITION_ENABLED false
@@ -237,6 +238,14 @@ QList<QWidget*> PEMainWindow::getButtonsForView(ViewIdentifierClass::ViewIdentif
 }
 
 void PEMainWindow::connectPairs() {
+    bool succeeded = true;
+	succeeded =  succeeded && connect(qApp, SIGNAL(spaceBarIsPressedSignal(bool)), m_breadboardGraphicsView, SLOT(spaceBarIsPressedSlot(bool)));
+	succeeded =  succeeded && connect(qApp, SIGNAL(spaceBarIsPressedSignal(bool)), m_schematicGraphicsView, SLOT(spaceBarIsPressedSlot(bool)));
+	succeeded =  succeeded && connect(qApp, SIGNAL(spaceBarIsPressedSignal(bool)), m_pcbGraphicsView, SLOT(spaceBarIsPressedSlot(bool)));
+
+	succeeded =  succeeded && connect(m_pcbGraphicsView, SIGNAL(cursorLocationSignal(double, double)), this, SLOT(cursorLocationSlot(double, double)));
+	succeeded =  succeeded && connect(m_breadboardGraphicsView, SIGNAL(cursorLocationSignal(double, double)), this, SLOT(cursorLocationSlot(double, double)));
+	succeeded =  succeeded && connect(m_schematicGraphicsView, SIGNAL(cursorLocationSignal(double, double)), this, SLOT(cursorLocationSlot(double, double)));
 }
 
 QMenu *PEMainWindow::breadboardWireMenu() {
