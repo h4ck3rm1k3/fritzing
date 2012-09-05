@@ -58,6 +58,7 @@ HEADERS += \
     src/partseditor/pecommands.h \
     src/partseditor/connectorsview.h \
     src/partseditor/petoolview.h \
+    src/partseditor/pegraphicsitem.h \
     
 
 SOURCES += \
@@ -89,3 +90,4 @@ SOURCES += \
     src/partseditor/pecommands.cpp \
     src/partseditor/connectorsview.cpp \
     src/partseditor/petoolview.cpp \
+    src/partseditor/pegraphicsitem.cpp \

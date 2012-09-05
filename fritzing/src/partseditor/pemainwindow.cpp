@@ -310,8 +310,6 @@ void PEMainWindow::setInitialItem(PaletteItem * paletteItem) {
     }
     TextUtils::replaceChildText(m_fzpDocument, date, QDate::currentDate().toString());
 
-
-
 	QString userPartsFolderPath = FolderUtils::getUserDataStorePath("parts")+"/user/";
 	QString userPartsFolderSvgPath = FolderUtils::getUserDataStorePath("parts")+"/svg/user/";
     QString guid = FolderUtils::getRandText();
@@ -391,12 +389,15 @@ void PEMainWindow::setInitialItem(PaletteItem * paletteItem) {
     ModelPart * modelPart = new ModelPart(&m_fzpDocument, fzpPath, ModelPart::Part);
 
     m_iconGraphicsView->addItem(modelPart, m_iconGraphicsView->defaultViewLayerSpec(), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
-    m_breadboardGraphicsView->addItem(modelPart, m_breadboardGraphicsView->defaultViewLayerSpec(), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
-    m_schematicGraphicsView->addItem(modelPart, m_schematicGraphicsView->defaultViewLayerSpec(), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
-    m_pcbGraphicsView->addItem(modelPart, m_pcbGraphicsView->defaultViewLayerSpec(), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
+    ItemBase * breadboardItem = m_breadboardGraphicsView->addItem(modelPart, m_breadboardGraphicsView->defaultViewLayerSpec(), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
+    ItemBase * schematicItem = m_schematicGraphicsView->addItem(modelPart, m_schematicGraphicsView->defaultViewLayerSpec(), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
+    ItemBase * pcbItem = m_pcbGraphicsView->addItem(modelPart, m_pcbGraphicsView->defaultViewLayerSpec(), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
     m_metadataView->initMetadata(m_fzpDocument);
     m_connectorsView->initConnectors(m_fzpDocument);
 
+    m_breadboardGraphicsView->initSvgTree(breadboardItem);
+    m_schematicGraphicsView->initSvgTree(schematicItem);
+    m_pcbGraphicsView->initSvgTree(pcbItem);
 
     QTimer::singleShot(10, this, SLOT(initZoom()));
 }

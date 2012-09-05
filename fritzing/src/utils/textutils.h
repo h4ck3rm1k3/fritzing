@@ -111,6 +111,7 @@ public:
     static int getPinsAndSpacing(const QString & expectedFileName, QString & spacingString);
 	static QSizeF parseForWidthAndHeight(QXmlStreamReader &);
 	static QSizeF parseForWidthAndHeight(const QString & svg);
+    static void gornTree(QDomDocument &);
 
 public:
 	static const QRegExp FindWhitespace;
@@ -132,6 +133,7 @@ protected:
     static void squashNotElement(QDomElement & element, const QString & elementName, const QString & attName, const QRegExp & matchContent, bool & result);
 	static void initPowerPrefixes();
 	static QDomElement copyText(QDomDocument & svgDom, QDomElement & parent, QDomElement & text, const QString & defaultX, const QString & defaultY, bool copyAttributes);
+    static void gornTreeAux(QDomElement &);
 };
 
 #endif

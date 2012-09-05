@@ -1411,3 +1411,21 @@ QSizeF TextUtils::parseForWidthAndHeight(QXmlStreamReader & svg)
 
     return size;
 }
+
+void TextUtils::gornTree(QDomDocument & doc)
+{
+    QDomElement root = doc.documentElement();
+    root.setAttribute("id", "0");
+    gornTreeAux(root);
+}
+
+void TextUtils::gornTreeAux(QDomElement & root) {
+    QString prefix = root.attribute("id");
+    QDomElement child = root.firstChildElement();
+    int index = 0;
+    while (!child.isNull()) {
+        child.setAttribute("id", QString("%1.%2").arg(prefix).arg(index++));
+        gornTreeAux(child);
+        child = child.nextSiblingElement();
+    }
+}
