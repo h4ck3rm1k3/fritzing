@@ -40,6 +40,12 @@ public:
 	void hoverEnterEvent(QGraphicsSceneHoverEvent *);
 	void hoverLeaveEvent(QGraphicsSceneHoverEvent *);
     void wheelEvent(QGraphicsSceneWheelEvent *);
+    void setHighlighted(bool);
+    bool highlighted();
+
+protected:
+    bool m_highlighted;
+
 };
 
 #endif /* PEGRAPHICSITEM_H_ */

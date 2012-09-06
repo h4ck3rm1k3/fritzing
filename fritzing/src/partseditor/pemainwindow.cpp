@@ -186,6 +186,10 @@ void PEMainWindow::initSketchWidgets()
 {
     MainWindow::initSketchWidgets();
 
+    m_breadboardGraphicsView->setAcceptWheelEvents(false);
+    m_schematicGraphicsView->setAcceptWheelEvents(false);
+    m_pcbGraphicsView->setAcceptWheelEvents(false);
+
 	m_iconGraphicsView = new IconSketchWidget(ViewIdentifierClass::IconView, this);
 	initSketchWidget(m_iconGraphicsView);
 	m_iconWidget = new SketchAreaWidget(m_iconGraphicsView,this);

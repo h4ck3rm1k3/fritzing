@@ -30,26 +30,84 @@ $Date$
 
 #include <QBrush>
 #include <QColor>
+#include <QGraphicsScene>
 
 PEGraphicsItem::PEGraphicsItem(double x, double y, double w, double h) : QGraphicsRectItem(x, y, w, h) {
 	setAcceptedMouseButtons(Qt::NoButton);
 	setAcceptHoverEvents(true);
     //setFlag(QGraphicsItem::ItemIsSelectable, true );
-    setOpacity(0.001);
+    setHighlighted(false);
     setBrush(QBrush(QColor(0, 0, 255)));
 }
 
 void PEGraphicsItem::hoverEnterEvent(QGraphicsSceneHoverEvent *) {
-	setOpacity(0.4);
-    update();
+	setHighlighted(true);
 }
 
 void PEGraphicsItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *) {
-	setOpacity(0.001);
-    update();
+	setHighlighted(false);
 }
 
 void PEGraphicsItem::wheelEvent(QGraphicsSceneWheelEvent * event) {
-    DebugDialog::debug("wheel event");
+    if (event->orientation() != Qt::Vertical) return;
+
+    // delta one click forward = 120; delta one click backward = -120
+
+    int steps = event->delta() / 120;
+    QList<PEGraphicsItem *> items;
+    foreach (QGraphicsItem * item, scene()->items(event->scenePos())) {
+        PEGraphicsItem * pegi = dynamic_cast<PEGraphicsItem *>(item);
+        if (pegi) items.append(pegi);
+    }
+
+    if (items.count() < 2) return;
+
+    int ix = -1;
+    int mix = -1;
+    for (int i = 0; i < items.count(); i++) {
+        if (items.at(i)->highlighted()) {
+            ix = i;
+            break;
+        }
+        if (items.at(i) == this) {
+            mix = i;
+        }
+    }
+
+    if (ix == -1) ix = mix;
+    if (ix == -1) {
+        // shouldn't happen
+        return;
+    }
+
+    ix = (ix + steps) % items.count();
+    if (ix < 0) {
+        ix = items.count() + ix - 1;
+    }
+    
+    items.at(ix)->setHighlighted(true);
 }
 
+void PEGraphicsItem::setHighlighted(bool highlighted) {
+    if (highlighted) {
+        m_highlighted = true;
+        setOpacity(0.4);
+        foreach (QGraphicsItem * item, scene()->items()) {
+            PEGraphicsItem * pegi = dynamic_cast<PEGraphicsItem *>(item);
+            if (pegi == NULL) continue;
+            if (pegi == this) continue;
+            if (!pegi->highlighted()) continue;
+             
+            pegi->setHighlighted(false);
+        }
+    }
+    else {
+        m_highlighted = false;
+        setOpacity(0.001);
+    }
+    update();
+}
+
+bool PEGraphicsItem::highlighted() {
+    return m_highlighted;
+}
