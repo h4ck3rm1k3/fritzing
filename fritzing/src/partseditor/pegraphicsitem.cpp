@@ -100,6 +100,7 @@ void PEGraphicsItem::setHighlighted(bool highlighted) {
              
             pegi->setHighlighted(false);
         }
+        emit highlightSignal(this);
     }
     else {
         m_highlighted = false;
@@ -110,4 +111,21 @@ void PEGraphicsItem::setHighlighted(bool highlighted) {
 
 bool PEGraphicsItem::highlighted() {
     return m_highlighted;
+}
+
+void PEGraphicsItem::setElement(QDomElement & el)
+{
+    m_element = el;
+}
+
+QDomElement & PEGraphicsItem::element() {
+    return m_element;
+}
+
+void PEGraphicsItem::setOffset(QPointF p) {
+    m_offset = p;
+}
+
+QPointF PEGraphicsItem::offset() {
+    return m_offset;
 }

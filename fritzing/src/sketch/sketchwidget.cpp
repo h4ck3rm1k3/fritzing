@@ -90,7 +90,6 @@ $Date$
 #include "../utils/graphutils.h"
 #include "../utils/ratsnestcolors.h"
 #include "../utils/cursormaster.h"
-#include "../partseditor/pegraphicsitem.h"
 
 /////////////////////////////////////////////////////////////////////
 
@@ -8859,56 +8858,3 @@ void SketchWidget::showUnrouted() {
 	}
 }
 
-void SketchWidget::initSvgTree(ItemBase * itemBase) {
-    QString errorStr;
-    int errorLine;
-    int errorColumn;
-    QDomDocument domDocument;
-    QFile file(itemBase->filename());
-    if (!domDocument.setContent(&file, true, &errorStr, &errorLine, &errorColumn)) {
-		DebugDialog::debug(QString("unable to parse splash.xml: %1 %2 %3").arg(errorStr).arg(errorLine).arg(errorColumn));
-		return;
-	}
-
-    TextUtils::gornTree(domDocument);
-
-    FSvgRenderer renderer;
-    renderer.loadSvg(domDocument.toByteArray(), "", false);
-
-	QSizeF defaultSizeF = renderer.defaultSizeF();
-	QRectF viewBox = renderer.viewBoxF();
-
-    double z = 5000;
-    QList<QDomElement> traverse;
-    traverse << domDocument.documentElement();
-    while (traverse.count() > 0) {
-        QList<QDomElement> next;
-        foreach (QDomElement element, traverse) {
-            QString id = element.attribute("id");
-            QRectF r = renderer.boundsOnElement(id);
-            QMatrix matrix = renderer.matrixForElement(id);
-            QRectF bounds = matrix.mapRect(r);
-	        bounds.setRect(bounds.x() * defaultSizeF.width() / viewBox.width(), 
-							   bounds.y() * defaultSizeF.height() / viewBox.height(), 
-							   bounds.width() * defaultSizeF.width() / viewBox.width(), 
-							   bounds.height() * defaultSizeF.height() / viewBox.height());
-
-
-            PEGraphicsItem * rectItem = new PEGraphicsItem(0, 0, bounds.width(), bounds.height());
-            rectItem->setPos(itemBase->pos() + bounds.topLeft());
-            rectItem->setZValue(z);
-            scene()->addItem(rectItem);
-
-            QDomElement child = element.firstChildElement();
-            while (!child.isNull()) {
-                next.append(child);
-                child = child.nextSiblingElement();
-            }
-        }
-        z++;
-        traverse.clear();
-        foreach (QDomElement element, next) traverse.append(element);
-        next.clear();
-    }
-
-}

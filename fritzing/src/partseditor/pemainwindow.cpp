@@ -129,6 +129,7 @@ $Date$
 #include "connectorsview.h"
 #include "pecommands.h"
 #include "petoolview.h"
+#include "pegraphicsitem.h"
 #include "../debugdialog.h"
 #include "../model/palettemodel.h"
 #include "../sketch/breadboardsketchwidget.h"
@@ -140,6 +141,7 @@ $Date$
 #include "../utils/textutils.h"
 #include "../utils/folderutils.h"
 #include "../mainwindow/fdockwidget.h"
+#include "../fsvgrenderer.h"
 
 #include <QCoreApplication>
 
@@ -399,9 +401,9 @@ void PEMainWindow::setInitialItem(PaletteItem * paletteItem) {
     m_metadataView->initMetadata(m_fzpDocument);
     m_connectorsView->initConnectors(m_fzpDocument);
 
-    m_breadboardGraphicsView->initSvgTree(breadboardItem);
-    m_schematicGraphicsView->initSvgTree(schematicItem);
-    m_pcbGraphicsView->initSvgTree(pcbItem);
+    initSvgTree(breadboardItem, m_breadboardDocument);
+    initSvgTree(schematicItem, m_schematicDocument);
+    initSvgTree(pcbItem, m_pcbDocument);
 
     QTimer::singleShot(10, this, SLOT(initZoom()));
 }
@@ -665,4 +667,67 @@ void PEMainWindow::changeConnectorElement(QDomElement & connector, const Connect
     connector.setAttribute("type", type);
     QDomElement description = connector.firstChildElement("description");
     TextUtils::replaceElementChildText(m_fzpDocument, connector, "description", cmd.connectorDescription);
+}
+
+void PEMainWindow::initSvgTree(ItemBase * itemBase, QDomDocument & domDocument) 
+{
+    QString errorStr;
+    int errorLine;
+    int errorColumn;
+
+    QFile file(itemBase->filename());
+    if (!domDocument.setContent(&file, true, &errorStr, &errorLine, &errorColumn)) {
+		DebugDialog::debug(QString("unable to parse svg: %1 %2 %3").arg(errorStr).arg(errorLine).arg(errorColumn));
+        return;
+	}
+
+    TextUtils::gornTree(domDocument);
+
+    FSvgRenderer renderer;
+    renderer.loadSvg(domDocument.toByteArray(), "", false);
+
+	QSizeF defaultSizeF = renderer.defaultSizeF();
+	QRectF viewBox = renderer.viewBoxF();
+
+    double z = 5000;
+    QList<QDomElement> traverse;
+    traverse << domDocument.documentElement();
+    while (traverse.count() > 0) {
+        QList<QDomElement> next;
+        foreach (QDomElement element, traverse) {
+            QString id = element.attribute("id");
+            QRectF r = renderer.boundsOnElement(id);
+            QMatrix matrix = renderer.matrixForElement(id);
+            QRectF bounds = matrix.mapRect(r);
+	        bounds.setRect(bounds.x() * defaultSizeF.width() / viewBox.width(), 
+							   bounds.y() * defaultSizeF.height() / viewBox.height(), 
+							   bounds.width() * defaultSizeF.width() / viewBox.width(), 
+							   bounds.height() * defaultSizeF.height() / viewBox.height());
+
+
+            PEGraphicsItem * pegItem = new PEGraphicsItem(0, 0, bounds.width(), bounds.height());
+            pegItem->setPos(itemBase->pos() + bounds.topLeft());
+            pegItem->setZValue(z);
+            itemBase->scene()->addItem(pegItem);
+            pegItem->setElement(element);
+            pegItem->setOffset(bounds.topLeft());
+            connect(pegItem, SIGNAL(highlightSignal(PEGraphicsItem *)), this, SLOT(highlightSlot(PEGraphicsItem *)));
+
+            QDomElement child = element.firstChildElement();
+            while (!child.isNull()) {
+                next.append(child);
+                child = child.nextSiblingElement();
+            }
+        }
+        z++;
+        traverse.clear();
+        foreach (QDomElement element, next) traverse.append(element);
+        next.clear();
+    }
+}
+
+void PEMainWindow::highlightSlot(PEGraphicsItem * pegi) {
+    if (m_peToolView) {
+        m_peToolView->highlightElement(pegi);
+    }
 }

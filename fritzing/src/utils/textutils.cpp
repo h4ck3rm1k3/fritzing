@@ -48,7 +48,8 @@ const QString TextUtils::SMDFlipSuffix("___");
 const QString TextUtils::RegexFloatDetector = "[-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?";
 const QRegExp TextUtils::floatingPointMatcher(RegexFloatDetector);		
 
-const QRegExp HexExpr("&#x[0-9a-fA-F];");   // &#x9; &#xa; &#xd;
+static const QRegExp HexExpr("&#x[0-9a-fA-F];");   // &#x9; &#xa; &#xd;
+static const QRegExp xmlns("xmlns=\"[^\"]*\"");
 
 static const ushort MicroSymbolCode = 181;
 const QString TextUtils::MicroSymbol = QString::fromUtf16(&MicroSymbolCode, 1);
@@ -371,6 +372,13 @@ bool TextUtils::isIllustratorDoc(const QDomDocument & doc) {
 
 QString TextUtils::removeXMLEntities(QString svgContent) {
 	return removeXMLNS(svgContent.remove(HexExpr));
+}
+
+QString TextUtils::killXMLNS(QString svgContent) {
+	// TODO: this is a bug in Qt, it would be nice to fix it there
+
+    svgContent.remove(xmlns);
+    return svgContent;
 }
 
 QString TextUtils::removeXMLNS(QString svgContent) {

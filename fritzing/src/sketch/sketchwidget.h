@@ -313,7 +313,6 @@ public:
 	void deleteMiddle(QSet<ItemBase *> & deletedItems, QUndoCommand * parentCommand);
     void setPasting(bool);
     void showUnrouted();
-    void initSvgTree(ItemBase *);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);

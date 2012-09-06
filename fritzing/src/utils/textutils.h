@@ -80,6 +80,7 @@ public:
     static QList<double> getTransformFloats(QDomElement & element);
 	static QList<double> getTransformFloats(const QString & transform);
 	static QString removeXMLNS(QString svgContent);
+	static QString killXMLNS(QString svgContent);
 	static void gWrap(QDomDocument & domDocument, const QHash<QString, QString> & attributes);
 	static bool tspanRemove(QString &svg);
 	static bool noUse(QString &svg);

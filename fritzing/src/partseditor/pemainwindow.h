@@ -83,12 +83,14 @@ protected:
     QHash<QString, QString> getOldProperties();
     QDomElement findConnector(const QString & id);
     void changeConnectorElement(QDomElement & connector, const ConnectorMetadata & cmd);
+    void initSvgTree(ItemBase *, QDomDocument &);
 
 public slots:
     void metadataChanged(const QString & name, const QString & value);
     void propertiesChanged(const QHash<QString, QString> &);
     void tagsChanged(const QStringList &);
     void connectorMetadataChanged(const struct ConnectorMetadata *);
+    void highlightSlot(class PEGraphicsItem *);
 
 protected slots:
     void initZoom();

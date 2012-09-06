@@ -28,12 +28,12 @@ $Date$
 #define PETOOLVIEW_H
 
 #include <QFrame>
-#include <QCheckBox>
-#include <QPushButton>
+#include <QRadioButton>
 #include <QVBoxLayout>
 #include <QGroupBox>
 #include <QSpacerItem>
 #include <QScrollArea>
+#include <QLabel>
 
 class PEToolView : public QScrollArea
 {
@@ -42,10 +42,25 @@ public:
 	PEToolView(QWidget * parent = NULL);
 	~PEToolView();
 
+    void highlightElement(class PEGraphicsItem *);
 
 protected slots:
+    void changeUnits();
 
 protected:
+    QString convertUnits(double);
+
+protected:
+    QLabel * m_svgElement;
+    QLabel * m_height;
+    QLabel * m_width;
+    QLabel * m_x;
+    QLabel * m_y;
+    QRadioButton * m_in;
+    QRadioButton * m_mm;
+    QRadioButton * m_px;
+    QString m_units;
+    class PEGraphicsItem * m_pegi;
 };
 
 #endif

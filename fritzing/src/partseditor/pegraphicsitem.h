@@ -30,10 +30,12 @@ $Date$
 #define PEGRAPHICSITEM_H_
 
 #include <QGraphicsRectItem>
+#include <QDomElement>
 #include <QGraphicsSceneHoverEvent>
 
-class PEGraphicsItem : public QGraphicsRectItem 
+class PEGraphicsItem : public QObject, public QGraphicsRectItem 
 {
+    Q_OBJECT
 public:
 	PEGraphicsItem(double x, double y, double width, double height);
 
@@ -42,10 +44,18 @@ public:
     void wheelEvent(QGraphicsSceneWheelEvent *);
     void setHighlighted(bool);
     bool highlighted();
+    void setElement(QDomElement &);
+    QDomElement & element();
+    void setOffset(QPointF);
+    QPointF offset();
+
+signals:
+    void highlightSignal(PEGraphicsItem *);
 
 protected:
     bool m_highlighted;
-
+    QDomElement  m_element;
+    QPointF m_offset;
 };
 
 #endif /* PEGRAPHICSITEM_H_ */
