@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-FKIT-RIBBON_CONNECTOR--2MM_L_REV2'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Electromechanical' FKIT-RIBBON_CONNECTOR -2MM_L_REV2 -->
 <version>4</version>
-<date>2012-09-05</date>
+<date>2012-09-06</date>
 <label>J</label>
 <author>www.fritzing.org</author>
 <description>&lt;h3&gt;fabrick.it Conductive Ribbon Connector&lt;/h3&gt;</description>
@@ -50,7 +50,7 @@
 <p layer='breadboard' svgId='connector2pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector0pin' terminalId='connector0terminal'/>
+<p layer='schematic' svgId='connector2pin' terminalId='connector2terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector2pad'/>
@@ -65,7 +65,7 @@
 <p layer='breadboard' svgId='connector5pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector1pin' terminalId='connector1terminal'/>
+<p layer='schematic' svgId='connector5pin' terminalId='connector5terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector5pad'/>
@@ -80,7 +80,7 @@
 <p layer='breadboard' svgId='connector8pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector2pin' terminalId='connector2terminal'/>
+<p layer='schematic' svgId='connector8pin' terminalId='connector8terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector8pad'/>

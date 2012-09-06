@@ -25,25 +25,25 @@
 <line class='other' x1='20.447' y1='14.636' x2='19.431' y2='13.62' stroke='#000000' stroke-width='0.254' stroke-linecap='round'/>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.651' x='4.191' y='6' text-anchor='start'>&gt;NAME</text>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.651' x='3.937' y='24.034' text-anchor='start'>&gt;VALUE</text>
-<line class='pin' id='connector4pin' connectorname='NC3' x1='20.447' y1='19.716' x2='15.367' y2='19.716' stroke='#555555' stroke-width='0.1524' stroke-linecap='round'/>
-<rect class='terminal' id='connector4terminal' x='20.447' y='19.716' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='17.907' y='19.5636' text-anchor='middle'>5</text>
+<line class='pin' id='connector2pin' connectorname='NC3' x1='20.447' y1='19.716' x2='15.367' y2='19.716' stroke='#555555' stroke-width='0.1524' stroke-linecap='round'/>
+<rect class='terminal' id='connector2terminal' x='20.447' y='19.716' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='17.907' y='19.5636' text-anchor='middle'>3</text>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='14.9098' y='20.0208' text-anchor='end'>NC3</text>
-<line class='pin' id='connector3pin' connectorname='NC2' x1='20.447' y1='17.176' x2='15.367' y2='17.176' stroke='#555555' stroke-width='0.1524' stroke-linecap='round'/>
-<rect class='terminal' id='connector3terminal' x='20.447' y='17.176' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='17.907' y='17.0236' text-anchor='middle'>4</text>
+<line class='pin' id='connector1pin' connectorname='NC2' x1='20.447' y1='17.176' x2='15.367' y2='17.176' stroke='#555555' stroke-width='0.1524' stroke-linecap='round'/>
+<rect class='terminal' id='connector1terminal' x='20.447' y='17.176' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='17.907' y='17.0236' text-anchor='middle'>2</text>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='14.9098' y='17.4808' text-anchor='end'>NC2</text>
-<line class='pin' id='connector2pin' connectorname='NC1' x1='20.447' y1='14.636' x2='15.367' y2='14.636' stroke='#555555' stroke-width='0.1524' stroke-linecap='round'/>
-<rect class='terminal' id='connector2terminal' x='20.447' y='14.636' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='17.907' y='14.4836' text-anchor='middle'>3</text>
+<line class='pin' id='connector0pin' connectorname='NC1' x1='20.447' y1='14.636' x2='15.367' y2='14.636' stroke='#555555' stroke-width='0.1524' stroke-linecap='round'/>
+<rect class='terminal' id='connector0terminal' x='20.447' y='14.636' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='17.907' y='14.4836' text-anchor='middle'>1</text>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='14.9098' y='14.9408' text-anchor='end'>NC1</text>
-<line class='pin' id='connector1pin' connectorname='MIDI_OUT' x1='20.447' y1='12.096' x2='15.367' y2='12.096' stroke='#555555' stroke-width='0.1524' stroke-linecap='round'/>
-<rect class='terminal' id='connector1terminal' x='20.447' y='12.096' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='17.907' y='11.9436' text-anchor='middle'>2</text>
+<line class='pin' id='connector4pin' connectorname='MIDI_OUT' x1='20.447' y1='12.096' x2='15.367' y2='12.096' stroke='#555555' stroke-width='0.1524' stroke-linecap='round'/>
+<rect class='terminal' id='connector4terminal' x='20.447' y='12.096' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='17.907' y='11.9436' text-anchor='middle'>5</text>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='14.9098' y='12.4008' text-anchor='end'>MIDI_OUT</text>
-<line class='pin' id='connector0pin' connectorname='MIDI_IN' x1='20.447' y1='9.556' x2='15.367' y2='9.556' stroke='#555555' stroke-width='0.1524' stroke-linecap='round'/>
-<rect class='terminal' id='connector0terminal' x='20.447' y='9.556' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='17.907' y='9.4036' text-anchor='middle'>1</text>
+<line class='pin' id='connector3pin' connectorname='MIDI_IN' x1='20.447' y1='9.556' x2='15.367' y2='9.556' stroke='#555555' stroke-width='0.1524' stroke-linecap='round'/>
+<rect class='terminal' id='connector3terminal' x='20.447' y='9.556' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='17.907' y='9.4036' text-anchor='middle'>4</text>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='14.9098' y='9.8608' text-anchor='end'>MIDI_IN</text>
 </g>
 </svg>

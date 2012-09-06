@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Electromechanical-RELAY-SOLIDSTATE-PTH'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Electromechanical' RELAY-SOLIDSTATE PTH -->
 <version>4</version>
-<date>2012-09-05</date>
+<date>2012-09-06</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>SPST SS relay</description>
@@ -49,7 +49,7 @@
 <p layer='breadboard' svgId='connector2pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector0pin' terminalId='connector0terminal'/>
+<p layer='schematic' svgId='connector2pin' terminalId='connector2terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector2pad'/>
@@ -64,7 +64,7 @@
 <p layer='breadboard' svgId='connector3pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector1pin' terminalId='connector1terminal'/>
+<p layer='schematic' svgId='connector3pin' terminalId='connector3terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector3pad'/>
@@ -79,7 +79,7 @@
 <p layer='breadboard' svgId='connector0pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector2pin' terminalId='connector2terminal'/>
+<p layer='schematic' svgId='connector0pin' terminalId='connector0terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector0pad'/>
@@ -94,7 +94,7 @@
 <p layer='breadboard' svgId='connector1pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector3pin' terminalId='connector3terminal'/>
+<p layer='schematic' svgId='connector1pin' terminalId='connector1terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector1pad'/>

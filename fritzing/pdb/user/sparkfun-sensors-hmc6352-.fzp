@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-HMC6352-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Sensors' HMC6352  -->
 <version>4</version>
-<date>2012-09-05</date>
+<date>2012-09-06</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>Compass module from Honeywell. Works very well. Schematic and footprint are production proven. Spark Fun Electronics SKU : COM-07892</description>
@@ -46,7 +46,7 @@
 <p layer='breadboard' svgId='connector22pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector0pin' terminalId='connector0terminal'/>
+<p layer='schematic' svgId='connector22pin' terminalId='connector22terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper1' svgId='connector22pad'/>
@@ -60,7 +60,7 @@
 <p layer='breadboard' svgId='connector21pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector1pin' terminalId='connector1terminal'/>
+<p layer='schematic' svgId='connector21pin' terminalId='connector21terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper1' svgId='connector21pad'/>
@@ -74,7 +74,7 @@
 <p layer='breadboard' svgId='connector19pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector2pin' terminalId='connector2terminal'/>
+<p layer='schematic' svgId='connector19pin' terminalId='connector19terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper1' svgId='connector19pad'/>
@@ -88,7 +88,7 @@
 <p layer='breadboard' svgId='connector18pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector3pin' terminalId='connector3terminal'/>
+<p layer='schematic' svgId='connector18pin' terminalId='connector18terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper1' svgId='connector18pad'/>
@@ -116,7 +116,7 @@
 <p layer='breadboard' svgId='connector9pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector5pin' terminalId='connector5terminal'/>
+<p layer='schematic' svgId='connector9pin' terminalId='connector9terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper1' svgId='connector9pad'/>
@@ -144,7 +144,7 @@
 <p layer='breadboard' svgId='connector13pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector7pin' terminalId='connector7terminal'/>
+<p layer='schematic' svgId='connector13pin' terminalId='connector13terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper1' svgId='connector13pad'/>

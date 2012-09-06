@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Displays-7-SEGMENT-4DIGIT-YOUNGSUN-LONGPADS'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Displays' 7-SEGMENT-4DIGIT-YOUNGSUN LONGPADS -->
 <version>4</version>
-<date>2012-09-05</date>
+<date>2012-09-06</date>
 <label>LED</label>
 <author>www.fritzing.org</author>
 <description>This is a part for the 4-Digit 7-segment LEDs from Young Sun.  Different from the Digikey LEDs, all 16 pins are used.
@@ -52,7 +52,7 @@ The LONGPADS Variant is used for a test jig, but you may like it because there i
 <p layer='breadboard' svgId='connector13pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector0pin' terminalId='connector0terminal'/>
+<p layer='schematic' svgId='connector13pin' terminalId='connector13terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector13pad'/>
@@ -67,7 +67,7 @@ The LONGPADS Variant is used for a test jig, but you may like it because there i
 <p layer='breadboard' svgId='connector9pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector1pin' terminalId='connector1terminal'/>
+<p layer='schematic' svgId='connector9pin' terminalId='connector9terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector9pad'/>
@@ -82,7 +82,7 @@ The LONGPADS Variant is used for a test jig, but you may like it because there i
 <p layer='breadboard' svgId='connector8pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector2pin' terminalId='connector2terminal'/>
+<p layer='schematic' svgId='connector8pin' terminalId='connector8terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector8pad'/>
@@ -97,7 +97,7 @@ The LONGPADS Variant is used for a test jig, but you may like it because there i
 <p layer='breadboard' svgId='connector15pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector3pin' terminalId='connector3terminal'/>
+<p layer='schematic' svgId='connector15pin' terminalId='connector15terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector15pad'/>
@@ -112,7 +112,7 @@ The LONGPADS Variant is used for a test jig, but you may like it because there i
 <p layer='breadboard' svgId='connector12pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector4pin' terminalId='connector4terminal'/>
+<p layer='schematic' svgId='connector12pin' terminalId='connector12terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector12pad'/>
@@ -127,7 +127,7 @@ The LONGPADS Variant is used for a test jig, but you may like it because there i
 <p layer='breadboard' svgId='connector3pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector5pin' terminalId='connector5terminal'/>
+<p layer='schematic' svgId='connector3pin' terminalId='connector3terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector3pad'/>
@@ -142,7 +142,7 @@ The LONGPADS Variant is used for a test jig, but you may like it because there i
 <p layer='breadboard' svgId='connector11pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector6pin' terminalId='connector6terminal'/>
+<p layer='schematic' svgId='connector11pin' terminalId='connector11terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector11pad'/>
@@ -157,7 +157,7 @@ The LONGPADS Variant is used for a test jig, but you may like it because there i
 <p layer='breadboard' svgId='connector2pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector7pin' terminalId='connector7terminal'/>
+<p layer='schematic' svgId='connector2pin' terminalId='connector2terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector2pad'/>
@@ -172,7 +172,7 @@ The LONGPADS Variant is used for a test jig, but you may like it because there i
 <p layer='breadboard' svgId='connector0pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector8pin' terminalId='connector8terminal'/>
+<p layer='schematic' svgId='connector0pin' terminalId='connector0terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector0pad'/>
@@ -187,7 +187,7 @@ The LONGPADS Variant is used for a test jig, but you may like it because there i
 <p layer='breadboard' svgId='connector1pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector9pin' terminalId='connector9terminal'/>
+<p layer='schematic' svgId='connector1pin' terminalId='connector1terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector1pad'/>
@@ -202,7 +202,7 @@ The LONGPADS Variant is used for a test jig, but you may like it because there i
 <p layer='breadboard' svgId='connector5pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector10pin' terminalId='connector10terminal'/>
+<p layer='schematic' svgId='connector5pin' terminalId='connector5terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector5pad'/>
@@ -217,7 +217,7 @@ The LONGPADS Variant is used for a test jig, but you may like it because there i
 <p layer='breadboard' svgId='connector7pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector11pin' terminalId='connector11terminal'/>
+<p layer='schematic' svgId='connector7pin' terminalId='connector7terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector7pad'/>
@@ -232,7 +232,7 @@ The LONGPADS Variant is used for a test jig, but you may like it because there i
 <p layer='breadboard' svgId='connector6pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector12pin' terminalId='connector12terminal'/>
+<p layer='schematic' svgId='connector6pin' terminalId='connector6terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector6pad'/>
@@ -247,7 +247,7 @@ The LONGPADS Variant is used for a test jig, but you may like it because there i
 <p layer='breadboard' svgId='connector4pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector13pin' terminalId='connector13terminal'/>
+<p layer='schematic' svgId='connector4pin' terminalId='connector4terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector4pad'/>
@@ -262,7 +262,7 @@ The LONGPADS Variant is used for a test jig, but you may like it because there i
 <p layer='breadboard' svgId='connector10pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector14pin' terminalId='connector14terminal'/>
+<p layer='schematic' svgId='connector10pin' terminalId='connector10terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector10pad'/>
@@ -277,7 +277,7 @@ The LONGPADS Variant is used for a test jig, but you may like it because there i
 <p layer='breadboard' svgId='connector14pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector15pin' terminalId='connector15terminal'/>
+<p layer='schematic' svgId='connector14pin' terminalId='connector14terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector14pad'/>

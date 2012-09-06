@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-DigitalIC-WS2801-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-DigitalIC' WS2801  -->
 <version>4</version>
-<date>2012-09-05</date>
+<date>2012-09-06</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;h3&gt;WS2801&lt;/h3&gt;
@@ -51,7 +51,7 @@ Datasheet: http://www.sparkfun.com/datasheets/Components/LED/WS2801.pdf</descrip
 <p layer='breadboard' svgId='connector5pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector0pin' terminalId='connector0terminal'/>
+<p layer='schematic' svgId='connector5pin' terminalId='connector5terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper1' svgId='connector5pad'/>
@@ -65,7 +65,7 @@ Datasheet: http://www.sparkfun.com/datasheets/Components/LED/WS2801.pdf</descrip
 <p layer='breadboard' svgId='connector7pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector1pin' terminalId='connector1terminal'/>
+<p layer='schematic' svgId='connector7pin' terminalId='connector7terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper1' svgId='connector7pad'/>
@@ -79,7 +79,7 @@ Datasheet: http://www.sparkfun.com/datasheets/Components/LED/WS2801.pdf</descrip
 <p layer='breadboard' svgId='connector0pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector2pin' terminalId='connector2terminal'/>
+<p layer='schematic' svgId='connector0pin' terminalId='connector0terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper1' svgId='connector0pad'/>
@@ -93,7 +93,7 @@ Datasheet: http://www.sparkfun.com/datasheets/Components/LED/WS2801.pdf</descrip
 <p layer='breadboard' svgId='connector12pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector3pin' terminalId='connector3terminal'/>
+<p layer='schematic' svgId='connector12pin' terminalId='connector12terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper1' svgId='connector12pad'/>
@@ -121,7 +121,7 @@ Datasheet: http://www.sparkfun.com/datasheets/Components/LED/WS2801.pdf</descrip
 <p layer='breadboard' svgId='connector6pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector5pin' terminalId='connector5terminal'/>
+<p layer='schematic' svgId='connector6pin' terminalId='connector6terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper1' svgId='connector6pad'/>
@@ -135,7 +135,7 @@ Datasheet: http://www.sparkfun.com/datasheets/Components/LED/WS2801.pdf</descrip
 <p layer='breadboard' svgId='connector8pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector6pin' terminalId='connector6terminal'/>
+<p layer='schematic' svgId='connector8pin' terminalId='connector8terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper1' svgId='connector8pad'/>
@@ -149,7 +149,7 @@ Datasheet: http://www.sparkfun.com/datasheets/Components/LED/WS2801.pdf</descrip
 <p layer='breadboard' svgId='connector2pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector7pin' terminalId='connector7terminal'/>
+<p layer='schematic' svgId='connector2pin' terminalId='connector2terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper1' svgId='connector2pad'/>
@@ -163,7 +163,7 @@ Datasheet: http://www.sparkfun.com/datasheets/Components/LED/WS2801.pdf</descrip
 <p layer='breadboard' svgId='connector3pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector8pin' terminalId='connector8terminal'/>
+<p layer='schematic' svgId='connector3pin' terminalId='connector3terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper1' svgId='connector3pad'/>
@@ -191,7 +191,7 @@ Datasheet: http://www.sparkfun.com/datasheets/Components/LED/WS2801.pdf</descrip
 <p layer='breadboard' svgId='connector1pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector10pin' terminalId='connector10terminal'/>
+<p layer='schematic' svgId='connector1pin' terminalId='connector1terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper1' svgId='connector1pad'/>
@@ -219,7 +219,7 @@ Datasheet: http://www.sparkfun.com/datasheets/Components/LED/WS2801.pdf</descrip
 <p layer='breadboard' svgId='connector13pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector12pin' terminalId='connector12terminal'/>
+<p layer='schematic' svgId='connector13pin' terminalId='connector13terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper1' svgId='connector13pad'/>

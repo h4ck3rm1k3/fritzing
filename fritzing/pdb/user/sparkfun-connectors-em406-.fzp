@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Connectors-EM406-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Connectors' EM406  -->
 <version>4</version>
-<date>2012-09-05</date>
+<date>2012-09-06</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;EM406 GPS Connector&lt;/b&gt;
@@ -47,7 +47,7 @@ Proven layout and schematic for EM406 connector. Spark Fun Electronics SKU : GPS
 <p layer='breadboard' svgId='connector7pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector0pin' terminalId='connector0terminal'/>
+<p layer='schematic' svgId='connector7pin' terminalId='connector7terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper1' svgId='connector7pad'/>
@@ -61,7 +61,7 @@ Proven layout and schematic for EM406 connector. Spark Fun Electronics SKU : GPS
 <p layer='breadboard' svgId='connector0pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector1pin' terminalId='connector1terminal'/>
+<p layer='schematic' svgId='connector0pin' terminalId='connector0terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper1' svgId='connector0pad'/>
@@ -75,7 +75,7 @@ Proven layout and schematic for EM406 connector. Spark Fun Electronics SKU : GPS
 <p layer='breadboard' svgId='connector6pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector2pin' terminalId='connector2terminal'/>
+<p layer='schematic' svgId='connector6pin' terminalId='connector6terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper1' svgId='connector6pad'/>
@@ -89,7 +89,7 @@ Proven layout and schematic for EM406 connector. Spark Fun Electronics SKU : GPS
 <p layer='breadboard' svgId='connector4pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector3pin' terminalId='connector3terminal'/>
+<p layer='schematic' svgId='connector4pin' terminalId='connector4terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper1' svgId='connector4pad'/>
@@ -103,7 +103,7 @@ Proven layout and schematic for EM406 connector. Spark Fun Electronics SKU : GPS
 <p layer='breadboard' svgId='connector5pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector4pin' terminalId='connector4terminal'/>
+<p layer='schematic' svgId='connector5pin' terminalId='connector5terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper1' svgId='connector5pad'/>
@@ -117,7 +117,7 @@ Proven layout and schematic for EM406 connector. Spark Fun Electronics SKU : GPS
 <p layer='breadboard' svgId='connector2pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector5pin' terminalId='connector5terminal'/>
+<p layer='schematic' svgId='connector2pin' terminalId='connector2terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper1' svgId='connector2pad'/>

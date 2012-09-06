@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-LED-LED_BARGRAPH_10-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-LED' LED_BARGRAPH_10  -->
 <version>4</version>
-<date>2012-09-05</date>
+<date>2012-09-06</date>
 <label>D</label>
 <author>www.fritzing.org</author>
 <description>10-Segment LED Bar Graph&lt;p&gt;
@@ -69,7 +69,7 @@ COM-09938 (green, Vf = 3.4V, Ifmax = 20mA)&lt;br&gt;</description>
 <p layer='breadboard' svgId='connector19pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector1pin' terminalId='connector1terminal'/>
+<p layer='schematic' svgId='connector19pin' terminalId='connector19terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector19pad'/>
@@ -84,7 +84,7 @@ COM-09938 (green, Vf = 3.4V, Ifmax = 20mA)&lt;br&gt;</description>
 <p layer='breadboard' svgId='connector1pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector2pin' terminalId='connector2terminal'/>
+<p layer='schematic' svgId='connector1pin' terminalId='connector1terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector1pad'/>
@@ -99,7 +99,7 @@ COM-09938 (green, Vf = 3.4V, Ifmax = 20mA)&lt;br&gt;</description>
 <p layer='breadboard' svgId='connector18pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector3pin' terminalId='connector3terminal'/>
+<p layer='schematic' svgId='connector18pin' terminalId='connector18terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector18pad'/>
@@ -114,7 +114,7 @@ COM-09938 (green, Vf = 3.4V, Ifmax = 20mA)&lt;br&gt;</description>
 <p layer='breadboard' svgId='connector2pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector4pin' terminalId='connector4terminal'/>
+<p layer='schematic' svgId='connector2pin' terminalId='connector2terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector2pad'/>
@@ -129,7 +129,7 @@ COM-09938 (green, Vf = 3.4V, Ifmax = 20mA)&lt;br&gt;</description>
 <p layer='breadboard' svgId='connector17pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector5pin' terminalId='connector5terminal'/>
+<p layer='schematic' svgId='connector17pin' terminalId='connector17terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector17pad'/>
@@ -144,7 +144,7 @@ COM-09938 (green, Vf = 3.4V, Ifmax = 20mA)&lt;br&gt;</description>
 <p layer='breadboard' svgId='connector3pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector6pin' terminalId='connector6terminal'/>
+<p layer='schematic' svgId='connector3pin' terminalId='connector3terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector3pad'/>
@@ -159,7 +159,7 @@ COM-09938 (green, Vf = 3.4V, Ifmax = 20mA)&lt;br&gt;</description>
 <p layer='breadboard' svgId='connector16pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector7pin' terminalId='connector7terminal'/>
+<p layer='schematic' svgId='connector16pin' terminalId='connector16terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector16pad'/>
@@ -174,7 +174,7 @@ COM-09938 (green, Vf = 3.4V, Ifmax = 20mA)&lt;br&gt;</description>
 <p layer='breadboard' svgId='connector4pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector8pin' terminalId='connector8terminal'/>
+<p layer='schematic' svgId='connector4pin' terminalId='connector4terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector4pad'/>
@@ -189,7 +189,7 @@ COM-09938 (green, Vf = 3.4V, Ifmax = 20mA)&lt;br&gt;</description>
 <p layer='breadboard' svgId='connector15pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector9pin' terminalId='connector9terminal'/>
+<p layer='schematic' svgId='connector15pin' terminalId='connector15terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector15pad'/>
@@ -204,7 +204,7 @@ COM-09938 (green, Vf = 3.4V, Ifmax = 20mA)&lt;br&gt;</description>
 <p layer='breadboard' svgId='connector5pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector10pin' terminalId='connector10terminal'/>
+<p layer='schematic' svgId='connector5pin' terminalId='connector5terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector5pad'/>
@@ -219,7 +219,7 @@ COM-09938 (green, Vf = 3.4V, Ifmax = 20mA)&lt;br&gt;</description>
 <p layer='breadboard' svgId='connector14pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector11pin' terminalId='connector11terminal'/>
+<p layer='schematic' svgId='connector14pin' terminalId='connector14terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector14pad'/>
@@ -234,7 +234,7 @@ COM-09938 (green, Vf = 3.4V, Ifmax = 20mA)&lt;br&gt;</description>
 <p layer='breadboard' svgId='connector6pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector12pin' terminalId='connector12terminal'/>
+<p layer='schematic' svgId='connector6pin' terminalId='connector6terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector6pad'/>
@@ -264,7 +264,7 @@ COM-09938 (green, Vf = 3.4V, Ifmax = 20mA)&lt;br&gt;</description>
 <p layer='breadboard' svgId='connector7pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector14pin' terminalId='connector14terminal'/>
+<p layer='schematic' svgId='connector7pin' terminalId='connector7terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector7pad'/>
@@ -279,7 +279,7 @@ COM-09938 (green, Vf = 3.4V, Ifmax = 20mA)&lt;br&gt;</description>
 <p layer='breadboard' svgId='connector12pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector15pin' terminalId='connector15terminal'/>
+<p layer='schematic' svgId='connector12pin' terminalId='connector12terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector12pad'/>
@@ -294,7 +294,7 @@ COM-09938 (green, Vf = 3.4V, Ifmax = 20mA)&lt;br&gt;</description>
 <p layer='breadboard' svgId='connector8pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector16pin' terminalId='connector16terminal'/>
+<p layer='schematic' svgId='connector8pin' terminalId='connector8terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector8pad'/>
@@ -309,7 +309,7 @@ COM-09938 (green, Vf = 3.4V, Ifmax = 20mA)&lt;br&gt;</description>
 <p layer='breadboard' svgId='connector11pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector17pin' terminalId='connector17terminal'/>
+<p layer='schematic' svgId='connector11pin' terminalId='connector11terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector11pad'/>
@@ -324,7 +324,7 @@ COM-09938 (green, Vf = 3.4V, Ifmax = 20mA)&lt;br&gt;</description>
 <p layer='breadboard' svgId='connector9pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector18pin' terminalId='connector18terminal'/>
+<p layer='schematic' svgId='connector9pin' terminalId='connector9terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector9pad'/>
@@ -339,7 +339,7 @@ COM-09938 (green, Vf = 3.4V, Ifmax = 20mA)&lt;br&gt;</description>
 <p layer='breadboard' svgId='connector10pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector19pin' terminalId='connector19terminal'/>
+<p layer='schematic' svgId='connector10pin' terminalId='connector10terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector10pad'/>

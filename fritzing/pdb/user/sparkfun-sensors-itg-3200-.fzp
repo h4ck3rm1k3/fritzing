@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-Sensors-ITG-3200-'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-Sensors' ITG-3200  -->
 <version>4</version>
-<date>2012-09-05</date>
+<date>2012-09-06</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>ITG-3200 3-axis gyro, digital output, qfn24 package</description>
@@ -48,7 +48,7 @@
 <p layer='breadboard' svgId='connector8pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector0pin' terminalId='connector0terminal'/>
+<p layer='schematic' svgId='connector8pin' terminalId='connector8terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper1' svgId='connector8pad'/>
@@ -62,7 +62,7 @@
 <p layer='breadboard' svgId='connector0pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector1pin' terminalId='connector1terminal'/>
+<p layer='schematic' svgId='connector0pin' terminalId='connector0terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper1' svgId='connector0pad'/>
@@ -76,7 +76,7 @@
 <p layer='breadboard' svgId='connector19pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector2pin' terminalId='connector2terminal'/>
+<p layer='schematic' svgId='connector19pin' terminalId='connector19terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper1' svgId='connector19pad'/>
@@ -90,7 +90,7 @@
 <p layer='breadboard' svgId='connector17pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector3pin' terminalId='connector3terminal'/>
+<p layer='schematic' svgId='connector17pin' terminalId='connector17terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper1' svgId='connector17pad'/>
@@ -104,7 +104,7 @@
 <p layer='breadboard' svgId='connector11pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector4pin' terminalId='connector4terminal'/>
+<p layer='schematic' svgId='connector11pin' terminalId='connector11terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper1' svgId='connector11pad'/>
@@ -118,7 +118,7 @@
 <p layer='breadboard' svgId='connector9pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector5pin' terminalId='connector5terminal'/>
+<p layer='schematic' svgId='connector9pin' terminalId='connector9terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper1' svgId='connector9pad'/>
@@ -132,7 +132,7 @@
 <p layer='breadboard' svgId='connector10pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector6pin' terminalId='connector6terminal'/>
+<p layer='schematic' svgId='connector10pin' terminalId='connector10terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper1' svgId='connector10pad'/>
@@ -146,7 +146,7 @@
 <p layer='breadboard' svgId='connector22pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector7pin' terminalId='connector7terminal'/>
+<p layer='schematic' svgId='connector22pin' terminalId='connector22terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper1' svgId='connector22pad'/>
@@ -160,7 +160,7 @@
 <p layer='breadboard' svgId='connector23pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector8pin' terminalId='connector8terminal'/>
+<p layer='schematic' svgId='connector23pin' terminalId='connector23terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper1' svgId='connector23pad'/>
@@ -174,7 +174,7 @@
 <p layer='breadboard' svgId='connector12pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector9pin' terminalId='connector9terminal'/>
+<p layer='schematic' svgId='connector12pin' terminalId='connector12terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper1' svgId='connector12pad'/>
@@ -188,7 +188,7 @@
 <p layer='breadboard' svgId='connector7pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector10pin' terminalId='connector10terminal'/>
+<p layer='schematic' svgId='connector7pin' terminalId='connector7terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper1' svgId='connector7pad'/>

@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-RF-BLUERADIO_BR-C40N-INT2'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-RF' BLUERADIO_BR-C40N INT2 -->
 <version>4</version>
-<date>2012-09-05</date>
+<date>2012-09-06</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Bluetooth SMD Module&lt;/b&gt;
@@ -51,7 +51,7 @@ BR-C40A with antenna cut off. 50 Ohm antenna trace and connector required. Footp
 <p layer='breadboard' svgId='connector27pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector0pin' terminalId='connector0terminal'/>
+<p layer='schematic' svgId='connector25pin' terminalId='connector25terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper1' svgId='connector27pad'/>
@@ -65,7 +65,7 @@ BR-C40A with antenna cut off. 50 Ohm antenna trace and connector required. Footp
 <p layer='breadboard' svgId='connector0pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector1pin' terminalId='connector1terminal'/>
+<p layer='schematic' svgId='connector0pin' terminalId='connector0terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector0pad'/>
@@ -80,7 +80,7 @@ BR-C40A with antenna cut off. 50 Ohm antenna trace and connector required. Footp
 <p layer='breadboard' svgId='connector11pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector2pin' terminalId='connector2terminal'/>
+<p layer='schematic' svgId='connector11pin' terminalId='connector11terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector11pad'/>
@@ -95,7 +95,7 @@ BR-C40A with antenna cut off. 50 Ohm antenna trace and connector required. Footp
 <p layer='breadboard' svgId='connector26pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector3pin' terminalId='connector3terminal'/>
+<p layer='schematic' svgId='connector24pin' terminalId='connector24terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper1' svgId='connector26pad'/>
@@ -109,7 +109,7 @@ BR-C40A with antenna cut off. 50 Ohm antenna trace and connector required. Footp
 <p layer='breadboard' svgId='connector28pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector4pin' terminalId='connector4terminal'/>
+<p layer='schematic' svgId='connector26pin' terminalId='connector26terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper1' svgId='connector28pad'/>
@@ -123,7 +123,7 @@ BR-C40A with antenna cut off. 50 Ohm antenna trace and connector required. Footp
 <p layer='breadboard' svgId='connector24pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector5pin' terminalId='connector5terminal'/>
+<p layer='schematic' svgId='connector27pin' terminalId='connector27terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector24pad'/>
@@ -138,7 +138,7 @@ BR-C40A with antenna cut off. 50 Ohm antenna trace and connector required. Footp
 <p layer='breadboard' svgId='connector25pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector6pin' terminalId='connector6terminal'/>
+<p layer='schematic' svgId='connector28pin' terminalId='connector28terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector25pad'/>
@@ -153,7 +153,7 @@ BR-C40A with antenna cut off. 50 Ohm antenna trace and connector required. Footp
 <p layer='breadboard' svgId='connector6pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector7pin' terminalId='connector7terminal'/>
+<p layer='schematic' svgId='connector6pin' terminalId='connector6terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector6pad'/>
@@ -198,7 +198,7 @@ BR-C40A with antenna cut off. 50 Ohm antenna trace and connector required. Footp
 <p layer='breadboard' svgId='connector7pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector10pin' terminalId='connector10terminal'/>
+<p layer='schematic' svgId='connector7pin' terminalId='connector7terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector7pad'/>
@@ -213,7 +213,7 @@ BR-C40A with antenna cut off. 50 Ohm antenna trace and connector required. Footp
 <p layer='breadboard' svgId='connector18pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector11pin' terminalId='connector11terminal'/>
+<p layer='schematic' svgId='connector18pin' terminalId='connector18terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector18pad'/>
@@ -228,7 +228,7 @@ BR-C40A with antenna cut off. 50 Ohm antenna trace and connector required. Footp
 <p layer='breadboard' svgId='connector19pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector12pin' terminalId='connector12terminal'/>
+<p layer='schematic' svgId='connector19pin' terminalId='connector19terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector19pad'/>
@@ -243,7 +243,7 @@ BR-C40A with antenna cut off. 50 Ohm antenna trace and connector required. Footp
 <p layer='breadboard' svgId='connector21pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector13pin' terminalId='connector13terminal'/>
+<p layer='schematic' svgId='connector21pin' terminalId='connector21terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector21pad'/>
@@ -258,7 +258,7 @@ BR-C40A with antenna cut off. 50 Ohm antenna trace and connector required. Footp
 <p layer='breadboard' svgId='connector20pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector14pin' terminalId='connector14terminal'/>
+<p layer='schematic' svgId='connector20pin' terminalId='connector20terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector20pad'/>
@@ -273,7 +273,7 @@ BR-C40A with antenna cut off. 50 Ohm antenna trace and connector required. Footp
 <p layer='breadboard' svgId='connector2pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector15pin' terminalId='connector15terminal'/>
+<p layer='schematic' svgId='connector2pin' terminalId='connector2terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector2pad'/>
@@ -288,7 +288,7 @@ BR-C40A with antenna cut off. 50 Ohm antenna trace and connector required. Footp
 <p layer='breadboard' svgId='connector3pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector16pin' terminalId='connector16terminal'/>
+<p layer='schematic' svgId='connector3pin' terminalId='connector3terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector3pad'/>
@@ -303,7 +303,7 @@ BR-C40A with antenna cut off. 50 Ohm antenna trace and connector required. Footp
 <p layer='breadboard' svgId='connector4pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector17pin' terminalId='connector17terminal'/>
+<p layer='schematic' svgId='connector4pin' terminalId='connector4terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector4pad'/>
@@ -318,7 +318,7 @@ BR-C40A with antenna cut off. 50 Ohm antenna trace and connector required. Footp
 <p layer='breadboard' svgId='connector5pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector18pin' terminalId='connector18terminal'/>
+<p layer='schematic' svgId='connector5pin' terminalId='connector5terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector5pad'/>
@@ -333,7 +333,7 @@ BR-C40A with antenna cut off. 50 Ohm antenna trace and connector required. Footp
 <p layer='breadboard' svgId='connector22pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector19pin' terminalId='connector19terminal'/>
+<p layer='schematic' svgId='connector22pin' terminalId='connector22terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector22pad'/>
@@ -348,7 +348,7 @@ BR-C40A with antenna cut off. 50 Ohm antenna trace and connector required. Footp
 <p layer='breadboard' svgId='connector23pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector20pin' terminalId='connector20terminal'/>
+<p layer='schematic' svgId='connector23pin' terminalId='connector23terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector23pad'/>
@@ -363,7 +363,7 @@ BR-C40A with antenna cut off. 50 Ohm antenna trace and connector required. Footp
 <p layer='breadboard' svgId='connector1pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector21pin' terminalId='connector21terminal'/>
+<p layer='schematic' svgId='connector1pin' terminalId='connector1terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector1pad'/>
@@ -378,7 +378,7 @@ BR-C40A with antenna cut off. 50 Ohm antenna trace and connector required. Footp
 <p layer='breadboard' svgId='connector15pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector22pin' terminalId='connector22terminal'/>
+<p layer='schematic' svgId='connector15pin' terminalId='connector15terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector15pad'/>
@@ -393,7 +393,7 @@ BR-C40A with antenna cut off. 50 Ohm antenna trace and connector required. Footp
 <p layer='breadboard' svgId='connector14pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector23pin' terminalId='connector23terminal'/>
+<p layer='schematic' svgId='connector14pin' terminalId='connector14terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector14pad'/>
@@ -408,7 +408,7 @@ BR-C40A with antenna cut off. 50 Ohm antenna trace and connector required. Footp
 <p layer='breadboard' svgId='connector12pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector24pin' terminalId='connector24terminal'/>
+<p layer='schematic' svgId='connector12pin' terminalId='connector12terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector12pad'/>
@@ -423,7 +423,7 @@ BR-C40A with antenna cut off. 50 Ohm antenna trace and connector required. Footp
 <p layer='breadboard' svgId='connector13pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector25pin' terminalId='connector25terminal'/>
+<p layer='schematic' svgId='connector13pin' terminalId='connector13terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector13pad'/>
@@ -438,7 +438,7 @@ BR-C40A with antenna cut off. 50 Ohm antenna trace and connector required. Footp
 <p layer='breadboard' svgId='connector10pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector26pin' terminalId='connector26terminal'/>
+<p layer='schematic' svgId='connector10pin' terminalId='connector10terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper0' svgId='connector10pad'/>

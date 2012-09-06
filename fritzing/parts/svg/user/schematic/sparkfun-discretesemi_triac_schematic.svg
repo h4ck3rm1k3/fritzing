@@ -20,13 +20,13 @@
 <g transform='translate(2.4638,1.3462)'><g transform='rotate(270)'>
 <text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='0' y='0' text-anchor='middle'>3</text>
 </g></g>
-<line class='pin' id='connector1pin' connectorname='M1' x1='2.6162' y1='7.6962' x2='2.6162' y2='5.1562' stroke='#555555' stroke-width='0.1524' stroke-linecap='round'/>
-<rect class='terminal' id='connector1terminal' x='2.6162' y='7.6962' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<line class='pin' id='connector0pin' connectorname='M1' x1='2.6162' y1='7.6962' x2='2.6162' y2='5.1562' stroke='#555555' stroke-width='0.1524' stroke-linecap='round'/>
+<rect class='terminal' id='connector0terminal' x='2.6162' y='7.6962' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
 <g transform='translate(2.4638,6.4262)'><g transform='rotate(270)'>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='0' y='0' text-anchor='middle'>2</text>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='0' y='0' text-anchor='middle'>1</text>
 </g></g>
-<line class='pin' id='connector0pin' connectorname='G' x1='7.6962' y1='5.1562' x2='5.1562' y2='5.1562' stroke='#555555' stroke-width='0.1524' stroke-linecap='round'/>
-<rect class='terminal' id='connector0terminal' x='7.6962' y='5.1562' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
-<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='6.4262' y='5.0038' text-anchor='middle'>1</text>
+<line class='pin' id='connector1pin' connectorname='G' x1='7.6962' y1='5.1562' x2='5.1562' y2='5.1562' stroke='#555555' stroke-width='0.1524' stroke-linecap='round'/>
+<rect class='terminal' id='connector1terminal' x='7.6962' y='5.1562' width='0.0001' height='0.0001' stroke='none' stroke-width='0' fill='none'/>
+<text class='text' font-family='OCRA' stroke='none' stroke-width='0' fill='#555555' font-size='1.0668' x='6.4262' y='5.0038' text-anchor='middle'>2</text>
 </g>
 </svg>

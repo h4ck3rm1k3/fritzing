@@ -2,7 +2,7 @@
 <module fritzingVersion='0.7.2b' moduleId='SparkFun-RF-ANTENNA2-SMD2'>
 <!-- generated from Sparkfun Eagle Library 'SparkFun-RF' ANTENNA2 SMD2 -->
 <version>4</version>
-<date>2012-09-05</date>
+<date>2012-09-06</date>
 <label>U</label>
 <author>www.fritzing.org</author>
 <description>&lt;b&gt;Chip antenna&lt;/b&gt;&lt;p&gt;
@@ -49,7 +49,7 @@ Single endded antenna. Common with smaller chip antennas. CHIP4 package is the G
 <p layer='breadboard' svgId='connector0pin'/>
 </breadboardView>
 <schematicView>
-<p layer='schematic' svgId='connector0pin' terminalId='connector0terminal'/>
+<p layer='schematic' svgId='connector1pin' terminalId='connector1terminal'/>
 </schematicView>
 <pcbView>
 <p layer='copper1' svgId='connector0pad'/>
