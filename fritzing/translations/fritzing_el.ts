@@ -151,7 +151,7 @@
     <message>
         <location filename="../src/help/aboutbox.cpp" line="164"/>
         <source>to &amp;#313;ubom&amp;iacute;r Ducho&amp;#328; for the Slovak translation, </source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;#313;ubom&amp;iacute;r Ducho&amp;#328; για την μετάφραση στα Σλοβάκικα</translation>
     </message>
     <message>
         <location filename="../src/help/aboutbox.cpp" line="165"/>
@@ -308,7 +308,7 @@
     <message>
         <location filename="../src/partsbinpalette/binmanager/binmanager.cpp" line="797"/>
         <source>Searching...</source>
-        <translation type="unfinished"></translation>
+        <translation>Αναζήτηση...</translation>
     </message>
     <message>
         <location filename="../src/partsbinpalette/binmanager/binmanager.cpp" line="857"/>
@@ -318,12 +318,12 @@
     <message>
         <location filename="../src/partsbinpalette/binmanager/binmanager.cpp" line="859"/>
         <source>Import...</source>
-        <translation type="unfinished"></translation>
+        <translation>Εισαγωγή...</translation>
     </message>
     <message>
         <location filename="../src/partsbinpalette/binmanager/binmanager.cpp" line="860"/>
         <source>Load a Fritzing part (.fzpz), or a Fritzing parts bin (.fzb, .fzbz)</source>
-        <translation type="unfinished"></translation>
+        <translation>Φόρτωση ενός εξαρτήματος Fritzing (.fzpz), ή ενός δοδείου εξαρτημάτων Fritzing (.fzb, .fzbz)</translation>
     </message>
     <message>
         <location filename="../src/partsbinpalette/binmanager/binmanager.cpp" line="863"/>
@@ -478,12 +478,12 @@
     <message>
         <location filename="../src/partsbinpalette/binmanager/binmanager.cpp" line="1177"/>
         <source>Select a Fritzing File to Open</source>
-        <translation type="unfinished">Επιλέξτε για Άνοιγμα ένα αρχείο Fritzing</translation>
+        <translation>Επιλέξτε για Άνοιγμα ένα αρχείο Fritzing</translation>
     </message>
     <message>
         <location filename="../src/partsbinpalette/binmanager/binmanager.cpp" line="1179"/>
         <source>Fritzing Files (*%1 *%2 *%3);;Fritzing Part (*%1);;Fritzing Bin (*%2);;Fritzing Shareable Bin (*%3)</source>
-        <translation type="unfinished"></translation>
+        <translation>Αρχεία Fritzing (*%1 *%2 *%3);;Εξαρτήματα Fritzing (*%1);;Δοχείο Fritzing (*%2);;Διαμοιραζόμενο Δοχείο Fritzing (*%3)</translation>
     </message>
     <message>
         <location filename="../src/partsbinpalette/binmanager/binmanager.cpp" line="397"/>
@@ -751,89 +751,91 @@ in order to fix this connector</source>
 <context>
     <name>ConnectorsView</name>
     <message>
-        <location filename="../src/partseditor/connectorsview.cpp" line="110"/>
+        <location filename="../src/partseditor/connectorsview.cpp" line="111"/>
         <source>This is where you edit the connector metadata for the part</source>
-        <translation type="unfinished"></translation>
+        <translation>Εδώ τροποποιείτε τα μετα-δεδομένα του συνδετήρα για το εξάρτημα</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/connectorsview.cpp" line="116"/>
+        <location filename="../src/partseditor/connectorsview.cpp" line="117"/>
         <source>number of connectors:</source>
-        <translation type="unfinished"></translation>
+        <translation>Αριθμός συνδετήρων:</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/connectorsview.cpp" line="159"/>
+        <location filename="../src/partseditor/connectorsview.cpp" line="168"/>
         <source>Connectors will be removed from the end of the list, so you may lose some work. </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/partseditor/connectorsview.cpp" line="162"/>
-        <source>Connectors will be added the end of the list. </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/partseditor/connectorsview.cpp" line="164"/>
-        <source>Rather than changing the number of connectors here, it may be better to begin with a part that already has the right number of connectors.
-
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message numerus="yes">
-        <location filename="../src/partseditor/connectorsview.cpp" line="166"/>
-        <source>Change to %n connectors?</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
+        <translation>Οι συνδετήρες θα αφαιρεθούν από το τέλος της λίστας, οπότε μπορεί να χαθεί λίγη δουλειά που έχετε κάνει. </translation>
     </message>
     <message>
         <location filename="../src/partseditor/connectorsview.cpp" line="171"/>
+        <source>Connectors will be added the end of the list. </source>
+        <translation>Οι συνδετήρες θα προσθεθούν στο τέλος της λίστας. </translation>
+    </message>
+    <message>
+        <location filename="../src/partseditor/connectorsview.cpp" line="173"/>
+        <source>Rather than changing the number of connectors here, it may be better to begin with a part that already has the right number of connectors.
+
+</source>
+        <translation>Αντί να αλλάξετε των αριθμό των συνδετήρων εδώ, ίσως είναι καλύτερα να ξεκινήσετε με ένα εξάρτημα που έχει τον σωστό αριθμό συνδετήρων.
+
+</translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../src/partseditor/connectorsview.cpp" line="175"/>
+        <source>Change to %n connectors?</source>
+        <translation>
+            <numerusform>Αλλαγή σε %n συνδετήρες;</numerusform>
+            <numerusform>Αλλαγή σε %n συνδετήρες;</numerusform>
+        </translation>
+    </message>
+    <message>
+        <location filename="../src/partseditor/connectorsview.cpp" line="179"/>
         <source>Change Connectors Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>Προειδοποίηση Αλλαγής Συνδετήρων</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/connectorsview.cpp" line="177"/>
+        <location filename="../src/partseditor/connectorsview.cpp" line="185"/>
         <source>Change Connector Count</source>
-        <translation type="unfinished"></translation>
+        <translation>Αλλαγή Αριθμού Συνδετήρων</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/connectorsview.cpp" line="178"/>
+        <location filename="../src/partseditor/connectorsview.cpp" line="186"/>
         <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
+        <translation>Ακύρωση</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/connectorsview.cpp" line="210"/>
+        <location filename="../src/partseditor/connectorsview.cpp" line="218"/>
         <source>Connector number</source>
-        <translation type="unfinished"></translation>
+        <translation>Αριθμός συνδετήρων</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/connectorsview.cpp" line="214"/>
+        <location filename="../src/partseditor/connectorsview.cpp" line="222"/>
         <source>&lt;b&gt;Type:&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Τύπος:&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/connectorsview.cpp" line="234"/>
+        <location filename="../src/partseditor/connectorsview.cpp" line="248"/>
         <source>SMD-pad</source>
-        <translation type="unfinished"></translation>
+        <translation>SMD-pad</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/connectorsview.cpp" line="241"/>
+        <location filename="../src/partseditor/connectorsview.cpp" line="258"/>
         <source>&lt;b&gt;Name:&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Όνομα:&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/connectorsview.cpp" line="249"/>
+        <location filename="../src/partseditor/connectorsview.cpp" line="266"/>
         <source>Set the connectors&apos;s title</source>
-        <translation type="unfinished"></translation>
+        <translation>Επιλέξτε τον τίτλο των συνδετήρων</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/connectorsview.cpp" line="259"/>
+        <location filename="../src/partseditor/connectorsview.cpp" line="279"/>
         <source>&lt;b&gt;Description:&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Περιγραφή:&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/connectorsview.cpp" line="268"/>
+        <location filename="../src/partseditor/connectorsview.cpp" line="288"/>
         <source>Set the connectors&apos;s description</source>
-        <translation type="unfinished"></translation>
+        <translation>Επιλέξτε την περιγραφή των συνδετήρων</translation>
     </message>
 </context>
 <context>
@@ -871,106 +873,58 @@ in order to fix this connector</source>
     </message>
 </context>
 <context>
-    <name>DockManager</name>
-    <message>
-        <location filename="../src/dockmanager.cpp" line="95"/>
-        <source>View Switcher</source>
-        <translation>Επιλογέας Εμφάνισης</translation>
-    </message>
-    <message>
-        <location filename="../src/dockmanager.cpp" line="107"/>
-        <source>Inspector</source>
-        <translation>Ελεγκτής</translation>
-    </message>
-    <message>
-        <location filename="../src/dockmanager.cpp" line="109"/>
-        <source>Undo History</source>
-        <translation>Ιστορία Αναίρεσης</translation>
-    </message>
-    <message>
-        <location filename="../src/dockmanager.cpp" line="130"/>
-        <source>Breadboard</source>
-        <translation>Breadboard</translation>
-    </message>
-    <message>
-        <location filename="../src/dockmanager.cpp" line="131"/>
-        <source>Schematic</source>
-        <translation>Σχέδιο</translation>
-    </message>
-    <message>
-        <location filename="../src/dockmanager.cpp" line="132"/>
-        <source>PCB</source>
-        <translation>Τυπωμένο (PCB)</translation>
-    </message>
-    <message>
-        <location filename="../src/dockmanager.cpp" line="133"/>
-        <source>Navigator</source>
-        <translation>Πλοηγός</translation>
-    </message>
-    <message>
-        <location filename="../src/dockmanager.cpp" line="136"/>
-        <source>Layers</source>
-        <translation>Επίπεδα</translation>
-    </message>
-    <message>
-        <location filename="../src/dockmanager.cpp" line="266"/>
-        <source>Couldn&apos;t get the dock widget</source>
-        <translation>Δεν μπόρεσε να γίνει λήψη του widget απόθεσης</translation>
-    </message>
-</context>
-<context>
     <name>FApplication</name>
     <message>
-        <location filename="../src/fapplication.cpp" line="1211"/>
-        <location filename="../src/fapplication.cpp" line="1215"/>
+        <location filename="../src/fapplication.cpp" line="1216"/>
+        <location filename="../src/fapplication.cpp" line="1220"/>
         <source>Fritzing failure</source>
         <translation>Αποτυχία του Fritzing</translation>
     </message>
     <message>
-        <location filename="../src/fapplication.cpp" line="1211"/>
+        <location filename="../src/fapplication.cpp" line="1216"/>
         <source>Fritzing caught an exception %1 from %2 in event %3</source>
         <translation>Το Fritzing εντόπισε μία εξαίρεση %1 από %2 στο γεγονός %3</translation>
     </message>
     <message>
-        <location filename="../src/fapplication.cpp" line="1215"/>
+        <location filename="../src/fapplication.cpp" line="1220"/>
         <source>Fritzing caught an exception from %1 in event %2</source>
         <translation>Το Fritzing εντόπισε μία εξαίρεση από το %1 στο γεγονός %2</translation>
     </message>
     <message>
-        <location filename="../src/fapplication.cpp" line="1326"/>
+        <location filename="../src/fapplication.cpp" line="1331"/>
         <source>Import files from previous version?</source>
         <translation>Εισαγωγή αρχείων από προηγούμενη έκδοση;</translation>
     </message>
     <message>
-        <location filename="../src/fapplication.cpp" line="1327"/>
+        <location filename="../src/fapplication.cpp" line="1332"/>
         <source>Do you want to import parts and bins that you have created with earlier versions of Fritzing?
 </source>
         <translation>Θέλετε να εισάγεται εξαρτήματα και δοχεία που έχετε δημιουργήσει με μια νεώτερη έκδοση του Fritzing;</translation>
     </message>
     <message>
-        <location filename="../src/fapplication.cpp" line="1328"/>
+        <location filename="../src/fapplication.cpp" line="1333"/>
         <source>
 Note: You can import them later using the &quot;Help&quot; &gt; &quot;Import parts and bins from old version...&quot; menu action.</source>
         <translation>
 Σημείωση: Μπορείτε να τα εισάγετε αργότερα χρησιμοποιώντας το μενού &quot;Βοήθεια&quot; &gt; &quot;Εισαγωγή εξαρτημάτων και δοχεία από παλιά έκδοση...&quot;.</translation>
     </message>
     <message>
-        <location filename="../src/fapplication.cpp" line="1334"/>
+        <location filename="../src/fapplication.cpp" line="1339"/>
         <source>Import</source>
         <translation>Εισαγωγή</translation>
     </message>
     <message>
-        <location filename="../src/fapplication.cpp" line="1335"/>
+        <location filename="../src/fapplication.cpp" line="1340"/>
         <source>Do not import now</source>
         <translation>Μην γίνει εισαγωγή τώρα</translation>
     </message>
     <message>
-        <location filename="../src/fapplication.cpp" line="1369"/>
+        <location filename="../src/fapplication.cpp" line="1374"/>
         <source>Please specify an .fzz file name to save to (cancel will delete the backup)</source>
         <translation>Παρακαλώ προσδιορίστε ένα όνομα αρχείου .fzz για αποθήκευση (ακύρωση θα διαγράψει το αντίγραφο)</translation>
     </message>
     <message>
-        <location filename="../src/fapplication.cpp" line="1369"/>
+        <location filename="../src/fapplication.cpp" line="1374"/>
         <source>Fritzing (*%1)</source>
         <translation>Fritzing (*%1)</translation>
     </message>
@@ -1008,67 +962,67 @@ Please select one of the Fritzing fonts to replace them:</source>
 <context>
     <name>FritzingWindow</name>
     <message>
-        <location filename="../src/fritzingwindow.cpp" line="76"/>
+        <location filename="../src/mainwindow/fritzingwindow.cpp" line="75"/>
         <source>&amp;Close Window</source>
         <translation>&amp;Κλείσιμο Παραθύρου</translation>
     </message>
     <message>
-        <location filename="../src/fritzingwindow.cpp" line="77"/>
+        <location filename="../src/mainwindow/fritzingwindow.cpp" line="76"/>
         <source>Ctrl+W</source>
         <translation>Ctrl+W</translation>
     </message>
     <message>
-        <location filename="../src/fritzingwindow.cpp" line="78"/>
+        <location filename="../src/mainwindow/fritzingwindow.cpp" line="77"/>
         <source>Close the current sketch</source>
         <translation>Κλείσιμο του τρέχοντος σχεδίου</translation>
     </message>
     <message>
-        <location filename="../src/fritzingwindow.cpp" line="83"/>
+        <location filename="../src/mainwindow/fritzingwindow.cpp" line="82"/>
         <source>%1 - %2</source>
         <translation>%1 - %2</translation>
     </message>
     <message>
-        <location filename="../src/fritzingwindow.cpp" line="137"/>
+        <location filename="../src/mainwindow/fritzingwindow.cpp" line="136"/>
         <source>Specify a file name</source>
         <translation>Προσδιορίστε ένα όνομα αρχείου</translation>
     </message>
     <message>
-        <location filename="../src/fritzingwindow.cpp" line="214"/>
+        <location filename="../src/mainwindow/fritzingwindow.cpp" line="213"/>
         <source>Save &quot;%1&quot;</source>
         <translation>Αποθήκευση &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../src/fritzingwindow.cpp" line="215"/>
+        <location filename="../src/mainwindow/fritzingwindow.cpp" line="214"/>
         <source>Do you want to save the changes you made in the document &quot;%1&quot;?</source>
         <translation>Θέλετε να αποθηκεύσετε τις αλλαγές που πραγματοποιήσατε στο έγγραφο&quot;%1&quot;;</translation>
     </message>
     <message>
-        <location filename="../src/fritzingwindow.cpp" line="216"/>
+        <location filename="../src/mainwindow/fritzingwindow.cpp" line="215"/>
         <source>Your changes will be lost if you don&apos;t save them.</source>
         <translation>Οι αλλαγές σας θα χαθούν αν δεν τις αποθηκεύσετε.</translation>
     </message>
     <message>
-        <location filename="../src/fritzingwindow.cpp" line="224"/>
+        <location filename="../src/mainwindow/fritzingwindow.cpp" line="223"/>
         <source>Save...</source>
         <translation>Αποθήκευση...</translation>
     </message>
     <message>
-        <location filename="../src/fritzingwindow.cpp" line="227"/>
+        <location filename="../src/mainwindow/fritzingwindow.cpp" line="226"/>
         <source>Save</source>
         <translation>Αποθήκευση</translation>
     </message>
     <message>
-        <location filename="../src/fritzingwindow.cpp" line="229"/>
+        <location filename="../src/mainwindow/fritzingwindow.cpp" line="228"/>
         <source>Don&apos;t Save</source>
         <translation>Όχι Αποθήκευση</translation>
     </message>
     <message>
-        <location filename="../src/fritzingwindow.cpp" line="231"/>
+        <location filename="../src/mainwindow/fritzingwindow.cpp" line="230"/>
         <source>Cancel</source>
         <translation>Ακύρωση</translation>
     </message>
     <message>
-        <location filename="../src/fritzingwindow.cpp" line="235"/>
+        <location filename="../src/mainwindow/fritzingwindow.cpp" line="234"/>
         <source>Ctrl+D</source>
         <translation>Ctrl+D</translation>
     </message>
@@ -1144,82 +1098,82 @@ It is also possible to choose a connector as a ground fill seed by right-clickin
 <context>
     <name>HtmlInfoView</name>
     <message>
-        <location filename="../src/infoview/htmlinfoview.cpp" line="136"/>
+        <location filename="../src/infoview/htmlinfoview.cpp" line="135"/>
         <source>Change the part label here</source>
         <translation>Αλλαγή της ετικέτας εξαρτήματος εδώ</translation>
     </message>
     <message>
-        <location filename="../src/infoview/htmlinfoview.cpp" line="161"/>
+        <location filename="../src/infoview/htmlinfoview.cpp" line="160"/>
         <source>Part breadboard view image</source>
         <translation>Εικόνα εξαρτήματος προβολής breadboard</translation>
     </message>
     <message>
-        <location filename="../src/infoview/htmlinfoview.cpp" line="163"/>
+        <location filename="../src/infoview/htmlinfoview.cpp" line="162"/>
         <source>Part schematic view image</source>
         <translation>Εικόνα εξαρτήματος προβολής σχεδίου</translation>
     </message>
     <message>
-        <location filename="../src/infoview/htmlinfoview.cpp" line="165"/>
+        <location filename="../src/infoview/htmlinfoview.cpp" line="164"/>
         <source>Part pcb view image</source>
         <translation>Εικόνα εξαρτήματος προβολής τυπωμένου (PCB)</translation>
     </message>
     <message>
-        <location filename="../src/infoview/htmlinfoview.cpp" line="172"/>
+        <location filename="../src/infoview/htmlinfoview.cpp" line="171"/>
         <source>Part version number</source>
         <translation>Αριθμός έκδοσης του εξαρτήματος</translation>
     </message>
     <message>
-        <location filename="../src/infoview/htmlinfoview.cpp" line="182"/>
+        <location filename="../src/infoview/htmlinfoview.cpp" line="181"/>
         <source>Locked</source>
         <translation>Κλειδωμένο</translation>
     </message>
     <message>
-        <location filename="../src/infoview/htmlinfoview.cpp" line="184"/>
+        <location filename="../src/infoview/htmlinfoview.cpp" line="183"/>
         <source>Change the locked state of the part in this view. A locked part can&apos;t be moved.</source>
         <translation>Αλλαγή της κατάσταση κλειδώματος του εξαρτήματος σε αυτή την προβολή. ένα κλειδωμένο εξάρτημα δεν μπορεί να μετακινηθεί.</translation>
     </message>
     <message>
-        <location filename="../src/infoview/htmlinfoview.cpp" line="188"/>
+        <location filename="../src/infoview/htmlinfoview.cpp" line="187"/>
         <source>Sticky</source>
         <translation>Υπόμνημα (Sticky)</translation>
     </message>
     <message>
-        <location filename="../src/infoview/htmlinfoview.cpp" line="190"/>
+        <location filename="../src/infoview/htmlinfoview.cpp" line="189"/>
         <source>Change the &quot;sticky&quot; state of the part in this view. When a sticky part is moved, objects on top of it also move.</source>
         <translation>Αλλαγή της κατάστασης &quot;υπομνήματος (sticky)&quot; σε αυτή την προβολή. Όταν ένα εξάρτημα-υπόμνημα μετακινείτε, τα από πάνω αντικείμενα μετακινούνται επίσης.</translation>
     </message>
     <message>
-        <location filename="../src/infoview/htmlinfoview.cpp" line="214"/>
+        <location filename="../src/infoview/htmlinfoview.cpp" line="213"/>
         <source>Properties</source>
         <translation>Ιδιότητες</translation>
     </message>
     <message>
-        <location filename="../src/infoview/htmlinfoview.cpp" line="226"/>
+        <location filename="../src/infoview/htmlinfoview.cpp" line="225"/>
         <source>Tags</source>
         <translation>Ετικέτες</translation>
     </message>
     <message>
-        <location filename="../src/infoview/htmlinfoview.cpp" line="235"/>
+        <location filename="../src/infoview/htmlinfoview.cpp" line="234"/>
         <source>Connections</source>
         <translation>Συνδέσεις</translation>
     </message>
     <message>
-        <location filename="../src/infoview/htmlinfoview.cpp" line="247"/>
+        <location filename="../src/infoview/htmlinfoview.cpp" line="246"/>
         <source>conn.</source>
         <translation>συνδ.</translation>
     </message>
     <message>
-        <location filename="../src/infoview/htmlinfoview.cpp" line="254"/>
+        <location filename="../src/infoview/htmlinfoview.cpp" line="253"/>
         <source>name</source>
         <translation>όνομα</translation>
     </message>
     <message>
-        <location filename="../src/infoview/htmlinfoview.cpp" line="261"/>
+        <location filename="../src/infoview/htmlinfoview.cpp" line="260"/>
         <source>type</source>
         <translation>τύπος</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/infoview/htmlinfoview.cpp" line="340"/>
+        <location filename="../src/infoview/htmlinfoview.cpp" line="339"/>
         <source>connected to %n item(s)</source>
         <translation>
             <numerusform>συνδεδεμένο σε %n εξαρτήματα</numerusform>
@@ -1227,36 +1181,36 @@ It is also possible to choose a connector as a ground fill seed by right-clickin
         </translation>
     </message>
     <message>
-        <location filename="../src/infoview/htmlinfoview.cpp" line="377"/>
+        <location filename="../src/infoview/htmlinfoview.cpp" line="376"/>
         <source>(autoroutable)</source>
         <translation>(αυτο-δρομολογήσιμο)</translation>
     </message>
     <message>
-        <location filename="../src/infoview/htmlinfoview.cpp" line="378"/>
+        <location filename="../src/infoview/htmlinfoview.cpp" line="377"/>
         <source>Wire</source>
         <translation>Καλώδιο</translation>
     </message>
     <message>
-        <location filename="../src/infoview/htmlinfoview.cpp" line="381"/>
+        <location filename="../src/infoview/htmlinfoview.cpp" line="380"/>
         <source>Ratsnest wire</source>
         <translatorcomment>Ratsnest ???</translatorcomment>
         <translation>Ratsnest καλώδιο</translation>
     </message>
     <message>
-        <location filename="../src/infoview/htmlinfoview.cpp" line="384"/>
+        <location filename="../src/infoview/htmlinfoview.cpp" line="383"/>
         <source>Trace wire %1</source>
         <translatorcomment>Ίχνος καλωδίου %1</translatorcomment>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/infoview/htmlinfoview.cpp" line="653"/>
+        <location filename="../src/infoview/htmlinfoview.cpp" line="652"/>
         <source>v. %1 %2</source>
-        <translation type="unfinished">v. %1 %2</translation>
+        <translation>εκ. %1 %2</translation>
     </message>
     <message>
-        <location filename="../src/infoview/htmlinfoview.cpp" line="653"/>
+        <location filename="../src/infoview/htmlinfoview.cpp" line="652"/>
         <source>obsolete</source>
-        <translation type="unfinished"></translation>
+        <translation>παρωχημένο</translation>
     </message>
 </context>
 <context>
@@ -1451,7 +1405,7 @@ It is also possible to choose a connector as a ground fill seed by right-clickin
     <message>
         <location filename="../src/items/itembase.cpp" line="1262"/>
         <source>file for %1 %2 not found</source>
-        <translation type="unfinished"></translation>
+        <translation>το αρχείο για το %1 %2 δεν βρέθηκε</translation>
     </message>
     <message>
         <location filename="../src/items/itembase.cpp" line="1346"/>
@@ -1475,7 +1429,7 @@ It is also possible to choose a connector as a ground fill seed by right-clickin
 <context>
     <name>LayerPalette</name>
     <message>
-        <location filename="../src/layerpalette.cpp" line="70"/>
+        <location filename="../src/dock/layerpalette.cpp" line="70"/>
         <source>show all layers</source>
         <translation>εμφάνιση όλων των επιπέδων</translation>
     </message>
@@ -1565,124 +1519,124 @@ It is also possible to choose a connector as a ground fill seed by right-clickin
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/mainwindow.cpp" line="775"/>
-        <location filename="../src/mainwindow_menu.cpp" line="1208"/>
+        <location filename="../src/mainwindow/mainwindow.cpp" line="770"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="1208"/>
         <source>Rotate</source>
         <translation>Περιστροφή</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="783"/>
+        <location filename="../src/mainwindow/mainwindow.cpp" line="778"/>
         <source>Share</source>
         <translation>Διαμοιρασμός</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="792"/>
+        <location filename="../src/mainwindow/mainwindow.cpp" line="787"/>
         <source>Flip</source>
         <translation>Αναστροφή</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="800"/>
+        <location filename="../src/mainwindow/mainwindow.cpp" line="795"/>
         <source>Autoroute</source>
         <translation>Αυτο-Δρομολόγιση</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="807"/>
+        <location filename="../src/mainwindow/mainwindow.cpp" line="802"/>
         <source>Order PCB</source>
         <translation>Παραγγελία PCB</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="823"/>
+        <location filename="../src/mainwindow/mainwindow.cpp" line="818"/>
         <source>Both Layers</source>
         <translation>Τα δύο Επίπεδα</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="828"/>
+        <location filename="../src/mainwindow/mainwindow.cpp" line="823"/>
         <source>Bottom Layer</source>
         <translation>Κάτω Επίπεδο</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="833"/>
+        <location filename="../src/mainwindow/mainwindow.cpp" line="828"/>
         <source>Top Layer</source>
         <translation>Πάνω Επίπεδο</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="841"/>
-        <location filename="../src/mainwindow_menu.cpp" line="780"/>
+        <location filename="../src/mainwindow/mainwindow.cpp" line="836"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="780"/>
         <source>Add a note</source>
         <translation>Προσθήκη Σημείωσης</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="851"/>
+        <location filename="../src/mainwindow/mainwindow.cpp" line="846"/>
         <source>Export for PCB</source>
         <translation>Εξαγωγή σε PCB</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="928"/>
-        <location filename="../src/mainwindow_export.cpp" line="150"/>
+        <location filename="../src/mainwindow/mainwindow.cpp" line="923"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="150"/>
         <source>Ready</source>
         <translation>Έτοιμο</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="241"/>
+        <location filename="../src/mainwindow/mainwindow.cpp" line="246"/>
         <source>Ctrl+R</source>
         <comment>Rotate Clockwise</comment>
         <translatorcomment>Rotate Clockwise</translatorcomment>
         <translation>Ctrl+R</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="243"/>
+        <location filename="../src/mainwindow/mainwindow.cpp" line="248"/>
         <source>Alt+Ctrl+R</source>
         <comment>Rotate Clockwise</comment>
         <translatorcomment>Rotate Clockwise</translatorcomment>
         <translation>Alt+Ctrl+R</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="245"/>
+        <location filename="../src/mainwindow/mainwindow.cpp" line="250"/>
         <source>Meta+Ctrl+R</source>
         <comment>Rotate Clockwise</comment>
         <translatorcomment>Rotate Clockwise</translatorcomment>
         <translation>Meta+Ctrl+R</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="248"/>
+        <location filename="../src/mainwindow/mainwindow.cpp" line="253"/>
         <source>Shift+Ctrl+R</source>
         <comment>Rotate Counterclockwise</comment>
         <translatorcomment>Rotate Counterclockwise</translatorcomment>
         <translation>Shift+Ctrl+R</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="250"/>
+        <location filename="../src/mainwindow/mainwindow.cpp" line="255"/>
         <source>Alt+Shift+Ctrl+R</source>
         <comment>Rotate Counterclockwise</comment>
         <translatorcomment>Rotate Counterclockwise</translatorcomment>
         <translation>Alt+Shift+Ctrl+R</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="252"/>
+        <location filename="../src/mainwindow/mainwindow.cpp" line="257"/>
         <source>Meta+Shift+Ctrl+R</source>
         <comment>Rotate Counterclockwise</comment>
         <translatorcomment>Rotate Counterclockwise</translatorcomment>
         <translation>Meta+Shift+Ctrl+R</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="255"/>
+        <location filename="../src/mainwindow/mainwindow.cpp" line="260"/>
         <source>Shift+Ctrl+Tab</source>
         <comment>Toggle Active Layer</comment>
         <translatorcomment>Toggle Active Layer</translatorcomment>
         <translation>Shift+Ctrl+Tab</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1094"/>
+        <location filename="../src/mainwindow/mainwindow.cpp" line="1089"/>
         <source>Save %1</source>
         <translation>Αποθήκευση %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1163"/>
+        <location filename="../src/mainwindow/mainwindow.cpp" line="1158"/>
         <source>Updating existing part</source>
         <translation>Ενημέρωση υπάρχοντος εξαρτήματος</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1164"/>
+        <location filename="../src/mainwindow/mainwindow.cpp" line="1159"/>
         <source>Some connectors have changed.
 In order to see the changes, you have to restart fritzing.
 Do you want to restart now?</source>
@@ -1691,122 +1645,122 @@ Do you want to restart now?</source>
 Θέλετε να επανεκκινήσετε τώρα;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1446"/>
-        <location filename="../src/mainwindow_export.cpp" line="809"/>
+        <location filename="../src/mainwindow/mainwindow.cpp" line="1441"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="809"/>
         <source>Specify a file name</source>
         <translation>Προσδιορίστε ένα όνομα αρχείου</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1960"/>
+        <location filename="../src/mainwindow/mainwindow.cpp" line="1975"/>
         <source>Change image to %2</source>
         <translation>Αλλαγή εικόνας σε %2</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2285"/>
-        <location filename="../src/mainwindow_export.cpp" line="809"/>
-        <location filename="../src/mainwindow_menu.cpp" line="273"/>
+        <location filename="../src/mainwindow/mainwindow.cpp" line="2300"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="809"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="273"/>
         <source>Fritzing (*%1)</source>
         <translation>Fritzing (*%1)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1245"/>
-        <location filename="../src/mainwindow.cpp" line="1263"/>
-        <location filename="../src/mainwindow.cpp" line="1363"/>
-        <location filename="../src/mainwindow.cpp" line="1403"/>
-        <location filename="../src/mainwindow.cpp" line="1416"/>
-        <location filename="../src/mainwindow.cpp" line="1481"/>
-        <location filename="../src/mainwindow.cpp" line="2017"/>
-        <location filename="../src/mainwindow_export.cpp" line="170"/>
-        <location filename="../src/mainwindow_export.cpp" line="175"/>
-        <location filename="../src/mainwindow_export.cpp" line="591"/>
-        <location filename="../src/mainwindow_export.cpp" line="642"/>
-        <location filename="../src/mainwindow_export.cpp" line="729"/>
-        <location filename="../src/mainwindow_export.cpp" line="878"/>
-        <location filename="../src/mainwindow_export.cpp" line="984"/>
-        <location filename="../src/mainwindow_export.cpp" line="1201"/>
-        <location filename="../src/mainwindow_export.cpp" line="1371"/>
-        <location filename="../src/mainwindow_export.cpp" line="1376"/>
-        <location filename="../src/mainwindow_menu.cpp" line="183"/>
-        <location filename="../src/mainwindow_menu.cpp" line="194"/>
-        <location filename="../src/mainwindow_menu.cpp" line="248"/>
-        <location filename="../src/mainwindow_menu.cpp" line="2203"/>
-        <location filename="../src/mainwindow_menu.cpp" line="2346"/>
-        <location filename="../src/mainwindow_menu.cpp" line="2568"/>
-        <location filename="../src/mainwindow_menu.cpp" line="2573"/>
-        <location filename="../src/mainwindow_menu.cpp" line="2885"/>
-        <location filename="../src/mainwindow_menu.cpp" line="2890"/>
-        <location filename="../src/mainwindow_menu.cpp" line="2916"/>
-        <location filename="../src/mainwindow_menu.cpp" line="2921"/>
-        <location filename="../src/mainwindow_menu.cpp" line="3360"/>
-        <location filename="../src/mainwindow_menu.cpp" line="3483"/>
-        <location filename="../src/mainwindow_menu.cpp" line="3698"/>
-        <location filename="../src/mainwindow_menu.cpp" line="3703"/>
-        <location filename="../src/mainwindow_menu.cpp" line="3714"/>
-        <location filename="../src/mainwindow_menu.cpp" line="3717"/>
-        <location filename="../src/mainwindow_menu.cpp" line="3809"/>
-        <location filename="../src/mainwindow_menu.cpp" line="3814"/>
-        <location filename="../src/mainwindow_menu.cpp" line="3826"/>
-        <location filename="../src/mainwindow_menu.cpp" line="3831"/>
+        <location filename="../src/mainwindow/mainwindow.cpp" line="1240"/>
+        <location filename="../src/mainwindow/mainwindow.cpp" line="1258"/>
+        <location filename="../src/mainwindow/mainwindow.cpp" line="1358"/>
+        <location filename="../src/mainwindow/mainwindow.cpp" line="1398"/>
+        <location filename="../src/mainwindow/mainwindow.cpp" line="1411"/>
+        <location filename="../src/mainwindow/mainwindow.cpp" line="1476"/>
+        <location filename="../src/mainwindow/mainwindow.cpp" line="2032"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="170"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="175"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="591"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="642"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="729"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="878"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="984"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="1201"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="1371"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="1376"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="183"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="194"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="248"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2203"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2346"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2568"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2573"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2885"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2890"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2916"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2921"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="3360"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="3483"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="3698"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="3703"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="3714"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="3717"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="3809"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="3814"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="3826"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="3831"/>
         <source>Fritzing</source>
         <translation>Fritzing</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="879"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="879"/>
         <source>Unable to export %1 as shareable</source>
         <translation>Αδυναμία εξαγωγής του %1 ως κοινόχρηστο</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1246"/>
+        <location filename="../src/mainwindow/mainwindow.cpp" line="1241"/>
         <source>Unable to open &apos;%1&apos;</source>
         <translation>Αδυναμία ανοίγματος του &apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1264"/>
+        <location filename="../src/mainwindow/mainwindow.cpp" line="1259"/>
         <source>No Sketch found in &apos;%1&apos;</source>
         <translation>Δεν βρέθηκε κανένα σχέδιο στο &apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1364"/>
+        <location filename="../src/mainwindow/mainwindow.cpp" line="1359"/>
         <source>Unable to open shareable %1</source>
         <translation>Αδυναμία ανοίγματος του κοινόχρηστου %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1404"/>
+        <location filename="../src/mainwindow/mainwindow.cpp" line="1399"/>
         <source>Unable to open shareable part %1</source>
         <translation>Αδυναμία ανοίγματος του κοινόχρηστου εξαρτήματος %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1417"/>
+        <location filename="../src/mainwindow/mainwindow.cpp" line="1412"/>
         <source>Unable to read shareable part %1</source>
         <translation>Αδυναμία ανάγνωσης του κοινόχρηστου %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1448"/>
+        <location filename="../src/mainwindow/mainwindow.cpp" line="1443"/>
         <source>Fritzing Part (*%1)</source>
         <translation>Εξάρτημα Fritzing (*%1)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1482"/>
+        <location filename="../src/mainwindow/mainwindow.cpp" line="1477"/>
         <source>Unable to export %1 to shareable sketch</source>
         <translation>Αδυναμία εξαγωγής του %1 σε κοινόχρηστο σχέδιο</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1571"/>
+        <location filename="../src/mainwindow/mainwindow.cpp" line="1566"/>
         <source>Do you want to keep the imported parts?</source>
         <translation>Θέλετε να διατηρήσετε τα εισαγμένα εξαρτήματα;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1639"/>
+        <location filename="../src/mainwindow/mainwindow.cpp" line="1634"/>
         <source>No connections to route</source>
         <translation>Δεν υπάρχουν συνδέσεις για δρομολόγιση</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1642"/>
+        <location filename="../src/mainwindow/mainwindow.cpp" line="1637"/>
         <source>Routing completed</source>
         <translation>Η δρομολόγιση ολοκληρώθηκε</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/mainwindow.cpp" line="1645"/>
+        <location filename="../src/mainwindow/mainwindow.cpp" line="1640"/>
         <source>Routing completed using %n jumper part(s)</source>
         <translation>
             <numerusform>Η δρομολόγιση ολοκληρώθηκε χρησιμοποιώντας %n βραχυκυκλωτήρες</numerusform>
@@ -1814,7 +1768,7 @@ Do you want to restart now?</source>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/mainwindow.cpp" line="1648"/>
+        <location filename="../src/mainwindow/mainwindow.cpp" line="1643"/>
         <source>%1 of %2 nets routed - %n connector(s) still to be routed</source>
         <translation>
             <numerusform>%1 από %2 δίκτυα δρομολογήθηκαν - %n συνδετήρες προς δρομολόγηση</numerusform>
@@ -1822,467 +1776,440 @@ Do you want to restart now?</source>
         </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1684"/>
+        <location filename="../src/mainwindow/mainwindow.cpp" line="1679"/>
         <source>%1 - [%2]</source>
         <translation>%1 - [%2]</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1815"/>
+        <location filename="../src/mainwindow/mainwindow.cpp" line="1810"/>
         <source>No copper top layer</source>
         <translation>Δεν υπάρχει πάνω επίπεδο χαλκού</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1816"/>
+        <location filename="../src/mainwindow/mainwindow.cpp" line="1811"/>
         <source>The copper top (copper 1) layer is not available on a one-sided board.  Please switch the board to double-sided or choose the copper bottom (copper 0) layer.</source>
         <translation>Το πανω επίπεδο χαλκού (copper 1) δεν είναι διαθέσιμο σε μία μονής όψης πλακέτα.  Παρακαλώ αλλάξτε την πλακέτα σε διπλής όψης ή επιλέξτε το κάτω επίπεδο (copper 0) χαλκού.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1865"/>
-        <location filename="../src/mainwindow_menu.cpp" line="3421"/>
+        <location filename="../src/mainwindow/mainwindow.cpp" line="1872"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="3421"/>
         <source>Sorry!</source>
         <translation>Συγνώμη!</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1866"/>
+        <location filename="../src/mainwindow/mainwindow.cpp" line="1873"/>
         <source>No part with those characteristics.
 We&apos;re working to avoid this message, and only let you choose between properties that do exist</source>
         <translation>Δεν υπάρχει εξάρτημα με αυτά τα χαρακτηριστικά.
 Προσπαθούμε να αποφύγουμε το μήνυμα αυτό, και σας επιτρέπουμε να επιλέξετε μεταξύ ιδιοτήτων που υπάρχουν</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1878"/>
+        <location filename="../src/mainwindow/mainwindow.cpp" line="1885"/>
         <source>No exactly matching part found; Fritzing chose the closest match.</source>
         <translation>Δεν βρέθηκε ακριβώς το  εξάρτημα, το Fritzing επέλεξε το πιο ταιριαστό.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1915"/>
+        <location filename="../src/mainwindow/mainwindow.cpp" line="1922"/>
         <source>Change to single layer pcb</source>
         <translation>Αλλαγή σε τυπωμένο μονής όψης</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1915"/>
-        <location filename="../src/mainwindow.cpp" line="2401"/>
+        <location filename="../src/mainwindow/mainwindow.cpp" line="1922"/>
         <source>Change to two layer pcb</source>
         <translation>Αλλαγή σε τυπωμένο διπλής όψης</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1948"/>
+        <location filename="../src/mainwindow/mainwindow.cpp" line="1954"/>
         <source>Swapped %1 with module %2</source>
         <translation>Ανταλλάχτηκε το το άρθρωμα %1 με το %2</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2018"/>
+        <location filename="../src/mainwindow/mainwindow.cpp" line="2033"/>
         <source>Svg %1 is missing a &apos;%2&apos; layer. For more information on how to create a custom board shape, see the tutorial at &lt;a href=&apos;http://fritzing.org/learning/tutorials/designing-pcb/pcb-custom-shape/&apos;&gt;http://fritzing.org/learning/tutorials/designing-pcb/pcb-custom-shape/&lt;/a&gt;.</source>
         <translation>Το Svg %1 στερείται ενός &apos;%2&apos; επιπέδου. Για περισσότερες πληροφορίες για την δημιουργία προσαρμοσμένου σχήματος πλακετών δείτε το βοήθημα στο &lt;a href=&apos;http://fritzing.org/learning/tutorials/designing-pcb/pcb-custom-shape/&apos;&gt;http://fritzing.org/learning/tutorials/designing-pcb/pcb-custom-shape/&lt;/a&gt;.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2055"/>
+        <location filename="../src/mainwindow/mainwindow.cpp" line="2070"/>
         <source>loading %1</source>
         <translation>φόρτωση %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2064"/>
+        <location filename="../src/mainwindow/mainwindow.cpp" line="2079"/>
         <source>Loading...</source>
         <translation>Φόρτωση...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2070"/>
+        <location filename="../src/mainwindow/mainwindow.cpp" line="2085"/>
         <source>new sketch</source>
         <translation>νέο σχέδιο</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2194"/>
+        <location filename="../src/mainwindow/mainwindow.cpp" line="2209"/>
         <source>Backing up &apos;%1&apos;</source>
         <translation>Αντιγραφή ασφαλείας &apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2340"/>
+        <location filename="../src/mainwindow/mainwindow.cpp" line="2355"/>
         <source>Unrouted connections</source>
-        <translation type="unfinished"></translation>
+        <translation>Μη δρομολογημένες συνδέσεις</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2341"/>
+        <location filename="../src/mainwindow/mainwindow.cpp" line="2356"/>
         <source>There are no unrouted connections in this view.</source>
-        <translation type="unfinished"></translation>
+        <translation>Δεν υπάρχουν μη δρομολογημένες συνδέσεις σε αυτή την προβολή.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2379"/>
-        <source>Using SMD parts</source>
-        <translation>Χρήση SMD εξαρτημάτων</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="2380"/>
-        <source>When using SMD parts, a double-sided board is usually desired. On the default single-sided board, SMD parts will end up on the back of the board.</source>
-        <translation>Κατά την χρήση SMD εξαρτημάτων, χρησιμοποιείται συνήθως πλακέτα διπλής όψεως. Στην προεπιλεγμένη πλακέτα μονής όψεως, τα SMD εξαρτήματα θα είναι στο κάτω επίπεδο.</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="2382"/>
-        <source>Do you want to swap to a double-sided board now?</source>
-        <translation>Θέλετε να αλλάξετε σε διπλής όψεως πλακέτα τώρα;</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="2387"/>
-        <source>Swap</source>
-        <translation>Αλλαγή</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="2388"/>
-        <source>Don&apos;t Swap</source>
-        <translation>Όχι Αλλαγή</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="2389"/>
-        <location filename="../src/mainwindow_menu.cpp" line="754"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="754"/>
         <source>Ctrl+D</source>
         <translation>Ctrl+D</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2434"/>
+        <location filename="../src/mainwindow/mainwindow.cpp" line="2397"/>
         <source>%1 %2 %3</source>
         <translation>%1 %2 %3</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="130"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="130"/>
         <source>PDF (*.pdf)</source>
         <translation>PDF (*.pdf)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="131"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="131"/>
         <source>PostScript (*.ps)</source>
         <translation>PostScript (*.ps)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="132"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="132"/>
         <source>PNG Image (*.png)</source>
         <translation>PNG Εικόνα (*.png)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="133"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="133"/>
         <source>JPEG Image (*.jpg)</source>
         <translation>JPEG Εικόνα (*.jpg)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="134"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="134"/>
         <source>SVG Image (*.svg)</source>
         <translation>SVG Εικόνα (*.svg)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="135"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="135"/>
         <source>BoM Text File (*.html)</source>
         <translation>BoM Αρχείο Κειμένου (*.html)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="148"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="148"/>
         <source>Printing...</source>
         <translation>Εκτύπωση...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="171"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="171"/>
         <source>Your sketch does not have a board yet! Please add a PCB in order to export etchable.</source>
-        <translation type="unfinished"></translation>
+        <translation>Το σχέδιο σας δεν περιέχει κάποια πλακέτα! Παρακαλώ προσθαίστε ένα PCB για να εξάγετε σε οξυγραφία.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="176"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="176"/>
         <source>Etchable export can only handle one board at a time--please select the board you want to export.</source>
-        <translation type="unfinished"></translation>
+        <translation>Η εξαγωγή σε οξυγραφία μπορεί να διαχειριστεί μόνο μία πλακέτα την φορά--παρακαλώ επιλέξτε την πλακέτα που θέλετε να εξάγετε.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="185"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="185"/>
         <source>All traces have not yet been routed.</source>
         <translation>Δεν έχουν δρομολογηθεί όλα τα ίχνη.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="186"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="186"/>
         <source>Do you want to proceed anyway?</source>
         <translation>Θέλετε να συνεχίσετε παρόλο αυτά;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="188"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="188"/>
         <source>Proceed</source>
         <translation>Συνέχεια</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="189"/>
-        <location filename="../src/mainwindow_menu.cpp" line="265"/>
-        <location filename="../src/mainwindow_menu.cpp" line="3522"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="189"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="265"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="3522"/>
         <source>Cancel</source>
         <translation>Ακύρωση</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="205"/>
-        <location filename="../src/mainwindow_export.cpp" line="1381"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="205"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="1381"/>
         <source>Choose a folder for exporting</source>
         <translation>Επιλογή φακέλου για την εξαγωγή</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="324"/>
-        <location filename="../src/mainwindow_export.cpp" line="516"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="324"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="516"/>
         <source>Sketch exported</source>
         <translation>Έγινε εξαγωγή του σχεδίου</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="495"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="495"/>
         <source>Export...</source>
         <translation>Εξαγωγή...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="514"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="514"/>
         <source>Exporting...</source>
         <translation>Εξαγωγή...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="591"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="591"/>
         <source>Unable to save %1</source>
         <translation>Αδυναμία αποθήκευσης του %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="642"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="642"/>
         <source>Cannot print to %1</source>
         <translation>Αδυναμία εκτύπωσης του %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="730"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="730"/>
         <source>Cannot write file %1:
 %2.</source>
         <translation>Αδυναμία εγγραφής του αρχείου %1:
 %2.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="745"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="745"/>
         <source>Saved &apos;%1&apos;</source>
         <translation>Αποθηκευμένο &apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="891"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="891"/>
         <source>&amp;Save</source>
         <translation>&amp;Αποθήκευση</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="892"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="892"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="893"/>
-        <location filename="../src/mainwindow_export.cpp" line="898"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="893"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="898"/>
         <source>Save the current sketch</source>
         <translation>Αποθήκευση τρέχοντος σχεδίου</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="896"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="896"/>
         <source>&amp;Save As...</source>
         <translation>&amp;Αποθήκευση Ως...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="897"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="897"/>
         <source>Shift+Ctrl+S</source>
         <translation>Shift+Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="901"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="901"/>
         <source>Share online...</source>
         <translation>Διαμοιρασμός στο Ιντερνετ...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="902"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="902"/>
         <source>Post a project to the Fritzing website</source>
         <translation>Τοποθετήστε ένα έργο σας στην σελίδα του Fritzing</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="905"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="905"/>
         <source>JPG...</source>
         <translation>JPG...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="907"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="907"/>
         <source>Export the visible area of the current sketch as a JPG image</source>
         <translation>Εξαγωγή της ορατής περιοχής του τρέχοντος σχεδίου ως JPG εικόνας</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="910"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="910"/>
         <source>PNG...</source>
         <translation>PNG...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="912"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="912"/>
         <source>Export the visible area of the current sketch as a PNG image</source>
         <translation>Εξαγωγή της ορατής περιοχής του τρέχοντος σχεδίου ως PNG εικόνας</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="915"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="915"/>
         <source>PostScript...</source>
         <translation>PostScript...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="917"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="917"/>
         <source>Export the visible area of the current sketch as a PostScript image</source>
         <translation>Εξαγωγή της ορατής περιοχής του τρέχοντος σχεδίου ως PostScrip εικόνας</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="920"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="920"/>
         <source>PDF...</source>
         <translation>PDF...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="922"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="922"/>
         <source>Export the visible area of the current sketch as a PDF image</source>
         <translation>Εξαγωγή της ορατής περιοχής του τρέχοντος σχεδίου ως PDF εικόνας</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="925"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="925"/>
         <source>SVG...</source>
         <translation>SVG...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="927"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="927"/>
         <source>Export the current sketch as an SVG image</source>
         <translation>Εξαγωγή του τρέχοντος σχεδίου ως SVG εικόνας</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="930"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="930"/>
         <source>List of parts (&amp;Bill of Materials)...</source>
         <translation>Λίστα των εξαρτημάτων (Κόστος Υλικών, &amp;BoM)...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="932"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="932"/>
         <source>Save a Bill of Materials (BoM)/Shopping List as text</source>
         <translation>Αποθήκευση του Κόστους Υλικών (BoM) ως κείμενο</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="935"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="935"/>
         <source>XML Netlist...</source>
         <translation>XML Netlist...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="937"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="937"/>
         <source>Save a netlist in XML format</source>
         <translation>Αποθήκευση netlist σε XML μορφή</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="940"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="940"/>
         <source>Eagle...</source>
         <translation>Eagle...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="942"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="942"/>
         <source>Export the current sketch to Eagle CAD</source>
         <translation>Εξαγωγή του τρέχοντος σχεδίου σε Eagle CAD</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="945"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="945"/>
         <source>Extended Gerber (RS-274X)...</source>
         <translation>Extended Gerber (RS-274X)...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="947"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="947"/>
         <source>Export the current sketch to Extended Gerber format (RS-274X) for professional PCB production</source>
         <translation>Εξαγωγή του τρέχοντος σχεδίου σε μορφή Extended Gerber (RS-274X) για επαγγελματική παραγωγή τυπωμένου (PCB)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="950"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="950"/>
         <source>Etchable (PDF)...</source>
         <translation>Etchable (PDF)...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="951"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="951"/>
         <source>Export the current sketch to PDF for DIY PCB production (photoresist)</source>
         <translation>Εξαγωγή του τρέχοντος σχεδίου σε PDF για την κατασκευή &quot;σπιτικού&quot; φωτοευαίσθητου τυπωμένου (photoresist PCB)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="955"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="955"/>
         <source>Etchable (SVG)...</source>
         <translation>Οξυγραφία (SVG)...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="956"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="956"/>
         <source>Export the current sketch to SVG for DIY PCB production (photoresist)</source>
         <translation>Εξαγωγή του τρέχοντος σχεδίου σε SVG για την κατασκευή &quot;σπιτικού&quot; φωτοευαίσθητου τυπωμένου (photoresist PCB)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="965"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="965"/>
         <source>&amp;Print...</source>
         <translation>&amp;Εκτύπωση...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="966"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="966"/>
         <source>Ctrl+P</source>
         <translation>Ctrl+P</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="967"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="967"/>
         <source>Print the current view</source>
         <translation>Εκτύπωση της τρέχουσας προβολής</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="975"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="975"/>
         <source>This will soon provide an export of your Fritzing sketch to the EAGLE layout software. If you&apos;d like to have more exports to your favourite EDA tool, please let us know, or contribute.</source>
         <translation>Αυτό σύντομα θα προσφαίρει εξαγωγή του Fritzing σχεδίου σας για το λογισμικό σχεδίασης EAGLE. Αν θέλετε να έχετε περισσότερες επιλογές εξαγωγής στο αγαπημένο σας EDA εργαλείο, ενημερώστε μας, ή συνεισφέρετε οι ίδιοι.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="1039"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="1039"/>
         <source>Export SVG...</source>
         <translation>Εξαγωγή SVG...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="1184"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="1184"/>
         <source>Export Bill of Materials (BoM)...</source>
         <translation>Εξαγωγή κόστους υλικών (BoM)...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="1201"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="1201"/>
         <source>Unable to save BOM file, but the text is on the clipboard.</source>
         <translation>Αδυναμία αποθήκευσης του αρχείου BoM, αλλά το κείμενο υπάρχει στο πρόχειρο.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="1294"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="1294"/>
         <source>Export Netlist...</source>
         <translation>Εξαγωγή Netlist...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="1372"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="1372"/>
         <source>Your sketch does not have a board yet!  Please add a PCB in order to export to Gerber.</source>
         <translation>Το σχέδιο σας δεν έχει ακόμη πλακέτα!  Παρακαλώ προσθέστε ένα τυπωμένο (PCB) για να εξάγετε σε Gerber.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="1377"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="1377"/>
         <source>Gerber export can only handle one board at a time--please select the board you want to export.</source>
         <translation>Η εξαγωγή Gerber μπορεί μόνο να διαχειριστεί μόνο μία πλακέτα την φορά--παρακαλώ επιλέξτε την πλακέτα που θέλετε να εξάγετε.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_export.cpp" line="1401"/>
+        <location filename="../src/mainwindow/mainwindow_export.cpp" line="1401"/>
         <source>Sketch exported to Gerber</source>
         <translation>Το σχέδιο εξάχθηκε σε Gerber</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="145"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="145"/>
         <source>Select a Fritzing File to Open</source>
         <translation>Επιλέξτε για Άνοιγμα ένα αρχείο Fritzing</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="184"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="184"/>
         <source>Cannot find file %1.</source>
         <translation>Αδυναμία εύρεσης του αρχείου %1.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="195"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="195"/>
         <source>Cannot read file  1 %1:
 %2.</source>
         <translation>Αδυναμία ανάγνωσης του αρχείου  1 %1:
 %2.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="248"/>
-        <location filename="../src/mainwindow_menu.cpp" line="2346"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="248"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2346"/>
         <source>File &apos;%1&apos; not found</source>
         <translation>Το αρχείο &apos;%1&apos; δεν βρέθηκε</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="256"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="256"/>
         <source>the .fz file format is obsolete</source>
         <translation>η μορφή αρχείων .fz είναι ξεπερασμένη</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="257"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="257"/>
         <source>The .fz file format has been deprecated.
 
 Would you like to convert &apos;%1&apos; to the .fzz format now or open it read-only?
@@ -2292,1555 +2219,1561 @@ Would you like to convert &apos;%1&apos; to the .fzz format now or open it read-
 Θα θέλατε να μετατρέψετε το &apos;%1&apos; στην μορφή .fzz τώρα ή να το ανοίξετε μόνο για αναγνωση;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="258"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="258"/>
         <source>The conversion process will not modify &apos;%1&apos;.</source>
         <translation>Η διαδικασία μετατροπής δεν θα τροποποιήσει το &apos;%1&apos;.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="263"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="263"/>
         <source>Convert</source>
         <translation>Μετατροπή</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="264"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="264"/>
         <source>Read-only</source>
         <translation>Μόνο Ανάγνωση</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="273"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="273"/>
         <source>Please specify an .fzz file name to save &apos;%1&apos; to</source>
         <translation>Παρακαλώ επιλέξτε ένα όνομα αρχείου .fzz για την αποθήκευση του &apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="305"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="305"/>
         <source>directly loading parts</source>
         <translation>απευθείας φόρτωση εξαρτημάτων</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="337"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="337"/>
         <source>loading %1 (model)</source>
         <translation>φόρτωση %1 (μοντέλου)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="359"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="359"/>
         <source>loading %1 (breadboard)</source>
         <translation>φόρτωση %1 (breadboard)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="368"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="368"/>
         <source>loading %1 (pcb)</source>
         <translation>φόρτωση %1 (pcb)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="377"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="377"/>
         <source>loading %1 (schematic)</source>
         <translation>φόρτωση %1 (σχέδιο)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="512"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="512"/>
         <source>New</source>
         <translation>Νέο</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="513"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="513"/>
         <source>Ctrl+N</source>
         <translation>Ctrl+N</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="514"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="514"/>
         <source>Create a new sketch</source>
         <translation>Δημιουργεί ένα νέο σχέδιο</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="517"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="517"/>
         <source>&amp;Open...</source>
         <translation>&amp;Άνοιγμα...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="518"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="518"/>
         <source>Ctrl+O</source>
         <translation>Ctrl+O</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="537"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="537"/>
         <source>Shell launch %1</source>
         <translation>Εκκίνηση κελύφους %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="542"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="542"/>
         <source>throw test exception</source>
         <translation>εισαγωγή εξαίρεσης δοκιμής</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="543"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="543"/>
         <source>throw a fake exception to see what happens</source>
         <translation>Εισάγει μία ψεύτικη εξαίρεση για να δει τι συμβαίνει</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="547"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="547"/>
         <source>&amp;Quit</source>
         <translation>&amp;Έξοδος</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="548"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="548"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="549"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="549"/>
         <source>Quit the application</source>
         <translation>Εγκαταλείπει την εφαρμογή</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="556"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="556"/>
         <source>&amp;Open Example</source>
         <translation>&amp;Άνοιγμα Παραδείγματος</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="578"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="578"/>
         <source>All</source>
         <translation>Όλα</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="626"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="626"/>
         <source>MainWindow::populateMenuWithIndex: couldn&apos;t load example with id=&apos;%1&apos;</source>
         <translation>MainWindow::populateMenuWithIndex: αδυναμία φόρτωσης παραδείγματος με διακριτικό=&apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="676"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="676"/>
         <source>&amp;Open Recent Files</source>
         <translation>&amp;Άνοιγμα Πρόσφατων Αρχείων</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="708"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="708"/>
         <source>&amp;%1 %2</source>
         <translation>&amp;%1 %2</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="725"/>
-        <location filename="../src/mainwindow_menu.cpp" line="727"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="725"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="727"/>
         <source>Undo</source>
         <translation>Αναίρεση</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="729"/>
-        <location filename="../src/mainwindow_menu.cpp" line="731"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="729"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="731"/>
         <source>Redo</source>
         <translation>Επανάληψη</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="733"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="733"/>
         <source>&amp;Cut</source>
         <translation>&amp;Αποκοπή</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="734"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="734"/>
         <source>Ctrl+X</source>
         <translation>Ctrl+X</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="735"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="735"/>
         <source>Cut selection</source>
         <translation>Αποκοπή επιλογής</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="738"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="738"/>
         <source>&amp;Copy</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="739"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="739"/>
         <source>Ctrl+C</source>
         <translation>Ctrl+C</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="740"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="740"/>
         <source>Copy selection</source>
         <translation>Αντιγράφει το επιλεγμένο</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="743"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="743"/>
         <source>&amp;Paste</source>
         <translation>&amp;Επικόλληση</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="744"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="744"/>
         <source>Ctrl+V</source>
         <translation>Ctrl+V</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="745"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="745"/>
         <source>Paste clipboard contents</source>
         <translation>Επικόλληση των περιεχομένων του πρόχειρου</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="748"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="748"/>
         <source>Paste in Place</source>
         <translation>Επικόλληση Εδώ</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="749"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="749"/>
         <source>Ctrl+B</source>
         <translation>Ctrl+B</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="750"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="750"/>
         <source>Paste clipboard contents in place</source>
         <translation>Επικόλληση των περιεχομένων του πρόχειρου στην ίδια θέση</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="753"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="753"/>
         <source>&amp;Duplicate</source>
         <translation>&amp;Διπλότυπο</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="755"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="755"/>
         <source>Duplicate selection</source>
         <translation>Δημιουργεί ένα αντίγραφο της επιλογής</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="758"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="758"/>
         <source>&amp;Delete</source>
         <translation>&amp;Διαγραφή</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="759"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="759"/>
         <source>Delete selection</source>
         <translation>Διαγράφει την επιλογή</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="770"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="770"/>
         <source>&amp;Select All</source>
         <translation>&amp;Επιλογή Όλων</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="771"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="771"/>
         <source>Ctrl+A</source>
         <translation>Ctrl+A</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="772"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="772"/>
         <source>Select all elements</source>
         <translation>Επιλέγει όλα τα στοιχεία</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="775"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="775"/>
         <source>&amp;Deselect</source>
         <translation>&amp;Αποεπιλογή</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="776"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="776"/>
         <source>Deselect</source>
         <translation>Αποεπιλέγει</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="779"/>
-        <location filename="../src/mainwindow_menu.cpp" line="2702"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="779"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2702"/>
         <source>Add Note</source>
         <translation>Προσθήκη Σημείωσης</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="783"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="783"/>
         <source>&amp;Preferences...</source>
         <translation>&amp;Επιλογές...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="784"/>
-        <location filename="../src/mainwindow_menu.cpp" line="1073"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="784"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="1073"/>
         <source>Show the application&apos;s about box</source>
         <translation>Εμφανίζει πληροφορίες για την εφαρμογή</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="790"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="790"/>
         <source>&amp;New</source>
         <translation>&amp;Νέο</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="791"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="791"/>
         <source>Alt+Ctrl+N</source>
         <translation>Alt+Ctrl+N</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="792"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="792"/>
         <source>Create new part</source>
         <translation>Δημιουργία νέου εξαρτήματος</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="795"/>
-        <location filename="../src/mainwindow_menu.cpp" line="1173"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="795"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="1173"/>
         <source>&amp;Edit</source>
         <translation>&amp;Επεξεργασία</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="796"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="796"/>
         <source>Ctrl+Return</source>
         <translation>Ctrl+Return</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="804"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="804"/>
         <source>&amp;Add to bin...</source>
         <translation>&amp;Προσθήκη σε δοχείο...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="805"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="805"/>
         <source>Add selected part to bin</source>
         <translation>Προσθέτει το εξάρτημα σε δοχείο</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="807"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="807"/>
         <source>Disconnect All Wires</source>
         <translation>Αποσύνδεση Όλων των Καλωδίων</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="808"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="808"/>
         <source>Disconnect all wires connected to this connector</source>
         <translation>Αποσυνδέει όλα τα καλώδια που συνδέονται σε αυτόν τον συνδετήρα</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="812"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="812"/>
         <source>Update InfoView on hover</source>
         <translation>Ενημέρωση InfoView στο πέρασμα από πάνω</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="819"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="819"/>
         <source>Export Normalized SVG</source>
         <translation>Εξαγωγή Κανονικοποιημένου SVG</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="820"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="820"/>
         <source>Export 1000 dpi SVG of this part in this view</source>
         <translation>Εξάγει ένα SVG 1000 dpi του εξαρτήματος σε αυτή την προβολή</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="823"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="823"/>
         <source>Export Normalized Flattened SVG</source>
         <translation>Εξαγωγή Κανονικοποιημένου Πεπλατυσμένου SVG</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="824"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="824"/>
         <source>Export 1000 dpi Flattened SVG of this part in this view</source>
         <translation>Εξάγει ένα Πεπλατυσμένο SVG του εξαρτήματος σε αυτή την προβολή</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="834"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="834"/>
         <source>Rotate the selected parts by 90 degrees clockwise</source>
         <translation>Περιστρέφει το επιλεγμένο εξάρτημα κατά 90 μοίρες δεξιόστροφα</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="838"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="838"/>
         <source>Rotate the selected parts by 180 degrees</source>
         <translation>Περιστρέφει το επιλεγμένο εξάρτημα κατά 180 μοίρες</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="842"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="842"/>
         <source>Rotate current selection 90 degrees counter clockwise</source>
         <translation>Περιστρέφει την τρέχουσα επιλογή 90 μοίρες αριστερόστροφα</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="846"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="846"/>
         <source>Rotate current selection 45 degrees counter clockwise</source>
         <translation>Περιστρέφει την τρέχουσα επιλογή 45 μοίρες αριστερόστροφα</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="830"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="830"/>
         <source>Rotate current selection 45 degrees clockwise</source>
         <translation>Περιστρέφει την τρέχουσα επιλογή 45 μοίρες δεξιόστροφα</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="849"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="849"/>
         <source>&amp;Flip Horizontal</source>
         <translation>&amp;Οριζόντια Αναστροφή</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="850"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="850"/>
         <source>Flip current selection horizontally</source>
         <translation>Αναστρέφει την τρέχουσα επιλογή οριζόντια</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="853"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="853"/>
         <source>&amp;Flip Vertical</source>
         <translation>&amp;Κατακόρυφη Αναστροφή</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="854"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="854"/>
         <source>Flip current selection vertically</source>
         <translation>Αναστρέφει την τρέχουσα επιλογή κατακόρυφα</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="857"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="857"/>
         <source>Bring to Front</source>
         <translation>Μεταφορά Εμπρός</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="858"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="858"/>
         <source>Shift+Ctrl+]</source>
         <translation>Shift+Ctrl+]</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="859"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="859"/>
         <source>Bring selected object(s) to front of their layer</source>
         <translation>Μεταφέρει τα επιλεγμένα αντικείμενα εμπρός στο επίπεδό τους</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="864"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="864"/>
         <source>Bring Forward</source>
         <translation>Μεταφορά προς τα Εμπρός</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="865"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="865"/>
         <source>Ctrl+]</source>
         <translation>Ctrl+]</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="866"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="866"/>
         <source>Bring selected object(s) forward in their layer</source>
         <translation>Μεταφέρει τα επιλεγμένα αντικείμενα προς τα εμπρός στο επίπεδό τους</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="871"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="871"/>
         <source>Send Backward</source>
         <translation>Μεταφορά προς τα Πίσω</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="872"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="872"/>
         <source>Ctrl+[</source>
         <translation>Ctrl+[</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="873"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="873"/>
         <source>Send selected object(s) back in their layer</source>
         <translation>Μεταφέρει τα επιλεγμένα αντικείμενα πίσω στο επίπεδό τους</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="878"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="878"/>
         <source>Send to Back</source>
         <translation>Μεταφορά Πίσω</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="879"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="879"/>
         <source>Shift+Ctrl+[</source>
         <translation>Shift+Ctrl+[</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="880"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="880"/>
         <source>Send selected object(s) to the back of their layer</source>
         <translation>Μεταφέρει τα επιλεγμένα αντικείμενα προς τα πίσω στο επίπεδό τους</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="885"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="885"/>
         <source>Lock Part</source>
         <translation>Κλείδωμα Εξαρτήματος</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="886"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="886"/>
         <source>Prevent a part from being moved</source>
         <translation>Αποτρέπει την μετακίνηση ενός εξαρτήματος</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="895"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="895"/>
         <source>Select All Locked Parts</source>
         <translation>Επιλογή Όλων των Κλειδωμένων Εξαρτημάτων</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="896"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="896"/>
         <source>Select all parts that can&apos;t be moved</source>
         <translation>Επιλέγει όλα τα εξαρτήματα που δεν μπορούν να μετακινηθούν</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="899"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="899"/>
         <source>&amp;Show All Layers</source>
         <translation>&amp;Εμφάνιση Όλων των Επιπέδων</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="900"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="900"/>
         <source>Show all the available layers for the current view</source>
         <translation>Εμφανίζει όλα τα διαθέσιμα επίπεδα για την τρέχουσα προβολή</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="903"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="903"/>
         <source>&amp;Hide All Layers</source>
         <translation>&amp;Απόκρυψη Όλων των Επιπέδων</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="904"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="904"/>
         <source>Hide all the layers of the current view</source>
         <translation>Αποκρύπτει όλα τα επίπεδα της τρέχουσας προβολής</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="907"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="907"/>
         <source>&amp;Show part label</source>
         <translation>&amp;Εμφάνιση ετικέτας εξαρτήματος</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="908"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="908"/>
         <source>Show or hide the label for the selected parts</source>
         <translation>Εμφανίζει ή αποκρύπτει την ετικέτα για το επιλεγμένο εξάρτημα</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="912"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="912"/>
         <source>&amp;Export...</source>
         <translation>&amp;Εξαγωγή...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="913"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="913"/>
         <source>Export selected part</source>
         <translation>Εξάγει το επιλεγμένο εξάρτημα</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="916"/>
-        <location filename="../src/mainwindow_menu.cpp" line="2754"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="916"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2754"/>
         <source>Add Bendpoint</source>
         <translation>Εισαγωγή Καμπής</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="917"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="917"/>
         <source>Add a bendpoint to the selected wire</source>
         <translation>Εισάγει ένα σημείο καμπής στο επιλεγμένο καλώδιο</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="920"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="920"/>
         <source>Convert Bendpoint to Via</source>
-        <translation type="unfinished"></translation>
+        <translation>Μετατροπή σημείου καμπής σε Οπή</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="921"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="921"/>
         <source>Convert the bendpoint to a via</source>
-        <translation type="unfinished"></translation>
+        <translation>Μετατρέπει το σημείο καμπής σε οπή</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="924"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="924"/>
         <source>Convert Via to Bendpoint</source>
-        <translation type="unfinished"></translation>
+        <translation>Μετατροπή Οπής σε Σημείο καμπής</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="925"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="925"/>
         <source>Convert the via to a bendpoint</source>
-        <translation type="unfinished"></translation>
+        <translation>Μετατρέπει την οπή σε σημείο καμπής</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="928"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="928"/>
         <source>Straighten Curve</source>
         <translation>Ευθυγράμμιση Καμπύλης</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="929"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="929"/>
         <source>Straighten the curve of the selected wire</source>
         <translation>Ευθυγραμμίζει την καμπύλη του επιλεγμένου καλωδίου</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="932"/>
-        <location filename="../src/mainwindow_menu.cpp" line="933"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="932"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="933"/>
         <source>Select outdated parts</source>
         <translation>Επιλογή ξεπερασμένων εξαρτημάτων</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="936"/>
-        <location filename="../src/mainwindow_menu.cpp" line="937"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="936"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="937"/>
         <source>Update selected parts</source>
         <translation>Ενημέρωση επιλεγμένων εξαρτημάτων</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="940"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="940"/>
         <source>Open programming window</source>
         <translation>Άνοιγμα παραθύρου προγραμματισμού</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="941"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="941"/>
         <source>Open microcontroller programming window</source>
         <translation>Ανοίγει το παράθυρο προγραμματισμού του μικροελεγκτή</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="946"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="946"/>
         <source>&amp;Zoom In</source>
         <translation>&amp;Μεγέθυνση</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="947"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="947"/>
         <source>Ctrl++</source>
         <translation>Ctrl++</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="948"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="948"/>
         <source>Zoom in</source>
         <translation>Εκτελεί μεγέθυνση</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="954"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="954"/>
         <source>Ctrl+=</source>
         <translation>Ctrl+=</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="958"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="958"/>
         <source>&amp;Zoom Out</source>
         <translation>&amp;Σμίκρυνση</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="959"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="959"/>
         <source>Ctrl+-</source>
         <translation>Ctrl+-</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="960"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="960"/>
         <source>Zoom out</source>
         <translation>Εκτελεί σμίκρυνση</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="963"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="963"/>
         <source>&amp;Fit in Window</source>
         <translation>&amp;Ταίριασμα στο Παράθυρο</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="964"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="964"/>
         <source>Ctrl+0</source>
         <translation>Ctrl+0</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="965"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="965"/>
         <source>Fit in window</source>
         <translation>Προσαρμόζει το μέγεθος σε αυτό του παραθύρου</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="968"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="968"/>
         <source>&amp;Actual Size</source>
         <translation>&amp;Πραγματικό Μέγεθος</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="969"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="969"/>
         <source>Actual (real world physical) size</source>
         <translation>Πραγματικό φυσικό μέγεθος</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="972"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="972"/>
         <source>100% Size</source>
         <translation>100% Μέγεθος</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="973"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="973"/>
         <source>Shift+Ctrl+0</source>
         <translation>Shift+Ctrl+0</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="974"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="974"/>
         <source>100% (pixel) size</source>
         <translation>100% μέγεθος (εικονοστοιχεία)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="977"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="977"/>
         <source>Align to Grid</source>
         <translation>Ευθυγράμμιση στο Πλέγμα</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="978"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="978"/>
         <source>Align items to grid when dragging</source>
         <translation>Ευθυγραμμίζει τα αντικείμενα στο πλέγμα κατά το σύρσιμο</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1280"/>
-        <location filename="../src/mainwindow_menu.cpp" line="1313"/>
-        <location filename="../src/mainwindow_menu.cpp" line="1326"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="1280"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="1313"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="1326"/>
         <source>&amp;Routing</source>
         <translation>&amp;Δρομολόγηση</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2026"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2026"/>
         <source>A new Parts Editor is under construction. The old Parts Editor is still available, but the code is pretty buggy. So use it at your own risk.
 
 For many purposes you can use a Generic IC chip instead (first part in the ICs section of the Parts Bin). Drag one into your sketch and from the Inspector change the package: there are SIPs, DIPS, and a set of SMDs. Depending on the package you choose, you can also change the chip label, set the number of pins, and change the pin labels.
 
 Open the old Parts Editor?</source>
-        <translation type="unfinished"></translation>
+        <translation>Ένας νέος Επεξεργαστής Εξαρτημάτων είναι υπό κατασκευή. Ο παλιός Επεξεργαστής Εξαρτημάτων είναι ακόμη διαθέσιμος, αλλά ο κώδικας έχει αρκετά σφάλματα. Οπότε χρησιμοποιήστε τον με δική σας ευθύνη.
+
+Για πολλές χρήσεις μπορείτε να χρησιμοποιήσετε ένα γενικής χρήσης IC (πρώτο εξάρτημα στο δοχείο IC). Σύρετε ένα στο σχέδιο σας και από τον Ελεγκτή αλλάξτε την συσκευασία: Υπάρχουν SIPs, DIPs και ένα σετ από SMDs. Ανάλλογα με την συσκευασία που θα επιλέξετε, μπορείτε επίσης να αλλάξετε την ετικέτα του τσιπ, των αριθμό των ακίδων και την ετικέτα των ακίδων.
+
+Άνοιγμα του παλιού Επεξεργαστή Εξαρτηματων;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2400"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2400"/>
         <source>&amp;Create trace from ratsnest</source>
         <translation>&amp;Δημιουργία ίχνους από το rastnet</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2401"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2401"/>
         <source>Create a trace from the ratsnest line</source>
         <translation>Δημιουργεί έναν διάδρομο από την γραμμή του rastnet</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2404"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2404"/>
         <source>&amp;Create wire from ratsnest</source>
         <translation>&amp;Δημιουργία καλωδίου από το rastnet</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2405"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2405"/>
         <source>Create a wire from the ratsnest line</source>
         <translation>Δημιουργεί ένα καλώδιο από την γραμμή του rastnet</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2428"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2428"/>
         <source>Select All Wires</source>
         <translation>Επιλογή Όλων των Καλωδίων</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2429"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2429"/>
         <source>Select all wires</source>
         <translation>Επιλέγει όλα τα καλώδια</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2440"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2440"/>
         <source>Select All &quot;Don&apos;t Autoroute&quot; Traces</source>
         <translation>Επιλογή Όλων &quot;Μην Αυτοδρομολογείς&quot; τα Ίχνη</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2444"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2444"/>
         <source>Select All Autoroutable Traces</source>
         <translation>Επιλογή Όλων των Αυτοδρομολογούμενων Ιχνών</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2445"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2445"/>
         <source>Select all trace wires that can be changed during autorouting</source>
         <translation>Επιλέγει όλα ίχνη καλωδίων που μπορεί να αλλαχτούν κατά την αυτοδρομολόγηση</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2465"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2465"/>
         <source>Fill empty regions of the copper layer--not including traces connected to a GROUND</source>
         <translation>Γεμίζει τις άδειες περιοχές του επιπέδου του χαλκού χωρίς να περιλαμβάνει τα ίχνη που συνδέονται σε κάποια Γείωση (GROUND)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2472"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2472"/>
         <source>Choose Ground Fill Seed(s)...</source>
         <translation>Επιλέξτε Φύτρες Γεμίσματος Γείωσης...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2476"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2476"/>
         <source>Set Ground Fill Seed</source>
         <translation>Καθορίστε Φύτρες Γεμίσματος Γείωσης</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2477"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2477"/>
         <source>Treat this connector and its connections as a &apos;ground&apos; during ground fill.</source>
         <translation>Αντιμετωπίζει τους συνδετήρες και τις συνδέσεις τους ως &apos;γείωση&apos; κατά το γέμισμα γείωσης.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2481"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2481"/>
         <source>Clear Ground Fill Seeds</source>
         <translation>Καθάρισμα των Φυτρών Γεμίσματος Γείωσης</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2482"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2482"/>
         <source>Clear ground fill seeds--enable copper fill only.</source>
         <translation>Καθαρίζει τις φύτρες γεμίσματος γείωσης. Ενεργοποιεί γέμισμα χαλκού μόνο.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2664"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2664"/>
         <source>jumpers</source>
         <translation>βραχυκυκλωτήρες</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2668"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2668"/>
         <source>copperfill</source>
         <translation>γέμισμα χαλκού</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2672"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2672"/>
         <source>vias</source>
         <translation>οπές</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2896"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2896"/>
         <source>Generating %1 fill...</source>
         <translation>Παραγωγή %1 γεμίσματος...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2896"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2896"/>
         <source>ground</source>
         <translation>γείωση</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2896"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2896"/>
         <source>copper</source>
         <translation>χαλκός</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="3422"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="3422"/>
         <source>unable to find replacement for %1.
 </source>
         <translation>Αδυναμία εύρεσης αντικατάστασης για το %1.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="995"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="995"/>
         <source>&amp;Show Breadboard</source>
         <translation>&amp;Εμφάνιση Breadboard</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="147"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="147"/>
         <source>Fritzing Files (*%1 *%2 *%3 *%4 *%5);;Fritzing (*%1);;Fritzing Shareable (*%2);;Fritzing Part (*%3);;Fritzing Bin (*%4);;Fritzing Shareable Bin (*%5)</source>
         <translation>Αρχεία Fritzing (*%1 *%2 *%3 *%4 *%5);;Fritzing (*%1);;Διαμοιραζόμενα Fritzing (*%2);;Εξαρτήματα Fritzing (*%3);;Δοχεία Fritzing (*%4);;Διαμοιραζόμενα Δοχεία Fritzing (*%5)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="212"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="212"/>
         <source>Revert?</source>
-        <translation type="unfinished"></translation>
+        <translation>Αναίρεση;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="213"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="213"/>
         <source>This operation can not be undone--you will lose all of your changes.
 
 Go ahead and revert?</source>
-        <translation type="unfinished"></translation>
+        <translation>Αυτή η ενέργεια δεν μπορεί να αναιρεθεί--θα χάσετε όλες τις αλλαγές.
+
+Συνέχεια στην αναίρεση;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="519"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="519"/>
         <source>Open a Fritzing sketch (.fzz, .fz), or load a Fritzing part (.fzpz), or a Fritzing parts bin (.fzb, .fzbz)</source>
-        <translation type="unfinished"></translation>
+        <translation>Άνοιγμα ενός σχεδίου Fritzing (.fzz, .fz), ή φόρτωση ενός εξαρτήματος Fritzing (.fzpz), ή ένός δοχείου εξαρτηματων Fritzing (.fzb, .fzbz)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="522"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="522"/>
         <source>Revert</source>
-        <translation type="unfinished">Αναίρεση</translation>
+        <translation>Αναίρεση</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="523"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="523"/>
         <source>Reload the sketch</source>
-        <translation type="unfinished"></translation>
+        <translation>Επαναφόρτωση του σχεδίου</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="797"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="797"/>
         <source>Open the parts editor on an existing part</source>
-        <translation type="unfinished"></translation>
+        <translation>Άνοιγμα του επεξεργαστή εξαρτημάτων σε ένα υπάρχον εξάρτημα</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="800"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="800"/>
         <source>Edit (new parts editor)</source>
-        <translation type="unfinished"></translation>
+        <translation>Επεξεργασία (επεξεργαστής νέων εξαρτημάτων)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="801"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="801"/>
         <source>Open the new parts editor on an existing part</source>
-        <translation type="unfinished"></translation>
+        <translation>Άνοιγμα του επεξεργαστή νέων εξαρτημάτων σε ένα υπάρχον εξάρτημα</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="829"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="829"/>
         <source>Rotate 45° Clockwise</source>
         <translation>Περιστροφή 45° Δεξιόστροφα</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="833"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="833"/>
         <source>Rotate 90° Clockwise</source>
         <translation>Περιστροφή 90° Δεξιόστροφα</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="837"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="837"/>
         <source>Rotate 180°</source>
         <translation>Περιστροφή 180°</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="841"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="841"/>
         <source>Rotate 90° Counter Clockwise</source>
         <translation>Περιστροφή 90° Αριστερόστροφα</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="845"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="845"/>
         <source>Rotate 45° Counter Clockwise</source>
         <translation>Περιστροφή 45° Αριστερόστροφα</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="890"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="890"/>
         <source>Sticky</source>
         <translation>Υπόμνημα (Sticky)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="891"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="891"/>
         <source>If a &quot;sticky&quot; part is moved, parts on top of it are also moved</source>
         <translation>Όταν ένα εξάρτημα-υπόμνημα μετακινείτε, τα από πάνω αντικείμενα μετακινούνται επίσης</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="982"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="982"/>
         <source>Show Grid</source>
         <translation>Εμφάνιση Πλέγματος</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="983"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="983"/>
         <source>Show the grid</source>
         <translation>Εμφανίζει το πλέγμα</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="987"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="987"/>
         <source>Set Grid Size...</source>
         <translation>Ρύθμιση μεγέθους πλέγματος...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="988"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="988"/>
         <source>Set the size of the grid in this view</source>
         <translation>Ρυθμίζει το μέγεθος πλέγματος σε αυτή την προβολή</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="991"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="991"/>
         <source>Set Background Color...</source>
         <translation>Ρύθμιση Χρώματος Φόντου...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="992"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="992"/>
         <source>Set the background color of this view</source>
         <translation>Ρυθμίζει το χρώμα φόντου σε αυτή την προβολή</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="996"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="996"/>
         <source>Ctrl+1</source>
         <translation>Ctrl+1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="997"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="997"/>
         <source>Show the breadboard view</source>
         <translation>Εμφανίζει την προβολή breadboard</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1000"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="1000"/>
         <source>&amp;Show Schematic</source>
         <translation>&amp;Εμφάνιση Schematic</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1001"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="1001"/>
         <source>Ctrl+2</source>
         <translation>Ctrl+2</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1002"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="1002"/>
         <source>Show the schematic view</source>
         <translation>Εμφανίζει την προβολή σε σχηματικό</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1005"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="1005"/>
         <source>&amp;Show PCB</source>
         <translation>&amp;Εμφάνιση Τυπωμ.ένου (PCB)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1006"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="1006"/>
         <source>Ctrl+3</source>
         <translation>Ctrl+3</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1007"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="1007"/>
         <source>Show the PCB view</source>
         <translation>Εμφανίζει την προβολή σε τυπωμένο (PCB)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1010"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="1010"/>
         <source>Show Parts Bin Icon View</source>
         <translation>Εμφάνιση Δοχείου Εξαρτημάτων ως Εικονίδια</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1011"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="1011"/>
         <source>Display the parts bin in an icon view</source>
         <translation>Εμφανίζει τα εξαρτήματα στο δοχείο σαν εικονίδια</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1014"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="1014"/>
         <source>Show Parts Bin List View</source>
         <translation>Εμφάνιση Δοχείου Εξαρτημάτων ως Λίστα</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1015"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="1015"/>
         <source>Display the parts bin in a list view</source>
         <translation>Εμφανίζει τα εξαρτήματα στο δοχείο σαν λίστα</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1021"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="1021"/>
         <source>&amp;Minimize</source>
         <translation>&amp;Ελαχιστοποίηση</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1022"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="1022"/>
         <source>Ctrl+M</source>
         <translation>Ctrl+M</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1023"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="1023"/>
         <source>Minimize current window</source>
         <translation>Ελαχιστοποιεί το τρέχον παράθυρο</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1035"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="1035"/>
         <source>Debugger Output</source>
         <translation>Έξοδος Αποσφαλματωτή</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1041"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="1041"/>
         <source>Online Tutorials</source>
         <translation>Βοηθήματα στο Διαδίκτυο</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1042"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="1042"/>
         <source>Ctrl+?</source>
         <translation>Ctrl+?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1043"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="1043"/>
         <source>Open Fritzing help</source>
         <translation>Άνοιγμα βοήθειας του Fritzing</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1046"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="1046"/>
         <source>Donate to Fritzing</source>
         <translation>Δωρεά προς το Fritzing</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1047"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="1047"/>
         <source>Open Fritzing donation web page</source>
         <translation>Ανοίγει την σελίδα δωρεών του Fritzing</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1050"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="1050"/>
         <source>Online Projects Gallery</source>
         <translation>Συλλογή Έργων στο Διαδίκτυο</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1051"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="1051"/>
         <source>Open Fritzing examples</source>
         <translation>Άνοιγμα παραδειγμάτων του Fritzing</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1054"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="1054"/>
         <source>Online Parts Reference</source>
         <translation>Αναφορά Εξαρτημάτων στο Διαδίκτυο</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1055"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="1055"/>
         <source>Open Parts Reference</source>
         <translation>Άνοιγμα Αναφοράς Εξαρτημάτων</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1058"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="1058"/>
         <source>First Time Help</source>
         <translation>Βοήθεια Πρώτης Φοράς</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1059"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="1059"/>
         <source>Show or Hide First Time Help</source>
         <translation>Εμφανίζει ή κρύβει την Βοήθεια Πρώτης Φοράς</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1068"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="1068"/>
         <source>Check for updates...</source>
         <translation>Έλεγχος για ενημερώσεις...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1069"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="1069"/>
         <source>Check whether a newer version of Fritzing is available for download</source>
         <translation>Ελέγχει αν υπάρχει κάποια νέα έκδοση του Fritzing για μεταφόρτωση</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1072"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="1072"/>
         <source>&amp;About</source>
         <translation>&amp;Περί</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1077"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="1077"/>
         <source>Tips, Tricks and Shortcuts</source>
         <translation>Συμβουλές, Κόλπα και Συντομεύσεις</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1078"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="1078"/>
         <source>Display some handy Fritzing tips and tricks</source>
         <translation>Εμφανίζει μερικές χρήσιμες συμβουλές και κόλπα</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1081"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="1081"/>
         <source>&amp;About Qt</source>
         <translation>&amp;Περί του Qt</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1082"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="1082"/>
         <source>Show Qt&apos;s about box</source>
         <translation>Εμφανίζει πληροφορίες για το Qt</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1085"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="1085"/>
         <source>Report a bug...</source>
         <translation>Αναφορά προβλήματος...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1086"/>
-        <location filename="../src/mainwindow_menu.cpp" line="1090"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="1086"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="1090"/>
         <source>Report a but you&apos;ve found in Fritzing</source>
         <translation>Αναφέρει κάποιο πρόβλημα που εντοπίσατε στο Fritzing</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1089"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="1089"/>
         <source>Enable debugging log</source>
         <translation>Ενεργοποίηση καταγραφής αποσφαλμάτωσης</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1095"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="1095"/>
         <source>&amp;Import parts and bins from old version...</source>
         <translation>&amp;εισαγωγή εξαρτημάτων και δοχείων από παλιότερη έκδοση...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1096"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="1096"/>
         <source>Import parts and bins from previous installation</source>
         <translation>Εισάγει εξαρτήματα και δοχεία από μία προηγούμενη εγκατάσταση</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1112"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="1112"/>
         <source>&amp;File</source>
         <translation>&amp;Αρχείο</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1130"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="1130"/>
         <source>&amp;Export</source>
         <translation>&amp;Εξαγωγή</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1151"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="1151"/>
         <source>as Image</source>
         <translation>ως Εικόνα</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1159"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="1159"/>
         <source>for Production</source>
         <translation>για Παραγωγή</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1195"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="1195"/>
         <source>&amp;Part</source>
         <translation>&amp;Εξάρτημα</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1209"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="1209"/>
         <source>Raise and Lower</source>
         <translation>Ανύψωση και Κατέβασμα</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1242"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="1242"/>
         <source>&amp;View</source>
         <translation>&amp;Προβολή</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1270"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="1270"/>
         <source>&amp;Window</source>
         <translation>&amp;Παράθυρο</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1286"/>
-        <location filename="../src/mainwindow_menu.cpp" line="2460"/>
-        <location filename="../src/mainwindow_menu.cpp" line="2897"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="1286"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2460"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2897"/>
         <source>Ground Fill</source>
         <translation>Γέμισμα Γείωσης</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1340"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="1340"/>
         <source>&amp;Help</source>
         <translation>&amp;Βοήθεια</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1540"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="1540"/>
         <source>Delete Ratsnest Line</source>
         <translation>Διαγραφή Γραμμής Rastnest</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1543"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="1543"/>
         <source>Delete Wire</source>
         <translation>Διαγραφή Καλωδίου</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1773"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="1773"/>
         <source>Delete</source>
         <translation>Διαγραφή</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1927"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="1927"/>
         <source>Actual Size</source>
         <translation>Φυσικό Μέγεθος</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1928"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="1928"/>
         <source>It doesn&apos;t seem to be possible to automatically determine the actual physical size of the monitor, so &apos;actual size&apos; as currently implemented is only a guess. Your best bet would be to drag out a ruler part, then place a real (physical) ruler on top and zoom until they match up.</source>
         <translation>Δεν μοιάζει να είναι εφικτό να καθοριστεί αυτόματα το φυσικό μέγεθος της οθόνης, έτσι το &apos;Φυσικό Μέγεθος&apos; είναι απλά μια εκτίμηση. Η καλύτερη λύση θα ήταν να τοποθετήσετε έναν κανόνα και μετά έναν πραγματικό κανόνα από πάνω να μεγεθύνεται μέχρι να υπάρξει ταύτιση.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2025"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2025"/>
         <source>Parts Editor</source>
         <translation>Επεξεργαστής Εξαρτημάτων</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2199"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2199"/>
         <source>Page Setup</source>
         <translation>Ρύθμιση Σελίδας</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2204"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2204"/>
         <source>Sorry, &quot;%1&quot; has not been implemented yet</source>
         <translation>Συγνώμη. Το &quot;%1&quot; δεν έχει υλοποιηθεί ακόμη</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2378"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2378"/>
         <source>&amp;Autoroute</source>
         <translation>&amp;Αυτοδρομολόγηση</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2379"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2379"/>
         <source>Autoroute...</source>
         <translation>Αυτοδρομολόγηση...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2380"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2380"/>
         <source>Shift+Ctrl+A</source>
         <translation>Shift+Ctrl+A</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2385"/>
-        <location filename="../src/mainwindow_menu.cpp" line="2386"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2385"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2386"/>
         <source>Set both copper layers clickable</source>
         <translation>Ενεργοποίηση του &quot;κλικ&quot; στα δύο επίπεδα</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2387"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2387"/>
         <source>Shift+Ctrl+3</source>
         <translation>Shift+Ctrl+3</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2390"/>
-        <location filename="../src/mainwindow_menu.cpp" line="2391"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2390"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2391"/>
         <source>Set copper top layer clickable</source>
         <translation>Ενεργοποίηση του &quot;κλικ&quot; στο πάνω επίπεδο</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2392"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2392"/>
         <source>Shift+Ctrl+2</source>
         <translation>Shift+Ctrl+2</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2395"/>
-        <location filename="../src/mainwindow_menu.cpp" line="2396"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2395"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2396"/>
         <source>Set copper bottom layer clickable</source>
         <translation>Ενεργοποίηση του &quot;κλικ&quot; στο κάτω επίπεδο</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2397"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2397"/>
         <source>Shift+Ctrl+1</source>
         <translation>Shift+Ctrl+1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2409"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2409"/>
         <source>Do not autoroute</source>
         <translation>Όχι αυτοδομολόγηση</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2410"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2410"/>
         <source>When autorouting, do not rip up this trace wire, via, or jumper item</source>
         <translation>Κατά την αυτοδρομολόγηση, μην πειράζεις αυτό το ίχνος, καλώδιο, τυφλή οπή ή βραχυκυκλωτήρα</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2416"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2416"/>
         <source>Move to other side of the board</source>
         <translation>Μετακίνηση στην άλλη πλευρά της πλακέτας</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2417"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2417"/>
         <source>Move selected traces to the other side of the board (note: the &apos;first&apos; trace will be moved and the rest will follow to the same side)</source>
         <translation>Μετακινεί τα επιλεγμένα ίχνη στην άλλη πλευρά της πλακέτας (θα μετακινηθεί το πρώτο και τα υπόλοιπα θα ακολουθήσουν)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2420"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2420"/>
         <source>Show unrouted</source>
-        <translation type="unfinished"></translation>
+        <translation>Εμφάνιση μη δρομολογημένων</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2421"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2421"/>
         <source>Highlight all unrouted connectors</source>
-        <translation type="unfinished"></translation>
+        <translation>Επισήμανση όλων των μη δρομολογημένων συνδετήρων</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2424"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2424"/>
         <source>Select All Traces</source>
         <translation>Επιλογή Όλων των Ιχνών</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2425"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2425"/>
         <source>Select all trace wires</source>
         <translation>Επιλέγει όλα τα ίχνη καλωδίων</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2432"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2432"/>
         <source>Select All CopperFill</source>
         <translation>Επιλογή Όλου του Γεμίσματος Χαλκού</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2433"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2433"/>
         <source>Select all copper fill items</source>
         <translation>Επιλέγει όλα τα αντικείμενα γεμίσματος χαλκού</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2436"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2436"/>
         <source>Force Update Routing Status and Ratsnests</source>
         <translation>Εξαναγκασμένη Ενημέρωση Κατάστασης Δρομολόγησης και Rastnests</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2437"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2437"/>
         <source>Recalculate routing status and ratsnest wires (in case the auto-update isn&apos;t working correctly)</source>
         <translation>Υπολογίζει πάλι την κατάσταση δρομολόγησης και τα καλώδια rastnests (σε περίπτωση που η αυτοδρομολόγηση δεν δουλεύει σωστά)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2441"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2441"/>
         <source>Select all trace wires excluded from autorouting</source>
         <translation>Επιλογή όλων των ιχνών καλωδίων που εξαιρούνται από την αυτοδρομολόγηση</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2448"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2448"/>
         <source>Select All Jumpers</source>
         <translation>Επιλογή Όλων των Βαχυκυκλωτήρων</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2449"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2449"/>
         <source>Select all jumper item parts</source>
         <translation>Επιλέγει όλους τους βραχυκυκλωτήρες</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2452"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2452"/>
         <source>Select All Vias</source>
         <translation>Επιλογή Όλων των τυφλών Οπών</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2453"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2453"/>
         <source>Select all via parts</source>
         <translation>Επιλέγει όλες τις τυφλές οπές</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2456"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2456"/>
         <source>Tidy Wires</source>
         <translation>Τακτοποίηση Καλωδίων</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2457"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2457"/>
         <source>Tidy selected wires</source>
         <translation>Τακτοποιεί τα επιλεγμένα καλώδια</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2461"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2461"/>
         <source>Fill empty regions of the copper layer--fill will include all traces connected to a GROUND</source>
         <translation>Γεμίζει τις άδειες περιοχές του επιπέδου χαλκού. Το γέμισμα θα περιλάβει όλα τα ίχνη που συνδέονται σε μία γείωση (GROUND)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2464"/>
-        <location filename="../src/mainwindow_menu.cpp" line="2897"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2464"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2897"/>
         <source>Copper Fill</source>
         <translation>Γέμισμα Χαλκού</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2468"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2468"/>
         <source>Remove Copper Fill</source>
         <translation>Αφαίρεση Γέμισμα Χαλκού</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2469"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2469"/>
         <source>Remove the copper fill</source>
         <translation>Αφαιρεί το γέμισμα χαλκού</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2473"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2473"/>
         <source>Fill empty regions of the copper layer--fill will include all traces connected to the seeds</source>
         <translation>Γεμίζει τις άδειες περιοχές του επιπέδου χαλκού. Το γέμισμα θα περιλάβει όλα τα ίχνη που συνδέονται σε φύτρες</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2485"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2485"/>
         <source>Design Rules Check</source>
         <translation>Έλεγχος Κανόνων Σχεδίου (DRC)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2486"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2486"/>
         <source>Select any parts that are too close together for safe board production (w/in 10 mil)</source>
         <translation>Επιλέγει οποιαδήποτε εξαρτήματα είναι πολύ κοντά το ένα με το άλλο για ασφαλή παραγωγή της πλακέτας (w/in 10 mil)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2487"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2487"/>
         <source>Shift+Ctrl+D</source>
         <translation>Shift+Ctrl+D</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2490"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2490"/>
         <source>Check Loaded Traces</source>
-        <translation type="unfinished"></translation>
+        <translation>Έλεγχος Φορτωμένων Ιχνών</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2491"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2491"/>
         <source>Select any traces where the screen location doesn&apos;t match their actual location.</source>
-        <translation type="unfinished"></translation>
+        <translation>Επιλέξτε κάθε ίχνος που η θέση τους στην οθόνη δεν ταιριάζει με την πραγματική τους θέση.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2494"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2494"/>
         <source>Autorouter settings...</source>
         <translation>Ρυθμίσεις Αυτοδρομολογητή...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2495"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2495"/>
         <source>Set autorouting parameters...</source>
         <translation>Επιλογή παραμέτρων αυτοδρομολόγησης...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2505"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2505"/>
         <source>Copper Top and Copper Bottom layers are both active</source>
         <translation>Το Πάνω και Κάτω στρώμα χαλκού είναι ενεργά</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2554"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2554"/>
         <source>Order a PCB...</source>
         <translation>Παραγγελία Τυπωμένου (PCB)...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2555"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2555"/>
         <source>Order a PCB created from your sketch--from fabulous Fritzing Fab</source>
         <translation>Παραγγελία ενός PCB που δημιουργήθηκε από κάποιο σχέδιο σας. Από το εργαστήριο του Fritzing</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2569"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2569"/>
         <source>Your sketch does not have a board yet!  Please add a PCB in order to use the autorouter.</source>
-        <translation type="unfinished"></translation>
+        <translation>Το σχέδιο σας δεν έχει κάποια πλακέτα ακόμη!  Παρακαλώ προσθέστε μια πλακέτα (PCB) για να κάνετε χρήση του αυτόματου δρομολογητή.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2574"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2574"/>
         <source>Please select the board you want to autoroute. The autorouter can only handle one board at a time.</source>
-        <translation type="unfinished"></translation>
+        <translation>Παρακαλώ επιλέξτε την πλακέτα που θέλετε για τον αυτόματο δρομολογητή. Ο αυτόματος δρομολογητής μπορεί να χειριστεί μία πλακέτα την φορά.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2886"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2886"/>
         <source>Your sketch does not have a board yet!  Please add a PCB in order to use ground or copper fill.</source>
-        <translation type="unfinished"></translation>
+        <translation>Το σχέδιο σας δεν έχει κάποια πλακέτα ακόμη!  Παρακαλώ προσθέστε κάποιο PCB για να χρησιμοποιήσετε γέμισμα χαλκού.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2891"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2891"/>
         <source>Please select a PCB--copper fill only works for one board at a time.</source>
-        <translation type="unfinished"></translation>
+        <translation>Παρακαλώ επιλέξτε μία πλακέτα (PCB)--το γέμισμα χαλκού μπορεί να χειριστεί μία πλακέτα την φορά.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2917"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2917"/>
         <source>Your sketch does not have a board yet!  Please add a PCB in order to remove copper fill.</source>
-        <translation type="unfinished"></translation>
+        <translation>Το σχέδιο σας δεν έχει κάποια πλακέτα ακόμη!  Παρακαλώ προσθέστε κάποιο PCB για να αφαιρέσετε το γέμισμα χαλκού.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2922"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2922"/>
         <source>Please select a PCB--ground fill operations only work on a one board at a time.</source>
-        <translation type="unfinished"></translation>
+        <translation>Παρακαλώ επιλέξτε μία πλακέτα (PCB)--το γέμισμα γείωσεις μπορεί να χειριστεί μία πλακέτα την φορά.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="3523"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="3523"/>
         <source>OK</source>
         <translation>Εντάξει</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="3545"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="3545"/>
         <source>Set the grid size for %1.</source>
         <translation>Ρύθμιση μεγέθους πλέγματος για %1.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="3552"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="3552"/>
         <source>Grid Size:</source>
         <translation>Μέγεθος Πλέγματος:</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="3566"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="3566"/>
         <source>in</source>
         <translation>in</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="3569"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="3569"/>
         <source>mm</source>
         <translation>mm</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="3578"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="3578"/>
         <source>Restore Default</source>
         <translation>Αποκατάσταση Προεπιλογών</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="3699"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="3699"/>
         <source>Your sketch does not have a board yet! DRC only works with a PCB.</source>
-        <translation type="unfinished"></translation>
+        <translation>Το σχέδιο σας δεν περιέχει κάποια πλακέτα! Ο DRC λειτουργεί μόνο με μία πλακέτα (PCB).</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="3704"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="3704"/>
         <source>Please select a PCB. DRC only works on one board at a time.</source>
-        <translation type="unfinished"></translation>
+        <translation>Παρακαλώ επιλέξτε μία πλακέτα (PCB)--ο DRC μπορεί να χειριστεί μία πλακέτα την φορά.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="3810"/>
-        <location filename="../src/mainwindow_menu.cpp" line="3827"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="3810"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="3827"/>
         <source>Your sketch does not have a board yet! Please add a PCB in order to use copper fill operations.</source>
-        <translation type="unfinished"></translation>
+        <translation>Το σχέδιο σας δεν έχει κάποια πλακέτα ακόμη!  Παρακαλώ προσθέστε κάποια πλακέτα (PCB) για να χρησιμοποιήσετε τις λειτουργίες γεμίσματος χαλκού.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="3815"/>
-        <location filename="../src/mainwindow_menu.cpp" line="3832"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="3815"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="3832"/>
         <source>Please select a PCB. Copper fill operations only work on one board at a time.</source>
-        <translation type="unfinished"></translation>
+        <translation>Παρακαλώ επιλέξτε μία πλακέτα (PCB). Το γέμισμα χαλκού μπορεί να χειριστεί μία πλακέτα την φορά.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="3899"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="3899"/>
         <source>%1 background Color</source>
         <translation>%1 Χρώμα φόντου</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2515"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2515"/>
         <source>Copper Top layer is active</source>
         <translation>Το πάνω στρώμα Χαλκού είναι ενεργό</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2525"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2525"/>
         <source>Copper Bottom layer is active</source>
         <translation>Το κάτω στρώμα Χαλκού είναι ενεργό</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2579"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2579"/>
         <source>Autorouting...</source>
         <translation>Αυτοδρομολόγηση...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2584"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2584"/>
         <source>Autorouting Progress...</source>
         <translation>Πρόοδος Αυτοδρομολόγησης...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2746"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2746"/>
         <source>Remove Bendpoint</source>
         <translation>Αφαίρεση Καμπής</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2806"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2806"/>
         <source>Please choose the previous Fritzing folder...</source>
         <translation>Παρακαλώ επιλέξτε τον προηγούμενο φάκελο του Fritzing...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2813"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2813"/>
         <source>The folder &quot;%1&quot; isn&apos;t a Friting installation folder</source>
         <translation>Ο φάκελος &quot;%1&quot; δεν είναι φάκελος εγκατάστασης του Fritzing</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2847"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2847"/>
         <source>You will have to restart Fritzing in order to use the imported parts</source>
         <translation>Θα πρέπει να επανεκκινήσετε το fritzing για να χρησιμοποιήσετε τα εισηγμένα εξαρτήματα</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2945"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2945"/>
         <source>Remove copper fill</source>
         <translation>Αφαίρεση γεμίσματος χαλκού</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="3004"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="3004"/>
         <source>&amp;Wire Color</source>
         <translation>&amp;Χρώμα Καλωδίου</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="3279"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="3279"/>
         <source>Launch %1...</source>
         <translation>Εκκίνηση %1...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="3360"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="3360"/>
         <source>No outdated parts found.
 All your parts are up-to-date.</source>
         <translation>Δεν βρέθηκαν ξεπερασμένα εξαρτήματα.
 Όλα τα εξαρτηματά σας είναι ενημερωμένα.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="3365"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="3365"/>
         <source>Outdated parts</source>
         <translation>Ξεπερασμένα εξαρτήματα</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/mainwindow_menu.cpp" line="3366"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="3366"/>
         <source>Found %n outdated parts. Do you want to update them now?</source>
         <translation>
             <numerusform>Βρέθηκε %n ξεπερασμένο εξάρτημα. Θέλετε να το ενημερώσετε τώρα;</numerusform>
@@ -3848,16 +3781,61 @@ All your parts are up-to-date.</source>
         </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="3478"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="3478"/>
         <source>Update %1 part(s)</source>
         <translation>Ενημέρωση %1 εξαρτημάτων</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="3483"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="3483"/>
         <source>Successfully updated %1 part(s).
 Please check all views for potential side-effects.</source>
         <translation>Επιτυχής ενημέρωση %1 εξαρτημάτων.
 Παρακαλώ ελέξτε όλες τις προβολές για τυχόν λάθη.</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow/mainwindow_dock.cpp" line="72"/>
+        <source>View Switcher</source>
+        <translation type="unfinished">Επιλογέας Εμφάνισης</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow/mainwindow_dock.cpp" line="83"/>
+        <source>Inspector</source>
+        <translation type="unfinished">Ελεγκτής</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow/mainwindow_dock.cpp" line="85"/>
+        <source>Undo History</source>
+        <translation type="unfinished">Ιστορία Αναίρεσης</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow/mainwindow_dock.cpp" line="106"/>
+        <source>Breadboard</source>
+        <translation type="unfinished">Breadboard</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow/mainwindow_dock.cpp" line="107"/>
+        <source>Schematic</source>
+        <translation type="unfinished">Σχέδιο</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow/mainwindow_dock.cpp" line="108"/>
+        <source>PCB</source>
+        <translation type="unfinished">Τυπωμένο (PCB)</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow/mainwindow_dock.cpp" line="109"/>
+        <source>Navigator</source>
+        <translation type="unfinished">Πλοηγός</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow/mainwindow_dock.cpp" line="112"/>
+        <source>Layers</source>
+        <translation type="unfinished">Επίπεδα</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow/mainwindow_dock.cpp" line="244"/>
+        <source>Couldn&apos;t get the dock widget</source>
+        <translation type="unfinished">Δεν μπόρεσε να γίνει λήψη του widget απόθεσης</translation>
     </message>
 </context>
 <context>
@@ -3865,87 +3843,87 @@ Please check all views for potential side-effects.</source>
     <message>
         <location filename="../src/partseditor/metadataview.cpp" line="160"/>
         <source>This is where you edit the metadata for the part ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Εδώ τροποποιείτε τα μετα-δεδομένα για το εξάρτημα ...</translation>
     </message>
     <message>
         <location filename="../src/partseditor/metadataview.cpp" line="171"/>
         <source>Set the part&apos;s title</source>
-        <translation type="unfinished"></translation>
+        <translation>Επιλέξτε τον τίτλο του εξαρτήματος</translation>
     </message>
     <message>
         <location filename="../src/partseditor/metadataview.cpp" line="172"/>
         <source>Title</source>
-        <translation type="unfinished"></translation>
+        <translation>Τίτλος</translation>
     </message>
     <message>
         <location filename="../src/partseditor/metadataview.cpp" line="178"/>
         <source>Set the part&apos;s date</source>
-        <translation type="unfinished"></translation>
+        <translation>Επιλέξτε την ημερομηνία του εξαρτήματος</translation>
     </message>
     <message>
         <location filename="../src/partseditor/metadataview.cpp" line="180"/>
         <source>Date</source>
-        <translation type="unfinished">Ημερομηνία</translation>
+        <translation>Ημερομηνία</translation>
     </message>
     <message>
         <location filename="../src/partseditor/metadataview.cpp" line="186"/>
         <source>Set the part&apos;s author</source>
-        <translation type="unfinished"></translation>
+        <translation>Επιλέξτε τον δημιουργό του εξαρτήματος</translation>
     </message>
     <message>
         <location filename="../src/partseditor/metadataview.cpp" line="187"/>
         <source>Author</source>
-        <translation type="unfinished">Συγγραφέας</translation>
+        <translation>Συγγραφέας</translation>
     </message>
     <message>
         <location filename="../src/partseditor/metadataview.cpp" line="193"/>
         <source>Set the part&apos;s description--you can use simple html (as defined by Qt&apos;s Rich Text)</source>
-        <translation type="unfinished"></translation>
+        <translation>Επιλέξτε την περιγραφή του εξαρτήματος--μπορείτε να χρησιμοποιήσετε απλή html (όπως καθορίζεται από το Qt&apos;s Rich Text)</translation>
     </message>
     <message>
         <location filename="../src/partseditor/metadataview.cpp" line="194"/>
         <source>Description</source>
-        <translation type="unfinished">Περιγραφή</translation>
+        <translation>Περιγραφή</translation>
     </message>
     <message>
         <location filename="../src/partseditor/metadataview.cpp" line="200"/>
         <source>Set the default part label prefix</source>
-        <translation type="unfinished"></translation>
+        <translation>Επιλέξτε το προκαθορισμένο πρόθεμα για την ετικέτα</translation>
     </message>
     <message>
         <location filename="../src/partseditor/metadataview.cpp" line="201"/>
         <source>Label</source>
-        <translation type="unfinished">Ετικέτα</translation>
+        <translation>Ετικέτα</translation>
     </message>
     <message>
         <location filename="../src/partseditor/metadataview.cpp" line="207"/>
         <source>Set the part&apos;s family--what other parts is this part related to</source>
-        <translation type="unfinished"></translation>
+        <translation>Επιλέξτε την οικογένεια του εξαρτήματος--με τι άλλα εξαρτήματα σχετίζεται</translation>
     </message>
     <message>
         <location filename="../src/partseditor/metadataview.cpp" line="209"/>
         <source>Family</source>
-        <translation type="unfinished"></translation>
+        <translation>Οικογένεια</translation>
     </message>
     <message>
         <location filename="../src/partseditor/metadataview.cpp" line="213"/>
         <source>Set the part&apos;s properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Επιλέξτε τις ιδιότητες του εξαρτήματος</translation>
     </message>
     <message>
         <location filename="../src/partseditor/metadataview.cpp" line="215"/>
         <source>Properties</source>
-        <translation type="unfinished">Ιδιότητες</translation>
+        <translation>Ιδιότητες</translation>
     </message>
     <message>
         <location filename="../src/partseditor/metadataview.cpp" line="219"/>
         <source>Set the part&apos;s tags</source>
-        <translation type="unfinished"></translation>
+        <translation>Επιλέξτε τις ετικέτες του εξαρτήματος</translation>
     </message>
     <message>
         <location filename="../src/partseditor/metadataview.cpp" line="221"/>
         <source>Tags</source>
-        <translation type="unfinished">Ετικέτες</translation>
+        <translation>Ετικέτες</translation>
     </message>
 </context>
 <context>
@@ -3987,29 +3965,16 @@ Please check all views for potential side-effects.</source>
         <translation>στο</translation>
     </message>
     <message>
-        <location filename="../src/model/modelbase.cpp" line="382"/>
+        <location filename="../src/model/modelbase.cpp" line="383"/>
         <source>File save failed!</source>
         <translation>Η αποθήκευση αρχείου απέτυχε!</translation>
     </message>
     <message>
-        <location filename="../src/model/modelbase.cpp" line="383"/>
+        <location filename="../src/model/modelbase.cpp" line="384"/>
         <source>Couldn&apos;t overwrite file &apos;%1&apos;.
 Reason: %2 (errcode %3)</source>
         <translation>Αδυναμία αντικατάστασης του αρχείου &apos;%1&apos;
 Αιτία: %2 (κωδ. σφαλμ. %3)</translation>
-    </message>
-</context>
-<context>
-    <name>ModelPartShared</name>
-    <message>
-        <location filename="../src/model/modelpartshared.cpp" line="504"/>
-        <source>Fritzing</source>
-        <translation>Fritzing</translation>
-    </message>
-    <message>
-        <location filename="../src/model/modelpartshared.cpp" line="504"/>
-        <source>Unable to parse &apos;%1&apos;: %2: line %3 column %4.</source>
-        <translation>Αδυναμία συντακτικής ανάλυσης &apos;%1&apos;: %2: γραμμή %3 στήλη %4.</translation>
     </message>
 </context>
 <context>
@@ -4047,74 +4012,74 @@ Reason: %2 (errcode %3)</source>
     </message>
     <message>
         <location filename="../src/sketch/pcbsketchwidget.cpp" line="746"/>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1296"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1254"/>
         <source>Resize board to %1 %2</source>
         <translation>Μέγεθος πλακέτας σε %1 %2</translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1128"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1082"/>
         <source>Change trace layer</source>
         <translation>Αλλαγή επιπέδου ίχνους</translation>
     </message>
     <message>
         <location filename="../src/sketch/pcbsketchwidget.cpp" line="254"/>
         <location filename="../src/sketch/pcbsketchwidget.cpp" line="259"/>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1511"/>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1516"/>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1545"/>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1560"/>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1574"/>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1596"/>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1614"/>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1653"/>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1658"/>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1665"/>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1675"/>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1696"/>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1712"/>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2242"/>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2247"/>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2271"/>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2276"/>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2435"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1469"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1474"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1503"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1518"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1532"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1554"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1572"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1611"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1616"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1623"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1633"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1654"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1670"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2200"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2205"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2229"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2234"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2403"/>
         <source>Fritzing</source>
         <translation>Fritzing</translation>
     </message>
     <message>
         <location filename="../src/sketch/pcbsketchwidget.cpp" line="255"/>
         <source>Your sketch does not have a board yet! Please add a PCB in order to use this selection operation.</source>
-        <translation type="unfinished"></translation>
+        <translation>Το σχέδιο σας δεν έχει κάποια πλακέτα ακόμη!  Παρακαλώ προσθέστε κάποια πλακέτα (PCB) για να χρησιμοποιήσετε αυτή την λειτουργία επιλογής.</translation>
     </message>
     <message>
         <location filename="../src/sketch/pcbsketchwidget.cpp" line="260"/>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2248"/>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2277"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2206"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2235"/>
         <source>Please click on a PCB first--this selection operation only works for one board at a time.</source>
-        <translation type="unfinished"></translation>
+        <translation>Παρακαλώ κάντε &quot;κλικ&quot; σε μία πλακέτα (PCB) πρώτα--αυτή η λειτουργία επιλογής λειτουργεί με μία πλακέτα την φορά.</translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1512"/>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1654"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1470"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1612"/>
         <source>Your sketch does not have a board yet!  Please add a PCB in order to use copper fill.</source>
         <translation>Το σχέδιο σας δεν έχει κάποια πλακέτα ακόμη!  Παρακαλώ προσθέστε κάποιο PCB για να χρησιμοποιήσετε γέμισμα χαλκού.</translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1517"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1475"/>
         <source>%1 Fill: please select the board you want to apply fill to.</source>
         <translation>%1 Γέμισμα: παρακαλώ επιλέξτε την πλακέτα που θέλετε να εφαρμόσετε το γέμισμα.</translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1517"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1475"/>
         <source>Ground</source>
         <translation>Γείωση</translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1517"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1475"/>
         <source>Copper</source>
         <translation>Χαλκός</translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1527"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1485"/>
         <source>Please designate one or more ground fill seeds before doing a ground fill.
 
 </source>
@@ -4123,137 +4088,165 @@ Reason: %2 (errcode %3)</source>
 </translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1545"/>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1675"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1503"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1633"/>
         <source>Fritzing error: unable to render board svg (1).</source>
         <translation>Σφάλμα Fritzing: Αδυναμία απόδοσης του board.svg(1).</translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1560"/>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1574"/>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1696"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1518"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1532"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1654"/>
         <source>Fritzing error: unable to render copper svg (1).</source>
         <translation>Σφάλμα Fritzing: Αδυναμία απόδοσης του copper.svg(1).</translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1596"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1554"/>
         <source>Fritzing error: unable to write copper fill (1).</source>
         <translation>Σφάλμα Fritzing: Αδυναμία εγγραφής του γεμίσματος χαλκού(1).</translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1614"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1572"/>
         <source>Fritzing error: unable to write copper fill (2).</source>
         <translation>Σφάλμα Fritzing: Αδυναμία εγγραφής του γεμίσματος χαλκού(2).</translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1659"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1617"/>
         <source>Copper fill: please select only the board you want to fill.</source>
         <translation>Γέμισμα χαλκού: παρακαλώ επιλέξτε μόνο την πλακέτα που θέλετε να γεμίσετε.</translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1665"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1623"/>
         <source>Unable to create copper fill--probably the part wasn&apos;t dropped onto the PCB.</source>
         <translation>Αδυναμία γεμίσματος χαλκού. Πιθανότατα το εξάρτημα δεν τοποθετήθηκε πάνω στο τυπωμένο (PCB).</translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1712"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="1670"/>
         <source>Unable to create copper fill--possibly the part was dropped onto another part or wire rather than the actual PCB.</source>
         <translation>Αδυναμία γεμίσματος χαλκού. Πιθανότατα το εξάρτημα τοποθετήθηκε πάνω κάποιο άλλο εξάρτημα, καλώδιο και όχι στο τυπωμένο (PCB).</translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2104"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2062"/>
         <source>Clear ground fill seeds</source>
         <translation>Καθαρισμός φυτρών γεμίσματος χαλκού</translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2243"/>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2272"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2201"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2230"/>
         <source>Your sketch does not have a board yet!  Please add a PCB in order to use this selection operation.</source>
-        <translation type="unfinished"></translation>
+        <translation>Το σχέδιο σας δεν έχει κάποια πλακέτα ακόμη!  Παρακαλώ προσθέστε κάποια πλακέτα (PCB) για να χρησιμοποιήσετε αυτή την λειτουργία επιλογής.</translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2436"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2404"/>
         <source>Unable to convert this via to a bendpoint because it is connected to a part that is only on the bottom layer and another part that is only on the top layer.</source>
-        <translation type="unfinished"></translation>
+        <translation>Αδυναμία μετατροπής της οπής σε σημείο καμπής διότι είναι συνδεδεμένη σε κάποιο εξάρτημα που είναι μόνο στο κάτω επίπεδο και σε ένα άλλο που είναι μόνο στο πάνω επίπεδο.</translation>
     </message>
 </context>
 <context>
     <name>PEMainWindow</name>
     <message>
-        <location filename="../src/partseditor/pemainwindow.cpp" line="276"/>
-        <location filename="../src/partseditor/pemainwindow.cpp" line="356"/>
-        <location filename="../src/partseditor/pemainwindow.cpp" line="363"/>
+        <location filename="../src/partseditor/pemainwindow.cpp" line="221"/>
+        <source>Tools</source>
+        <translation type="unfinished">Εργαλεία</translation>
+    </message>
+    <message>
+        <location filename="../src/partseditor/pemainwindow.cpp" line="300"/>
+        <location filename="../src/partseditor/pemainwindow.cpp" line="378"/>
+        <location filename="../src/partseditor/pemainwindow.cpp" line="385"/>
         <source>Parts Editor</source>
-        <translation type="unfinished">Επεξεργαστής Εξαρτημάτων</translation>
+        <translation>Επεξεργαστής Εξαρτημάτων</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/pemainwindow.cpp" line="403"/>
+        <location filename="../src/partseditor/pemainwindow.cpp" line="428"/>
         <source>New Parts Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Επεξεργαστής Νέων Εξαρτημάτων</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/pemainwindow.cpp" line="409"/>
+        <location filename="../src/partseditor/pemainwindow.cpp" line="434"/>
         <source>Show Icon</source>
-        <translation type="unfinished"></translation>
+        <translation>Εμφάνιση Εικονιδίου</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/pemainwindow.cpp" line="410"/>
+        <location filename="../src/partseditor/pemainwindow.cpp" line="435"/>
         <source>Ctrl+4</source>
-        <translation type="unfinished">Ctrl+4</translation>
+        <translation>Ctrl+4</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/pemainwindow.cpp" line="411"/>
+        <location filename="../src/partseditor/pemainwindow.cpp" line="436"/>
         <source>Show the icon view</source>
-        <translation type="unfinished"></translation>
+        <translation>Εμφανίζει την προβολή σε εικονίδια</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/pemainwindow.cpp" line="414"/>
+        <location filename="../src/partseditor/pemainwindow.cpp" line="439"/>
         <source>Show Metatdata</source>
-        <translation type="unfinished"></translation>
+        <translation>Εμφάνιση Μεταδεδομένων</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/pemainwindow.cpp" line="415"/>
+        <location filename="../src/partseditor/pemainwindow.cpp" line="440"/>
         <source>Ctrl+5</source>
-        <translation type="unfinished">Ctrl+5</translation>
+        <translation>Ctrl+5</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/pemainwindow.cpp" line="416"/>
+        <location filename="../src/partseditor/pemainwindow.cpp" line="441"/>
         <source>Show the metadata view</source>
-        <translation type="unfinished"></translation>
+        <translation>Εμφάνιση της προβολής μεταδεδομένων</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/pemainwindow.cpp" line="419"/>
+        <location filename="../src/partseditor/pemainwindow.cpp" line="444"/>
         <source>Show Connectors</source>
-        <translation type="unfinished"></translation>
+        <translation>Εμφάνιση Συνδετήρων</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/pemainwindow.cpp" line="420"/>
+        <location filename="../src/partseditor/pemainwindow.cpp" line="445"/>
         <source>Ctrl+6</source>
-        <translation type="unfinished">Ctrl+6</translation>
+        <translation>Ctrl+6</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/pemainwindow.cpp" line="421"/>
+        <location filename="../src/partseditor/pemainwindow.cpp" line="446"/>
         <source>Show the connector metatdata in a list view</source>
-        <translation type="unfinished"></translation>
+        <translation>Εμφανίζει σε λίστα τα μεταδεδομένα του συνδετήρα</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/pemainwindow.cpp" line="463"/>
+        <location filename="../src/partseditor/pemainwindow.cpp" line="488"/>
         <source>Change family to %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Αλλαγή οικογένειας σε %1</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/pemainwindow.cpp" line="475"/>
+        <location filename="../src/partseditor/pemainwindow.cpp" line="496"/>
         <source>Change %1 to &apos;%2&apos;</source>
+        <translation>Αλλαγή %1 σε &apos;%2&apos;</translation>
+    </message>
+    <message>
+        <location filename="../src/partseditor/pemainwindow.cpp" line="496"/>
+        <source>Change description</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partseditor/pemainwindow.cpp" line="504"/>
+        <location filename="../src/partseditor/pemainwindow.cpp" line="535"/>
         <source>Change tags</source>
-        <translation type="unfinished"></translation>
+        <translation>Αλλαγή ετικετών</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/pemainwindow.cpp" line="534"/>
+        <location filename="../src/partseditor/pemainwindow.cpp" line="568"/>
         <source>Change properties</source>
+        <translation>Αλλαγή ιδιοτήτων</translation>
+    </message>
+    <message>
+        <location filename="../src/partseditor/pemainwindow.cpp" line="629"/>
+        <source>Change connector %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PEToolView</name>
+    <message>
+        <location filename="../src/partseditor/petoolview.cpp" line="67"/>
+        <source>width</source>
+        <translation type="unfinished">πλάτος</translation>
+    </message>
+    <message>
+        <location filename="../src/partseditor/petoolview.cpp" line="73"/>
+        <source>height</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4304,56 +4297,56 @@ Reason: %2 (errcode %3)</source>
         <translation>Επεξεργασία Ετικέτας Ακίδων</translation>
     </message>
     <message>
-        <location filename="../src/items/paletteitem.cpp" line="596"/>
-        <location filename="../src/items/paletteitem.cpp" line="607"/>
-        <location filename="../src/items/paletteitem.cpp" line="631"/>
+        <location filename="../src/items/paletteitem.cpp" line="618"/>
+        <location filename="../src/items/paletteitem.cpp" line="629"/>
+        <location filename="../src/items/paletteitem.cpp" line="653"/>
         <source>Fritzing</source>
         <translation>Fritzing</translation>
     </message>
     <message>
-        <location filename="../src/items/paletteitem.cpp" line="597"/>
+        <location filename="../src/items/paletteitem.cpp" line="619"/>
         <source>Unable to proceed; unable to find top level view.</source>
         <translation>Αδυναμία να συνεχιστεί, αδυναμία εύρεσης προβολής πάνω επιπέδου.</translation>
     </message>
     <message>
-        <location filename="../src/items/paletteitem.cpp" line="608"/>
+        <location filename="../src/items/paletteitem.cpp" line="630"/>
         <source>Unable to proceed; part connectors do no have standard IDs.</source>
         <translation>Αδυναμία να συνεχιστεί, οι συνδετήρες των εξαρτημάτων δεν έχουν πρότυπα IDs.</translation>
     </message>
     <message>
-        <location filename="../src/items/paletteitem.cpp" line="632"/>
+        <location filename="../src/items/paletteitem.cpp" line="654"/>
         <source>Label mismatch.  Nothing was saved.</source>
         <translation>Αναντιστοιχία ετικέτας.  Δεν αποθηκεύτηκε τίποτε.</translation>
     </message>
     <message>
-        <location filename="../src/items/paletteitem.cpp" line="785"/>
+        <location filename="../src/items/paletteitem.cpp" line="807"/>
         <source>hole size</source>
-        <translation type="unfinished">μέγεθος οπής</translation>
+        <translation>μέγεθος οπής</translation>
     </message>
     <message>
-        <location filename="../src/items/paletteitem.cpp" line="923"/>
+        <location filename="../src/items/paletteitem.cpp" line="945"/>
         <source>advanced settings</source>
-        <translation type="unfinished">προχωρημένες ρυθμίσεις</translation>
-    </message>
-    <message>
-        <location filename="../src/items/paletteitem.cpp" line="934"/>
-        <source>in</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/items/paletteitem.cpp" line="938"/>
-        <source>mm</source>
-        <translation type="unfinished">mm</translation>
+        <translation>προχωρημένες ρυθμίσεις</translation>
     </message>
     <message>
         <location filename="../src/items/paletteitem.cpp" line="956"/>
-        <source>Hole Diameter</source>
-        <translation type="unfinished">Διάμετρος Οπής</translation>
+        <source>in</source>
+        <translation>in</translation>
     </message>
     <message>
-        <location filename="../src/items/paletteitem.cpp" line="969"/>
+        <location filename="../src/items/paletteitem.cpp" line="960"/>
+        <source>mm</source>
+        <translation>mm</translation>
+    </message>
+    <message>
+        <location filename="../src/items/paletteitem.cpp" line="978"/>
+        <source>Hole Diameter</source>
+        <translation>Διάμετρος Οπής</translation>
+    </message>
+    <message>
+        <location filename="../src/items/paletteitem.cpp" line="991"/>
         <source>Ring Thickness</source>
-        <translation type="unfinished">Πάχος Δακτυλίου</translation>
+        <translation>Πάχος Δακτυλίου</translation>
     </message>
 </context>
 <context>
@@ -5122,7 +5115,7 @@ Note: this warning will not be repeated during this session.</source>
     <message>
         <location filename="../src/dialogs/prefsdialog.cpp" line="295"/>
         <source>Clear Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθαρισμός Ρυθμίσεων</translation>
     </message>
     <message>
         <location filename="../src/dialogs/prefsdialog.cpp" line="358"/>
@@ -5160,12 +5153,12 @@ shift key swaps scroll axis</source>
     <message>
         <location filename="../src/dialogs/prefsdialog.cpp" line="440"/>
         <source>When you mouse-down and drag on a wire or the leg of a part (as opposed to a connector or a bendpoint) do you want to change the curvature of the wire (or leg) or drag out a new bendpoint?</source>
-        <translation type="unfinished"></translation>
+        <translation>Όταν πατάτε το ποντίκι και σύρετε πάνω σε ένα καλώδιο ή στο πόδι ενός εξαρτήματος (σε αντίθεση με έναν συνδετήρα ή σημείο καμπής) θέλετε να αλλάζει η καμπύλη ή να δημιουργείται ένα νέο σημείο καμπής;</translation>
     </message>
     <message>
         <location filename="../src/dialogs/prefsdialog.cpp" line="445"/>
         <source>This checkbox sets the default behavior. You can switch back to the non-default behavior by holding down the Control key (Mac: Command key) when you drag.</source>
-        <translation type="unfinished"></translation>
+        <translation>Το κουτί επιλογής θέτει την προκαθορισμένη συμπεριφορά. Μπορείτε να επιστρέψετε στην μη προκαθορισμένη συμπεριφορά κρατώντας το πλήκτρο Control (πλήκτρο Command για Mac) όταν σύρετε.</translation>
     </message>
 </context>
 <context>
@@ -5513,17 +5506,17 @@ shift key swaps scroll axis</source>
         <location filename="../src/autoroute/cmrouter/cmrouter.cpp" line="778"/>
         <location filename="../src/autoroute/cmrouter/cmrouter.cpp" line="1021"/>
         <location filename="../src/autoroute/cmrouter/panelizer.cpp" line="1162"/>
-        <location filename="../src/fritzingwindow.cpp" line="53"/>
-        <location filename="../src/fritzingwindow.cpp" line="146"/>
-        <location filename="../src/mainwindow_menu.cpp" line="2812"/>
-        <location filename="../src/mainwindow_menu.cpp" line="2846"/>
+        <location filename="../src/mainwindow/fritzingwindow.cpp" line="52"/>
+        <location filename="../src/mainwindow/fritzingwindow.cpp" line="145"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2812"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2846"/>
         <location filename="../src/model/modelbase.cpp" line="72"/>
         <location filename="../src/model/modelbase.cpp" line="85"/>
         <location filename="../src/model/modelbase.cpp" line="96"/>
         <location filename="../src/model/modelbase.cpp" line="103"/>
         <location filename="../src/model/modelbase.cpp" line="161"/>
         <location filename="../src/model/modelbase.cpp" line="318"/>
-        <location filename="../src/model/modelbase.cpp" line="365"/>
+        <location filename="../src/model/modelbase.cpp" line="366"/>
         <location filename="../src/model/palettemodel.cpp" line="97"/>
         <location filename="../src/model/palettemodel.cpp" line="107"/>
         <location filename="../src/model/palettemodel.cpp" line="346"/>
@@ -5545,12 +5538,12 @@ shift key swaps scroll axis</source>
     <message>
         <location filename="../src/autoroute/cmrouter/cmrouter.cpp" line="602"/>
         <source>No connections (on the PCB) to route.</source>
-        <translation type="unfinished"></translation>
+        <translation>Δεν υπάρχουν συνδέσεις (στο PCB) για δρομολόγιση.</translation>
     </message>
     <message>
         <location filename="../src/autoroute/cmrouter/cmrouter.cpp" line="602"/>
         <source>No connections to route.</source>
-        <translation type="unfinished"></translation>
+        <translation>Δεν υπάρχουν συνδέσεις για δρομολόγιση.</translation>
     </message>
     <message>
         <location filename="../src/autoroute/cmrouter/cmrouter.cpp" line="668"/>
@@ -5580,32 +5573,32 @@ shift key swaps scroll axis</source>
     <message>
         <location filename="../src/dialogs/prefsdialog.cpp" line="253"/>
         <source>Connected highlight color</source>
-        <translation type="unfinished"></translation>
+        <translation>Χρώμα επισήμανσης συνδεδεμένων</translation>
     </message>
     <message>
         <location filename="../src/dialogs/prefsdialog.cpp" line="273"/>
         <source>Unconnected highlight color</source>
-        <translation type="unfinished"></translation>
+        <translation>Χρώμα επισήμανσης ασύνδετων</translation>
     </message>
     <message>
         <location filename="../src/dialogs/prefsdialog.cpp" line="304"/>
         <source>Clear all saved settings and close this dialog immediately.</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθαρισμός όλων των αποθηκευμένων ρυθμίσεων και κλείσιμο αυτού του διαλόγου.</translation>
     </message>
     <message>
         <location filename="../src/dialogs/prefsdialog.cpp" line="311"/>
         <source>This action does not delete any files; it restores settings to their default values.</source>
-        <translation type="unfinished"></translation>
+        <translation>Αυτή η ενέργεια δεν διαγράφει αρχεία, επαναφέρει τις ρυθμίσεις στις προεπιλεγμένες τιμές.</translation>
     </message>
     <message>
         <location filename="../src/dialogs/prefsdialog.cpp" line="318"/>
         <source>There is no undo for this action, and no further warning!!!!</source>
-        <translation type="unfinished"></translation>
+        <translation>Δεν υπάρχει αναίρεση για αυτή την ενέργεια, και καμιά περαιτέρω προειδοποίηση!!!</translation>
     </message>
     <message>
         <location filename="../src/dialogs/prefsdialog.cpp" line="326"/>
         <source>Clear Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθαρισμός Ρυθμίσεων</translation>
     </message>
     <message>
         <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="496"/>
@@ -5613,17 +5606,17 @@ shift key swaps scroll axis</source>
         <translation>Το Fritzing δεν μπορεί να φορτώσει το δοχείο εξαρτημάτων</translation>
     </message>
     <message>
-        <location filename="../src/fapplication.cpp" line="969"/>
+        <location filename="../src/fapplication.cpp" line="974"/>
         <source>&lt;font face=&apos;Lucida Grande, Tahoma, Sans Serif&apos; size=&apos;2&apos; color=&apos;#eaf4ed&apos;&gt;&amp;#169; 2007-%1 Fachhochschule Potsdam&lt;/font&gt;</source>
         <translation>&lt;font face=&apos;Lucida Grande, Tahoma, Sans Serif&apos; size=&apos;2&apos; color=&apos;#eaf4ed&apos;&gt;&amp;#169; 2007-%1 Fachhochschule Potsdam&lt;/font&gt;</translation>
     </message>
     <message>
-        <location filename="../src/fapplication.cpp" line="983"/>
+        <location filename="../src/fapplication.cpp" line="988"/>
         <source>&lt;font face=&apos;Lucida Grande, Tahoma, Sans Serif&apos; size=&apos;2&apos; color=&apos;#eaf4ed&apos;&gt;Version %1.%2.%3 (%4%5)%6&lt;/font&gt;</source>
         <translation>&lt;font face=&apos;Lucida Grande, Tahoma, Sans Serif&apos; size=&apos;2&apos; color=&apos;#eaf4ed&apos;&gt;Version %1.%2.%3 (%4%5)%6&lt;/font&gt;</translation>
     </message>
     <message>
-        <location filename="../src/fritzingwindow.cpp" line="147"/>
+        <location filename="../src/mainwindow/fritzingwindow.cpp" line="146"/>
         <source>The file &apos;%1&apos; is read-only; please use a different filename.</source>
         <translation>Το αρχείο &apos;%1&apos; είναι μόνο για ανάγνωση, παρακαλώ χρησιμοποιήστε ένα άλλο όνομα αρχείου.</translation>
     </message>
@@ -5633,21 +5626,21 @@ shift key swaps scroll axis</source>
         <translation>Επεξεργασία συνδέσμου</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="2975"/>
-        <location filename="../src/mainwindow_menu.cpp" line="2981"/>
-        <location filename="../src/mainwindow_menu.cpp" line="2989"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2975"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2981"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="2989"/>
         <source>Part</source>
         <translation>Εξάρτημα</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="3001"/>
-        <location filename="../src/mainwindow_menu.cpp" line="3031"/>
-        <location filename="../src/mainwindow_menu.cpp" line="3055"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="3001"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="3031"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="3055"/>
         <source>Wire</source>
         <translation>Καλώδιο</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="3515"/>
+        <location filename="../src/mainwindow/mainwindow_menu.cpp" line="3515"/>
         <source>Set Grid Size</source>
         <translation>Ρύθμιση Μεγέθους Πλέγματος</translation>
     </message>
@@ -5684,7 +5677,7 @@ shift key swaps scroll axis</source>
         <translation>Το αρχείο %1 δεν είναι ένα αρχείο Fritzing (3).</translation>
     </message>
     <message>
-        <location filename="../src/model/modelbase.cpp" line="366"/>
+        <location filename="../src/model/modelbase.cpp" line="367"/>
         <source>Cannot write file temp:
 %1
 %2
@@ -5891,14 +5884,14 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
         <translation>Επιλογή Όλων των Αυτοδρομολογούμενων Ιχνών</translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2314"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2282"/>
         <source>Convert to Via</source>
-        <translation type="unfinished"></translation>
+        <translation>Μετατροπή σε Οπή</translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2443"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2411"/>
         <source>Convert Via to Bendpoint</source>
-        <translation type="unfinished"></translation>
+        <translation>Μετατροπή Οπής σε Σημείο Καμπής</translation>
     </message>
     <message>
         <location filename="../src/sketch/schematicsketchwidget.cpp" line="56"/>
@@ -5911,74 +5904,74 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
         <translation>Σφάλμα ανάγνωσης αρχείου %1: %2.</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3355"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3359"/>
         <source>%1 %2,%3 %4</source>
         <translation>%1 %2,%3 %4</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3384"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3388"/>
         <source>Change leg of %1,%2</source>
         <translation>Αλλαγή στο πόδι του %1,%2</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3539"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3543"/>
         <source>%1 %2 %3</source>
         <translation>%1 %2 %3</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3797"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3801"/>
         <source>%1 Layer</source>
         <translation>%1 Επίπεδο</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="4015"/>
-        <location filename="../src/sketch/sketchwidget.cpp" line="4032"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="4019"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="4036"/>
         <source>Bring forward</source>
         <translation>Μεταφορά προς τα Εμπρός</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="4024"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="4028"/>
         <source>Send backward</source>
         <translation>Μεταφορά προς τα Πίσω</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="4041"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="4045"/>
         <source>Bring to front</source>
         <translation>Μεταφορά Εμπρός</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="5263"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="5267"/>
         <source>Split Wire</source>
         <translation>Διαχωρισμός Καλωδίου</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="5320"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="5324"/>
         <source>Join Wire</source>
         <translation>Ένωση Καλωδίου</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="7448"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="7452"/>
         <source>Trace wires</source>
         <translation>Ιχνηλάτηση καλωδίων</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="7451"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="7455"/>
         <source>Ratsnest wires</source>
         <translation>Καλώδια Ratsnest</translation>
     </message>
     <message>
-        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2262"/>
-        <location filename="../src/sketch/sketchwidget.cpp" line="7453"/>
+        <location filename="../src/sketch/pcbsketchwidget.cpp" line="2220"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="7457"/>
         <source>Select all %1</source>
         <translation>Επιλογή Όλων των %1</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="7732"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="7736"/>
         <source>Select outdated parts</source>
         <translation>Επιλογή ξεπερασμένων εξαρτημάτων</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="7746"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="7750"/>
         <source>Select locked parts</source>
         <translation>Επιλογή κλειδωμένων εξαρτημάτων</translation>
     </message>
@@ -6361,7 +6354,7 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
     <message>
         <location filename="../src/svg/gerbergenerator.cpp" line="156"/>
         <source>paste mask layer(s), </source>
-        <translation type="unfinished"></translation>
+        <translation>επικόληση επιπέδου(ων) μάσκας</translation>
     </message>
     <message>
         <location filename="../src/svg/gerbergenerator.cpp" line="158"/>
@@ -6448,41 +6441,41 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
     <message>
         <location filename="../src/autoroute/cmrouter/panelizer.cpp" line="1162"/>
         <source>%1 wires moved from their saved position in %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 καλώδια μετακινήθηκαν από την αποθηκευμένη θέση τους στη %2.</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/pemainwindow.cpp" line="150"/>
+        <location filename="../src/partseditor/pemainwindow.cpp" line="159"/>
         <source>ii</source>
-        <translation type="unfinished"></translation>
+        <translation>ii</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/pemainwindow.cpp" line="151"/>
+        <location filename="../src/partseditor/pemainwindow.cpp" line="160"/>
         <source>Icon View</source>
-        <translation type="unfinished"></translation>
+        <translation>προβολή εικονιδίων</translation>
     </message>
 </context>
 <context>
     <name>QShortcut</name>
     <message>
-        <location filename="../src/mainwindow.cpp" line="482"/>
+        <location filename="../src/mainwindow/mainwindow.cpp" line="484"/>
         <source>Ctrl</source>
         <comment>for naming shortcut keys on menu items</comment>
         <translation>Ctrl</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="483"/>
+        <location filename="../src/mainwindow/mainwindow.cpp" line="485"/>
         <source>Alt</source>
         <comment>for naming shortcut keys on menu items</comment>
         <translation>Alt</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="484"/>
+        <location filename="../src/mainwindow/mainwindow.cpp" line="486"/>
         <source>Shift</source>
         <comment>for naming shortcut keys on menu items</comment>
         <translation>Shift</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="485"/>
+        <location filename="../src/mainwindow/mainwindow.cpp" line="487"/>
         <source>Meta</source>
         <comment>for naming shortcut keys on menu items</comment>
         <translation>Meta</translation>
@@ -6753,185 +6746,185 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
         <translation>Προσθήκη %1</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="1958"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="1962"/>
         <source>Selection</source>
         <translation>Επιλογή</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3075"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3079"/>
         <source>Move %2 (%1)</source>
         <translation>Μετακίνηση %2 (%1)</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3078"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3082"/>
         <source>Move %2 items (%1)</source>
         <translation>Μετακίνηση %2 αντικειμένων (%1)</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3253"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3257"/>
         <source>Select %1</source>
         <translation>Επιλογή %1</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3256"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3260"/>
         <source>Select %1 items</source>
         <translation>Επιλογή %1 αντικειμένων</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3343"/>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3523"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3347"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3527"/>
         <source>Disconnect</source>
         <translation>Αποσύνδεση</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3344"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3348"/>
         <source>from %1</source>
         <translation>από %1</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3347"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3351"/>
         <source>Move leg of</source>
         <translation>Μετακίνηση από το</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3351"/>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3535"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3355"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3539"/>
         <source>Connect</source>
         <translation>Σύνδεση</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3352"/>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3536"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3356"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3540"/>
         <source>to %1</source>
         <translation>στο %1</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3406"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3410"/>
         <source>Change leg curvature for %1.</source>
         <translation>Αλλαγή καμπύλης ποδιού για το %1.</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3432"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3436"/>
         <source>Change leg bendpoint for %1.</source>
         <translation>Αλλαγή σημείου καμπής ποδιού για το %1.</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3531"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3535"/>
         <source>Change</source>
         <translation>Αλλαγή</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3588"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3592"/>
         <source>Create and connect wire</source>
         <translation>Δημιουργία και σύνδεση καλωδίου</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3708"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3712"/>
         <source>Fritzing</source>
         <translation>Fritzing</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3708"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3712"/>
         <source>This seems like an attempt to create a trace across layers. This circumstance should not arise: please contact the developers.</source>
         <translation>Αυτό μοιάζει με προσπάθεια για την δημιουργία ενός ίχνους διαμέσου επιπέδων. Αυτό δεν έπρεπε να συμβεί: παρακαλώ ειδοποιείστε τους προγραμματιστές.</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3715"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3719"/>
         <source>Create and connect %1</source>
         <translation>Δημιουργία και σύνδεση %1</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3715"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3719"/>
         <source>wire</source>
         <translation>καλωδίου</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="3715"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="3719"/>
         <source>trace</source>
         <translation>ίχνους</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="4340"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="4344"/>
         <source>Rotate %2 (%1)</source>
         <translation>Περιστροφή %2 (%1)</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="4487"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="4491"/>
         <source>Flip %2 (%1)</source>
         <translation>Αναστροφή %2 (%1)</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="5419"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="5423"/>
         <source>Double-click</source>
         <translation>Διπλό-κλικ</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="5419"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="5423"/>
         <source>Drag or double-click</source>
         <translation>Σύρσιμο ή διπλό-κλικ</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="5420"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="5424"/>
         <source>or alt-drag to move the segment</source>
         <translation>ή alt-σύρσιμο για να μετακινηθεί στο κομμάτι</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="5485"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="5489"/>
         <source>Double-click to delete this bend point</source>
         <translation>Διπλό-κλικ για την διαγραφή αυτού του σημείου καμπής</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="5547"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="5551"/>
         <source>Note text change</source>
-        <translation type="unfinished"></translation>
+        <translation>Αλλαγή κειμένου σημείωσης</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="5572"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="5576"/>
         <source>Change %1 label to &apos;%2&apos;</source>
         <translation>Αλλαγή ετικέτας %1 σε &apos;%2&apos;</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="6028"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="6032"/>
         <source>Change %1 color from %2 to %3</source>
         <translation>Αλλαγή χρώματος %1 από %2 σε %3</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="6034"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="6038"/>
         <source>Change color of %1 wires to %2</source>
         <translation>Αλλαγή χρώματος %1 καλωδίων σε %2</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="6080"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="6084"/>
         <source>Change %1 width from %2 to %3</source>
         <translation>Αλλαγή μεγέθους %1 από %2 σε %3</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="6086"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="6090"/>
         <source>Change width of %1 wires to %2</source>
         <translation>Αλλαγή πλάτους %1 καλωδίων σε %2</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="6759"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="6763"/>
         <source>Move label &apos;%1&apos;</source>
         <translation>Μετακίνηση ετικέτας &apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="6766"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="6770"/>
         <source>%1 label &apos;%2&apos;</source>
         <translation>%1 ετικέτα %2</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="6766"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="6770"/>
         <source>Rotate</source>
         <translation>Περιστροφή</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="6766"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="6770"/>
         <source>Flip</source>
         <translation>Αναστροφή</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/sketch/sketchwidget.cpp" line="6801"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="6805"/>
         <source>show part label(s)</source>
         <translation>
             <numerusform>εμφάνιση ετικέτας εξαρτήματος</numerusform>
@@ -6939,7 +6932,7 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/sketch/sketchwidget.cpp" line="6804"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="6808"/>
         <source>hide part label(s)</source>
         <translation>
             <numerusform>απόκρυψη ετικέτας εξαρτήματος</numerusform>
@@ -6947,77 +6940,79 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
         </translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="6818"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="6822"/>
         <source>Resize Note</source>
         <translation>Αλλαγή μεγέθους Σημείωσης</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="7184"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="7188"/>
         <source>Change Resistance from %1 to %2</source>
         <translation>Αλλαγή Αντίστασης από %1 σε %2</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="7208"/>
-        <location filename="../src/sketch/sketchwidget.cpp" line="7217"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="7212"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="7221"/>
         <source>Change %1 from %2 to %3</source>
         <translation>Αλλαγή %1 από %2 σε %3</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="7293"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="7297"/>
         <source>Resize ruler to %1%2</source>
         <translation>Αλλαγή μεγέθους κανόνα σε %1%2</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="7347"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="7351"/>
         <source>Create wire from Ratsnest</source>
         <translation>Δημιουργία καλωδίου από Ratsnes</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="7550"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="7554"/>
         <source>Disconnect all wires from %1</source>
         <translation>Αποσύνδεση όλων των καλωδίων από το %1</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="7553"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="7557"/>
         <source>Disconnect all wires from %1 items</source>
         <translation>Αποσύνδεση όλων των καλωδίων από %1 αντικείμενα</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="7808"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="7812"/>
         <source>Change image from %1 to %2</source>
         <translation>Αλλαγή εικόνας από %1 σε %2</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="8482"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="8486"/>
         <source>Rotate %1</source>
         <translation>Περιστροφή %1</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="8548"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="8552"/>
         <source>change pin labels</source>
         <translation>αλλαγή ετικετών ακίδας (pin)</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="8839"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="8843"/>
         <source>Unrouted connections are highlighted in yellow.</source>
-        <translation type="unfinished"></translation>
+        <translation>Μη δρομολογημένες συνδέσεις είναι επισημασμένες με κίτρινο.</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="8840"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="8844"/>
         <source>There are no unrouted connections</source>
-        <translation type="unfinished"></translation>
+        <translation>Δεν υπάρχουν μη δρομολογημένες συνδέσεις</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="8841"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="8845"/>
         <source>Unrouted connections</source>
-        <translation type="unfinished"></translation>
+        <translation>Μη δρομολογημένς συνδέσεις</translation>
     </message>
     <message>
-        <location filename="../src/sketch/sketchwidget.cpp" line="8842"/>
+        <location filename="../src/sketch/sketchwidget.cpp" line="8846"/>
         <source>%1
 
 Note: you can also trigger this display by mousing down on the routing status text in the status bar.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1
+
+Σημείωση: μπορείτε να προκαλέσετε την οθόνη αυτή πατώντας το ποντίκι στο κείμενο κατάστασης της δρομολόγησης στην μπάρα κατάστασης.</translation>
     </message>
 </context>
 <context>
@@ -7084,7 +7079,7 @@ Note: you can also trigger this display by mousing down on the routing status te
     <message>
         <location filename="../src/help/tipsandtricks.cpp" line="54"/>
         <source>&lt;li&gt;If you can&apos;t find a part in the Parts Bin, the Generic IC is your friend.  Drag it onto your sketch, then use the widgets in the Inspector to: choose from among 25 different through-hole and SMD packages; change the pin label; and--for DIPs and SIPs--change the number of pins.  You can also change the pin names with the Pin Label editor&lt;/li&gt;</source>
-        <translation>&lt;li&gt;Αν δεν μπορείτε να βρείτε ένα εξάρτημα στο Δοχείο εξαρτημάτων, το Γενικά IC είναι φίλος σας.  Σύρτε το στο σχέδιο σας, και χρησιμοποιήστε το widget στον Ελεκτή για να διαλέξετε από 25 διαφορετικά πακέτα, αλάξτε την ετικέτα, και τον αριθμό των ακίδων.  Μπορείτε επίσης να αλλάξετε το όνομα των ακίδων με τον επεξεργαστή Ετικέτα Ακίδας&lt;/li&gt;</translation>
+        <translation>&lt;li&gt;Αν δεν μπορείτε να βρείτε ένα εξάρτημα στο Δοχείο εξαρτημάτων, το &quot;Γενικά IC&quot; είναι φίλος σας.  Σύρτε το στο σχέδιο σας, και χρησιμοποιήστε το widget στον Ελεκτή για να διαλέξετε από 25 διαφορετικά πακέτα, αλάξτε την ετικέτα, και τον αριθμό των ακίδων.  Μπορείτε επίσης να αλλάξετε το όνομα των ακίδων με τον επεξεργαστή Ετικέτα Ακίδας&lt;/li&gt;</translation>
     </message>
     <message>
         <location filename="../src/help/tipsandtricks.cpp" line="55"/>
@@ -7197,7 +7192,7 @@ Note: you can also trigger this display by mousing down on the routing status te
     <message>
         <location filename="../src/items/tracewire.cpp" line="59"/>
         <source>Select from the dropdown, or type in any value from %1 to %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Επιλέξτε από την λίστα, ή πληκτρολογήστε μία τιμή από %1 έως %2</translation>
     </message>
     <message>
         <location filename="../src/items/tracewire.cpp" line="84"/>
@@ -7389,20 +7384,20 @@ Note: you can also trigger this display by mousing down on the routing status te
 <context>
     <name>ViewSwitcher</name>
     <message>
-        <location filename="../src/viewswitcher/viewswitcher.cpp" line="264"/>
-        <location filename="../src/viewswitcher/viewswitcher.cpp" line="275"/>
+        <location filename="../src/dock/viewswitcher.cpp" line="264"/>
+        <location filename="../src/dock/viewswitcher.cpp" line="275"/>
         <source>Breadboard</source>
         <translation>Breadboard</translation>
     </message>
     <message>
-        <location filename="../src/viewswitcher/viewswitcher.cpp" line="265"/>
-        <location filename="../src/viewswitcher/viewswitcher.cpp" line="276"/>
+        <location filename="../src/dock/viewswitcher.cpp" line="265"/>
+        <location filename="../src/dock/viewswitcher.cpp" line="276"/>
         <source>Schematic</source>
         <translation>Σχέδιο</translation>
     </message>
     <message>
-        <location filename="../src/viewswitcher/viewswitcher.cpp" line="266"/>
-        <location filename="../src/viewswitcher/viewswitcher.cpp" line="277"/>
+        <location filename="../src/dock/viewswitcher.cpp" line="266"/>
+        <location filename="../src/dock/viewswitcher.cpp" line="277"/>
         <source>PCB</source>
         <translation>Τυπωμένο (PCB)</translation>
     </message>

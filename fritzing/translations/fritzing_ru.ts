@@ -710,45 +710,6 @@ in order to fix this connector</source>
     </message>
 </context>
 <context>
-    <name>DockManager</name>
-    <message>
-        <source>View Switcher</source>
-        <translation>Просмотр переключений</translation>
-    </message>
-    <message>
-        <source>Inspector</source>
-        <translation>Инспектор</translation>
-    </message>
-    <message>
-        <source>Undo History</source>
-        <translation>История отмен</translation>
-    </message>
-    <message>
-        <source>Breadboard</source>
-        <translation>Макетная плата</translation>
-    </message>
-    <message>
-        <source>Schematic</source>
-        <translation>Принципиальная схема</translation>
-    </message>
-    <message>
-        <source>PCB</source>
-        <translation>Печатная плата</translation>
-    </message>
-    <message>
-        <source>Navigator</source>
-        <translation>Навигатор</translation>
-    </message>
-    <message>
-        <source>Couldn&apos;t get the dock widget</source>
-        <translation>Не могу получить виджет документа</translation>
-    </message>
-    <message>
-        <source>Layers</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>FApplication</name>
     <message>
         <source>Import files from previous version?</source>
@@ -2501,26 +2462,6 @@ Please check all views for potential side-effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Using SMD parts</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>When using SMD parts, a double-sided board is usually desired. On the default single-sided board, SMD parts will end up on the back of the board.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Do you want to swap to a double-sided board now?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Swap</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Don&apos;t Swap</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>BoM Text File (*.html)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3045,6 +2986,42 @@ Go ahead and revert?</source>
         <source>Highlight all unrouted connectors</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>View Switcher</source>
+        <translation type="unfinished">Просмотр переключений</translation>
+    </message>
+    <message>
+        <source>Inspector</source>
+        <translation type="unfinished">Инспектор</translation>
+    </message>
+    <message>
+        <source>Undo History</source>
+        <translation type="unfinished">История отмен</translation>
+    </message>
+    <message>
+        <source>Breadboard</source>
+        <translation type="unfinished">Макетная плата</translation>
+    </message>
+    <message>
+        <source>Schematic</source>
+        <translation type="unfinished">Принципиальная схема</translation>
+    </message>
+    <message>
+        <source>PCB</source>
+        <translation type="unfinished">Печатная плата</translation>
+    </message>
+    <message>
+        <source>Navigator</source>
+        <translation type="unfinished">Навигатор</translation>
+    </message>
+    <message>
+        <source>Layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t get the dock widget</source>
+        <translation type="unfinished">Не могу получить виджет документа</translation>
+    </message>
 </context>
 <context>
     <name>MetadataView</name>
@@ -3158,17 +3135,6 @@ Reason: %2 (errcode %3)</source>
     </message>
     <message>
         <source>at</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ModelPartShared</name>
-    <message>
-        <source>Fritzing</source>
-        <translation type="unfinished">Fritzing</translation>
-    </message>
-    <message>
-        <source>Unable to parse &apos;%1&apos;: %2: line %3 column %4.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3343,6 +3309,29 @@ Reason: %2 (errcode %3)</source>
     </message>
     <message>
         <source>Change properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tools</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change description</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change connector %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PEToolView</name>
+    <message>
+        <source>width</source>
+        <translation type="unfinished">ширина</translation>
+    </message>
+    <message>
+        <source>height</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -709,45 +709,6 @@ antes de adicionar algum conector</translation>
     </message>
 </context>
 <context>
-    <name>DockManager</name>
-    <message>
-        <source>View Switcher</source>
-        <translation>Ver Switcher</translation>
-    </message>
-    <message>
-        <source>Inspector</source>
-        <translation>Propriedades</translation>
-    </message>
-    <message>
-        <source>Undo History</source>
-        <translation>Desfazer</translation>
-    </message>
-    <message>
-        <source>Breadboard</source>
-        <translation>Breadboard</translation>
-    </message>
-    <message>
-        <source>Schematic</source>
-        <translation>Esquema</translation>
-    </message>
-    <message>
-        <source>PCB</source>
-        <translation>PCB (PLaca de Circuito Impresso)</translation>
-    </message>
-    <message>
-        <source>Navigator</source>
-        <translation>Navegador</translation>
-    </message>
-    <message>
-        <source>Couldn&apos;t get the dock widget</source>
-        <translation>Impossível de obter o dock widget</translation>
-    </message>
-    <message>
-        <source>Layers</source>
-        <translation>Camadas</translation>
-    </message>
-</context>
-<context>
     <name>FApplication</name>
     <message>
         <source>Import files from previous version?</source>
@@ -2497,26 +2458,6 @@ Por favor verifique em todos os modos de visualização para verificar alguma mo
         <translation>novo desenho</translation>
     </message>
     <message>
-        <source>Using SMD parts</source>
-        <translation>usar componentes SMD</translation>
-    </message>
-    <message>
-        <source>When using SMD parts, a double-sided board is usually desired. On the default single-sided board, SMD parts will end up on the back of the board.</source>
-        <translation>Quando se usam componente SMD, uma placa de dupla face é normalmente a desejada. Numa placa de face simples, os componente SMD vão acabar na parte de trás da placa.</translation>
-    </message>
-    <message>
-        <source>Do you want to swap to a double-sided board now?</source>
-        <translation>Queres trocar para uma placa de dupla face agora?</translation>
-    </message>
-    <message>
-        <source>Swap</source>
-        <translation>Trocar</translation>
-    </message>
-    <message>
-        <source>Don&apos;t Swap</source>
-        <translation>Não Trocar</translation>
-    </message>
-    <message>
         <source>BoM Text File (*.html)</source>
         <translation>BoM Ficheiro de Texto (*html)</translation>
     </message>
@@ -3042,6 +2983,42 @@ Go ahead and revert?</source>
         <source>Highlight all unrouted connectors</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>View Switcher</source>
+        <translation type="unfinished">Ver Switcher</translation>
+    </message>
+    <message>
+        <source>Inspector</source>
+        <translation type="unfinished">Propriedades</translation>
+    </message>
+    <message>
+        <source>Undo History</source>
+        <translation type="unfinished">Desfazer</translation>
+    </message>
+    <message>
+        <source>Breadboard</source>
+        <translation type="unfinished">Breadboard</translation>
+    </message>
+    <message>
+        <source>Schematic</source>
+        <translation type="unfinished">Esquema</translation>
+    </message>
+    <message>
+        <source>PCB</source>
+        <translation type="unfinished">PCB (PLaca de Circuito Impresso)</translation>
+    </message>
+    <message>
+        <source>Navigator</source>
+        <translation type="unfinished">Navegador</translation>
+    </message>
+    <message>
+        <source>Layers</source>
+        <translation type="unfinished">Camadas</translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t get the dock widget</source>
+        <translation type="unfinished">Impossível de obter o dock widget</translation>
+    </message>
 </context>
 <context>
     <name>MetadataView</name>
@@ -3155,17 +3132,6 @@ Razão: %2 (código do erro %3)</translation>
     <message>
         <source>at</source>
         <translation>em</translation>
-    </message>
-</context>
-<context>
-    <name>ModelPartShared</name>
-    <message>
-        <source>Fritzing</source>
-        <translation>Fritzing</translation>
-    </message>
-    <message>
-        <source>Unable to parse &apos;%1&apos;: %2: line %3 column %4.</source>
-        <translation>Incapaz de fazer o parse &apos;%1&apos;: %2: linha %3 coluna %4.</translation>
     </message>
 </context>
 <context>
@@ -3339,6 +3305,29 @@ Razão: %2 (código do erro %3)</translation>
     </message>
     <message>
         <source>Change properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tools</source>
+        <translation type="unfinished">Ferramentas</translation>
+    </message>
+    <message>
+        <source>Change description</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change connector %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PEToolView</name>
+    <message>
+        <source>width</source>
+        <translation type="unfinished">largura</translation>
+    </message>
+    <message>
+        <source>height</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

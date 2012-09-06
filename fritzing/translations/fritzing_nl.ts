@@ -705,45 +705,6 @@ om deze aansluiting in orde te brengen</translation>
     </message>
 </context>
 <context>
-    <name>DockManager</name>
-    <message>
-        <source>View Switcher</source>
-        <translation>Toon switcher</translation>
-    </message>
-    <message>
-        <source>Inspector</source>
-        <translation>Inspector</translation>
-    </message>
-    <message>
-        <source>Undo History</source>
-        <translation>Ongedaan maken geschiedenis</translation>
-    </message>
-    <message>
-        <source>Breadboard</source>
-        <translation>Breadbord</translation>
-    </message>
-    <message>
-        <source>Schematic</source>
-        <translation>Schema</translation>
-    </message>
-    <message>
-        <source>PCB</source>
-        <translation>PCB</translation>
-    </message>
-    <message>
-        <source>Navigator</source>
-        <translation>Navigator</translation>
-    </message>
-    <message>
-        <source>Couldn&apos;t get the dock widget</source>
-        <translation>Fout bij ophalen dock widget</translation>
-    </message>
-    <message>
-        <source>Layers</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>FApplication</name>
     <message>
         <source>Import files from previous version?</source>
@@ -2494,26 +2455,6 @@ Controleer a.u.b. alle views voor potentiële fouten.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Using SMD parts</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>When using SMD parts, a double-sided board is usually desired. On the default single-sided board, SMD parts will end up on the back of the board.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Do you want to swap to a double-sided board now?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Swap</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Don&apos;t Swap</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>BoM Text File (*.html)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3038,6 +2979,42 @@ Go ahead and revert?</source>
         <source>Highlight all unrouted connectors</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>View Switcher</source>
+        <translation type="unfinished">Toon switcher</translation>
+    </message>
+    <message>
+        <source>Inspector</source>
+        <translation type="unfinished">Inspector</translation>
+    </message>
+    <message>
+        <source>Undo History</source>
+        <translation type="unfinished">Ongedaan maken geschiedenis</translation>
+    </message>
+    <message>
+        <source>Breadboard</source>
+        <translation type="unfinished">Breadbord</translation>
+    </message>
+    <message>
+        <source>Schematic</source>
+        <translation type="unfinished">Schema</translation>
+    </message>
+    <message>
+        <source>PCB</source>
+        <translation type="unfinished">PCB</translation>
+    </message>
+    <message>
+        <source>Navigator</source>
+        <translation type="unfinished">Navigator</translation>
+    </message>
+    <message>
+        <source>Layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t get the dock widget</source>
+        <translation type="unfinished">Fout bij ophalen dock widget</translation>
+    </message>
 </context>
 <context>
     <name>MetadataView</name>
@@ -3150,17 +3127,6 @@ Reden : %2 (errcode %3)</translation>
     </message>
     <message>
         <source>at</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ModelPartShared</name>
-    <message>
-        <source>Fritzing</source>
-        <translation type="unfinished">Fritzing</translation>
-    </message>
-    <message>
-        <source>Unable to parse &apos;%1&apos;: %2: line %3 column %4.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3335,6 +3301,29 @@ Reden : %2 (errcode %3)</translation>
     </message>
     <message>
         <source>Change properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tools</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change description</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change connector %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PEToolView</name>
+    <message>
+        <source>width</source>
+        <translation type="unfinished">breedte</translation>
+    </message>
+    <message>
+        <source>height</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

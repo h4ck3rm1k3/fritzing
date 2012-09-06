@@ -702,45 +702,6 @@ in order to fix this connector</source>
     </message>
 </context>
 <context>
-    <name>DockManager</name>
-    <message>
-        <source>View Switcher</source>
-        <translation>查看切换器</translation>
-    </message>
-    <message>
-        <source>Inspector</source>
-        <translation>指示栏</translation>
-    </message>
-    <message>
-        <source>Undo History</source>
-        <translation>撤销历史</translation>
-    </message>
-    <message>
-        <source>Breadboard</source>
-        <translation>面包板</translation>
-    </message>
-    <message>
-        <source>Schematic</source>
-        <translation>原理图</translation>
-    </message>
-    <message>
-        <source>PCB</source>
-        <translation>PCB</translation>
-    </message>
-    <message>
-        <source>Navigator</source>
-        <translation>导航栏</translation>
-    </message>
-    <message>
-        <source>Couldn&apos;t get the dock widget</source>
-        <translation>不能获得可停靠控件</translation>
-    </message>
-    <message>
-        <source>Layers</source>
-        <translation>层</translation>
-    </message>
-</context>
-<context>
     <name>FApplication</name>
     <message>
         <source>Import files from previous version?</source>
@@ -2495,26 +2456,6 @@ Please check all views for potential side-effects.</source>
         <translation>新草稿</translation>
     </message>
     <message>
-        <source>Using SMD parts</source>
-        <translation>使用SMD元件</translation>
-    </message>
-    <message>
-        <source>When using SMD parts, a double-sided board is usually desired. On the default single-sided board, SMD parts will end up on the back of the board.</source>
-        <translation>当使用SMD元件时，通常要求是双面板。默认的是单面板，SMD元件将会在板背面突出来。</translation>
-    </message>
-    <message>
-        <source>Do you want to swap to a double-sided board now?</source>
-        <translation>你现在想转换为双面板么?</translation>
-    </message>
-    <message>
-        <source>Swap</source>
-        <translation>转换</translation>
-    </message>
-    <message>
-        <source>Don&apos;t Swap</source>
-        <translation>不转换</translation>
-    </message>
-    <message>
         <source>BoM Text File (*.html)</source>
         <translation>BoM Text File (*.html)</translation>
     </message>
@@ -3050,6 +2991,42 @@ Go ahead and revert?</source>
         <source>Highlight all unrouted connectors</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>View Switcher</source>
+        <translation type="unfinished">查看切换器</translation>
+    </message>
+    <message>
+        <source>Inspector</source>
+        <translation type="unfinished">指示栏</translation>
+    </message>
+    <message>
+        <source>Undo History</source>
+        <translation type="unfinished">撤销历史</translation>
+    </message>
+    <message>
+        <source>Breadboard</source>
+        <translation type="unfinished">面包板</translation>
+    </message>
+    <message>
+        <source>Schematic</source>
+        <translation type="unfinished">原理图</translation>
+    </message>
+    <message>
+        <source>PCB</source>
+        <translation type="unfinished">PCB</translation>
+    </message>
+    <message>
+        <source>Navigator</source>
+        <translation type="unfinished">导航栏</translation>
+    </message>
+    <message>
+        <source>Layers</source>
+        <translation type="unfinished">层</translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t get the dock widget</source>
+        <translation type="unfinished">不能获得可停靠控件</translation>
+    </message>
 </context>
 <context>
     <name>MetadataView</name>
@@ -3162,17 +3139,6 @@ Reason: %2 (errcode %3)</source>
     <message>
         <source>at</source>
         <translation>在</translation>
-    </message>
-</context>
-<context>
-    <name>ModelPartShared</name>
-    <message>
-        <source>Fritzing</source>
-        <translation>Fritzing</translation>
-    </message>
-    <message>
-        <source>Unable to parse &apos;%1&apos;: %2: line %3 column %4.</source>
-        <translation>不能解析&apos;%1&apos;: %2: 行 %3 列 %4.</translation>
     </message>
 </context>
 <context>
@@ -3348,6 +3314,29 @@ Reason: %2 (errcode %3)</source>
     </message>
     <message>
         <source>Change properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tools</source>
+        <translation type="unfinished">工具</translation>
+    </message>
+    <message>
+        <source>Change description</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change connector %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PEToolView</name>
+    <message>
+        <source>width</source>
+        <translation type="unfinished">宽度</translation>
+    </message>
+    <message>
+        <source>height</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
