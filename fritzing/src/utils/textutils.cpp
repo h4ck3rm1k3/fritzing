@@ -1432,7 +1432,9 @@ void TextUtils::gornTreeAux(QDomElement & root) {
     QDomElement child = root.firstChildElement();
     int index = 0;
     while (!child.isNull()) {
+        QString oldID = child.attribute("id");
         child.setAttribute("id", QString("%1.%2").arg(prefix).arg(index++));
+        if (!oldID.isEmpty()) child.setAttribute("oldid", oldID);
         gornTreeAux(child);
         child = child.nextSiblingElement();
     }

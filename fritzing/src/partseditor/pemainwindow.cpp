@@ -681,7 +681,7 @@ void PEMainWindow::initSvgTree(ItemBase * itemBase, QDomDocument & domDocument)
         return;
 	}
 
-    TextUtils::gornTree(domDocument);
+    TextUtils::gornTree(domDocument);   //
 
     FSvgRenderer renderer;
     renderer.loadSvg(domDocument.toByteArray(), "", false);
@@ -698,20 +698,35 @@ void PEMainWindow::initSvgTree(ItemBase * itemBase, QDomDocument & domDocument)
             QString id = element.attribute("id");
             QRectF r = renderer.boundsOnElement(id);
             QMatrix matrix = renderer.matrixForElement(id);
+            QString oldID = element.attribute("oldid");
+            if (!oldID.isEmpty()) {
+                element.setAttribute("id", oldID);
+                element.removeAttribute("oldid");
+            }
             QRectF bounds = matrix.mapRect(r);
 	        bounds.setRect(bounds.x() * defaultSizeF.width() / viewBox.width(), 
 							   bounds.y() * defaultSizeF.height() / viewBox.height(), 
 							   bounds.width() * defaultSizeF.width() / viewBox.width(), 
 							   bounds.height() * defaultSizeF.height() / viewBox.height());
 
+            // known Qt bug: boundsOnElement returns zero width and height for text elements.
+            if (bounds.width() > 0 && bounds.height() > 0) {
+                PEGraphicsItem * pegItem = new PEGraphicsItem(0, 0, bounds.width(), bounds.height());
+                pegItem->setPos(itemBase->pos() + bounds.topLeft());
+                pegItem->setZValue(z);
+                itemBase->scene()->addItem(pegItem);
+                pegItem->setElement(element);
+                pegItem->setOffset(bounds.topLeft());
+                connect(pegItem, SIGNAL(highlightSignal(PEGraphicsItem *)), this, SLOT(highlightSlot(PEGraphicsItem *)));
 
-            PEGraphicsItem * pegItem = new PEGraphicsItem(0, 0, bounds.width(), bounds.height());
-            pegItem->setPos(itemBase->pos() + bounds.topLeft());
-            pegItem->setZValue(z);
-            itemBase->scene()->addItem(pegItem);
-            pegItem->setElement(element);
-            pegItem->setOffset(bounds.topLeft());
-            connect(pegItem, SIGNAL(highlightSignal(PEGraphicsItem *)), this, SLOT(highlightSlot(PEGraphicsItem *)));
+                /* 
+                QString string;
+                QTextStream stream(&string);
+                element.save(stream, 0);
+                DebugDialog::debug("........");
+                DebugDialog::debug(string);
+                */
+            }
 
             QDomElement child = element.firstChildElement();
             while (!child.isNull()) {

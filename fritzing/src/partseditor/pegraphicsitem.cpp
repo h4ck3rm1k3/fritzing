@@ -54,6 +54,7 @@ void PEGraphicsItem::wheelEvent(QGraphicsSceneWheelEvent * event) {
     // delta one click forward = 120; delta one click backward = -120
 
     int steps = event->delta() / 120;
+    steps = (steps < 0) ? -1 : 1;
     QList<PEGraphicsItem *> items;
     foreach (QGraphicsItem * item, scene()->items(event->scenePos())) {
         PEGraphicsItem * pegi = dynamic_cast<PEGraphicsItem *>(item);
@@ -80,10 +81,11 @@ void PEGraphicsItem::wheelEvent(QGraphicsSceneWheelEvent * event) {
         return;
     }
 
-    ix = (ix + steps) % items.count();
-    if (ix < 0) {
-        ix = items.count() + ix - 1;
+    ix += steps;
+    while (ix < 0) {
+        ix += items.count();
     }
+    ix = ix % items.count();
     
     items.at(ix)->setHighlighted(true);
 }
