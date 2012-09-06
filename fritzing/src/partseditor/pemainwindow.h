@@ -29,7 +29,7 @@ $Date$
 #define PEMAINWINDOW_H_
 
 
-#include "../mainwindow.h"
+#include "../mainwindow/mainwindow.h"
 #include "../model/modelpartshared.h"
 #include "../sketch/sketchwidget.h"
 #include "connectorsview.h"

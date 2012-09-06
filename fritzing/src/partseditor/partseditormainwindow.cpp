@@ -29,7 +29,7 @@ $Date$
 #include "partseditormainwindow.h"
 #include "pcbxml.h"
 #include "../debugdialog.h"
-#include "../fdockwidget.h"
+#include "../mainwindow/fdockwidget.h"
 #include "../waitpushundostack.h"
 #include "editabletextwidget.h"
 #include "partseditorview.h"

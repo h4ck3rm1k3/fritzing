@@ -41,12 +41,12 @@ $Date$
 
 #include "fritzingwindow.h"
 #include "sketchareawidget.h"
-#include "viewlayer.h"
-#include "viewidentifierclass.h"
-#include "program/programwindow.h"
-#include "svg/svg2gerber.h"
-#include "viewswitcher/viewswitcher.h"
-#include "routingstatus.h"
+#include "../viewlayer.h"
+#include "../viewidentifierclass.h"
+#include "../program/programwindow.h"
+#include "../svg/svg2gerber.h"
+#include "../dock/viewswitcher.h"
+#include "../routingstatus.h"
 
 QT_BEGIN_NAMESPACE
 class QAction;

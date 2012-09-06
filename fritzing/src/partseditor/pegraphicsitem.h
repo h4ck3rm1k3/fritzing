@@ -37,9 +37,9 @@ class PEGraphicsItem : public QGraphicsRectItem
 public:
 	PEGraphicsItem(double x, double y, double width, double height);
 
-	void hoverEnterEvent( QGraphicsSceneHoverEvent * event );
-	void hoverLeaveEvent( QGraphicsSceneHoverEvent * event );
-
+	void hoverEnterEvent(QGraphicsSceneHoverEvent *);
+	void hoverLeaveEvent(QGraphicsSceneHoverEvent *);
+    void wheelEvent(QGraphicsSceneWheelEvent *);
 };
 
 #endif /* PEGRAPHICSITEM_H_ */

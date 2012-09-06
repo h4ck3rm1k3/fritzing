@@ -30,13 +30,13 @@ $Date$
 #include <QApplication>
 
 #include "mainwindow.h"
-#include "navigator/triplenavigator.h"
-#include "utils/fsizegrip.h"
-#include "viewswitcher/viewswitcherdockwidget.h"
-#include "utils/misc.h"
-#include "partsbinpalette/binmanager/binmanager.h"
-#include "infoview/htmlinfoview.h"
-#include "layerpalette.h"
+#include "../dock/triplenavigator.h"
+#include "../utils/fsizegrip.h"
+#include "../dock/viewswitcherdockwidget.h"
+#include "../utils/misc.h"
+#include "../partsbinpalette/binmanager/binmanager.h"
+#include "../infoview/htmlinfoview.h"
+#include "../dock/layerpalette.h"
 
 /////////////////////////////////////
 

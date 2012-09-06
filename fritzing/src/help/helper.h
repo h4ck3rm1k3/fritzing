@@ -34,7 +34,7 @@ $Date$
 #include <QObject>
 
 #include "sketchmainhelp.h"
-#include "../mainwindow.h"
+#include "../mainwindow/mainwindow.h"
 
 class Helper : public QObject {
 	Q_OBJECT

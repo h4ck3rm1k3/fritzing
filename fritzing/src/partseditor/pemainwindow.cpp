@@ -134,12 +134,12 @@ $Date$
 #include "../sketch/breadboardsketchwidget.h"
 #include "../sketch/schematicsketchwidget.h"
 #include "../sketch/pcbsketchwidget.h"
-#include "../sketchareawidget.h"
+#include "../mainwindow/sketchareawidget.h"
 #include "../referencemodel/referencemodel.h"
 #include "../utils/graphicsutils.h"
 #include "../utils/textutils.h"
 #include "../utils/folderutils.h"
-#include "../fdockwidget.h"
+#include "../mainwindow/fdockwidget.h"
 
 #include <QCoreApplication>
 

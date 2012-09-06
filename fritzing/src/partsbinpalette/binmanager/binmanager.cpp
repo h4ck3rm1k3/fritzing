@@ -37,7 +37,7 @@ $Date$
 #include "stacktabbar.h"
 
 #include "../../model/modelpart.h"
-#include "../../mainwindow.h"
+#include "../../mainwindow/mainwindow.h"
 #include "../../model/palettemodel.h"
 #include "../../waitpushundostack.h"
 #include "../../debugdialog.h"

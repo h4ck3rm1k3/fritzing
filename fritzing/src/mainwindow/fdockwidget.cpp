@@ -28,7 +28,7 @@ $Date$
 #include <QTimer>
 
 #include "fdockwidget.h"
-#include "debugdialog.h"
+#include "../debugdialog.h"
 
 FDockWidget::FDockWidget( const QString & title, QWidget * parent)
 	: QDockWidget(title, parent)

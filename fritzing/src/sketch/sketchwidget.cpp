@@ -65,7 +65,7 @@ $Date$
 #include "../itemdrag.h"
 #include "../layerattributes.h"
 #include "../waitpushundostack.h"
-#include "../fgraphicsscene.h"
+#include "fgraphicsscene.h"
 #include "../version/version.h"
 #include "../items/partlabel.h"
 #include "../items/note.h"

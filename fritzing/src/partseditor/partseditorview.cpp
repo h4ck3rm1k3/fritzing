@@ -44,7 +44,7 @@ $Date$
 #include "../items/layerkinpaletteitem.h"
 #include "../items/partfactory.h"
 #include "../layerattributes.h"
-#include "../fritzingwindow.h"
+#include "../mainwindow/fritzingwindow.h"
 #include "../fsvgrenderer.h"
 #include "../debugdialog.h"
 #include "../utils/folderutils.h"

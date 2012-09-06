@@ -33,7 +33,7 @@ $Date$
 #include <QStackedWidget>
 #include <QtGui/qwidget.h>
 
-#include "../fritzingwindow.h"
+#include "../mainwindow/fritzingwindow.h"
 #include "../model/modelpartshared.h"
 #include "connectorsinfowidget.h"
 #include "editablelinewidget.h"

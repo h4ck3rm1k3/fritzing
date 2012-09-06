@@ -35,7 +35,7 @@ $Date$
 #include <QSpacerItem>
 #include <QScrollArea>
 
-#include "viewlayer.h"
+#include "../viewlayer.h"
 
 class ViewLayerCheckBox : public QCheckBox 
 {

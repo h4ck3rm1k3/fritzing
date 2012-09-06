@@ -40,8 +40,8 @@ win32 {
         #INCLUDEPATH += C:/QtSDK/QtSources/4.7.2/src/3rdparty/zlib
 	DEFINES += _CRT_SECURE_NO_DEPRECATE
         DEFINES += _WINDOWS
-    LIBS += setupapi.lib
-    LIBS += advapi32.lib
+        LIBS += setupapi.lib
+        # LIBS += advapi32.lib   only seems necessary for QtCreator 2.5.2
 }
 macx {
         MOC_DIR = build/moc
@@ -108,6 +108,7 @@ QT += core gui svg xml network sql # opengl
 RC_FILE = fritzing.rc
 RESOURCES += phoenixresources.qrc
 	include(pri/kitchensink.pri)
+	include(pri/mainwindow.pri)
 	include(pri/quazip.pri)
 	include(pri/partsbinpalette.pri)
 	include(pri/partseditor.pri)
@@ -118,8 +119,7 @@ RESOURCES += phoenixresources.qrc
 	include(pri/version.pri)
 	include(pri/eagle.pri)
 	include(pri/utils.pri)
-	include(pri/viewswitcher.pri)
-	include(pri/navigator.pri)
+	include(pri/dock.pri)
 	include(pri/items.pri)
 	include(pri/autoroute.pri)
 	include(pri/dialogs.pri)

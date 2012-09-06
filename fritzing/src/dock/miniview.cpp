@@ -26,7 +26,7 @@ $Date$
 
 #include "miniview.h"
 #include "../debugdialog.h"
-#include "../fgraphicsscene.h"
+#include "../sketch/fgraphicsscene.h"
 #include "miniviewcontainer.h"
 
 static const QColor NormalColor(0x70, 0x70, 0x70);

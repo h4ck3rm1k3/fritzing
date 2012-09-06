@@ -26,6 +26,7 @@ $Date$
 
 
 #include "pegraphicsitem.h"
+#include "../debugdialog.h"
 
 #include <QBrush>
 #include <QColor>
@@ -38,12 +39,17 @@ PEGraphicsItem::PEGraphicsItem(double x, double y, double w, double h) : QGraphi
     setBrush(QBrush(QColor(0, 0, 255)));
 }
 
-void PEGraphicsItem::hoverEnterEvent( QGraphicsSceneHoverEvent * ) {
+void PEGraphicsItem::hoverEnterEvent(QGraphicsSceneHoverEvent *) {
 	setOpacity(0.4);
     update();
 }
 
-void PEGraphicsItem::hoverLeaveEvent ( QGraphicsSceneHoverEvent * ) {
+void PEGraphicsItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *) {
 	setOpacity(0.001);
     update();
 }
+
+void PEGraphicsItem::wheelEvent(QGraphicsSceneWheelEvent * event) {
+    DebugDialog::debug("wheel event");
+}
+

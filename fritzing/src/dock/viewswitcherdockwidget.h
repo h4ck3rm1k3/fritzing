@@ -28,7 +28,7 @@ $Date$
 #ifndef VIEWSWITCHERDOCKWIDGET_H
 #define VIEWSWITCHERDOCKWIDGET_H
 
-#include "../fdockwidget.h"
+#include "../mainwindow/fdockwidget.h"
 
 
 class ViewSwitcherDockWidget : public FDockWidget

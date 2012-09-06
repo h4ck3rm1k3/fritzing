@@ -27,7 +27,7 @@ $Date$
 #include "resizehandle.h"
 #include "../sketch/zoomablegraphicsview.h"
 #include "../debugdialog.h"
-#include "../fgraphicsscene.h"
+#include "../sketch/fgraphicsscene.h"
 
 #include <QCursor>
 

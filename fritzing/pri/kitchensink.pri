@@ -20,19 +20,13 @@ HEADERS += \
     src/commands.h \
     src/debugdialog.h \
     src/fapplication.h \
-    src/fdockwidget.h \
-    src/fgraphicsscene.h \
-    src/fritzingwindow.h \
     src/fsplashscreen.h \
     src/fsvgrenderer.h \
     src/installedfonts.h \
     src/itemdrag.h \
     src/layerattributes.h \
-    src/layerpalette.h \
-    src/mainwindow.h \
     src/processeventblocker.h \
     src/routingstatus.h \
-    src/sketchareawidget.h \
     src/sketchtoolbutton.h \
     src/viewgeometry.h \
     src/viewidentifierclass.h \
@@ -43,21 +37,12 @@ SOURCES += \
     src/commands.cpp \
     src/debugdialog.cpp \
     src/fapplication.cpp \
-    src/fdockwidget.cpp \
-    src/fgraphicsscene.cpp \
-    src/fritzingwindow.cpp \
     src/fsplashscreen.cpp \
     src/fsvgrenderer.cpp \
     src/itemdrag.cpp \
     src/layerattributes.cpp \
-    src/layerpalette.cpp \
     src/main.cpp \
-    src/mainwindow.cpp \
-    src/mainwindow_export.cpp \    
-    src/mainwindow_menu.cpp \
-    src/mainwindow_dock.cpp \
     src/processeventblocker.cpp \
-    src/sketchareawidget.cpp \
     src/sketchtoolbutton.cpp \
     src/viewgeometry.cpp \
     src/viewidentifierclass.cpp \

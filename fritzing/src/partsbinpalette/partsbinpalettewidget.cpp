@@ -48,7 +48,7 @@ $Date$
 #include "../utils/fileprogressdialog.h"
 #include "../utils/folderutils.h"
 #include "../utils/textutils.h"
-#include "../mainwindow.h"          // TODO: PartsBinPaletteWidget should not call MainWindow functions
+#include "../mainwindow/mainwindow.h"          // TODO: PartsBinPaletteWidget should not call MainWindow functions
 
 
 static QString CustomIconName = "Custom1.png";

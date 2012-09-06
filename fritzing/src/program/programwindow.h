@@ -40,7 +40,7 @@ $Date$
 
 #include "syntaxer.h"
 
-#include "../fritzingwindow.h"
+#include "../mainwindow/fritzingwindow.h"
 
 struct LinkedFile {
 	enum FileFlag {

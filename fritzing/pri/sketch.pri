@@ -17,6 +17,7 @@
 # $Date: 2009-11-14 12:36:34 +0100 (Sat, 14 Nov 2009) $
 # ********************************************************************/
 HEADERS += \
+    src/sketch/fgraphicsscene.h \
     src/sketch/breadboardsketchwidget.h \
     src/sketch/infographicsview.h \
     src/sketch/pcbsketchwidget.h \
@@ -25,6 +26,7 @@ HEADERS += \
     src/sketch/zoomablegraphicsview.h 
     
 SOURCES += \
+    src/sketch/fgraphicsscene.cpp \
     src/sketch/breadboardsketchwidget.cpp \
     src/sketch/infographicsview.cpp \
     src/sketch/pcbsketchwidget.cpp \

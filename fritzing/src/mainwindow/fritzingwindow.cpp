@@ -36,11 +36,10 @@ $Date$
 #include <QSettings>
 
 #include "fritzingwindow.h"
-#include "debugdialog.h"
-#include "utils/misc.h"
-#include "utils/folderutils.h"
-
-#include "utils/fileprogressdialog.h"
+#include "../debugdialog.h"
+#include "../utils/misc.h"
+#include "../utils/folderutils.h"
+#include "../utils/fileprogressdialog.h"
 
 const QString FritzingWindow::QtFunkyPlaceholder = QLatin1String("[*]");  // this is some weird hack Qt uses in window titles as a placeholder to setr the modified state
 QString FritzingWindow::ReadOnlyPlaceholder(" [READ-ONLY] ");

@@ -26,7 +26,7 @@ $Date$
 
 #include "autoclosemessagebox.h"
 #include "../debugdialog.h"
-#include "../mainwindow.h"
+#include "../mainwindow/mainwindow.h"
 
 static const int Interval = 30;
 static const int Steps = 7;

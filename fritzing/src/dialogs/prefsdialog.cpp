@@ -31,7 +31,7 @@ $Date$
 #include "../utils/clickablelabel.h"
 #include "setcolordialog.h"
 #include "../sketch/zoomablegraphicsview.h"
-#include "../mainwindow.h"
+#include "../mainwindow/mainwindow.h"
 
 #include <QFormLayout>
 #include <QLabel>

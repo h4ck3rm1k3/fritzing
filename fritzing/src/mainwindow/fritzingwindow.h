@@ -33,9 +33,9 @@ $Date$
 #include <QStatusBar>
 #include <QMessageBox>
 
-#include "waitpushundostack.h"
-#include "utils/misc.h"
-#include "utils/bundler.h"
+#include "../waitpushundostack.h"
+#include "../utils/misc.h"
+#include "../utils/bundler.h"
 
 class FritzingWindow : public QMainWindow, public Bundler 
 {

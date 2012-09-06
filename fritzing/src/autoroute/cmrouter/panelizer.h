@@ -30,7 +30,7 @@ $Date$
 #include <QString>
 #include <QSizeF>
 
-#include "../../mainwindow.h"
+#include "../../mainwindow/mainwindow.h"
 #include "../../items/itembase.h"
 #include "tile.h"
 
