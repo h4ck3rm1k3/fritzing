@@ -47,24 +47,6 @@ TODO:
 
 //////////////////////////////////////
 
-bool GotZeroConnector = false;
-
-bool byID(QDomElement & c1, QDomElement & c2)
-{
-    int c1id = -1;
-    int c2id = -1;
-	int ix = IntegerFinder.indexIn(c1.attribute("id"));
-    if (ix > 0) c1id = IntegerFinder.cap(0).toInt();
-    ix = IntegerFinder.indexIn(c2.attribute("id"));
-    if (ix > 0) c2id = IntegerFinder.cap(0).toInt();
-
-    if (c1id == 0 || c2id == 0) GotZeroConnector = true;
-	
-	return c1id <= c2id;
-}
-
-//////////////////////////////////////
-
 ConnectorsView::ConnectorsView(QWidget * parent) : QScrollArea(parent) 
 {
     m_mainFrame = NULL;
@@ -83,7 +65,7 @@ ConnectorsView::~ConnectorsView() {
 
 }
 
-void ConnectorsView::initConnectors(const QDomDocument & doc) 
+void ConnectorsView::initConnectors(QList<QDomElement> & connectorList, bool gotZeroConnector) 
 {
     if (m_mainFrame) {
         this->setWidget(NULL);
@@ -91,16 +73,6 @@ void ConnectorsView::initConnectors(const QDomDocument & doc)
         m_mainFrame = NULL;
     }
 
-    QDomElement root = doc.documentElement();
-    QDomElement connectors = root.firstChildElement("connectors");
-    QDomElement connector = connectors.firstChildElement("connector");
-    QList<QDomElement> connectorList;
-    while (!connector.isNull()) {
-        connectorList.append(connector);
-        connector = connector.nextSiblingElement("connector");
-    }
-
-    qSort(connectorList.begin(), connectorList.end(), byID);
     m_connectorCount = connectorList.size();
 
 	m_mainFrame = new QFrame(this);
@@ -130,7 +102,7 @@ void ConnectorsView::initConnectors(const QDomDocument & doc)
 
     int ix = 0;
     foreach (QDomElement connector, connectorList) {
-        QWidget * widget = makeConnectorForm(connector, ix++);
+        QWidget * widget = makeConnectorForm(connector, gotZeroConnector, ix++, this);
         mainLayout->addWidget(widget);
     }
 
@@ -193,7 +165,7 @@ void ConnectorsView::connectorCountEntry() {
 
 }
 
-QWidget * ConnectorsView::makeConnectorForm(const QDomElement & connector, int index) {
+QWidget * ConnectorsView::makeConnectorForm(const QDomElement & connector, bool gotZeroConnector, int index, QObject * slotHolder) {
     QFrame * frame = new QFrame();
     frame->setObjectName(index % 2 == 0 ? "connector0Frame" : "connector1Frame");
     QVBoxLayout * mainLayout = new QVBoxLayout();
@@ -204,7 +176,7 @@ QWidget * ConnectorsView::makeConnectorForm(const QDomElement & connector, int i
     QString id("    ");
     int ix = IntegerFinder.indexIn(connector.attribute("id"));
     if (ix >= 0) {
-        if (GotZeroConnector) {
+        if (gotZeroConnector) {
             int cid = IntegerFinder.cap(0).toInt();
             id = QString::number(cid + 1);
         }
@@ -228,7 +200,7 @@ QWidget * ConnectorsView::makeConnectorForm(const QDomElement & connector, int i
     else if (connector.attribute("type").compare("pad", Qt::CaseInsensitive) == 0) ctype = Connector::Pad;
 
     QRadioButton * radioButton = new QRadioButton(MaleSymbolString); 
-	connect(radioButton, SIGNAL(clicked()), this, SLOT(typeEntry()));
+	connect(radioButton, SIGNAL(clicked()), slotHolder, SLOT(typeEntry()));
     radioButton->setObjectName("PartsEditorRadio");
     if (ctype == Connector::Male) radioButton->setChecked(true); 
     radioButton->setProperty("value", Connector::Male);
@@ -237,7 +209,7 @@ QWidget * ConnectorsView::makeConnectorForm(const QDomElement & connector, int i
     nameLayout->addWidget(radioButton);
 
     radioButton = new QRadioButton(FemaleSymbolString); 
-	connect(radioButton, SIGNAL(clicked()), this, SLOT(typeEntry()));
+	connect(radioButton, SIGNAL(clicked()), slotHolder, SLOT(typeEntry()));
     radioButton->setObjectName("PartsEditorRadio");
     if (ctype == Connector::Female) radioButton->setChecked(true); 
     radioButton->setProperty("value", Connector::Female);
@@ -246,7 +218,7 @@ QWidget * ConnectorsView::makeConnectorForm(const QDomElement & connector, int i
     nameLayout->addWidget(radioButton);
 
     radioButton = new QRadioButton(tr("SMD-pad")); 
-	connect(radioButton, SIGNAL(clicked()), this, SLOT(typeEntry()));
+	connect(radioButton, SIGNAL(clicked()), slotHolder, SLOT(typeEntry()));
     radioButton->setObjectName("PartsEditorRadio");
     if (ctype == Connector::Pad) radioButton->setChecked(true); 
     radioButton->setProperty("value", Connector::Pad);
@@ -261,7 +233,7 @@ QWidget * ConnectorsView::makeConnectorForm(const QDomElement & connector, int i
 
     QLineEdit * nameEdit = new QLineEdit();
     nameEdit->setText(connector.attribute("name"));
-	connect(nameEdit, SIGNAL(editingFinished()), this, SLOT(nameEntry()));
+	connect(nameEdit, SIGNAL(editingFinished()), slotHolder, SLOT(nameEntry()));
 	nameEdit->setObjectName("PartsEditorLineEdit");
     nameEdit->setStatusTip(tr("Set the connectors's title"));
     nameEdit->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
@@ -283,7 +255,7 @@ QWidget * ConnectorsView::makeConnectorForm(const QDomElement & connector, int i
     QLineEdit * descriptionEdit = new QLineEdit();
     QDomElement description = connector.firstChildElement("description");
     descriptionEdit->setText(description.text());
-	connect(descriptionEdit, SIGNAL(editingFinished()), this, SLOT(descriptionEntry()));
+	connect(descriptionEdit, SIGNAL(editingFinished()), slotHolder, SLOT(descriptionEntry()));
 	descriptionEdit->setObjectName("PartsEditorLineEdit");
     descriptionEdit->setStatusTip(tr("Set the connectors's description"));
     descriptionEdit->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);

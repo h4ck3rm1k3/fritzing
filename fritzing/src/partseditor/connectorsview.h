@@ -60,7 +60,10 @@ public:
 	ConnectorsView(QWidget * parent = 0);
 	~ConnectorsView();
 
-    void initConnectors(const QDomDocument &);
+    void initConnectors(QList<QDomElement> & connectorList, bool gotZeroConnector);
+
+public:
+    static QWidget * makeConnectorForm(const QDomElement & connector, bool gotZeroConnector, int index, QObject * slotHolder);
 
 signals:
     void connectorMetadataChanged(const ConnectorMetadata *);
@@ -72,7 +75,6 @@ protected slots:
     void connectorCountEntry();
 
 protected:
-    QWidget * makeConnectorForm(const QDomElement & connector, int index);
     void changeConnector();
 
 protected:

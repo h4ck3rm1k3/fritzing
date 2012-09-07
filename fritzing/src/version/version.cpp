@@ -29,7 +29,7 @@ $Date$
 #include <QString>
 #include <QStringList>			
 			
-#include "../debugdialog.h"		                	
+#include "../debugdialog.h"		                	                
 
 	
 QString Version::m_majorVersion("0");				

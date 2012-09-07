@@ -26,37 +26,65 @@ $Date$
 
 #include "petoolview.h"
 #include "pegraphicsitem.h"
+#include "connectorsview.h"
 #include "../utils/textutils.h"
 #include "../utils/graphicsutils.h"
 
 #include <QHBoxLayout>
 #include <QTextStream>
+#include <QSplitter>
 
 static const int TheSpacing = 10;
 //////////////////////////////////////
 
-PEToolView::PEToolView(QWidget * parent) : QScrollArea(parent) 
+PEToolView::PEToolView(QWidget * parent) : QWidget(parent) 
 {
+    this->setObjectName("PEToolView");
+
     m_units = "px";
     m_pegi = NULL;
 
-	QFrame * frame = new QFrame(this);
-	QVBoxLayout * mainLayout = new QVBoxLayout;
-	mainLayout->setSizeConstraint( QLayout::SetMinAndMaxSize );
+    QVBoxLayout * mainLayout = new QVBoxLayout;
 
-    QGroupBox * groupBox = new QGroupBox("element");
-	QVBoxLayout * groupLayout = new QVBoxLayout;
+    QSplitter * splitter = new QSplitter(Qt::Vertical);
+    mainLayout->addWidget(splitter);
+
+    QFrame * connectorsFrame = new QFrame;
+    QVBoxLayout * connectorsLayout = new QVBoxLayout;
+    QLabel * label = new QLabel(tr("Connector List"));
+    connectorsLayout->addWidget(label);
+
+    m_connectorListWidget = new QListWidget();
+	connect(m_connectorListWidget, SIGNAL(currentItemChanged(QListWidgetItem *, QListWidgetItem *)), this, SLOT(switchConnector(QListWidgetItem *, QListWidgetItem *)));
+
+    connectorsLayout->addWidget(m_connectorListWidget);
+
+    connectorsFrame->setLayout(connectorsLayout);
+    splitter->addWidget(connectorsFrame);
+
+    QFrame * connectorFrame = new QFrame;
+    QVBoxLayout * connectorLayout = new QVBoxLayout;
+
+    m_connectorInfoGroupBox = new QGroupBox;
+    m_connectorInfoLayout = new QVBoxLayout;
+    m_connectorInfoWidget = new QFrame;
+    m_connectorInfoLayout->addWidget(m_connectorInfoWidget);
+    m_connectorInfoGroupBox->setLayout(m_connectorInfoLayout);
+    connectorLayout->addWidget(m_connectorInfoGroupBox);
+
+    QGroupBox * svgGroupBox = new QGroupBox("SVG Element Info");
+	QVBoxLayout * svgGroupLayout = new QVBoxLayout;
 
     m_svgElement = new QLabel;
     m_svgElement->setWordWrap(false);
     m_svgElement->setTextFormat(Qt::PlainText);
     m_svgElement->setMaximumWidth(400);
-    groupLayout->addWidget(m_svgElement);
+    svgGroupLayout->addWidget(m_svgElement);
 
     QFrame * boundsFrame = new QFrame;
     QHBoxLayout * boundsLayout = new QHBoxLayout;
 
-    QLabel * label = new QLabel("x");
+    label = new QLabel("x");
     boundsLayout->addWidget(label);
     m_x = new QLabel;
     boundsLayout->addWidget(m_x);
@@ -81,7 +109,7 @@ PEToolView::PEToolView(QWidget * parent) : QScrollArea(parent)
 
     boundsLayout->addSpacerItem(new QSpacerItem(1, 1, QSizePolicy::Expanding));
     boundsFrame->setLayout(boundsLayout);
-    groupLayout->addWidget(boundsFrame);
+    svgGroupLayout->addWidget(boundsFrame);
 
     QFrame * radioFrame = new QFrame;
     QHBoxLayout * radioLayout = new QHBoxLayout;
@@ -103,16 +131,20 @@ PEToolView::PEToolView(QWidget * parent) : QScrollArea(parent)
 
     radioLayout->addSpacerItem(new QSpacerItem(1, 1, QSizePolicy::Expanding));
     radioFrame->setLayout(radioLayout);
-    groupLayout->addWidget(radioFrame);
-
+    svgGroupLayout->addWidget(radioFrame);
 	
-	groupBox->setLayout(groupLayout);
-	mainLayout->addWidget(groupBox);
+	svgGroupBox->setLayout(svgGroupLayout);
 
-	frame->setLayout(mainLayout);
+    connectorLayout->addWidget(svgGroupBox);
+    connectorLayout->addSpacerItem(new QSpacerItem(1, 1, QSizePolicy::Minimum, QSizePolicy::Expanding));
+    connectorFrame->setLayout(connectorLayout);
 
-	this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-	this->setWidget(frame);
+	splitter->addWidget(connectorFrame);
+
+	//this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+	//this->setWidget(splitter);
+
+    this->setLayout(mainLayout);
 }
 
 PEToolView::~PEToolView() 
@@ -163,3 +195,40 @@ QString PEToolView::convertUnits(double val)
 
     return QString::number(val);
 }
+
+void PEToolView::initConnectors(QList<QDomElement> & connectorList, bool gotZeroConnector) {
+    m_gotZeroConnector = gotZeroConnector;
+    m_connectorListWidget->clear();  // deletes QListWidgetItems
+    m_connectorList = connectorList;
+
+    int ix = 0;
+    foreach (QDomElement connector, connectorList) {
+		QListWidgetItem *item = new QListWidgetItem;
+		item->setData(Qt::DisplayRole, connector.attribute("name"));
+		item->setData(Qt::UserRole, ix++);
+		m_connectorListWidget->addItem(item);
+    }
+
+    if (m_connectorListWidget->count() > 0) {
+        m_connectorListWidget->setCurrentRow(0);
+    }
+}
+
+void PEToolView::switchConnector(QListWidgetItem * current, QListWidgetItem * previous) {
+    Q_UNUSED(previous);
+
+    if (m_connectorInfoWidget) {
+        delete m_connectorInfoWidget;
+        m_connectorInfoWidget = NULL;
+    }
+
+    if (current == NULL) return;
+
+    int index = current->data(Qt::UserRole).toInt();
+    QDomElement element = m_connectorList.at(index);
+
+    m_connectorInfoWidget = ConnectorsView::makeConnectorForm(element, m_gotZeroConnector, index, this);
+    m_connectorInfoLayout->addWidget(m_connectorInfoWidget);
+    m_connectorInfoGroupBox->setTitle(tr("Connector %1").arg(element.attribute("name")));
+}
+

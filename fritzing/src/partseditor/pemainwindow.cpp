@@ -28,10 +28,6 @@ $Date$
 
 	clean up menus
 
-	add connectors tab
-
-	underlying data structure
-
 	first time help?
 
 	disable dragging wires
@@ -42,12 +38,13 @@ $Date$
 
     swap connector metadata op
 
+    assign connector to selected svg element 
+        is there a menu of connectors?--what if there are hundreds of them
+
 	add status bar to connectors tab
 
     on svg import detect all connector IDs
         if any are invisible, tell user this is obsolete
-
-    allow user to select connectors by driving through svg elements
     
     move connectors with arrow keys, or typed coordinates
 	drag and drop later
@@ -150,6 +147,24 @@ $Date$
 #else
 	#define CORE_EDITION_ENABLED false
 #endif
+
+////////////////////////////////////////////////////
+
+bool GotZeroConnector = false;
+
+bool byID(QDomElement & c1, QDomElement & c2)
+{
+    int c1id = -1;
+    int c2id = -1;
+	int ix = IntegerFinder.indexIn(c1.attribute("id"));
+    if (ix > 0) c1id = IntegerFinder.cap(0).toInt();
+    ix = IntegerFinder.indexIn(c2.attribute("id"));
+    if (ix > 0) c2id = IntegerFinder.cap(0).toInt();
+
+    if (c1id == 0 || c2id == 0) GotZeroConnector = true;
+	
+	return c1id <= c2id;
+}
 
 ////////////////////////////////////////////////////
 
@@ -399,7 +414,8 @@ void PEMainWindow::setInitialItem(PaletteItem * paletteItem) {
     ItemBase * schematicItem = m_schematicGraphicsView->addItem(modelPart, m_schematicGraphicsView->defaultViewLayerSpec(), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
     ItemBase * pcbItem = m_pcbGraphicsView->addItem(modelPart, m_pcbGraphicsView->defaultViewLayerSpec(), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
     m_metadataView->initMetadata(m_fzpDocument);
-    m_connectorsView->initConnectors(m_fzpDocument);
+
+    initConnectors();
 
     initSvgTree(breadboardItem, m_breadboardDocument);
     initSvgTree(schematicItem, m_schematicDocument);
@@ -654,7 +670,7 @@ void PEMainWindow::changeConnectorMetadata(const ConnectorMetadata & cmd, bool u
 
     changeConnectorElement(connector, cmd);
     if (updateDisplay) {
-        m_connectorsView->initConnectors(m_fzpDocument);
+        initConnectors();
     }
 }
 
@@ -698,9 +714,9 @@ void PEMainWindow::initSvgTree(ItemBase * itemBase, QDomDocument & domDocument)
             QString id = element.attribute("id");
             QRectF r = renderer.boundsOnElement(id);
             QMatrix matrix = renderer.matrixForElement(id);
-            QString oldID = element.attribute("oldid");
-            if (!oldID.isEmpty()) {
-                element.setAttribute("id", oldID);
+            QString oldid = element.attribute("oldid");
+            if (!oldid.isEmpty()) {
+                element.setAttribute("id", oldid);
                 element.removeAttribute("oldid");
             }
             QRectF bounds = matrix.mapRect(r);
@@ -745,4 +761,20 @@ void PEMainWindow::highlightSlot(PEGraphicsItem * pegi) {
     if (m_peToolView) {
         m_peToolView->highlightElement(pegi);
     }
+}
+
+void PEMainWindow::initConnectors() {
+    QDomElement root = m_fzpDocument.documentElement();
+    QDomElement connectors = root.firstChildElement("connectors");
+    QDomElement connector = connectors.firstChildElement("connector");
+    QList<QDomElement> connectorList;
+    while (!connector.isNull()) {
+        connectorList.append(connector);
+        connector = connector.nextSiblingElement("connector");
+    }
+
+    qSort(connectorList.begin(), connectorList.end(), byID);
+
+    m_connectorsView->initConnectors(connectorList, GotZeroConnector);
+    m_peToolView->initConnectors(connectorList, GotZeroConnector);
 }

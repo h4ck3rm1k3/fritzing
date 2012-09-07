@@ -84,6 +84,7 @@ protected:
     QDomElement findConnector(const QString & id);
     void changeConnectorElement(QDomElement & connector, const ConnectorMetadata & cmd);
     void initSvgTree(ItemBase *, QDomDocument &);
+    void initConnectors();
 
 public slots:
     void metadataChanged(const QString & name, const QString & value);

@@ -34,8 +34,10 @@ $Date$
 #include <QSpacerItem>
 #include <QScrollArea>
 #include <QLabel>
+#include <QListWidget>
+#include <QDomDocument>
 
-class PEToolView : public QScrollArea
+class PEToolView : public QWidget
 {
 Q_OBJECT
 public:
@@ -43,9 +45,11 @@ public:
 	~PEToolView();
 
     void highlightElement(class PEGraphicsItem *);
+    void initConnectors(QList<QDomElement> & connectorList, bool gotZeroConnector);
 
 protected slots:
     void changeUnits();
+    void switchConnector(QListWidgetItem * current, QListWidgetItem * previous);
 
 protected:
     QString convertUnits(double);
@@ -56,11 +60,17 @@ protected:
     QLabel * m_width;
     QLabel * m_x;
     QLabel * m_y;
+    QListWidget * m_connectorListWidget;
     QRadioButton * m_in;
     QRadioButton * m_mm;
     QRadioButton * m_px;
     QString m_units;
     class PEGraphicsItem * m_pegi;
+    QList<QDomElement> m_connectorList;
+    QGroupBox * m_connectorInfoGroupBox;
+    QLayout * m_connectorInfoLayout;
+    QWidget * m_connectorInfoWidget;
+    bool m_gotZeroConnector;
 };
 
 #endif
