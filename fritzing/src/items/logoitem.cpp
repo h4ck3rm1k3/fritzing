@@ -65,7 +65,7 @@ LogoItem::LogoItem( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier v
 	m_inLogoEntry = QTime::currentTime().addSecs(-10);
 	m_aspectRatioCheck = NULL;
 	m_keepAspectRatio = true;
-	m_hasLogo = (modelPart->moduleID() == ModuleIDNames::LogoTextModuleIDName);
+	m_hasLogo = (modelPart->moduleID().endsWith(ModuleIDNames::LogoTextModuleIDName));
 	m_logo = modelPart->localProp("logo").toString();
 	if (m_hasLogo && m_logo.isEmpty()) {
 		m_logo = modelPart->properties().value("logo", "logo");

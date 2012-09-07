@@ -203,8 +203,10 @@
         <file>resources/parts/core/logoimage.fzp</file>
         <file>resources/parts/core/copper1logotext.fzp</file>
         <file>resources/parts/core/copper1logoimage.fzp</file>
-         <file>resources/parts/core/copper0logotext.fzp</file>
+	<file>resources/parts/core/copper0logotext.fzp</file>
         <file>resources/parts/core/copper0logoimage.fzp</file>
+	<file>resources/parts/core/schematiclogotext.fzp</file>
+        <file>resources/parts/core/schematiclogoimage.fzp</file>
         <file>resources/parts/core/boardlogoimage.fzp</file>
         <file>resources/parts/core/boardlogoimage_one_layer.fzp</file>
         <file>resources/parts/core/ground.fzp</file>
@@ -264,6 +266,7 @@
         <file>resources/parts/svg/core/schematic/cell.svg</file>
         <file>resources/parts/svg/core/schematic/power.svg</file>
         <file>resources/parts/svg/core/schematic/frame.svg</file>
+        <file>resources/parts/svg/core/schematic/schematiclogo.svg</file>
 	
 	<file>resources/styles/fritzing.qss</file>
         <file>resources/styles/partseditor.qss</file>

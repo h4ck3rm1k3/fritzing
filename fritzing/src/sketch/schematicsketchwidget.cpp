@@ -152,10 +152,11 @@ void SchematicSketchWidget::getLabelFont(QFont & font, QColor & color, ViewLayer
 
 void SchematicSketchWidget::setNewPartVisible(ItemBase * itemBase) {
 	switch (itemBase->itemType()) {
+		case ModelPart::Logo:
+            if (itemBase->moduleID().contains("schematic", Qt::CaseInsensitive)) break;
 		case ModelPart::Breadboard:
 		case ModelPart::Jumper:
 		case ModelPart::CopperFill:
-		case ModelPart::Logo:
 		case ModelPart::Via:
 		case ModelPart::Hole:
 			// don't need to see the breadboard in the other views
@@ -164,7 +165,7 @@ void SchematicSketchWidget::setNewPartVisible(ItemBase * itemBase) {
 			itemBase->setEverVisible(false);
 			return;
 		default:
-		if (itemBase->moduleID().endsWith(ModuleIDNames::PadModuleIDName)) {
+		    if (itemBase->moduleID().endsWith(ModuleIDNames::PadModuleIDName)) {
 				itemBase->setVisible(false);
 				itemBase->setEverVisible(false);
 				return;
@@ -175,9 +176,10 @@ void SchematicSketchWidget::setNewPartVisible(ItemBase * itemBase) {
 
 bool SchematicSketchWidget::canDropModelPart(ModelPart * modelPart) {
 	switch (modelPart->itemType()) {
+		case ModelPart::Logo:
+            if (modelPart->moduleID().contains("schematic", Qt::CaseInsensitive)) return true;
 		case ModelPart::Jumper:
 		case ModelPart::CopperFill:
-		case ModelPart::Logo:
 		case ModelPart::Board:
 		case ModelPart::ResizableBoard:
 		case ModelPart::Breadboard:

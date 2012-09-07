@@ -475,8 +475,9 @@ bool PCBSketchWidget::canDropModelPart(ModelPart * modelPart) {
     }
 
 	switch (modelPart->itemType()) {
-		case ModelPart::Jumper:
 		case ModelPart::Logo:
+            if (modelPart->moduleID().contains("schematic", Qt::CaseInsensitive)) return false;
+		case ModelPart::Jumper:
 		case ModelPart::Ruler:
 		case ModelPart::CopperFill:
 			return true;
