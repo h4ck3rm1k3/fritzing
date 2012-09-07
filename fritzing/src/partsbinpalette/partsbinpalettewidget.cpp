@@ -65,6 +65,7 @@ static QHash<QString, PaletteModel *> PaletteBinModels;
 PartsBinPaletteWidget::PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoView *infoView, WaitPushUndoStack *undoStack, BinManager* manager) :
 	QFrame(manager)
 {
+    m_binLabel = NULL;
 	m_icon = NULL;
 	m_searchLineEdit = NULL;
 	m_saveQuietly = false;
@@ -87,8 +88,6 @@ PartsBinPaletteWidget::PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoV
 	m_undoStack = new WaitPushUndoStack(this);
 	connect(m_undoStack, SIGNAL(cleanChanged(bool)), this, SLOT(undoStackCleanChanged(bool)) );
 
-	setupHeader();
-
 	m_iconView = new PartsBinIconView(m_refModel, this);
 	m_iconView->setInfoView(infoView);
 
@@ -102,14 +101,19 @@ PartsBinPaletteWidget::PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoV
 	QVBoxLayout * vbl = new QVBoxLayout(this);
     vbl->setMargin(3);
     vbl->setSpacing(0);
-	vbl->addWidget(m_header);
 
-	QFrame * separator = new QFrame();
-	separator->setMaximumHeight(1);
-	separator->setObjectName("partsBinHeaderSeparator");
-    separator->setFrameShape(QFrame::HLine);
-    separator->setFrameShadow(QFrame::Plain);
-	vbl->addWidget(separator);
+    m_header = NULL;
+    setupHeader();
+    if (m_header) {
+	    vbl->addWidget(m_header);
+
+	    QFrame * separator = new QFrame();
+	    separator->setMaximumHeight(1);
+	    separator->setObjectName("partsBinHeaderSeparator");
+        separator->setFrameShape(QFrame::HLine);
+        separator->setFrameShadow(QFrame::Plain);
+	    vbl->addWidget(separator);
+    }
 
 	vbl->addWidget(m_stackedWidget);
 	this->setLayout(vbl);
@@ -131,7 +135,7 @@ PartsBinPaletteWidget::PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoV
 	connect(m_listView, SIGNAL(informItemMoved(int,int)), this, SLOT(itemMoved()));
 	connect(m_iconView, SIGNAL(informItemMoved(int,int)), this, SLOT(itemMoved()));
 
-	m_binLabel->setText(m_title);
+	if (m_binLabel) m_binLabel->setText(m_title);
 
 	m_addPartToMeAction = new QAction(m_title,this);
 	connect(m_addPartToMeAction, SIGNAL(triggered()),this, SLOT(addSketchPartToMe()));
@@ -167,14 +171,17 @@ QString PartsBinPaletteWidget::title() const {
 void PartsBinPaletteWidget::setTitle(const QString &title) {
 	if(m_title != title) {
 		m_title = title;
-		m_binLabel->setText(title);
+		if (m_binLabel) m_binLabel->setText(title);
 	}
 }
 
 void PartsBinPaletteWidget::setupHeader()
 {
+    QMenu * combinedMenu = m_manager->combinedMenu();
+    if (combinedMenu == NULL) return;
+
 	m_combinedBinMenuButton = newToolButton("partsBinCombinedMenuButton");
-	m_combinedBinMenuButton->setMenu(m_manager->combinedMenu());
+	m_combinedBinMenuButton->setMenu(combinedMenu);
 
 	m_binLabel = new QLabel(this);
 	m_binLabel->setObjectName("partsBinLabel");
@@ -286,14 +293,14 @@ void PartsBinPaletteWidget::grabTitle(PaletteModel *model) {
 	grabTitle(root->title(), iconFilename);
 	root->setIcon(iconFilename);
 
-	m_searchLineEdit->setText(root->searchTerm());
+	if (m_searchLineEdit) m_searchLineEdit->setText(root->searchTerm());
 }
 
 void PartsBinPaletteWidget::grabTitle(const QString & title, QString & iconFilename)
 {
 	m_title = title;
 	m_addPartToMeAction->setText(m_title);
-	m_binLabel->setText(m_title);
+	if (m_binLabel) m_binLabel->setText(m_title);
 
 	QString temp = BinManager::StandardBinIcons.value(m_fileName, "");
 	if (!temp.isEmpty()) {

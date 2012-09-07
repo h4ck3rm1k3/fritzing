@@ -39,7 +39,6 @@ $Date$
     swap connector metadata op
 
     assign connector to selected svg element 
-        is there a menu of connectors?--what if there are hundreds of them
 
 	add status bar to connectors tab
 
@@ -80,6 +79,7 @@ $Date$
         inkscape scaling?
         illustrator px
         <gradient>, <pattern>, <marker>, <tspan>, etc.
+        pcb view missing layers
 
     holes
 
@@ -118,6 +118,13 @@ $Date$
 
     allow rulers and other tools?
 
+    lock svg element, if unlocked then click to change.  If a connector is found, lock to start with
+
+    matrix problem with move and duplicate (i.e. if element inherits a matrix from far above)
+        even a problem when inserting hole, pad, or pin
+
+
+
 
 ***************************************************/
 
@@ -139,7 +146,7 @@ $Date$
 #include "../utils/folderutils.h"
 #include "../mainwindow/fdockwidget.h"
 #include "../fsvgrenderer.h"
-
+#include "../partsbinpalette/binmanager/binmanager.h"
 #include <QCoreApplication>
 
 #ifdef QT_NO_DEBUG
@@ -228,13 +235,21 @@ void PEMainWindow::initSketchWidgets()
 
 void PEMainWindow::initDock()
 {
+    m_binManager = new BinManager(m_refModel, NULL, m_undoStack, this);
+    m_binManager->openBin(":/resources/bins/pe.fzb");
 }
 
 void PEMainWindow::moreInitDock()
 {
+    static int MinHeight = 75;
+    static int DefaultHeight = 100;
+
     m_peToolView = new PEToolView();
-    makeDock(tr("Tools"), m_peToolView, DockMinWidth, DockMinHeight);
+    connect(m_peToolView, SIGNAL(switchedConnector(const QDomElement &)), this, SLOT(switchedConnector(const QDomElement &)));
+    makeDock(tr("Connectors"), m_peToolView, DockMinWidth, DockMinHeight);
     m_peToolView->setMinimumSize(DockMinWidth, DockMinHeight);
+
+	makeDock(BinManager::Title, m_binManager, MinHeight, DefaultHeight);
 }
 
 void PEMainWindow::createActions()
@@ -777,4 +792,31 @@ void PEMainWindow::initConnectors() {
 
     m_connectorsView->initConnectors(connectorList, GotZeroConnector);
     m_peToolView->initConnectors(connectorList, GotZeroConnector);
+}
+
+void PEMainWindow::switchedConnector(const QDomElement & element)
+{
+    if (m_currentGraphicsView == NULL) return;
+
+    QString viewName = ViewIdentifierClass::viewIdentifierXmlName(m_currentGraphicsView->viewIdentifier());
+    QDomElement views = element.firstChildElement("views");
+    QDomElement view = views.firstChildElement(viewName);
+    QDomElement p = view.firstChildElement("p");
+    if (p.isNull()) return;
+
+    QString id = p.attribute("svgId");
+    if (id.isEmpty()) return;
+
+    //QString terminalID = p.attribute("terminalId");
+
+    foreach (QGraphicsItem * item, m_currentGraphicsView->scene()->items()) {
+        PEGraphicsItem * pegi = dynamic_cast<PEGraphicsItem *>(item);
+        if (pegi == NULL) continue;
+
+        QDomElement pegiElement = pegi->element();
+        if (pegiElement.attribute("id").compare(id) == 0) {
+            pegi->setHighlighted(true);
+            break;
+        }
+    }
 }

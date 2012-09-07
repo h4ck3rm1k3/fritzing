@@ -35,6 +35,7 @@ $Date$
 #include <QSplitter>
 
 static const int TheSpacing = 10;
+
 //////////////////////////////////////
 
 PEToolView::PEToolView(QWidget * parent) : QWidget(parent) 
@@ -230,5 +231,7 @@ void PEToolView::switchConnector(QListWidgetItem * current, QListWidgetItem * pr
     m_connectorInfoWidget = ConnectorsView::makeConnectorForm(element, m_gotZeroConnector, index, this);
     m_connectorInfoLayout->addWidget(m_connectorInfoWidget);
     m_connectorInfoGroupBox->setTitle(tr("Connector %1").arg(element.attribute("name")));
+
+    emit switchedConnector(element);
 }
 

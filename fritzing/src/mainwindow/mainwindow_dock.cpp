@@ -78,8 +78,8 @@ void MainWindow::createDockWindows()
 	//m_viewSwitcher->setStyleSheet("background-color: blue;");
 #endif
 
-	FDockWidget* partsDock = makeDock(BinManager::Title, m_binManager, PartsBinMinHeight, PartsBinDefaultHeight/*, Qt::LeftDockWidgetArea*/);
-	m_binManager->dockedInto(partsDock);
+	makeDock(BinManager::Title, m_binManager, PartsBinMinHeight, PartsBinDefaultHeight/*, Qt::LeftDockWidgetArea*/);
+
     makeDock(tr("Inspector"), m_infoView, InfoViewMinHeight, InfoViewDefaultHeight);
 
 	makeDock(tr("Undo History"), m_undoView, UndoHistoryMinHeight, UndoHistoryDefaultHeight)->hide();

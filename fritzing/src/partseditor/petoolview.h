@@ -47,6 +47,9 @@ public:
     void highlightElement(class PEGraphicsItem *);
     void initConnectors(QList<QDomElement> & connectorList, bool gotZeroConnector);
 
+signals:
+    void switchedConnector(const QDomElement &);
+
 protected slots:
     void changeUnits();
     void switchConnector(QListWidgetItem * current, QListWidgetItem * previous);

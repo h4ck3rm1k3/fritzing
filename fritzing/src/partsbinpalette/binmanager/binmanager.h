@@ -64,7 +64,8 @@ class BinManager : public QFrame {
 		BinManager(class ReferenceModel *refModel, class HtmlInfoView *infoView, class WaitPushUndoStack *undoStack, MainWindow* parent);
 		virtual ~BinManager();
 
-		void addBin(PartsBinPaletteWidget* bin);
+        void initStandardBins();
+        void addBin(PartsBinPaletteWidget* bin);
 		void insertBin(PartsBinPaletteWidget* bin, int index);
 		void addPartToBin(ModelPart *modelPart, int position = -1);
 		void addToMyPart(ModelPart *modelPart);
@@ -95,8 +96,6 @@ class BinManager : public QFrame {
 		void addPartTo(PartsBinPaletteWidget* bin, ModelPart* mp, bool setDirty);
 		void newPartTo(PartsBinPaletteWidget* bin);
 		void editSelectedPartFrom(PartsBinPaletteWidget* bin);
-
-		void dockedInto(class FDockWidget* dock);
 
 		const QString &getSelectedModuleIDFromSketch();
 		QList<QAction*> openedBinsActions(const QString &moduleId);

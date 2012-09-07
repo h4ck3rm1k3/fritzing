@@ -452,6 +452,7 @@ void MainWindow::initDock() {
 	//DebugDialog::debug("after html view");
 
 	m_binManager = new BinManager(m_refModel, m_infoView, m_undoStack, this);
+    m_binManager->initStandardBins();
 
 	DebugDialog::debug("after creating bins");
 	if (m_fileProgressDialog) {
@@ -461,7 +462,6 @@ void MainWindow::initDock() {
 
 void MainWindow::moreInitDock() {
 	DebugDialog::debug("create view switcher");
-
 	m_layerPalette->setShowAllLayersAction(m_showAllLayersAct);
 	m_layerPalette->setHideAllLayersAction(m_hideAllLayersAct);
 

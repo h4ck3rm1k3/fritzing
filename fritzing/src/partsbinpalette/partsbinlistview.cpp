@@ -133,8 +133,6 @@ int PartsBinListView::setItemAux(ModelPart * modelPart, int position) {
 }
 
 void PartsBinListView::mouseMoveEvent(QMouseEvent *event) {
-	if (m_infoView == NULL) return;
-
 	if(m_infoViewOnHover) {
 		QListWidgetItem * item = itemAt(event->pos());
 		if (item != NULL) {
@@ -154,7 +152,7 @@ void PartsBinListView::showInfo(QListWidgetItem * item) {
 		return;
 	}
 
-	if (m_hoverItem != NULL) {
+	if (m_hoverItem != NULL && m_infoView != NULL) {
 		ItemBase * itemBase = m_hoverItem->data(Qt::UserRole).value<ItemBase *>();
 		if (itemBase != NULL) {
 			m_infoView->hoverLeaveItem(NULL, NULL, itemBase);
@@ -166,11 +164,12 @@ void PartsBinListView::showInfo(QListWidgetItem * item) {
 	}
 
 	m_hoverItem = item;
-
-	ItemBase * itemBase = item->data(Qt::UserRole).value<ItemBase *>();
-	if (itemBase == NULL) return;
-
-	m_infoView->hoverEnterItem(NULL, NULL, itemBase, swappingEnabled());
+    if (m_infoView != NULL) {
+	    ItemBase * itemBase = item->data(Qt::UserRole).value<ItemBase *>();
+	    if (itemBase != NULL) {
+	        m_infoView->hoverEnterItem(NULL, NULL, itemBase, swappingEnabled());
+        }
+    }
 }
 
 
@@ -181,12 +180,12 @@ void PartsBinListView::mousePressEvent(QMouseEvent *event) {
 	QListWidgetItem * current = currentItem();
 	if (current == NULL) {
 		m_hoverItem = NULL;
-		m_infoView->viewItemInfo(NULL, NULL, false);
+        if (m_infoView != NULL) m_infoView->viewItemInfo(NULL, NULL, false);
 		return;
 	}
 
 	showInfo(current);
-	m_infoView->viewItemInfo(NULL, current->data(Qt::UserRole).value<ItemBase *>(), false);
+	if (m_infoView != NULL) m_infoView->viewItemInfo(NULL, current->data(Qt::UserRole).value<ItemBase *>(), false);
 }
 
 void PartsBinListView::setInfoView(HtmlInfoView * infoView) {

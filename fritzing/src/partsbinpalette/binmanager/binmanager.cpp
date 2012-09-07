@@ -107,6 +107,9 @@ BinManager::BinManager(class ReferenceModel *refModel, class HtmlInfoView *infoV
 {
 	BinManager::Title = tr("Parts");
 
+    m_combinedMenu = NULL;
+    m_showListViewAction = m_showIconViewAction = NULL;
+
 	m_refModel = refModel;
 	m_infoView = infoView;
 	m_undoStack = undoStack;
@@ -127,7 +130,13 @@ BinManager::BinManager(class ReferenceModel *refModel, class HtmlInfoView *infoV
 	lo->setMargin(0);
 	lo->setSpacing(0);
 	setMaximumHeight(500);
+}
 
+BinManager::~BinManager() {
+}
+
+void BinManager::initStandardBins()
+{
 	createCombinedMenu();
 	createContextMenus();
 
@@ -149,9 +158,6 @@ BinManager::BinManager(class ReferenceModel *refModel, class HtmlInfoView *infoV
 	DebugDialog::debug("after core bin");
 
 	connectTabWidget();
-}
-
-BinManager::~BinManager() {
 }
 
 void BinManager::addBin(PartsBinPaletteWidget* bin) {
@@ -447,7 +453,7 @@ PartsBinPaletteWidget* BinManager::openCoreBinIn() {
 }
 
 PartsBinPaletteWidget* BinManager::newBin() {
-	PartsBinPaletteWidget* bin = new PartsBinPaletteWidget(m_refModel,m_infoView,m_undoStack,this);
+	PartsBinPaletteWidget* bin = new PartsBinPaletteWidget(m_refModel, m_infoView, m_undoStack,this);
 	connect(
 		bin, SIGNAL(fileNameUpdated(PartsBinPaletteWidget*, const QString&, const QString&)),
 		this, SLOT(updateFileName(PartsBinPaletteWidget*, const QString&, const QString&))
@@ -740,10 +746,6 @@ void BinManager::editSelectedPartFrom(PartsBinPaletteWidget* bin) {
 	partsEditor->raise();
 }
 
-void BinManager::dockedInto(FDockWidget* dock) {
-	Q_UNUSED(dock);
-}
-
 bool BinManager::isTabReorderingEvent(QDropEvent* event) {
 	const QMimeData *m = event->mimeData();
 	QStringList formats = m->formats();
@@ -841,6 +843,8 @@ void BinManager::updateBinCombinedMenuCurrent() {
 }
 
 void BinManager::updateBinCombinedMenu(PartsBinPaletteWidget * bin) {
+    if (m_combinedMenu == NULL) return;
+
 	m_saveBinAction->setEnabled(bin->allowsChanges());
 	m_renameBinAction->setEnabled(bin->canClose());
 	m_closeBinAction->setEnabled(bin->canClose());
@@ -1049,6 +1053,9 @@ void BinManager::saveBinAs() {
 
 
 void BinManager::updateViewChecks(bool iconView) {
+    if (m_showListViewAction == NULL) return;
+    if (m_showIconViewAction == NULL) return;
+
 	if (iconView) {
 		m_showListViewAction->setChecked(false);
 		m_showIconViewAction->setChecked(true);
