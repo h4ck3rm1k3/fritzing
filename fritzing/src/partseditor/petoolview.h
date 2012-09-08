@@ -45,15 +45,21 @@ public:
 
     void highlightElement(class PEGraphicsItem *);
     void initConnectors(QList<QDomElement> & connectorList, bool gotZeroConnector);
+    void setLock(bool);
 
 signals:
     void switchedConnector(const QDomElement &);
     void loadImage();
+    void lockChanged(bool);
 
 protected slots:
     void changeUnits();
     void switchConnector(QListWidgetItem * current, QListWidgetItem * previous);
     void loadImageSlot();
+    void lockChangedSlot(bool);
+    void descriptionEntry();
+    void typeEntry();
+    void nameEntry();
 
 protected:
     QString convertUnits(double);

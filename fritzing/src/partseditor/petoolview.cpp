@@ -85,6 +85,7 @@ PEToolView::PEToolView(QWidget * parent) : QWidget(parent)
     m_elementLock = new QCheckBox(tr("Locked"));
     m_elementLock->setChecked(true);
     m_elementLock->setToolTip(tr("Unlock to modify the current connector's location"));
+    connect(m_elementLock, SIGNAL(clicked(bool)), this, SLOT(lockChangedSlot(bool)));
     svgGroupLayout->addWidget(m_elementLock);
 
     m_svgElement = new QLabel;
@@ -250,3 +251,21 @@ void PEToolView::loadImageSlot() {
     emit loadImage();
 }
 
+void PEToolView::setLock(bool lock) {
+    if (m_elementLock) m_elementLock->setChecked(lock);
+}
+
+void PEToolView::lockChangedSlot(bool state)
+{
+    emit lockChanged(state);
+}
+
+void PEToolView::nameEntry() {
+}
+
+void PEToolView::typeEntry() {
+}
+
+void PEToolView::descriptionEntry() {
+
+}

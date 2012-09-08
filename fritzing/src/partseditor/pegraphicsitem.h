@@ -42,6 +42,7 @@ public:
 	void hoverEnterEvent(QGraphicsSceneHoverEvent *);
 	void hoverLeaveEvent(QGraphicsSceneHoverEvent *);
     void wheelEvent(QGraphicsSceneWheelEvent *);
+	void mouseReleaseEvent(QGraphicsSceneMouseEvent *);
     void setHighlighted(bool);
     bool highlighted();
     void setElement(QDomElement &);
@@ -56,6 +57,7 @@ public:
 
 signals:
     void highlightSignal(PEGraphicsItem *);
+    void mouseReleased(PEGraphicsItem *);
 
 protected:
     bool m_highlighted;

@@ -98,7 +98,9 @@ public slots:
     void tagsChanged(const QStringList &);
     void connectorMetadataChanged(const struct ConnectorMetadata *);
     void highlightSlot(class PEGraphicsItem *);
+    void pegiMouseReleased(class PEGraphicsItem *);
     void switchedConnector(const QDomElement &);
+    void lockChanged(bool);
 
 protected slots:
     void initZoom();

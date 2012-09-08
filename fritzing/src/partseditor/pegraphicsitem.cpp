@@ -198,3 +198,7 @@ void PEGraphicsItem::setTerminalPoint(QPointF p) {
 QPointF PEGraphicsItem::terminalPoint() {
     return m_terminalPoint;
 }
+
+void PEGraphicsItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *) {
+    emit mouseReleased(this);
+}

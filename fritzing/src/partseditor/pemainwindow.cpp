@@ -279,6 +279,7 @@ void PEMainWindow::moreInitDock()
     m_peToolView = new PEToolView();
     connect(m_peToolView, SIGNAL(switchedConnector(const QDomElement &)), this, SLOT(switchedConnector(const QDomElement &)));
     connect(m_peToolView, SIGNAL(loadImage()), this, SLOT(loadImage()));
+    connect(m_peToolView, SIGNAL(lockChanged(bool)), this, SLOT(lockChanged(bool)));
     makeDock(tr("Tools"), m_peToolView, DockMinWidth, DockMinHeight);
     m_peToolView->setMinimumSize(DockMinWidth, DockMinHeight);
 
@@ -768,6 +769,7 @@ void PEMainWindow::initSvgTree(ItemBase * itemBase, QDomDocument & domDocument)
                 pegItem->setElement(element);
                 pegItem->setOffset(bounds.topLeft());
                 connect(pegItem, SIGNAL(highlightSignal(PEGraphicsItem *)), this, SLOT(highlightSlot(PEGraphicsItem *)));
+                connect(pegItem, SIGNAL(mouseReleased(PEGraphicsItem *)), this, SLOT(pegiMouseReleased(PEGraphicsItem *)));
 
                 /* 
                 QString string;
@@ -845,6 +847,7 @@ void PEMainWindow::switchedConnector(const QDomElement & element)
         }
     }
 
+    bool gotOne = false;
     foreach (PEGraphicsItem * pegi, pegiList) {
         QDomElement pegiElement = pegi->element();
         if (pegiElement.attribute("id").compare(id) == 0) {
@@ -854,11 +857,15 @@ void PEMainWindow::switchedConnector(const QDomElement & element)
             else {
                 pegi->setTerminalPoint(pegi->rect().center());
             }
+            gotOne = true;
             pegi->showTerminalPoint(true);
             pegi->setHighlighted(true);
             break;
         }
-
+    }
+    m_peToolView->setLock(gotOne);
+    foreach (PEGraphicsItem * pegi, pegiList) {
+        pegi->setAcceptedMouseButtons(gotOne ? Qt::NoButton : Qt::LeftButton);
     }
 }
 
@@ -1070,6 +1077,9 @@ void PEMainWindow::changeSvg(SketchWidget * sketchWidget, const QString & filena
     }
 
     foreach (ItemBase * itemBase, m_items.values()) {
+        foreach(ItemBase * lk, itemBase->layerKin()) {
+            delete lk;
+        }
         delete itemBase;
     }
     m_items.clear();
@@ -1109,4 +1119,24 @@ void PEMainWindow::reload() {
     m_items.insert(m_pcbGraphicsView->viewIdentifier(), pcbItem);
 
     QTimer::singleShot(10, this, SLOT(initZoom()));
+}
+
+void PEMainWindow::lockChanged(bool state) {
+    foreach (QGraphicsItem * item, m_currentGraphicsView->scene()->items()) {
+        PEGraphicsItem * pegi = dynamic_cast<PEGraphicsItem *>(item);
+        if (pegi) {
+            pegi->setAcceptedMouseButtons(state ? Qt::NoButton : Qt::LeftButton);
+        }
+    }
+}
+
+void PEMainWindow::pegiMouseReleased(PEGraphicsItem * pegi)
+{
+    QDomElement element = pegi->element();
+    // find it in the svg
+
+    QString string;
+    QTextStream stream(&string);
+    element.save(stream, 0);
+    DebugDialog::debug("mousereleased " + string);
 }
