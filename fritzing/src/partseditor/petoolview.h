@@ -48,10 +48,12 @@ public:
 
 signals:
     void switchedConnector(const QDomElement &);
+    void loadImage();
 
 protected slots:
     void changeUnits();
     void switchConnector(QListWidgetItem * current, QListWidgetItem * previous);
+    void loadImageSlot();
 
 protected:
     QString convertUnits(double);

@@ -1439,3 +1439,24 @@ void TextUtils::gornTreeAux(QDomElement & root) {
         child = child.nextSiblingElement();
     }
 }
+
+void TextUtils::elevateTransform(QDomElement & root) {
+    if (root.hasChildNodes()) {
+        QDomElement child = root.firstChildElement();
+        while (!child.isNull()) {
+            QDomElement next = child.nextSiblingElement();
+            elevateTransform(child);
+            child = next;
+        }
+        return;
+    }
+
+    QString transform = root.attribute("transform");
+    if (transform.isEmpty()) return;
+
+    root.removeAttribute("transform");
+    QDomElement g = root.ownerDocument().createElement("g");
+    g.setAttribute("transform", transform);
+    root.parentNode().insertBefore(g, root);
+    g.appendChild(root);
+}

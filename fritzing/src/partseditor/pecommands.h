@@ -117,4 +117,22 @@ protected:
 
 /////////////////////////////////////////////
 
+class ChangeSvgCommand : public PEBaseCommand
+{
+public:
+	ChangeSvgCommand(class PEMainWindow *, SketchWidget *, const QString  & oldFilename, const QString & newFilename, QUndoCommand *parent);
+	void undo();
+	void redo();
+
+protected:
+	QString getParamString() const;
+
+protected:
+	QString m_oldFilename;
+	QString m_newFilename;
+};
+
+/////////////////////////////////////////////
+
+
 #endif // PECOMMANDS_H

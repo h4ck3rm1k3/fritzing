@@ -28,6 +28,8 @@ $Date$
 
 	clean up menus
 
+    show in OS button
+
 	first time help?
 
 	disable dragging wires
@@ -40,20 +42,22 @@ $Date$
 
     assign connector to selected svg element 
 
-	add status bar to connectors tab
+	on first time switching to view, select first connector
 
     on svg import detect all connector IDs
         if any are invisible, tell user this is obsolete
     
     move connectors with arrow keys, or typed coordinates
 	drag and drop later
-	
-    connector metadata as palette?
 
-    eagle lbr
-    eagle brd
-    kicad footprint and mod?
-    gEDA footprint
+    load new file
+        load image button can be replaced by file menu
+	
+    import
+        eagle lbr
+        eagle brd
+        kicad footprint and mod?
+        gEDA footprint
 
     for schematic view 
         offer generate option
@@ -85,16 +89,21 @@ $Date$
 
     smd vs. tht
 
+    hybrids
+
     buses 
         connect bus by drawing a wire
         can this be modal? i.e. turn bus mode on and off
 
     bendable legs
 
-    flip and rotate
+    flip and rotate?
+
+    set flippable
+
+    zoom slider is not correctly synchronized with actual zoom level
 
     terminal points
-        display as part of connectorItem
         move only with arrow keys (maybe cntl-arrow if arrow is used for connector)
         give presets: center, N, E, S, W, NE, NW, SE, SW
 
@@ -102,7 +111,7 @@ $Date$
 
     nudge via arrow keys
 
-    taxonomy?
+    taxonomy entry like tag entry?
 
     new schematic layout specs
 
@@ -116,14 +125,19 @@ $Date$
 
     disable family entry?  should always be "custom_"  + original family (unless it already starts with custom_)
 
-    allow rulers and other tools?
-
     lock svg element, if unlocked then click to change.  If a connector is found, lock to start with
 
     matrix problem with move and duplicate (i.e. if element inherits a matrix from far above)
         even a problem when inserting hole, pad, or pin
         eliminate internal transforms, then insert inverted matrix, then use untransformed coords based on viewbox
             
+    delete all unused svg files when finished
+
+    only allow appropriate file to be loaded for appropriate view (.mod, .fp, etc.)
+
+    kicad schematic does not match our schematic
+
+    move contrib pcb files to obsolete
 
 ***************************************************/
 
@@ -133,6 +147,7 @@ $Date$
 #include "pecommands.h"
 #include "petoolview.h"
 #include "pegraphicsitem.h"
+#include "kicadmoduledialog.h"
 #include "../debugdialog.h"
 #include "../model/palettemodel.h"
 #include "../sketch/breadboardsketchwidget.h"
@@ -146,7 +161,12 @@ $Date$
 #include "../mainwindow/fdockwidget.h"
 #include "../fsvgrenderer.h"
 #include "../partsbinpalette/binmanager/binmanager.h"
+#include "../svg/gedaelement2svg.h"
+#include "../svg/kicadmodule2svg.h"
+#include "../svg/kicadschematic2svg.h"
+
 #include <QCoreApplication>
+#include <QSvgGenerator>
 
 #ifdef QT_NO_DEBUG
 	#define CORE_EDITION_ENABLED false
@@ -192,10 +212,23 @@ PEMainWindow::PEMainWindow(PaletteModel * paletteModel, ReferenceModel * referen
 	: MainWindow(paletteModel, referenceModel, parent)
 {
     m_settingsPrefix = "pe/";
+    m_guid = FolderUtils::getRandText();
+    m_fileIndex = 0;
+	m_userPartsFolderPath = FolderUtils::getUserDataStorePath("parts")+"/user/";
+	m_userPartsFolderSvgPath = FolderUtils::getUserDataStorePath("parts")+"/svg/user/";
 }
 
 PEMainWindow::~PEMainWindow()
 {
+    // PEGraphicsItems are still holding QDomElement so delete them before m_fzpDocument is deleted
+    QList<SketchWidget *> sketchWidgets;
+    sketchWidgets << m_breadboardGraphicsView << m_schematicGraphicsView << m_pcbGraphicsView;
+    foreach (SketchWidget * sketchWidget, sketchWidgets) {
+        foreach (QGraphicsItem * item, sketchWidget->scene()->items()) {
+            PEGraphicsItem * pegi = dynamic_cast<PEGraphicsItem *>(item);
+            if (pegi) delete pegi;
+        }
+    }   
 }
 
 void PEMainWindow::closeEvent(QCloseEvent *event) {
@@ -245,7 +278,8 @@ void PEMainWindow::moreInitDock()
 
     m_peToolView = new PEToolView();
     connect(m_peToolView, SIGNAL(switchedConnector(const QDomElement &)), this, SLOT(switchedConnector(const QDomElement &)));
-    makeDock(tr("Connectors"), m_peToolView, DockMinWidth, DockMinHeight);
+    connect(m_peToolView, SIGNAL(loadImage()), this, SLOT(loadImage()));
+    makeDock(tr("Tools"), m_peToolView, DockMinWidth, DockMinHeight);
     m_peToolView->setMinimumSize(DockMinWidth, DockMinHeight);
 
 	makeDock(BinManager::Title, m_binManager, MinHeight, DefaultHeight);
@@ -316,10 +350,6 @@ void PEMainWindow::setInitialItem(PaletteItem * paletteItem) {
         originalModelPart = paletteItem->modelPart();
     }
 
-    long newID = ItemBase::getNextID();
-	ViewGeometry viewGeometry;
-	viewGeometry.setLoc(QPointF(0, 0));
-
     QFile file(originalModelPart->path());
 	QString errorStr;
 	int errorLine;
@@ -345,13 +375,10 @@ void PEMainWindow::setInitialItem(PaletteItem * paletteItem) {
     }
     TextUtils::replaceChildText(m_fzpDocument, date, QDate::currentDate().toString());
 
-	QString userPartsFolderPath = FolderUtils::getUserDataStorePath("parts")+"/user/";
-	QString userPartsFolderSvgPath = FolderUtils::getUserDataStorePath("parts")+"/svg/user/";
-    QString guid = FolderUtils::getRandText();
-    fzpRoot.setAttribute("moduleId", guid);
+    fzpRoot.setAttribute("moduleId", m_guid);
     QString family = originalModelPart->family();
     if (family.isEmpty()) {
-        family = guid;
+        family = m_guid;
     }
     else if (!family.startsWith("custom_")) {
         family = "custom_" + family;
@@ -376,12 +403,9 @@ void PEMainWindow::setInitialItem(PaletteItem * paletteItem) {
         TextUtils::replaceChildText(m_fzpDocument, prop, family);
     }
 
-    QHash<SketchWidget *, QString> sketchWidgets;
-    sketchWidgets.insert(m_breadboardGraphicsView, "breadboard");
-    sketchWidgets.insert(m_schematicGraphicsView, "schematic"),
-    sketchWidgets.insert(m_pcbGraphicsView, "pcb");
-    sketchWidgets.insert(m_iconGraphicsView, "icon");
-    foreach (SketchWidget * sketchWidget, sketchWidgets.keys()) {
+    QList<SketchWidget *> sketchWidgets;
+    sketchWidgets << m_breadboardGraphicsView << m_schematicGraphicsView << m_pcbGraphicsView << m_iconGraphicsView;
+    foreach (SketchWidget * sketchWidget, sketchWidgets) {
         ItemBase * itemBase = originalModelPart->viewItem(sketchWidget->viewIdentifier());
         if (itemBase == NULL) continue;
         if (!itemBase->hasCustomSVG()) continue;
@@ -397,45 +421,26 @@ void PEMainWindow::setInitialItem(PaletteItem * paletteItem) {
             continue;
         }
 
-        QString prefix = sketchWidgets.value(sketchWidget);
-        QString prefixPath = prefix + "/" + guid + ".svg";
 		QSizeF size = itemBase->size();
 		svg = TextUtils::makeSVGHeader(GraphicsUtils::SVGDPI, GraphicsUtils::StandardFritzingDPI, size.width(), size.height()) + svg + "</svg>";
-        QString svgPath = userPartsFolderSvgPath + prefixPath;
-        result = TextUtils::writeUtf8(svgPath, svg);
+        QString svgPath = makeSvgPath(sketchWidget);
+        result = TextUtils::writeUtf8(m_userPartsFolderSvgPath + svgPath, svg);
         if (!result) {
             QMessageBox::critical(NULL, tr("Parts Editor"), QString("Unable to write svg to  %1").arg(svgPath));
 		    return;
         }
 
-        QDomElement view = views.firstChildElement(prefix + "View");
+        QDomElement view = views.firstChildElement(ViewIdentifierClass::viewIdentifierXmlName(sketchWidget->viewIdentifier()));
         QDomElement layers = view.firstChildElement("layers");
         if (layers.isNull()) {
             QMessageBox::critical(NULL, tr("Parts Editor"), QString("Unable to parse fzp file  %1").arg(originalModelPart->path()));
 		    return;
         }
 
-        layers.setAttribute("image", prefixPath);
+        layers.setAttribute("image", svgPath);
     }
 
-    QString fzpPath = userPartsFolderPath + guid + ".fzp";
-    TextUtils::writeUtf8(fzpPath, m_fzpDocument.toString());
-
-    ModelPart * modelPart = new ModelPart(&m_fzpDocument, fzpPath, ModelPart::Part);
-
-    m_iconGraphicsView->addItem(modelPart, m_iconGraphicsView->defaultViewLayerSpec(), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
-    ItemBase * breadboardItem = m_breadboardGraphicsView->addItem(modelPart, m_breadboardGraphicsView->defaultViewLayerSpec(), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
-    ItemBase * schematicItem = m_schematicGraphicsView->addItem(modelPart, m_schematicGraphicsView->defaultViewLayerSpec(), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
-    ItemBase * pcbItem = m_pcbGraphicsView->addItem(modelPart, m_pcbGraphicsView->defaultViewLayerSpec(), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
-    m_metadataView->initMetadata(m_fzpDocument);
-
-    initConnectors();
-
-    initSvgTree(breadboardItem, m_breadboardDocument);
-    initSvgTree(schematicItem, m_schematicDocument);
-    initSvgTree(pcbItem, m_pcbDocument);
-
-    QTimer::singleShot(10, this, SLOT(initZoom()));
+    reload();
 }
 
 bool PEMainWindow::eventFilter(QObject *object, QEvent *event) 
@@ -711,6 +716,7 @@ void PEMainWindow::initSvgTree(ItemBase * itemBase, QDomDocument & domDocument)
         return;
 	}
 
+    TextUtils::elevateTransform(domDocument.documentElement());
     TextUtils::gornTree(domDocument);   //
 
     FSvgRenderer renderer;
@@ -725,6 +731,20 @@ void PEMainWindow::initSvgTree(ItemBase * itemBase, QDomDocument & domDocument)
     while (traverse.count() > 0) {
         QList<QDomElement> next;
         foreach (QDomElement element, traverse) {
+            QString tagName = element.tagName();
+            if      (tagName.compare("rect") == 0);
+            else if (tagName.compare("g") == 0);
+            else if (tagName.compare("circle") == 0);
+            else if (tagName.compare("ellipse") == 0);
+            else if (tagName.compare("path") == 0);
+            else if (tagName.compare("svg") == 0);
+            else if (tagName.compare("line") == 0);
+            else if (tagName.compare("polyline") == 0);
+            else if (tagName.compare("polygon") == 0);
+            else if (tagName.compare("use") == 0);
+            else if (tagName.compare("text") == 0);
+            else continue;
+
             QString id = element.attribute("id");
             QRectF r = renderer.boundsOnElement(id);
             QMatrix matrix = renderer.matrixForElement(id);
@@ -840,4 +860,253 @@ void PEMainWindow::switchedConnector(const QDomElement & element)
         }
 
     }
+}
+
+void PEMainWindow::loadImage() 
+{
+    if (m_currentGraphicsView == NULL) return;
+
+	QStringList extras;
+	extras.append("");
+	extras.append("");
+	QString imageFiles;
+	if (m_currentGraphicsView->viewIdentifier() == ViewIdentifierClass::PCBView) {
+		imageFiles = tr("Image & Footprint Files (%1 %2 %3 %4 %5);;SVG Files (%1);;JPEG Files (%2);;PNG Files (%3);;gEDA Footprint Files (%4);;Kicad Module Files (%5)");   // 
+		extras[0] = "*.fp";
+		extras[1] = "*.mod";
+	}
+	else {
+		imageFiles = tr("Image Files (%1 %2 %3);;SVG Files (%1);;JPEG Files (%2);;PNG Files (%3)%4%5");
+	}
+
+	if (m_currentGraphicsView->viewIdentifier() == ViewIdentifierClass::SchematicView) {
+		extras[0] = "*.lib";
+		imageFiles = tr("Image & Footprint Files (%1 %2 %3 %4);;SVG Files (%1);;JPEG Files (%2);;PNG Files (%3);;Kicad Schematic Files (%4)%5");   // 
+	}
+
+    QString initialPath = FolderUtils::openSaveFolder();
+    ItemBase * itemBase = m_items.value(m_currentGraphicsView->viewIdentifier(), NULL);
+    if (itemBase) {
+        initialPath = itemBase->filename();
+    }
+	QString origPath = FolderUtils::getOpenFileName(this,
+		tr("Open Image"),
+		initialPath,
+		imageFiles.arg("*.svg").arg("*.jpg *.jpeg").arg("*.png").arg(extras[0]).arg(extras[1])
+	);
+
+	if (origPath.isEmpty()) {
+		return; // Cancel pressed
+	} 
+
+	if (!origPath.endsWith(".svg")) {
+		try {
+			origPath = createSvgFromImage(origPath);
+		}
+		catch (const QString & msg) {
+    		QMessageBox::warning(
+    			NULL,
+    			tr("Conversion problem"),
+    			tr("Unable to load image file: \n%1").arg(msg)
+    		);
+			return;
+		}
+	}
+
+	if (!origPath.isEmpty()) {
+		ChangeSvgCommand * csc = new ChangeSvgCommand(this, m_currentGraphicsView, itemBase->filename(), origPath, NULL);
+        m_undoStack->waitPush(csc, SketchWidget::PropChangeDelay);
+	}
+}
+
+QString PEMainWindow::createSvgFromImage(const QString &origFilePath) {
+
+	QString newFilePath = m_userPartsFolderSvgPath + makeSvgPath(m_currentGraphicsView);
+	if (origFilePath.endsWith(".fp")) {
+		// this is a geda footprint file
+		GedaElement2Svg geda;
+		QString svg = geda.convert(origFilePath, false);
+		return saveSvg(svg, newFilePath);
+	}
+
+	if (origFilePath.endsWith(".lib")) {
+		// Kicad schematic library file
+		QStringList defs = KicadSchematic2Svg::listDefs(origFilePath);
+		if (defs.count() == 0) {
+			throw tr("no schematics found in %1").arg(origFilePath);
+		}
+
+		QString def;
+		if (defs.count() > 1) {
+			KicadModuleDialog kmd(tr("schematic part"), origFilePath, defs, this);
+			int result = kmd.exec();
+			if (result != QDialog::Accepted) {
+				return "";
+			}
+
+			def = kmd.selectedModule();
+		}
+		else {
+			def = defs.at(0);
+		}
+
+		KicadSchematic2Svg kicad;
+		QString svg = kicad.convert(origFilePath, def);
+		return saveSvg(svg, newFilePath);
+	}
+
+	if (origFilePath.endsWith(".mod")) {
+		// Kicad footprint (Module) library file
+		QStringList modules = KicadModule2Svg::listModules(origFilePath);
+		if (modules.count() == 0) {
+			throw tr("no footprints found in %1").arg(origFilePath);
+		}
+
+		QString module;
+		if (modules.count() > 1) {
+			KicadModuleDialog kmd("footprint", origFilePath, modules, this);
+			int result = kmd.exec();
+			if (result != QDialog::Accepted) {
+				return "";
+			}
+
+			module = kmd.selectedModule();
+		}
+		else {
+			module = modules.at(0);
+		}
+
+		KicadModule2Svg kicad;
+		QString svg = kicad.convert(origFilePath, module, false);
+		return saveSvg(svg, newFilePath);
+	}
+
+	// deal with png, jpg, etc.:
+
+
+/* %1=witdh in mm
+ * %2=height in mm
+ * %3=width in local coords
+ * %4=height in local coords
+ * %5=binary data
+ */
+/*	QString svgTemplate =
+"<?xml version='1.0' encoding='UTF-8' standalone='no'?>\n"
+"	<svg width='%1mm' height='%2mm' viewBox='0 0 %3 %4' xmlns='http://www.w3.org/2000/svg'\n"
+"		xmlns:xlink='http://www.w3.org/1999/xlink' version='1.2' baseProfile='tiny'>\n"
+"		<g fill='none' stroke='black' vector-effect='non-scaling-stroke' stroke-width='1'\n"
+"			fill-rule='evenodd' stroke-linecap='square' stroke-linejoin='bevel' >\n"
+"			<image x='0' y='0' width='%3' height='%4'\n"
+"				xlink:href='data:image/png;base64,%5' />\n"
+"		</g>\n"
+"	</svg>";
+
+	QPixmap pixmap(origFilePath);
+	QByteArray bytes;
+	QBuffer buffer(&bytes);
+	buffer.open(QIODevice::WriteOnly);
+	pixmap.save(&buffer,"png"); // writes pixmap into bytes in PNG format
+
+	QString svgDom = svgTemplate
+		.arg(pixmap.widthMM()).arg(pixmap.heightMM())
+		.arg(pixmap.width()).arg(pixmap.height())
+		.arg(QString("data:image/png;base64,%2").arg(QString(bytes.toBase64())));
+
+	QFile destFile(newFilePath);
+	if(!destFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
+		QMessageBox::information(NULL, "", "file not created");
+		if(!destFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
+				QMessageBox::information(NULL, "", "file not created 2");
+			}
+	}
+	QTextStream out(&destFile);
+	out << svgDom;
+	destFile.close();
+	qDebug() << newFilePath;
+	bool existsResult = QFileInfo(newFilePath).exists();
+	Q_ASSERT(existsResult);
+*/
+
+	QImage img(origFilePath);
+	QSvgGenerator svgGenerator;
+	svgGenerator.setResolution(90);
+	svgGenerator.setFileName(newFilePath);
+	QSize sz = img.size();
+    svgGenerator.setSize(sz);
+	svgGenerator.setViewBox(QRect(0, 0, sz.width(), sz.height()));
+	QPainter svgPainter(&svgGenerator);
+	svgPainter.drawImage(QPoint(0,0), img);
+	svgPainter.end();
+
+	return newFilePath;
+}
+
+QString PEMainWindow::makeSvgPath(SketchWidget * sketchWidget)
+{
+    QString viewName = ViewIdentifierClass::viewIdentifierNaturalName(sketchWidget->viewIdentifier());
+    return QString("%1/%2_%3.svg").arg(viewName).arg(m_guid).arg(m_fileIndex++);
+}
+
+QString PEMainWindow::saveSvg(const QString & svg, const QString & newFilePath) {
+    if (!TextUtils::writeUtf8(newFilePath, svg)) {
+        throw tr("unable to open temp file %1").arg(newFilePath);
+    }
+	return newFilePath;
+}
+
+void PEMainWindow::changeSvg(SketchWidget * sketchWidget, const QString & filename) {
+    QDomElement fzpRoot = m_fzpDocument.documentElement();
+    QDomElement views = fzpRoot.firstChildElement("views");
+    QDomElement view = views.firstChildElement(ViewIdentifierClass::viewIdentifierXmlName(sketchWidget->viewIdentifier()));
+    QDomElement layers = view.firstChildElement("layers");
+    QFileInfo info(filename);
+    QDir dir = info.absoluteDir();
+    QString shortName = dir.dirName() + "/" + info.fileName();
+    layers.setAttribute("image", shortName);
+
+    foreach (QGraphicsItem * item, sketchWidget->scene()->items()) {
+        PEGraphicsItem * pegi = dynamic_cast<PEGraphicsItem *>(item);
+        if (pegi) delete pegi;
+    }
+
+    foreach (ItemBase * itemBase, m_items.values()) {
+        delete itemBase;
+    }
+    m_items.clear();
+
+    reload();
+}
+
+QString PEMainWindow::saveFzp() {
+    QString fzpPath = QString("%1%2_%3.fzp").arg(m_userPartsFolderPath).arg(m_guid).arg(m_fileIndex++);
+    TextUtils::writeUtf8(fzpPath, m_fzpDocument.toString());
+    return fzpPath;
+}
+
+void PEMainWindow::reload() {
+    QString fzpPath = saveFzp();
+    ModelPart * modelPart = new ModelPart(&m_fzpDocument, fzpPath, ModelPart::Part);
+
+    long newID = ItemBase::getNextID();
+	ViewGeometry viewGeometry;
+	viewGeometry.setLoc(QPointF(0, 0));
+
+    ItemBase * iconItem = m_iconGraphicsView->addItem(modelPart, m_iconGraphicsView->defaultViewLayerSpec(), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
+    ItemBase * breadboardItem = m_breadboardGraphicsView->addItem(modelPart, m_breadboardGraphicsView->defaultViewLayerSpec(), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
+    ItemBase * schematicItem = m_schematicGraphicsView->addItem(modelPart, m_schematicGraphicsView->defaultViewLayerSpec(), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
+    ItemBase * pcbItem = m_pcbGraphicsView->addItem(modelPart, m_pcbGraphicsView->defaultViewLayerSpec(), BaseCommand::SingleView, viewGeometry, newID, -1, NULL, NULL);
+    m_metadataView->initMetadata(m_fzpDocument);
+
+    initConnectors();
+
+    initSvgTree(breadboardItem, m_breadboardDocument);
+    initSvgTree(schematicItem, m_schematicDocument);
+    initSvgTree(pcbItem, m_pcbDocument);
+
+    m_items.insert(m_iconGraphicsView->viewIdentifier(), iconItem);
+    m_items.insert(m_breadboardGraphicsView->viewIdentifier(), breadboardItem);
+    m_items.insert(m_schematicGraphicsView->viewIdentifier(), schematicItem);
+    m_items.insert(m_pcbGraphicsView->viewIdentifier(), pcbItem);
+
+    QTimer::singleShot(10, this, SLOT(initZoom()));
 }

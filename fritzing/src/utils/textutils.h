@@ -113,6 +113,7 @@ public:
 	static QSizeF parseForWidthAndHeight(QXmlStreamReader &);
 	static QSizeF parseForWidthAndHeight(const QString & svg);
     static void gornTree(QDomDocument &);
+    static void elevateTransform(QDomElement &);
 
 public:
 	static const QRegExp FindWhitespace;

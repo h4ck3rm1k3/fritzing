@@ -58,6 +58,7 @@ public:
     void changeProperties(const QHash<QString, QString> &, bool updateDisplay);
     void changeMetadata(const QString & name, const QString & value, bool updateDisplay);
     void changeConnectorMetadata(const ConnectorMetadata &, bool updateDisplay);
+    void changeSvg(SketchWidget *, const QString & filename);
 
 protected:
 	void closeEvent(QCloseEvent * event);
@@ -85,6 +86,11 @@ protected:
     void changeConnectorElement(QDomElement & connector, const ConnectorMetadata & cmd);
     void initSvgTree(ItemBase *, QDomDocument &);
     void initConnectors();
+    QString createSvgFromImage(const QString &origFilePath);
+    QString makeSvgPath(SketchWidget * sketchWidget);
+    QString saveSvg(const QString & svg, const QString & newFilePath);
+    QString saveFzp();
+    void reload();
 
 public slots:
     void metadataChanged(const QString & name, const QString & value);
@@ -99,6 +105,7 @@ protected slots:
     void showMetadataView();
     void showConnectorsView();
     void showIconView();
+    void loadImage();
 
 protected:
     QDomDocument m_fzpDocument;
@@ -116,7 +123,11 @@ protected:
     class MetadataView * m_metadataView;
     class ConnectorsView * m_connectorsView;
     class PEToolView * m_peToolView;
-
+    QString m_guid;
+    int m_fileIndex;
+    QHash<ViewIdentifierClass::ViewIdentifier, ItemBase *> m_items;
+    QString m_userPartsFolderPath;
+    QString m_userPartsFolderSvgPath;
 };
 
 #endif /* PEMAINWINDOW_H_ */

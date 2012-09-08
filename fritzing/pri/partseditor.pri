@@ -59,6 +59,7 @@ HEADERS += \
     src/partseditor/connectorsview.h \
     src/partseditor/petoolview.h \
     src/partseditor/pegraphicsitem.h \
+    src/partseditor/kicadmoduledialog.h \
     
 
 SOURCES += \
@@ -91,3 +92,4 @@ SOURCES += \
     src/partseditor/connectorsview.cpp \
     src/partseditor/petoolview.cpp \
     src/partseditor/pegraphicsitem.cpp \
+    src/partseditor/kicadmoduledialog.cpp \

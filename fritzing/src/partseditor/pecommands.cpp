@@ -177,3 +177,32 @@ QString ChangeConnectorMetadataCommand::getParamString() const {
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+ChangeSvgCommand::ChangeSvgCommand(PEMainWindow * peMainWindow, SketchWidget * sketchWidget, const QString  & oldFilename, const QString & newFilename, QUndoCommand *parent)
+    : PEBaseCommand(peMainWindow, parent)
+{
+ 	m_sketchWidget = sketchWidget;
+	m_oldFilename = oldFilename;
+	m_newFilename = newFilename;
+}
+
+void ChangeSvgCommand::undo()
+{
+    m_peMainWindow->changeSvg(m_sketchWidget, m_oldFilename);
+}
+
+void ChangeSvgCommand::redo()
+{
+    m_peMainWindow->changeSvg(m_sketchWidget, m_newFilename);
+}
+
+QString ChangeSvgCommand::getParamString() const {
+	return "ChangeSvgCommand " + 
+        QString(" id:%1, old:%2, new:%3")
+            .arg(m_sketchWidget->viewIdentifier())
+            .arg(m_oldFilename)
+            .arg(m_newFilename)
+        ;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
