@@ -122,9 +122,8 @@ $Date$
 
     matrix problem with move and duplicate (i.e. if element inherits a matrix from far above)
         even a problem when inserting hole, pad, or pin
-
-
-
+        eliminate internal transforms, then insert inverted matrix, then use untransformed coords based on viewbox
+            
 
 ***************************************************/
 
@@ -807,16 +806,38 @@ void PEMainWindow::switchedConnector(const QDomElement & element)
     QString id = p.attribute("svgId");
     if (id.isEmpty()) return;
 
-    //QString terminalID = p.attribute("terminalId");
+    QString terminalID = p.attribute("terminalId");
 
+    QList<PEGraphicsItem *> pegiList;
     foreach (QGraphicsItem * item, m_currentGraphicsView->scene()->items()) {
         PEGraphicsItem * pegi = dynamic_cast<PEGraphicsItem *>(item);
-        if (pegi == NULL) continue;
+        if (pegi) pegiList.append(pegi);
+    }
 
+    bool gotTerminal = false;
+    QPointF terminalPoint;
+    foreach (PEGraphicsItem * pegi, pegiList) {
+        QDomElement pegiElement = pegi->element();
+        if (pegiElement.attribute("id").compare(terminalID) == 0) {
+            terminalPoint = pegi->rect().center();
+            gotTerminal = true;
+            break;
+        }
+    }
+
+    foreach (PEGraphicsItem * pegi, pegiList) {
         QDomElement pegiElement = pegi->element();
         if (pegiElement.attribute("id").compare(id) == 0) {
+            if (gotTerminal) {
+                pegi->setTerminalPoint(terminalPoint);
+            }
+            else {
+                pegi->setTerminalPoint(pegi->rect().center());
+            }
+            pegi->showTerminalPoint(true);
             pegi->setHighlighted(true);
             break;
         }
+
     }
 }

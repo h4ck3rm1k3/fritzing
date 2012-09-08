@@ -31,8 +31,7 @@ $Date$
 #include <QRadioButton>
 #include <QVBoxLayout>
 #include <QGroupBox>
-#include <QSpacerItem>
-#include <QScrollArea>
+#include <QCheckBox>
 #include <QLabel>
 #include <QListWidget>
 #include <QDomDocument>
@@ -74,6 +73,7 @@ protected:
     QLayout * m_connectorInfoLayout;
     QWidget * m_connectorInfoWidget;
     bool m_gotZeroConnector;
+    QCheckBox * m_elementLock;
 };
 
 #endif

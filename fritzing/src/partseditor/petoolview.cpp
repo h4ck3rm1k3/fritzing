@@ -76,6 +76,11 @@ PEToolView::PEToolView(QWidget * parent) : QWidget(parent)
     QGroupBox * svgGroupBox = new QGroupBox("SVG Element Info");
 	QVBoxLayout * svgGroupLayout = new QVBoxLayout;
 
+    m_elementLock = new QCheckBox(tr("Locked"));
+    m_elementLock->setChecked(true);
+    m_elementLock->setToolTip(tr("Unlock to modify the current connector's location"));
+    svgGroupLayout->addWidget(m_elementLock);
+
     m_svgElement = new QLabel;
     m_svgElement->setWordWrap(false);
     m_svgElement->setTextFormat(Qt::PlainText);
@@ -228,7 +233,7 @@ void PEToolView::switchConnector(QListWidgetItem * current, QListWidgetItem * pr
     int index = current->data(Qt::UserRole).toInt();
     QDomElement element = m_connectorList.at(index);
 
-    m_connectorInfoWidget = ConnectorsView::makeConnectorForm(element, m_gotZeroConnector, index, this);
+    m_connectorInfoWidget = ConnectorsView::makeConnectorForm(element, m_gotZeroConnector, index, this, false);
     m_connectorInfoLayout->addWidget(m_connectorInfoWidget);
     m_connectorInfoGroupBox->setTitle(tr("Connector %1").arg(element.attribute("name")));
 

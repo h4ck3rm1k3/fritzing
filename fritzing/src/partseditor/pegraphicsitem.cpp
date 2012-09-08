@@ -31,8 +31,19 @@ $Date$
 #include <QBrush>
 #include <QColor>
 #include <QGraphicsScene>
+#include <QPainter>
+
+static QVector<qreal> Dashes;
+static const int DashLength = 3;
+
 
 PEGraphicsItem::PEGraphicsItem(double x, double y, double w, double h) : QGraphicsRectItem(x, y, w, h) {
+    if (Dashes.isEmpty()) {
+        Dashes << DashLength << DashLength;
+    }
+
+    m_terminalPoint = QPointF(w / 2, h / 2);
+    m_showTerminalPoint = false;
 	setAcceptedMouseButtons(Qt::NoButton);
 	setAcceptHoverEvents(true);
     //setFlag(QGraphicsItem::ItemIsSelectable, true );
@@ -130,4 +141,60 @@ void PEGraphicsItem::setOffset(QPointF p) {
 
 QPointF PEGraphicsItem::offset() {
     return m_offset;
+}
+
+void PEGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) 
+{
+    QGraphicsRectItem::paint(painter, option, widget);
+
+    if (m_showTerminalPoint && m_highlighted) {
+        QRectF r = rect();
+        QLineF l1(0, m_terminalPoint.y(), r.width(), m_terminalPoint.y());
+        QLineF l2(m_terminalPoint.x(), 0, m_terminalPoint.x(), r.height());
+
+        painter->save();
+
+        painter->setOpacity(1.0);
+        painter->setPen(QPen(QColor(0, 0, 0), 0, Qt::SolidLine));
+        painter->setBrush(Qt::NoBrush);
+        painter->drawLine(l1);
+        painter->drawLine(l2);
+
+	    painter->setPen(QPen(QColor(255, 255, 255), 0, Qt::DashLine));
+        painter->setBrush(Qt::NoBrush);
+        painter->drawLine(l1);
+        painter->drawLine(l2);
+    
+        painter->restore();
+    }
+}
+
+void PEGraphicsItem::showTerminalPoint(bool show) {
+    if (show) {
+        m_showTerminalPoint = true;
+        foreach (QGraphicsItem * item, scene()->items()) {
+            PEGraphicsItem * pegi = dynamic_cast<PEGraphicsItem *>(item);
+            if (pegi == NULL) continue;
+            if (pegi == this) continue;
+            if (!pegi->showingTerminalPoint()) continue;
+             
+            pegi->showTerminalPoint(false);
+        }
+    }
+    else {
+        m_showTerminalPoint = false;
+    }
+    update();
+}
+
+bool PEGraphicsItem::showingTerminalPoint() {
+    return m_showTerminalPoint;
+}
+
+void PEGraphicsItem::setTerminalPoint(QPointF p) {
+    m_terminalPoint = p;
+}
+
+QPointF PEGraphicsItem::terminalPoint() {
+    return m_terminalPoint;
 }

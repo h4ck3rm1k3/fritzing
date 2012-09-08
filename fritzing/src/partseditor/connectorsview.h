@@ -63,7 +63,7 @@ public:
     void initConnectors(QList<QDomElement> & connectorList, bool gotZeroConnector);
 
 public:
-    static QWidget * makeConnectorForm(const QDomElement & connector, bool gotZeroConnector, int index, QObject * slotHolder);
+    static QWidget * makeConnectorForm(const QDomElement & connector, bool gotZeroConnector, int index, QObject * slotHolder, bool alternating);
 
 signals:
     void connectorMetadataChanged(const ConnectorMetadata *);

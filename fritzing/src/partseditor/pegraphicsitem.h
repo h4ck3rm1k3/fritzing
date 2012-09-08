@@ -48,6 +48,11 @@ public:
     QDomElement & element();
     void setOffset(QPointF);
     QPointF offset();
+    void showTerminalPoint(bool);
+    bool showingTerminalPoint();
+    void setTerminalPoint(QPointF);
+    QPointF terminalPoint();
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
 signals:
     void highlightSignal(PEGraphicsItem *);
@@ -56,6 +61,8 @@ protected:
     bool m_highlighted;
     QDomElement  m_element;
     QPointF m_offset;
+    bool m_showTerminalPoint;
+    QPointF m_terminalPoint;
 };
 
 #endif /* PEGRAPHICSITEM_H_ */

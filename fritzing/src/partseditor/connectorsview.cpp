@@ -76,7 +76,7 @@ void ConnectorsView::initConnectors(QList<QDomElement> & connectorList, bool got
     m_connectorCount = connectorList.size();
 
 	m_mainFrame = new QFrame(this);
-	m_mainFrame->setObjectName("connectors");
+	m_mainFrame->setObjectName("NewPartsEditorConnectors");
 	QVBoxLayout *mainLayout = new QVBoxLayout(m_mainFrame);
     mainLayout->setSizeConstraint( QLayout::SetMinAndMaxSize );
 
@@ -102,7 +102,7 @@ void ConnectorsView::initConnectors(QList<QDomElement> & connectorList, bool got
 
     int ix = 0;
     foreach (QDomElement connector, connectorList) {
-        QWidget * widget = makeConnectorForm(connector, gotZeroConnector, ix++, this);
+        QWidget * widget = makeConnectorForm(connector, gotZeroConnector, ix++, this, true);
         mainLayout->addWidget(widget);
     }
 
@@ -165,9 +165,9 @@ void ConnectorsView::connectorCountEntry() {
 
 }
 
-QWidget * ConnectorsView::makeConnectorForm(const QDomElement & connector, bool gotZeroConnector, int index, QObject * slotHolder) {
+QWidget * ConnectorsView::makeConnectorForm(const QDomElement & connector, bool gotZeroConnector, int index, QObject * slotHolder, bool alternating) {
     QFrame * frame = new QFrame();
-    frame->setObjectName(index % 2 == 0 ? "connector0Frame" : "connector1Frame");
+    if (alternating) frame->setObjectName(index % 2 == 0 ? "NewPartsEditorConnector0Frame" : "NewPartsEditorConnector1Frame");
     QVBoxLayout * mainLayout = new QVBoxLayout();
 
     QFrame * nameFrame = new QFrame();
@@ -186,13 +186,13 @@ QWidget * ConnectorsView::makeConnectorForm(const QDomElement & connector, bool 
     }
 
     QLabel * numberLabel = new QLabel("<b>" + id + ".</b>");
-	numberLabel->setObjectName("PartsEditorLabel");
+	numberLabel->setObjectName("NewPartsEditorLabel");
     numberLabel->setStatusTip(tr("Connector number"));
     nameLayout->addWidget(numberLabel);
     nameLayout->addSpacing(10);
 
     QLabel * justLabel = new QLabel(tr("<b>Type:</b>"));
-	justLabel->setObjectName("PartsEditorLabel");
+	justLabel->setObjectName("NewPartsEditorLabel");
     nameLayout->addWidget(justLabel);
 
     Connector::ConnectorType ctype = Connector::Male;
@@ -201,7 +201,7 @@ QWidget * ConnectorsView::makeConnectorForm(const QDomElement & connector, bool 
 
     QRadioButton * radioButton = new QRadioButton(MaleSymbolString); 
 	connect(radioButton, SIGNAL(clicked()), slotHolder, SLOT(typeEntry()));
-    radioButton->setObjectName("PartsEditorRadio");
+    radioButton->setObjectName("NewPartsEditorRadio");
     if (ctype == Connector::Male) radioButton->setChecked(true); 
     radioButton->setProperty("value", Connector::Male);
     radioButton->setProperty("index", index);
@@ -210,7 +210,7 @@ QWidget * ConnectorsView::makeConnectorForm(const QDomElement & connector, bool 
 
     radioButton = new QRadioButton(FemaleSymbolString); 
 	connect(radioButton, SIGNAL(clicked()), slotHolder, SLOT(typeEntry()));
-    radioButton->setObjectName("PartsEditorRadio");
+    radioButton->setObjectName("NewPartsEditorRadio");
     if (ctype == Connector::Female) radioButton->setChecked(true); 
     radioButton->setProperty("value", Connector::Female);
     radioButton->setProperty("index", index);
@@ -219,7 +219,7 @@ QWidget * ConnectorsView::makeConnectorForm(const QDomElement & connector, bool 
 
     radioButton = new QRadioButton(tr("SMD-pad")); 
 	connect(radioButton, SIGNAL(clicked()), slotHolder, SLOT(typeEntry()));
-    radioButton->setObjectName("PartsEditorRadio");
+    radioButton->setObjectName("NewPartsEditorRadio");
     if (ctype == Connector::Pad) radioButton->setChecked(true); 
     radioButton->setProperty("value", Connector::Pad);
     nameLayout->addWidget(radioButton);
@@ -228,13 +228,13 @@ QWidget * ConnectorsView::makeConnectorForm(const QDomElement & connector, bool 
     nameLayout->addSpacing(10);
 
     justLabel = new QLabel(tr("<b>Name:</b>"));
-	justLabel->setObjectName("PartsEditorLabel");
+	justLabel->setObjectName("NewPartsEditorLabel");
     nameLayout->addWidget(justLabel);
 
     QLineEdit * nameEdit = new QLineEdit();
     nameEdit->setText(connector.attribute("name"));
 	connect(nameEdit, SIGNAL(editingFinished()), slotHolder, SLOT(nameEntry()));
-	nameEdit->setObjectName("PartsEditorLineEdit");
+	nameEdit->setObjectName("NewPartsEditorLineEdit");
     nameEdit->setStatusTip(tr("Set the connectors's title"));
     nameEdit->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
     nameEdit->setProperty("index", index);
@@ -249,14 +249,14 @@ QWidget * ConnectorsView::makeConnectorForm(const QDomElement & connector, bool 
     QHBoxLayout * descriptionLayout = new QHBoxLayout();
 
     justLabel = new QLabel(tr("<b>Description:</b>"));
-	justLabel->setObjectName("PartsEditorLabel");
+	justLabel->setObjectName("NewPartsEditorLabel");
     descriptionLayout->addWidget(justLabel);
 
     QLineEdit * descriptionEdit = new QLineEdit();
     QDomElement description = connector.firstChildElement("description");
     descriptionEdit->setText(description.text());
 	connect(descriptionEdit, SIGNAL(editingFinished()), slotHolder, SLOT(descriptionEntry()));
-	descriptionEdit->setObjectName("PartsEditorLineEdit");
+	descriptionEdit->setObjectName("NewPartsEditorLineEdit");
     descriptionEdit->setStatusTip(tr("Set the connectors's description"));
     descriptionEdit->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
     descriptionEdit->setProperty("index", index);
