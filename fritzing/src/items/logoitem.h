@@ -112,6 +112,19 @@ protected:
 	bool isCopper0();
 };
 
+class SchematicLogoItem : public LogoItem
+{
+Q_OBJECT
+	
+public:
+	SchematicLogoItem(ModelPart *, ViewIdentifierClass::ViewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel);
+	~SchematicLogoItem();
+
+protected:
+	ViewLayer::ViewLayerID layer();
+	QString colorString();
+};
+
 class BoardLogoItem : public LogoItem
 {
 Q_OBJECT

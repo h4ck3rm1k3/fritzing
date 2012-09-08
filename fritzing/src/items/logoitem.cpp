@@ -711,6 +711,25 @@ void LogoItem::paintHover(QPainter *painter, const QStyleOptionGraphicsItem *opt
 
 ///////////////////////////////////////////////////////////////////////
 
+SchematicLogoItem::SchematicLogoItem( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
+	: LogoItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
+{
+}
+
+SchematicLogoItem::~SchematicLogoItem() {
+}
+
+ViewLayer::ViewLayerID SchematicLogoItem::layer() {
+	return ViewLayer::Schematic;
+}
+
+QString SchematicLogoItem::colorString() {
+    return "black";
+}
+
+
+///////////////////////////////////////////////////////////////////////
+
 CopperLogoItem::CopperLogoItem( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: LogoItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {

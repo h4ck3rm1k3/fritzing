@@ -16,14 +16,13 @@
    <property name="filename" ></property>
    <property name="shape" ></property>
    <property name="type" >image</property>
-   <property name="layer" >schematic</property>
  </properties>
  <taxonomy>discreteParts.schematic.logo</taxonomy>
  <description>For adding images to the schematic view</description>
  <views>
   <defaultUnits>mm</defaultUnits>
   <iconView>
-   <layers image="icon/copper0_logo.svg" >
+   <layers image="icon/schematic_logo.svg" >
     <layer layerId="icon" />
    </layers>
   </iconView>

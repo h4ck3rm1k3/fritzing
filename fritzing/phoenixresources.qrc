@@ -235,6 +235,8 @@
 	<file>resources/parts/svg/core/icon/copper0_logo.svg</file>
  	<file>resources/parts/svg/core/icon/copper1_text.svg</file>
 	<file>resources/parts/svg/core/icon/copper1_logo.svg</file>
+ 	<file>resources/parts/svg/core/icon/schematic_text.svg</file>
+	<file>resources/parts/svg/core/icon/schematic_logo.svg</file>
         <file>resources/parts/svg/core/icon/ground.svg</file>
         <file>resources/parts/svg/core/icon/cell.svg</file>
         <file>resources/parts/svg/core/icon/power.svg</file>
