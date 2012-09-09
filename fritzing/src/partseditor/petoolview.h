@@ -49,13 +49,11 @@ public:
 
 signals:
     void switchedConnector(const QDomElement &);
-    void loadImage();
     void lockChanged(bool);
 
 protected slots:
     void changeUnits();
     void switchConnector(QListWidgetItem * current, QListWidgetItem * previous);
-    void loadImageSlot();
     void lockChangedSlot(bool);
     void descriptionEntry();
     void typeEntry();

@@ -42,6 +42,7 @@ public:
 	void hoverEnterEvent(QGraphicsSceneHoverEvent *);
 	void hoverLeaveEvent(QGraphicsSceneHoverEvent *);
     void wheelEvent(QGraphicsSceneWheelEvent *);
+	void mousePressEvent(QGraphicsSceneMouseEvent *);
 	void mouseReleaseEvent(QGraphicsSceneMouseEvent *);
     void setHighlighted(bool);
     bool highlighted();

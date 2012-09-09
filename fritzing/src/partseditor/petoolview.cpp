@@ -54,10 +54,6 @@ PEToolView::PEToolView(QWidget * parent) : QWidget(parent)
     QFrame * connectorsFrame = new QFrame;
     QVBoxLayout * connectorsLayout = new QVBoxLayout;
 
-    QPushButton * button = new QPushButton(tr("Load image..."));
-    connectorsLayout->addWidget(button);
-    connect(button, SIGNAL(pressed()), this, SLOT(loadImageSlot()));
-
     QLabel * label = new QLabel(tr("Connector List"));
     connectorsLayout->addWidget(label);
 
@@ -245,10 +241,6 @@ void PEToolView::switchConnector(QListWidgetItem * current, QListWidgetItem * pr
     m_connectorInfoGroupBox->setTitle(tr("Connector %1").arg(element.attribute("name")));
 
     emit switchedConnector(element);
-}
-
-void PEToolView::loadImageSlot() {
-    emit loadImage();
 }
 
 void PEToolView::setLock(bool lock) {

@@ -60,8 +60,7 @@ $Date$
         gEDA footprint
 
     for schematic view 
-        offer generate option
-        offer pins, rects (or lines), and a selection of standard schematic icons
+        offer pins, rects, and a selection of standard schematic icons in the parts bin
         text?
 
     for breadboard view
@@ -167,6 +166,7 @@ $Date$
 
 #include <QCoreApplication>
 #include <QSvgGenerator>
+#include <QMenuBar>
 
 #ifdef QT_NO_DEBUG
 	#define CORE_EDITION_ENABLED false
@@ -278,7 +278,6 @@ void PEMainWindow::moreInitDock()
 
     m_peToolView = new PEToolView();
     connect(m_peToolView, SIGNAL(switchedConnector(const QDomElement &)), this, SLOT(switchedConnector(const QDomElement &)));
-    connect(m_peToolView, SIGNAL(loadImage()), this, SLOT(loadImage()));
     connect(m_peToolView, SIGNAL(lockChanged(bool)), this, SLOT(lockChanged(bool)));
     makeDock(tr("Tools"), m_peToolView, DockMinWidth, DockMinHeight);
     m_peToolView->setMinimumSize(DockMinWidth, DockMinHeight);
@@ -289,6 +288,10 @@ void PEMainWindow::moreInitDock()
 void PEMainWindow::createActions()
 {
     createFileMenuActions();
+	m_openAct->setStatusTip(tr("Open a file to use as a part image."));
+	disconnect(m_openAct, SIGNAL(triggered()), this, SLOT(mainLoad()));
+	connect(m_openAct, SIGNAL(triggered()), this, SLOT(loadImage()));
+  
     createEditMenuActions();
     createViewMenuActions();
     createHelpMenuActions();
@@ -717,7 +720,8 @@ void PEMainWindow::initSvgTree(ItemBase * itemBase, QDomDocument & domDocument)
         return;
 	}
 
-    TextUtils::elevateTransform(domDocument.documentElement());
+    QDomElement root = domDocument.documentElement();
+    TextUtils::elevateTransform(root);
     TextUtils::gornTree(domDocument);   //
 
     FSvgRenderer renderer;
@@ -906,9 +910,10 @@ void PEMainWindow::loadImage()
 		return; // Cancel pressed
 	} 
 
-	if (!origPath.endsWith(".svg")) {
+    QString newPath = origPath;
+	if (!newPath.endsWith(".svg")) {
 		try {
-			origPath = createSvgFromImage(origPath);
+			newPath = createSvgFromImage(newPath);
 		}
 		catch (const QString & msg) {
     		QMessageBox::warning(
@@ -920,8 +925,10 @@ void PEMainWindow::loadImage()
 		}
 	}
 
-	if (!origPath.isEmpty()) {
-		ChangeSvgCommand * csc = new ChangeSvgCommand(this, m_currentGraphicsView, itemBase->filename(), origPath, NULL);
+	if (!newPath.isEmpty()) {
+		ChangeSvgCommand * csc = new ChangeSvgCommand(this, m_currentGraphicsView, itemBase->filename(), newPath, NULL);
+        QFileInfo info(origPath);
+        csc->setText(QString("Load '%1'").arg(info.fileName()));
         m_undoStack->waitPush(csc, SketchWidget::PropChangeDelay);
 	}
 }
@@ -1088,7 +1095,11 @@ void PEMainWindow::changeSvg(SketchWidget * sketchWidget, const QString & filena
 }
 
 QString PEMainWindow::saveFzp() {
-    QString fzpPath = QString("%1%2_%3.fzp").arg(m_userPartsFolderPath).arg(m_guid).arg(m_fileIndex++);
+    QDir dir = QDir::temp();
+    dir.mkdir(m_guid);
+    dir.cd(m_guid);
+    QString fzpPath = dir.absoluteFilePath(QString("%1_%2.fzp").arg(m_guid).arg(m_fileIndex++));   
+    DebugDialog::debug("temp path " + fzpPath);
     TextUtils::writeUtf8(fzpPath, m_fzpDocument.toString());
     return fzpPath;
 }
@@ -1140,3 +1151,25 @@ void PEMainWindow::pegiMouseReleased(PEGraphicsItem * pegi)
     element.save(stream, 0);
     DebugDialog::debug("mousereleased " + string);
 }
+
+void PEMainWindow::createFileMenu() {
+    m_fileMenu = menuBar()->addMenu(tr("&File"));
+    m_fileMenu->addAction(m_openAct);
+    m_fileMenu->addAction(m_revertAct);
+
+    m_fileMenu->addSeparator();
+    m_fileMenu->addAction(m_closeAct);
+    m_fileMenu->addAction(m_saveAct);
+    m_fileMenu->addAction(m_saveAsAct);
+
+
+    m_fileMenu->addSeparator();
+    //m_fileMenu->addAction(m_pageSetupAct);
+    m_fileMenu->addAction(m_printAct);
+
+	m_fileMenu->addSeparator();
+	m_fileMenu->addAction(m_quitAct);
+
+    connect(m_fileMenu, SIGNAL(aboutToShow()), this, SLOT(updateFileMenu()));
+}
+

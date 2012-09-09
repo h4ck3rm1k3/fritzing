@@ -199,6 +199,10 @@ QPointF PEGraphicsItem::terminalPoint() {
     return m_terminalPoint;
 }
 
+void PEGraphicsItem::mousePressEvent(QGraphicsSceneMouseEvent * event) {
+    //QGraphicsRectItem::mousePressEvent(event);
+}
+
 void PEGraphicsItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *) {
     emit mouseReleased(this);
 }

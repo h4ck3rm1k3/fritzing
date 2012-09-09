@@ -91,6 +91,7 @@ protected:
     QString saveSvg(const QString & svg, const QString & newFilePath);
     QString saveFzp();
     void reload();
+    void createFileMenu();
 
 public slots:
     void metadataChanged(const QString & name, const QString & value);
