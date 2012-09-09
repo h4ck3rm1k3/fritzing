@@ -261,3 +261,9 @@ void PEToolView::typeEntry() {
 void PEToolView::descriptionEntry() {
 
 }
+
+QDomElement PEToolView::currentConnector() {
+    QListWidgetItem * item = m_connectorListWidget->currentItem();
+    int index = item->data(Qt::UserRole).toInt();
+    return m_connectorList.at(index);
+}

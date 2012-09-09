@@ -134,5 +134,26 @@ protected:
 
 /////////////////////////////////////////////
 
+class RelocateConnectorSvgCommand : public PEBaseCommand
+{
+public:
+	RelocateConnectorSvgCommand(class PEMainWindow *, SketchWidget *, const QString  & id, const QString & terminalID, const QString  & oldGorn, const QString & oldGornTerminal, const QString  & newGorn, const QString & newGornTerminal, QUndoCommand *parent);
+	void undo();
+	void redo();
+
+protected:
+	QString getParamString() const;
+
+protected:
+    QString m_id;
+    QString m_terminalID;
+	QString m_oldGorn;
+	QString m_oldGornTerminal;
+	QString m_newGorn;
+	QString m_newGornTerminal;
+};
+
+/////////////////////////////////////////////
+
 
 #endif // PECOMMANDS_H

@@ -206,3 +206,42 @@ QString ChangeSvgCommand::getParamString() const {
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+RelocateConnectorSvgCommand::RelocateConnectorSvgCommand(PEMainWindow * peMainWindow, SketchWidget * sketchWidget, const QString  & id, const QString & terminalID, 
+        const QString & oldGorn, const QString & oldGornTerminal, const QString & newGorn, const QString & newGornTerminal, 
+        QUndoCommand *parent)
+    : PEBaseCommand(peMainWindow, parent)
+{
+ 	m_sketchWidget = sketchWidget;
+	m_id = id;
+	m_terminalID = terminalID;
+	m_oldGorn = oldGorn;
+	m_oldGornTerminal = oldGornTerminal;
+	m_newGorn = newGorn;
+	m_newGornTerminal = newGornTerminal;
+}
+
+void RelocateConnectorSvgCommand::undo()
+{
+    m_peMainWindow->relocateConnectorSvg(m_sketchWidget, m_id, m_terminalID, m_newGorn, m_newGornTerminal, m_oldGorn, m_oldGornTerminal);
+}
+
+void RelocateConnectorSvgCommand::redo()
+{
+    m_peMainWindow->relocateConnectorSvg(m_sketchWidget, m_id, m_terminalID, m_oldGorn, m_oldGornTerminal, m_newGorn, m_newGornTerminal);
+}
+
+QString RelocateConnectorSvgCommand::getParamString() const {
+	return "RelocateConnectorSvgCommand " + 
+        QString(" id:%1, terminalid:%2, oldgorn:%3, oldgornterminal:%4, newgorn:%5, newgornterminal:%6")
+            .arg(m_sketchWidget->viewIdentifier())
+            .arg(m_id)
+            .arg(m_terminalID)
+            .arg(m_oldGorn)
+            .arg(m_oldGornTerminal)
+            .arg(m_newGorn)
+            .arg(m_newGornTerminal)
+        ;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////

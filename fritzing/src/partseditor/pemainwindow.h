@@ -59,6 +59,7 @@ public:
     void changeMetadata(const QString & name, const QString & value, bool updateDisplay);
     void changeConnectorMetadata(const ConnectorMetadata &, bool updateDisplay);
     void changeSvg(SketchWidget *, const QString & filename);
+    void relocateConnectorSvg(SketchWidget *, const QString & id, const QString & terminalID, const QString & oldGorn, const QString & oldGornTerminal, const QString & newGorn, const QString & newGornTerminal);
 
 protected:
 	void closeEvent(QCloseEvent * event);
@@ -92,6 +93,7 @@ protected:
     QString saveFzp();
     void reload();
     void createFileMenu();
+    bool getConnectorIDs(const QDomElement & element, SketchWidget * sketchWidget, QString & id, QString & terminalID);
 
 public slots:
     void metadataChanged(const QString & name, const QString & value);
@@ -129,6 +131,7 @@ protected:
     QString m_guid;
     int m_fileIndex;
     QHash<ViewIdentifierClass::ViewIdentifier, ItemBase *> m_items;
+    QHash<ViewIdentifierClass::ViewIdentifier, QDomDocument *> m_docs;
     QString m_userPartsFolderPath;
     QString m_userPartsFolderSvgPath;
 };

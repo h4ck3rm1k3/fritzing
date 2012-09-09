@@ -242,6 +242,10 @@ void PEMainWindow::initSketchWidgets()
 {
     MainWindow::initSketchWidgets();
 
+    m_docs.insert(m_breadboardGraphicsView->viewIdentifier(), &m_breadboardDocument);
+    m_docs.insert(m_schematicGraphicsView->viewIdentifier(), &m_schematicDocument);
+    m_docs.insert(m_pcbGraphicsView->viewIdentifier(), &m_pcbDocument);
+
     m_breadboardGraphicsView->setAcceptWheelEvents(false);
     m_schematicGraphicsView->setAcceptWheelEvents(false);
     m_pcbGraphicsView->setAcceptWheelEvents(false);
@@ -445,6 +449,8 @@ void PEMainWindow::setInitialItem(PaletteItem * paletteItem) {
     }
 
     reload();
+
+    switchedConnector(m_peToolView->currentConnector());
 }
 
 bool PEMainWindow::eventFilter(QObject *object, QEvent *event) 
@@ -823,16 +829,8 @@ void PEMainWindow::switchedConnector(const QDomElement & element)
 {
     if (m_currentGraphicsView == NULL) return;
 
-    QString viewName = ViewIdentifierClass::viewIdentifierXmlName(m_currentGraphicsView->viewIdentifier());
-    QDomElement views = element.firstChildElement("views");
-    QDomElement view = views.firstChildElement(viewName);
-    QDomElement p = view.firstChildElement("p");
-    if (p.isNull()) return;
-
-    QString id = p.attribute("svgId");
-    if (id.isEmpty()) return;
-
-    QString terminalID = p.attribute("terminalId");
+    QString id, terminalID;
+    if (!getConnectorIDs(element, m_currentGraphicsView, id, terminalID)) return;
 
     QList<PEGraphicsItem *> pegiList;
     foreach (QGraphicsItem * item, m_currentGraphicsView->scene()->items()) {
@@ -1143,13 +1141,36 @@ void PEMainWindow::lockChanged(bool state) {
 
 void PEMainWindow::pegiMouseReleased(PEGraphicsItem * pegi)
 {
-    QDomElement element = pegi->element();
-    // find it in the svg
+    QString newGorn = pegi->element().attribute("gorn");
+    QDomDocument * doc = m_docs.value(m_currentGraphicsView->viewIdentifier());
+    QDomElement root = doc->documentElement();
+    QDomElement newGornElement = TextUtils::findElementWithAttribute(root, "gorn", newGorn);
+    if (newGornElement.isNull()) {
+        return;
+    }
 
-    QString string;
-    QTextStream stream(&string);
-    element.save(stream, 0);
-    DebugDialog::debug("mousereleased " + string);
+    QDomElement currentConnectorElement = m_peToolView->currentConnector();
+    QString id, terminalID;
+    if (!getConnectorIDs(currentConnectorElement, m_currentGraphicsView, id, terminalID)) {
+        return;
+    }
+
+    QDomElement oldGornElement = TextUtils::findElementWithAttribute(root, "id", id);
+    QString oldGorn = oldGornElement.attribute("gorn");
+    QString oldGornTerminal;
+    if (!terminalID.isEmpty()) {
+        QDomElement element = TextUtils::findElementWithAttribute(root, "id", terminalID);
+        oldGornTerminal = element.attribute("gorn");
+    }
+
+    if (newGornElement.attribute("gorn").compare(oldGornElement.attribute("gorn")) == 0) {
+        // no change
+        return;
+    }
+
+    RelocateConnectorSvgCommand * rcsc = new RelocateConnectorSvgCommand(this, m_currentGraphicsView, id, terminalID, oldGorn, oldGornTerminal, newGorn, "", NULL);
+    rcsc->setText(tr("Relocate connector %1").arg(currentConnectorElement.attribute("name")));
+    m_undoStack->waitPush(rcsc, SketchWidget::PropChangeDelay);
 }
 
 void PEMainWindow::createFileMenu() {
@@ -1173,3 +1194,54 @@ void PEMainWindow::createFileMenu() {
     connect(m_fileMenu, SIGNAL(aboutToShow()), this, SLOT(updateFileMenu()));
 }
 
+bool PEMainWindow::getConnectorIDs(const QDomElement & element, SketchWidget * sketchWidget, QString & id, QString & terminalID) {
+    QString viewName = ViewIdentifierClass::viewIdentifierXmlName(sketchWidget->viewIdentifier());
+    QDomElement views = element.firstChildElement("views");
+    QDomElement view = views.firstChildElement(viewName);
+    QDomElement p = view.firstChildElement("p");
+    if (p.isNull()) return false;
+
+    id = p.attribute("svgId");
+    if (id.isEmpty()) return false;
+
+    terminalID = p.attribute("terminalId");
+    return true;
+}
+
+void PEMainWindow::relocateConnectorSvg(SketchWidget * sketchWidget, const QString & id, const QString & terminalID,
+                const QString & oldGorn, const QString & oldGornTerminal, const QString & newGorn, const QString & newGornTerminal)
+{
+    QDomDocument * doc = m_docs.value(m_currentGraphicsView->viewIdentifier());
+    QDomElement root = doc->documentElement();
+
+    QDomElement oldGornElement = TextUtils::findElementWithAttribute(root, "gorn", oldGorn);
+    QDomElement oldGornTerminalElement;
+    if (!oldGornTerminal.isEmpty()) {
+        oldGornTerminalElement = TextUtils::findElementWithAttribute(root, "gorn", oldGornTerminal);
+    }
+    QDomElement newGornElement = TextUtils::findElementWithAttribute(root, "gorn", newGorn);
+    QDomElement newGornTerminalElement;
+    if (!newGornTerminal.isEmpty()) {
+        newGornTerminalElement = TextUtils::findElementWithAttribute(root, "gorn", newGornTerminal);
+    }
+
+    if (oldGornElement.isNull()) return;
+    if (newGornElement.isNull()) return;
+
+    oldGornElement.setAttribute("id", "");
+    if (!oldGornTerminalElement.isNull()) oldGornTerminalElement.setAttribute("id", "");
+    newGornElement.setAttribute("id", id);
+    if (!newGornTerminalElement.isNull()) newGornTerminalElement.setAttribute("id", terminalID);
+
+    foreach (QGraphicsItem * item, sketchWidget->scene()->items()) {
+        PEGraphicsItem * pegi = dynamic_cast<PEGraphicsItem *>(item);
+        if (pegi == NULL) continue;
+
+        QDomElement element = pegi->element();
+        if (element.attribute("gorn").compare(newGorn) == 0) {
+            switchedConnector(m_peToolView->currentConnector());
+            pegi->setHighlighted(true);
+            break;
+        }
+    }
+}
