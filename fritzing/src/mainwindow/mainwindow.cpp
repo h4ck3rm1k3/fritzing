@@ -2526,3 +2526,8 @@ QString MainWindow::getStyleSheetSuffix() {
     return "fritzing";
 }
 
+void MainWindow::addToMyParts(ModelPart * modelPart)
+{
+    if (modelPart != NULL) m_binManager->addToMyParts(modelPart);
+}
+

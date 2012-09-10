@@ -61,6 +61,9 @@ public:
     void changeSvg(SketchWidget *, const QString & filename, int changeDirection);
     void relocateConnectorSvg(SketchWidget *, const QString & id, const QString & terminalID, const QString & oldGorn, const QString & oldGornTerminal, const QString & newGorn, const QString & newGornTerminal, int changeDirection);
 
+signals:
+    void addToMyPartsSignal(ModelPart *);
+
 protected:
 	void closeEvent(QCloseEvent * event);
     void initLockedFiles(bool lockFiles);

@@ -599,7 +599,6 @@ void FApplication::runGerberService()
 	}
 }
 
-
 void FApplication::runDatabaseService()
 {
     DebugDialog::setEnabled(true);

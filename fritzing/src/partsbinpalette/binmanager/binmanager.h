@@ -68,7 +68,7 @@ class BinManager : public QFrame {
         void addBin(PartsBinPaletteWidget* bin);
 		void insertBin(PartsBinPaletteWidget* bin, int index);
 		void addPartToBin(ModelPart *modelPart, int position = -1);
-		void addToMyPart(ModelPart *modelPart);
+		void addToMyParts(ModelPart *modelPart);
 		void addToContrib(ModelPart *modelPart);
 		void addToTempPartsBin(ModelPart *modelPart);
 		void hideTempPartsBin();

@@ -382,6 +382,7 @@ protected slots:
 
     void keepMargins();
 	void dockChangeActivation(bool activate, QWidget * originator);
+    void addToMyParts(ModelPart *);
 
 protected:
 	void initSketchWidget(SketchWidget *);

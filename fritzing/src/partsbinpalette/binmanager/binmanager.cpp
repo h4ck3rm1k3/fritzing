@@ -305,7 +305,7 @@ void BinManager::addPartToBin(ModelPart *modelPart, int position) {
 	addPartToBinAux(bin,modelPart,position);
 }
 
-void BinManager::addToMyPart(ModelPart *modelPart) {
+void BinManager::addToMyParts(ModelPart *modelPart) {
 	PartsBinPaletteWidget *bin = getOrOpenMyPartsBin();
 	if (bin) {
 		addPartToBinAux(bin,modelPart);

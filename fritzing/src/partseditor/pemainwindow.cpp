@@ -1328,6 +1328,14 @@ bool PEMainWindow::saveAs() {
         layers.setAttribute("image", svgPath);
     }
 
+
+	QString moduleID = fzpRoot.attribute("moduleId");
+    ModelPart * modelPart = m_refModel->retrieveModelPart(moduleID);
+    if (modelPart == NULL) {
+	    modelPart = m_refModel->loadPart(fzpPath, true);
+        emit addToMyPartsSignal(modelPart);
+	}
+
     return result;
 }
 

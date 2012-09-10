@@ -2017,6 +2017,7 @@ void MainWindow::openNewPartsEditor(PaletteItem * paletteItem) {
 
 	peMainWindow->show();
 	peMainWindow->raise();
+    connect(peMainWindow, SIGNAL(addToMyPartsSignal(ModelPart *)), this, SLOT(addToMyParts(ModelPart *)));
 }
 
 PartsEditorMainWindow* MainWindow::getPartsEditor(ModelPart *modelPart, long _id, ItemBase * fromItem, class PartsBinPaletteWidget* requester) {
