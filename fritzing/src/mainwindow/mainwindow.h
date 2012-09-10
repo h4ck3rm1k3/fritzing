@@ -532,7 +532,8 @@ protected:
 	void addTopMargin(FDockWidget* dock);
 	void addBottomMargin(FDockWidget* dock);
 	void dockMarginAux(FDockWidget* dock, const QString &name, const QString &style);
-
+    void initStyleSheet();
+    virtual QString getStyleSheetSuffix();
 
 protected:
 	static void removeActionsStartingAt(QMenu *menu, int start=0);

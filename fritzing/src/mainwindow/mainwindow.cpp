@@ -298,36 +298,7 @@ void MainWindow::init(PaletteModel * paletteModel, ReferenceModel *refModel, boo
     m_schematicWidget->setToolbarWidgets(getButtonsForView(ViewIdentifierClass::SchematicView));
 	m_pcbWidget->setToolbarWidgets(getButtonsForView(ViewIdentifierClass::PCBView));
 
-	QFile styleSheet(":/resources/styles/fritzing.qss");
-    if (!styleSheet.open(QIODevice::ReadOnly)) {
-		qWarning("Unable to open :/resources/styles/fritzing.qss");
-	} else {
-		QString platformDependantStyle = "";
-		QString platformDependantStylePath;
-#ifdef Q_WS_X11
-		if(style()->metaObject()->className()==QString("OxygenStyle")) {
-			QFile oxygenStyleSheet(":/resources/styles/linux-kde-oxygen.qss");
-			if(oxygenStyleSheet.open(QIODevice::ReadOnly)) {
-				platformDependantStyle += oxygenStyleSheet.readAll();
-			}
-		}
-		platformDependantStylePath = ":/resources/styles/linux.qss";
-#endif
-
-#ifdef Q_WS_MAC
-		platformDependantStylePath = ":/resources/styles/mac.qss";
-#endif
-
-#ifdef Q_WS_WIN
-		platformDependantStylePath = ":/resources/styles/win.qss";
-#endif
-
-		QFile platformDependantStyleSheet(platformDependantStylePath);
-		if(platformDependantStyleSheet.open(QIODevice::ReadOnly)) {
-			platformDependantStyle += platformDependantStyleSheet.readAll();
-		}
-		setStyleSheet(styleSheet.readAll()+platformDependantStyle);
-	}
+    initStyleSheet();
 
     m_breadboardGraphicsView->setItemMenu(breadboardItemMenu());
     m_breadboardGraphicsView->setWireMenu(breadboardWireMenu());
@@ -2515,3 +2486,43 @@ void MainWindow::dropEvent(QDropEvent *event)
 bool MainWindow::hasAnyAlien() {
     return m_addedToTemp;
 }
+
+void MainWindow::initStyleSheet() 
+{
+    QString suffix = getStyleSheetSuffix();
+	QFile styleSheet(QString(":/resources/styles/%1.qss").arg(suffix));
+    if (!styleSheet.open(QIODevice::ReadOnly)) {
+		DebugDialog::debug(QString("Unable to open :/resources/styles/%1.qss").arg(suffix));
+	} else {
+		QString platformDependantStyle = "";
+		QString platformDependantStylePath;
+#ifdef Q_WS_X11
+		if(style()->metaObject()->className()==QString("OxygenStyle")) {
+			QFile oxygenStyleSheet(QString(":/resources/styles/linux-kde-oxygen-%1.qss").arg(suffix));
+			if(oxygenStyleSheet.open(QIODevice::ReadOnly)) {
+				platformDependantStyle += oxygenStyleSheet.readAll();
+			}
+		}
+		platformDependantStylePath = QString(":/resources/styles/linux-%1.qss").arg(suffix);
+#endif
+
+#ifdef Q_WS_MAC
+		platformDependantStylePath = QString(":/resources/styles/mac-%1.qss").arg(prefix);
+#endif
+
+#ifdef Q_WS_WIN
+		platformDependantStylePath = QString(":/resources/styles/win-%1.qss").arg(suffix);
+#endif
+
+		QFile platformDependantStyleSheet(platformDependantStylePath);
+		if(platformDependantStyleSheet.open(QIODevice::ReadOnly)) {
+			platformDependantStyle += platformDependantStyleSheet.readAll();
+		}
+		setStyleSheet(styleSheet.readAll()+platformDependantStyle);
+	}
+}
+
+QString MainWindow::getStyleSheetSuffix() {
+    return "fritzing";
+}
+

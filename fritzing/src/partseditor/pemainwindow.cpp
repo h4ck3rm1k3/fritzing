@@ -130,13 +130,15 @@ $Date$
         even a problem when inserting hole, pad, or pin
         eliminate internal transforms, then insert inverted matrix, then use untransformed coords based on viewbox
             
-    delete all unused svg files when finished
+    delete all unused svg and fzp files when finished
 
     only allow appropriate file to be loaded for appropriate view (.mod, .fp, etc.)
 
     kicad schematic does not match our schematic
 
     move contrib pcb files to obsolete
+
+    always show terminal point when highlighting
 
 ***************************************************/
 
@@ -167,12 +169,6 @@ $Date$
 #include <QCoreApplication>
 #include <QSvgGenerator>
 #include <QMenuBar>
-
-#ifdef QT_NO_DEBUG
-	#define CORE_EDITION_ENABLED false
-#else
-	#define CORE_EDITION_ENABLED false
-#endif
 
 ////////////////////////////////////////////////////
 
@@ -216,6 +212,7 @@ PEMainWindow::PEMainWindow(PaletteModel * paletteModel, ReferenceModel * referen
     m_fileIndex = 0;
 	m_userPartsFolderPath = FolderUtils::getUserDataStorePath("parts")+"/user/";
 	m_userPartsFolderSvgPath = FolderUtils::getUserDataStorePath("parts")+"/svg/user/";
+
 }
 
 PEMainWindow::~PEMainWindow()
@@ -357,6 +354,8 @@ void PEMainWindow::setInitialItem(PaletteItem * paletteItem) {
     else {
         originalModelPart = paletteItem->modelPart();
     }
+
+    m_isCore = originalModelPart->isCore();
 
     QFile file(originalModelPart->path());
 	QString errorStr;
@@ -1247,3 +1246,21 @@ void PEMainWindow::relocateConnectorSvg(SketchWidget * sketchWidget, const QStri
         }
     }
 }
+
+bool PEMainWindow::save() {
+    if (m_isCore) {
+        saveAs();
+    }
+
+    return true;
+}
+
+bool PEMainWindow::saveAs() {
+    return true;
+}
+
+
+QString PEMainWindow::getStyleSheetSuffix() {
+    return "newpartseditor";
+}
+

@@ -275,11 +275,11 @@
         <file>resources/styles/newpartseditor.qss</file>
         <file>resources/styles/programwindow.qss</file>
         <file>resources/styles/inviewhelp.qss</file>
-        <file>resources/styles/linux.qss</file>
-        <file>resources/styles/linux-kde-oxygen.qss</file>
-        <file>resources/styles/linux-gnome.qss</file>
-        <file>resources/styles/win.qss</file>
-        <file>resources/styles/mac.qss</file>
+        <file>resources/styles/linux-fritzing.qss</file>
+        <file>resources/styles/linux-kde-oxygen-fritzing.qss</file>
+        <file>resources/styles/linux-gnome-fritzing.qss</file>
+        <file>resources/styles/win-fritzing.qss</file>
+        <file>resources/styles/mac-fritzing.qss</file>
         <file>resources/styles/updatedialog.css</file>
 	
         <file>resources/fonts/DroidSans.ttf</file>

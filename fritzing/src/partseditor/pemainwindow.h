@@ -94,6 +94,7 @@ protected:
     void reload();
     void createFileMenu();
     bool getConnectorIDs(const QDomElement & element, SketchWidget * sketchWidget, QString & id, QString & terminalID);
+    QString getStyleSheetSuffix();
 
 public slots:
     void metadataChanged(const QString & name, const QString & value);
@@ -111,6 +112,8 @@ protected slots:
     void showConnectorsView();
     void showIconView();
     void loadImage();
+    bool save();
+    bool saveAs();
 
 protected:
     QDomDocument m_fzpDocument;
@@ -134,6 +137,7 @@ protected:
     QHash<ViewIdentifierClass::ViewIdentifier, QDomDocument *> m_docs;
     QString m_userPartsFolderPath;
     QString m_userPartsFolderSvgPath;
+    bool m_isCore;
 };
 
 #endif /* PEMAINWINDOW_H_ */
