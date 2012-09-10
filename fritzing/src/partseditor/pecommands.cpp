@@ -188,12 +188,12 @@ ChangeSvgCommand::ChangeSvgCommand(PEMainWindow * peMainWindow, SketchWidget * s
 
 void ChangeSvgCommand::undo()
 {
-    m_peMainWindow->changeSvg(m_sketchWidget, m_oldFilename);
+    m_peMainWindow->changeSvg(m_sketchWidget, m_oldFilename, -1);
 }
 
 void ChangeSvgCommand::redo()
 {
-    m_peMainWindow->changeSvg(m_sketchWidget, m_newFilename);
+    m_peMainWindow->changeSvg(m_sketchWidget, m_newFilename, 1);
 }
 
 QString ChangeSvgCommand::getParamString() const {
@@ -223,12 +223,12 @@ RelocateConnectorSvgCommand::RelocateConnectorSvgCommand(PEMainWindow * peMainWi
 
 void RelocateConnectorSvgCommand::undo()
 {
-    m_peMainWindow->relocateConnectorSvg(m_sketchWidget, m_id, m_terminalID, m_newGorn, m_newGornTerminal, m_oldGorn, m_oldGornTerminal);
+    m_peMainWindow->relocateConnectorSvg(m_sketchWidget, m_id, m_terminalID, m_newGorn, m_newGornTerminal, m_oldGorn, m_oldGornTerminal, -1);
 }
 
 void RelocateConnectorSvgCommand::redo()
 {
-    m_peMainWindow->relocateConnectorSvg(m_sketchWidget, m_id, m_terminalID, m_oldGorn, m_oldGornTerminal, m_newGorn, m_newGornTerminal);
+    m_peMainWindow->relocateConnectorSvg(m_sketchWidget, m_id, m_terminalID, m_oldGorn, m_oldGornTerminal, m_newGorn, m_newGornTerminal, 1);
 }
 
 QString RelocateConnectorSvgCommand::getParamString() const {

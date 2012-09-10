@@ -58,8 +58,8 @@ public:
     void changeProperties(const QHash<QString, QString> &, bool updateDisplay);
     void changeMetadata(const QString & name, const QString & value, bool updateDisplay);
     void changeConnectorMetadata(const ConnectorMetadata &, bool updateDisplay);
-    void changeSvg(SketchWidget *, const QString & filename);
-    void relocateConnectorSvg(SketchWidget *, const QString & id, const QString & terminalID, const QString & oldGorn, const QString & oldGornTerminal, const QString & newGorn, const QString & newGornTerminal);
+    void changeSvg(SketchWidget *, const QString & filename, int changeDirection);
+    void relocateConnectorSvg(SketchWidget *, const QString & id, const QString & terminalID, const QString & oldGorn, const QString & oldGornTerminal, const QString & newGorn, const QString & newGornTerminal, int changeDirection);
 
 protected:
 	void closeEvent(QCloseEvent * event);
@@ -88,12 +88,13 @@ protected:
     void initSvgTree(ItemBase *, QDomDocument &);
     void initConnectors();
     QString createSvgFromImage(const QString &origFilePath);
-    QString makeSvgPath(SketchWidget * sketchWidget);
+    QString makeSvgPath(SketchWidget * sketchWidget, bool useIndex);
     QString saveSvg(const QString & svg, const QString & newFilePath);
     QString saveFzp();
     void reload();
     void createFileMenu();
     bool getConnectorIDs(const QDomElement & element, SketchWidget * sketchWidget, QString & id, QString & terminalID);
+    void updateChangeCount(SketchWidget * sketchWidget, int changeDirection);
 
 public slots:
     void metadataChanged(const QString & name, const QString & value);
@@ -134,6 +135,7 @@ protected:
     int m_fileIndex;
     QHash<ViewIdentifierClass::ViewIdentifier, ItemBase *> m_items;
     QHash<ViewIdentifierClass::ViewIdentifier, QDomDocument *> m_docs;
+    QHash<ViewIdentifierClass::ViewIdentifier, int> m_svgChangeCount;
     QString m_userPartsFolderPath;
     QString m_userPartsFolderSvgPath;
     bool m_isCore;

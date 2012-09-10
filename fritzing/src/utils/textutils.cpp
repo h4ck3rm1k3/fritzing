@@ -49,7 +49,7 @@ const QString TextUtils::RegexFloatDetector = "[-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0
 const QRegExp TextUtils::floatingPointMatcher(RegexFloatDetector);		
 
 static const QRegExp HexExpr("&#x[0-9a-fA-F];");   // &#x9; &#xa; &#xd;
-static const QRegExp xmlns("xmlns=\"[^\"]*\"");
+static const QRegExp Xmlns("xmlns=\"[^\"]*\"");
 
 static const ushort MicroSymbolCode = 181;
 const QString TextUtils::MicroSymbol = QString::fromUtf16(&MicroSymbolCode, 1);
@@ -371,25 +371,23 @@ bool TextUtils::isIllustratorDoc(const QDomDocument & doc) {
 }
 
 QString TextUtils::removeXMLEntities(QString svgContent) {
-	return removeXMLNS(svgContent.remove(HexExpr));
+	return svgNSOnly(svgContent.remove(HexExpr));
 }
 
 QString TextUtils::killXMLNS(QString svgContent) {
 	// TODO: this is a bug in Qt, it would be nice to fix it there
 
-    svgContent.remove(xmlns);
+    svgContent.remove(Xmlns);
     return svgContent;
 }
 
-QString TextUtils::removeXMLNS(QString svgContent) {
-	// TODO: this is a bug in Qt, it would be nice to fix it there
-	// but as a stopgap, it would be nice if this function removed all repetitious xmlns attributes, not just the svg one
-	QString svgNS = "xmlns=\"http://www.w3.org/2000/svg\"";
-	QStringList strings = svgContent.split(svgNS);
-	if (strings.count() < 3) return svgContent;
-
-	QString first = strings.takeFirst();
-	return first + svgNS + strings.join("");
+QString TextUtils::svgNSOnly(QString svgContent) {
+    svgContent.remove(Xmlns);
+    int ix = svgContent.indexOf("<svg");
+    if (ix >= 0) {
+        svgContent.insert(ix + 5, "xmlns=\"http://www.w3.org/2000/svg\" ");
+    }
+    return svgContent;
 }
 
 bool TextUtils::cleanSodipodi(QString &content)

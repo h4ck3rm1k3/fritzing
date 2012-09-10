@@ -124,6 +124,11 @@ $Date$
 
     disable family entry?  should always be "custom_"  + original family (unless it already starts with custom_)
 
+    give users a family popup with all family names
+        ditto for other properties
+
+    force a new variant property to distinguish this part from any others for swapping?
+
     lock svg element, if unlocked then click to change.  If a connector is found, lock to start with
 
     matrix problem with move and duplicate (i.e. if element inherits a matrix from far above)
@@ -139,6 +144,18 @@ $Date$
     move contrib pcb files to obsolete
 
     always show terminal point when highlighting
+    
+    how to figure out whether to copy an svg? -- for now copy them all
+
+    is it possible to eliminate the restart?
+       if it's a new part, and we edited it from a sketch
+            swap the original for the new, part is added as usual 
+            does properties db get updated?
+        if it's an edited old part, 
+            before save warn that it is not undoable
+            then swap every instance in every open file
+            update the database with the new model part
+            swap the part in the bin?
 
 ***************************************************/
 
@@ -264,6 +281,12 @@ void PEMainWindow::initSketchWidgets()
 	sketchAreaWidget = new SketchAreaWidget(m_connectorsView, this);
 	m_tabWidget->addWidget(sketchAreaWidget);
     connect(m_connectorsView, SIGNAL(connectorMetadataChanged(const ConnectorMetadata *)), this, SLOT(connectorMetadataChanged(const ConnectorMetadata *)), Qt::DirectConnection);
+
+    m_svgChangeCount.insert(m_breadboardGraphicsView->viewIdentifier(), 0);
+    m_svgChangeCount.insert(m_schematicGraphicsView->viewIdentifier(), 0);
+    m_svgChangeCount.insert(m_pcbGraphicsView->viewIdentifier(), 0);
+    m_svgChangeCount.insert(m_iconGraphicsView->viewIdentifier(), 0);
+
 }
 
 void PEMainWindow::initDock()
@@ -430,8 +453,8 @@ void PEMainWindow::setInitialItem(PaletteItem * paletteItem) {
 
 		QSizeF size = itemBase->size();
 		svg = TextUtils::makeSVGHeader(GraphicsUtils::SVGDPI, GraphicsUtils::StandardFritzingDPI, size.width(), size.height()) + svg + "</svg>";
-        QString svgPath = makeSvgPath(sketchWidget);
-        result = TextUtils::writeUtf8(m_userPartsFolderSvgPath + svgPath, svg);
+        QString svgPath = makeSvgPath(sketchWidget, true);
+        result = TextUtils::writeUtf8(m_userPartsFolderSvgPath + svgPath, TextUtils::svgNSOnly(svg));
         if (!result) {
             QMessageBox::critical(NULL, tr("Parts Editor"), QString("Unable to write svg to  %1").arg(svgPath));
 		    return;
@@ -934,7 +957,7 @@ void PEMainWindow::loadImage()
 
 QString PEMainWindow::createSvgFromImage(const QString &origFilePath) {
 
-	QString newFilePath = m_userPartsFolderSvgPath + makeSvgPath(m_currentGraphicsView);
+	QString newFilePath = m_userPartsFolderSvgPath + makeSvgPath(m_currentGraphicsView, true);
 	if (origFilePath.endsWith(".fp")) {
 		// this is a geda footprint file
 		GedaElement2Svg geda;
@@ -1054,20 +1077,22 @@ QString PEMainWindow::createSvgFromImage(const QString &origFilePath) {
 	return newFilePath;
 }
 
-QString PEMainWindow::makeSvgPath(SketchWidget * sketchWidget)
+QString PEMainWindow::makeSvgPath(SketchWidget * sketchWidget, bool useIndex)
 {
     QString viewName = ViewIdentifierClass::viewIdentifierNaturalName(sketchWidget->viewIdentifier());
-    return QString("%1/%2_%3.svg").arg(viewName).arg(m_guid).arg(m_fileIndex++);
+    QString indexString;
+    if (useIndex) indexString = QString("_%3").arg(m_fileIndex++);
+    return QString("%1/%2_%1%3.svg").arg(viewName).arg(m_guid).arg(indexString);
 }
 
 QString PEMainWindow::saveSvg(const QString & svg, const QString & newFilePath) {
-    if (!TextUtils::writeUtf8(newFilePath, svg)) {
+    if (!TextUtils::writeUtf8(newFilePath, TextUtils::svgNSOnly(svg))) {
         throw tr("unable to open temp file %1").arg(newFilePath);
     }
 	return newFilePath;
 }
 
-void PEMainWindow::changeSvg(SketchWidget * sketchWidget, const QString & filename) {
+void PEMainWindow::changeSvg(SketchWidget * sketchWidget, const QString & filename, int changeDirection) {
     QDomElement fzpRoot = m_fzpDocument.documentElement();
     QDomElement views = fzpRoot.firstChildElement("views");
     QDomElement view = views.firstChildElement(ViewIdentifierClass::viewIdentifierXmlName(sketchWidget->viewIdentifier()));
@@ -1090,6 +1115,8 @@ void PEMainWindow::changeSvg(SketchWidget * sketchWidget, const QString & filena
     }
     m_items.clear();
 
+    updateChangeCount(sketchWidget, changeDirection);
+
     reload();
 }
 
@@ -1099,7 +1126,7 @@ QString PEMainWindow::saveFzp() {
     dir.cd(m_guid);
     QString fzpPath = dir.absoluteFilePath(QString("%1_%2.fzp").arg(m_guid).arg(m_fileIndex++));   
     DebugDialog::debug("temp path " + fzpPath);
-    TextUtils::writeUtf8(fzpPath, m_fzpDocument.toString());
+    TextUtils::writeUtf8(fzpPath, TextUtils::svgNSOnly(m_fzpDocument.toString()));
     return fzpPath;
 }
 
@@ -1210,7 +1237,8 @@ bool PEMainWindow::getConnectorIDs(const QDomElement & element, SketchWidget * s
 }
 
 void PEMainWindow::relocateConnectorSvg(SketchWidget * sketchWidget, const QString & id, const QString & terminalID,
-                const QString & oldGorn, const QString & oldGornTerminal, const QString & newGorn, const QString & newGornTerminal)
+                const QString & oldGorn, const QString & oldGornTerminal, const QString & newGorn, const QString & newGornTerminal, 
+                int changeDirection)
 {
     QDomDocument * doc = m_docs.value(m_currentGraphicsView->viewIdentifier());
     QDomElement root = doc->documentElement();
@@ -1245,6 +1273,8 @@ void PEMainWindow::relocateConnectorSvg(SketchWidget * sketchWidget, const QStri
             break;
         }
     }
+
+    updateChangeCount(sketchWidget, changeDirection);
 }
 
 bool PEMainWindow::save() {
@@ -1256,8 +1286,52 @@ bool PEMainWindow::save() {
 }
 
 bool PEMainWindow::saveAs() {
-    return true;
+    QDomElement fzpRoot = m_fzpDocument.documentElement();
+    QDomElement views = fzpRoot.firstChildElement("views");
+
+    QHash<ViewIdentifierClass::ViewIdentifier, QString> svgPaths;
+
+    QList<SketchWidget *> sketchWidgets;
+    sketchWidgets << m_breadboardGraphicsView << m_schematicGraphicsView << m_pcbGraphicsView << m_iconGraphicsView;
+    foreach (SketchWidget * sketchWidget, sketchWidgets) {
+        QDomElement view = views.firstChildElement(ViewIdentifierClass::viewIdentifierXmlName(sketchWidget->viewIdentifier()));
+        QDomElement layers = view.firstChildElement("layers");
+
+        QString currentSvgPath = layers.attribute("image");
+        if (!currentSvgPath.contains(m_guid) && m_svgChangeCount.value(sketchWidget->viewIdentifier()) == 0) {
+            // unaltered svg
+            continue;
+        }
+
+        svgPaths.insert(sketchWidget->viewIdentifier(), currentSvgPath);
+
+        QString svgPath = makeSvgPath(sketchWidget, false);
+        layers.setAttribute("image", svgPath);
+        QString svg = m_docs.value(sketchWidget->viewIdentifier())->toString();
+        bool result = TextUtils::writeUtf8(m_userPartsFolderSvgPath + svgPath, TextUtils::svgNSOnly(svg));
+        if (!result) {
+            // TODO: warn user
+        }
+    }
+
+    QDir dir(m_userPartsFolderPath);
+    QString fzpPath = dir.absoluteFilePath(QString("%1.fzp").arg(m_guid));   
+    bool result = TextUtils::writeUtf8(fzpPath, TextUtils::svgNSOnly(m_fzpDocument.toString()));
+
+    // restore the set of working svg files
+    foreach (SketchWidget * sketchWidget, sketchWidgets) {
+        QString svgPath = svgPaths.value(sketchWidget->viewIdentifier());
+        if (svgPath.isEmpty()) continue;
+
+        QDomElement view = views.firstChildElement(ViewIdentifierClass::viewIdentifierXmlName(sketchWidget->viewIdentifier()));
+        QDomElement layers = view.firstChildElement("layers");
+        layers.setAttribute("image", svgPath);
+    }
+
+    return result;
 }
 
 
-
+void PEMainWindow::updateChangeCount(SketchWidget * sketchWidget, int changeDirection) {
+    m_svgChangeCount.insert(sketchWidget->viewIdentifier(), m_svgChangeCount.value(sketchWidget->viewIdentifier()) + changeDirection);
+}
