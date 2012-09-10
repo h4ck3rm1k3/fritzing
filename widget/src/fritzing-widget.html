@@ -1,0 +1,232 @@
+<!--DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Fritzing Widget</title>
+
+<link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="../css/ocra.css" type="text/css" charset="utf-8">
+<script type="text/javascript" src="../lib/jquery-1.8.1/jquery-1.8.1.js"></script>
+<script type="text/javascript" src="../lib/jquery.svg.package-1.4.4/jquery.svg.js"></script>
+<script type="text/javascript" src="../lib/jquery.svg.package-1.4.4/jquery.svgdom.js"></script>
+<script type="text/javascript" src="../lib/jquery.svg.package-1.4.4/jquery.svganim.js"></script>
+<script type="text/javascript" src="../lib/talos-jquery-svgpan-7883f4e/jquery-svgpan.js"></script>
+<style type="text/css">
+	div#svgload {
+		width: 420px;
+		height: 370px;
+	}
+	
+	.tab {
+		//width:100%;
+		padding: .5em;
+		float: left;
+		text-align:center;
+		color:#FFFFFF;
+		background-color:#52001c;
+		font-family: 'Droid Sans'; sans-serif; font-weight: 700; font-size: 16px;
+		border-style: solid;
+		border-width: 1px;
+		border-color: #FFFFFF;
+		cursor: pointer;
+		//font-family: 'OCRA', sans-serif;
+	}
+	
+	#svgframe {
+		border:3px #52001c solid;
+		background-color: #EFEFEF; 
+		width: 420px;
+		height: 420px;
+	}
+	
+	text {
+		//font-family: 'Droid Sans', sans-serif; font-weight: 400;
+		//font-family: 'OCRA', sans-serif;
+	}
+
+	.tooltip{
+		color: #000000;
+		background-color:#CCCCCC;
+		opacity: 0.8;
+		font-family: 'Droid Sans', sans-serif; font-weight: 700; font-size: 10px;
+		position: absolute;
+		z-index: 3;
+	}
+
+	
+</style>
+
+</head>
+<body>
+<script type="text/javascript">
+
+var BoundingBox = function() {
+	var displayElement = null,
+		targetElement = null,
+		bbox = null,
+		id = null;
+}
+
+var hoverBox = new BoundingBox();
+hoverBox.id = "hoverBox";
+var selectionBox = new BoundingBox();
+selectionBox.id = "selectionBox";
+
+
+$(document).ready(function() {
+	init();
+	loadSVG("Countdown_bb2.svg");
+	initTooltip();
+});
+
+var initTooltip = function initTooltip() {
+	var svg = $("#svgContainer").svg('get');
+	$("#svgContainer").on("mousemove", moveTooltip);
+}
+
+var moveTooltip = function moveTooltip(evt) {
+	$('#tooltip').css("left",evt.pageX + 10 +"px");
+	$('#tooltip').css("top",evt.pageY - 5 + "px");
+}
+
+var showTooltip = function showTooltip(evt, hoverBox) {
+	var tooltip = $('#tooltip');
+	tooltip.css("padding","0.2em");
+	tooltip.css("visibility","visible");
+	var id = hoverBox.targetElement.id;
+	if (!id) {
+		id = hoverBox.targetElement.parentNode.id;
+		if (!id) {
+			tooltip.css("padding","0.0em");
+		}
+	}
+	
+	tooltip.text(id);
+	console.log("id: " + id);
+}
+
+var hideTooltip = function hideTooltip()
+{
+	var tooltip = $('#tooltip');
+	tooltip.css("padding","0.0em");
+	tooltip.css("visibility","hidden");
+}
+
+var init = function init() {
+	$(".tab").on("click",function(evt) {
+		log(this + "clicked!");
+		var view = this.getAttribute("view");
+		if (view !== null) {
+			loadSVG(view);
+		}
+	});
+}
+
+var loadSVG = function loadSVG(path) {
+	log("load svg: " + path);
+	var svg = $("#svgContainer").svg('get');
+	if (svg !== null) {
+		$("#svgContainer").svg('destroy');
+	}
+	if (path !== null) {
+		$("#svgContainer").svg({loadURL: path, addTo: true, changeSize: false, onLoad:setupInteraction});
+	}
+}
+
+var setupInteraction = function setupInteraction() {
+	$("g").each(function() {
+		$(this).on("mousewheel ", handleMouseWheel);
+		$(this).on("mousemove ", handleMouseMove);
+		$(this).on("mouseenter", handleMouseIn);
+		$(this).on("mouseleave", handleMouseOut);
+		$(this).on("click", handleClick);
+	});
+	$("svg").svgPan('viewport');
+	$(".hasSVG").on("mousemove", handleSelectionMoveWheel);
+	if ($.browser.webkit) {
+        window.addEventListener('mousewheel', handleSelectionMoveWheel, false); // Chrome/Safari
+    } else {
+        window.addEventListener('DOMMouseScroll', handleSelectionMoveWheel, false); // Others
+    }
+}
+
+var handleSelectionMoveWheel = function handleSelectionMoveWheel(evt) {
+	if(selectionBox.displayElement) updateTransformations(selectionBox.displayElement,selectionBox.targetElement);
+}
+
+var handleMouseIn = function handleMouseIn(evt) {
+	updateBox(evt,hoverBox,false);
+	showTooltip(evt,hoverBox);
+}
+var handleMouseOut = function handleMouseOut(evt) {
+	updateBox(evt,hoverBox,false);
+	hideTooltip();
+}
+var handleMouseMove = function handleMouseMove(evt) {
+	updateBox(evt,hoverBox,false);
+}
+var handleMouseWheel = function handleMouseWheel(evt) {
+	updateBox(evt,hoverBox,false);
+}
+
+var handleHoverOut = function handleHoverOut(evt) {
+	clearBoundingBox(evt,hoverBox);
+}
+
+var handleClick = function handleClick(evt) {
+	log(this.id + " clicked!");
+	updateBox(evt,selectionBox);
+}
+
+var updateBox = function updateBox(evt,bb) {
+	clearBoundingBox(evt,bb);
+	bb.targetElement = evt.target;
+	if(!bb.targetElement.getBBox) {
+	if(bb.targetElement.correspondingUseElement)
+		bb.targetElement = bb.targetElement.correspondingUseElement;
+	}
+	bb.bbox = bb.targetElement.getBBox();
+	//var svg = $("#svgContainer").svg('get');
+	var root = $("#svgContainer").svg('get').root();
+	bb.displayElement = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+	bb.displayElement.setAttributeNS(null, "opacity", "0.5");
+	bb.displayElement.setAttributeNS(null, "fill", "#0099FF");
+	bb.displayElement.setAttributeNS(null, "pointer-events", "none");
+	bb.displayElement.setAttributeNS(null, "id", bb.id);
+	root.appendChild(bb.displayElement);
+	
+	// outset the rect a bit
+	bb.displayElement.x.baseVal.value = bb.bbox.x - 2;
+	bb.displayElement.y.baseVal.value = bb.bbox.y - 2;
+	bb.displayElement.width.baseVal.value = bb.bbox.width + 4;
+	bb.displayElement.height.baseVal.value = bb.bbox.height + 4;
+
+	updateTransformations(bb.displayElement,bb.targetElement);
+}
+
+var updateTransformations = function updateTransformations(dispEl,targEl) {
+		dispEl.transform.baseVal.clear();
+		var tfm2elm = targEl.getTransformToElement(dispEl);
+		dispEl.transform.baseVal.appendItem(dispEl.transform.baseVal.createSVGTransformFromMatrix(tfm2elm))
+	}
+
+var clearBoundingBox = function clearBoundingBox(evt,bb) {
+	$('#' + bb.id).remove();
+	bb.targetElement = null;
+	bb.displayElement = null;
+	bb.bbox = null;
+}
+
+var log = function log(msg) {
+	console.log(msg);
+}
+
+</script>
+<div id = "tooltip" class = "tooltip" position = "absolute">Tooltip content</div>
+<div id = "svgContainer" style="width: 420px; height: 420px;"></div>
+<div id = "breadboard" class = "tab" view = "Countdown_bb2.svg" >breadboard</div>
+<div id = "pcb" class = "tab" view = "Countdown_pcb2.svg" >PCB</div>
+<div id = "schematic" class = "tab" view = "Countdown_pcb2.svg" >schematic</div>
+<div id = "code" class = "tab" >Code</div>
+</body>
+</html>
