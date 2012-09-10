@@ -840,12 +840,14 @@ void PEMainWindow::switchedConnector(const QDomElement & element)
 
     bool gotTerminal = false;
     QPointF terminalPoint;
-    foreach (PEGraphicsItem * pegi, pegiList) {
-        QDomElement pegiElement = pegi->element();
-        if (pegiElement.attribute("id").compare(terminalID) == 0) {
-            terminalPoint = pegi->rect().center();
-            gotTerminal = true;
-            break;
+    if (!terminalID.isEmpty()) {
+        foreach (PEGraphicsItem * pegi, pegiList) {
+            QDomElement pegiElement = pegi->element();
+            if (pegiElement.attribute("id").compare(terminalID) == 0) {
+                terminalPoint = pegi->rect().center();
+                gotTerminal = true;
+                break;
+            }
         }
     }
 
@@ -1239,8 +1241,8 @@ void PEMainWindow::relocateConnectorSvg(SketchWidget * sketchWidget, const QStri
 
         QDomElement element = pegi->element();
         if (element.attribute("gorn").compare(newGorn) == 0) {
-            switchedConnector(m_peToolView->currentConnector());
             pegi->setHighlighted(true);
+            switchedConnector(m_peToolView->currentConnector());
             break;
         }
     }
