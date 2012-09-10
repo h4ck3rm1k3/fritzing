@@ -346,7 +346,7 @@ bool GerberGenerator::saveEnd(const QString & layerName, const QString & exportD
     QString outname = exportDir + "/" +  prefix + suffix;
     QFile out(outname);
 	if (!out.open(QIODevice::WriteOnly | QIODevice::Text)) {
-		displayMessage(QObject::tr("%1 file export failure (2)").arg(layerName), displayMessageBoxes);
+		displayMessage(QObject::tr("%1 file export failure (2): %2").arg(layerName).arg(outname), displayMessageBoxes);
 		return false;
 	}
 
