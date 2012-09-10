@@ -2507,7 +2507,7 @@ void MainWindow::initStyleSheet()
 #endif
 
 #ifdef Q_WS_MAC
-		platformDependantStylePath = QString(":/resources/styles/mac-%1.qss").arg(prefix);
+		platformDependantStylePath = QString(":/resources/styles/mac-%1.qss").arg(suffix);
 #endif
 
 #ifdef Q_WS_WIN
