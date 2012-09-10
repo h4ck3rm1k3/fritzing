@@ -14,3 +14,8 @@ QSplitter::handle {
      color: #666666;
      background-color: #666666;
 } 
+
+/* this separates palettes from each other and is movable */
+PEMainWindow::separator {
+	background-color: #666666;
+}

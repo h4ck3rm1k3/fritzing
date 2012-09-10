@@ -1260,7 +1260,4 @@ bool PEMainWindow::saveAs() {
 }
 
 
-QString PEMainWindow::getStyleSheetSuffix() {
-    return "newpartseditor";
-}
 

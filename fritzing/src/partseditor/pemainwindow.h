@@ -94,7 +94,6 @@ protected:
     void reload();
     void createFileMenu();
     bool getConnectorIDs(const QDomElement & element, SketchWidget * sketchWidget, QString & id, QString & terminalID);
-    QString getStyleSheetSuffix();
 
 public slots:
     void metadataChanged(const QString & name, const QString & value);

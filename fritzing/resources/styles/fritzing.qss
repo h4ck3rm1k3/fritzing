@@ -28,6 +28,13 @@ MainWindow {
 	color: rgb(255,255,255);
 }
 
+PEMainWindow {
+	/* layout here */
+
+	/* styling there */
+	background-color: #ffffff;
+}
+
 QStatusBar {
 	background-color: rgb(84,24,44);
 }
