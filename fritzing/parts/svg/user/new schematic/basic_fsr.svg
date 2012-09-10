@@ -3,27 +3,27 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" id="svg2" xmlns:svg="http://www.w3.org/2000/svg"
 	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="18.314px"
-	 height="43.423px" viewBox="0 0 18.314 43.423" enable-background="new 0 0 18.314 43.423" xml:space="preserve">
-<polyline fill="none" stroke="#000000" stroke-width="0.9" stroke-linecap="round" points="12.084,21.828 17.939,21.828 
+	 height="43.422px" viewBox="0 0 18.314 43.422" enable-background="new 0 0 18.314 43.422" xml:space="preserve">
+<polyline fill="none" stroke="#000000" stroke-width="0.9" stroke-linecap="round" points="11.27,21.828 17.939,21.828 
 	17.939,32.227 4.601,38.141 "/>
 <g id="schematic_2_">
 	<polyline fill="none" stroke="#000000" stroke-width="0.9" stroke-linecap="round" points="4.611,36.224 4.611,34.782 1.73,32.624 
-		8.21,29.022 1.73,25.423 8.21,21.823 1.73,18.223 8.21,14.623 1.73,11.023 4.611,8.863 4.611,7.423 	"/>
-	<polygon points="11.81,25.423 8.21,21.823 11.81,18.223 	"/>
+		8.21,29.022 1.73,25.422 8.21,21.823 1.73,18.223 8.21,14.623 1.73,11.023 4.611,8.863 4.611,7.423 	"/>
+	<polygon points="11.81,25.422 8.21,21.823 11.81,18.223 	"/>
 	
-		<line id="connector0pin_2_" fill="none" stroke="#555555" stroke-width="0.9" stroke-linecap="round" x1="4.611" y1="43.423" x2="4.611" y2="36.224"/>
-	<rect id="connector0terminal_2_" x="4.611" y="43.423" fill="none" width="0" height="0"/>
+		<line id="connector0pin_2_" fill="none" stroke="#787878" stroke-width="0.9" stroke-linecap="round" x1="4.611" y1="43.422" x2="4.611" y2="36.224"/>
+	<polygon id="connector0terminal_2_" fill="none" points="4.611,43.422 4.611,43.422 4.611,43.422 	"/>
 	<g transform="translate(0.9906,14.0462)">
 		<g transform="rotate(270)">
-			<text transform="matrix(1 0 0 1 -26.6169 2.1056)" fill="#555555" font-family="'ArialMT'" font-size="3.024">1</text>
+			<text transform="matrix(1 0 0 1 -26.6164 2.1058)" fill="#787878" font-family="'DroidSans'" font-size="2">1</text>
 		</g>
 	</g>
 	
-		<line id="connector1pin_2_" fill="none" stroke="#555555" stroke-width="0.9" stroke-linecap="round" x1="4.611" y1="0.223" x2="4.611" y2="7.423"/>
-	<rect id="connector1terminal_2_" x="4.611" y="0.223" fill="none" width="0" height="0"/>
+		<line id="connector1pin_2_" fill="none" stroke="#787878" stroke-width="0.9" stroke-linecap="round" x1="4.611" y1="0.223" x2="4.611" y2="7.423"/>
+	<polygon id="connector1terminal_2_" fill="none" points="4.611,0.223 4.611,0.223 4.611,0.223 	"/>
 	<g transform="translate(0.9906,1.3462)">
 		<g transform="rotate(270)">
-			<text transform="matrix(1 0 0 1 -3.3174 2.1056)" fill="#555555" font-family="'ArialMT'" font-size="3.024">2</text>
+			<text transform="matrix(1 0 0 1 -3.3174 2.1058)" fill="#787878" font-family="'DroidSans'" font-size="2">2</text>
 		</g>
 	</g>
 </g>
