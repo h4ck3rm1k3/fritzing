@@ -1403,10 +1403,6 @@ void MainWindow::exportToGerber() {
 	delete fileProgressDialog;
 }
 
-void MainWindow::exportToGerber(const QString & exportDir) {
-	GerberGenerator::exportToGerber(m_fwFilename, exportDir, NULL, m_pcbGraphicsView, false);
-}
-
 void MainWindow::connectStartSave(bool doConnect) {
 
 	if (doConnect) {

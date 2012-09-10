@@ -153,7 +153,6 @@ public:
 	void setReportMissingModules(bool);
 	QList<class SketchWidget *> sketchWidgets();
 	void setCloseSilently(bool);
-	void exportToGerber(const QString & outputDir);
 	class PCBSketchWidget * pcbView();
 	void noBackup();
 	void swapSelectedAux(ItemBase * itemBase, const QString & moduleID, bool useViewLayerSpec, ViewLayer::ViewLayerSpec);

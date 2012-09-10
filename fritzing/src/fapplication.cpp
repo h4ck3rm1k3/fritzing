@@ -590,7 +590,8 @@ void FApplication::runGerberService()
 
 		FolderUtils::setOpenSaveFolderAux(m_outputFolder);
 		if (mainWindow->loadWhich(filepath, false, false, "")) {
-			mainWindow->exportToGerber(m_outputFolder);
+            QFileInfo info(filename);
+            GerberGenerator::exportToGerber(info.completeBaseName(), m_outputFolder, NULL, mainWindow->pcbView(), false);
 		}
 
 		mainWindow->setCloseSilently(true);
