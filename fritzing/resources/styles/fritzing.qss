@@ -28,13 +28,6 @@ MainWindow {
 	color: rgb(255,255,255);
 }
 
-PEMainWindow {
-	/* layout here */
-
-	/* styling there */
-	background-color: #ffffff;
-}
-
 QStatusBar {
 	background-color: rgb(84,24,44);
 }
@@ -63,6 +56,20 @@ QStatusBar {
 QStatusBar::item {
         border: none;
 }
+
+/* PEMainWindow seems to be needed here rathern in newpartseditor.qss */
+/* this separates palettes from each other and is movable */
+PEMainWindow::separator {
+	background-color: #666666;
+}
+
+PEMainWindow {
+	/* layout here */
+
+	/* styling there */
+	background-color: #afafb4;
+}
+
 
 /* ################### the toolbar #################### */
 QToolBar {

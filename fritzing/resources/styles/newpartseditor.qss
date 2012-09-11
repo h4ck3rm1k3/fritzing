@@ -19,3 +19,10 @@ QSplitter::handle {
 PEMainWindow::separator {
 	background-color: #666666;
 }
+
+PEMainWindow {
+	/* layout here */
+
+	/* styling there */
+	background-color: #afafb4;
+}

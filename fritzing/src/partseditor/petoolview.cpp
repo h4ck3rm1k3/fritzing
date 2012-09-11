@@ -34,6 +34,8 @@ $Date$
 #include <QTextStream>
 #include <QSplitter>
 #include <QPushButton>
+#include <QLineEdit>
+#include <QDoubleValidator>
 
 static const int TheSpacing = 10;
 
@@ -65,30 +67,25 @@ PEToolView::PEToolView(QWidget * parent) : QWidget(parent)
     connectorsFrame->setLayout(connectorsLayout);
     splitter->addWidget(connectorsFrame);
 
-    QFrame * connectorFrame = new QFrame;
-    QVBoxLayout * connectorLayout = new QVBoxLayout;
-
     m_connectorInfoGroupBox = new QGroupBox;
     m_connectorInfoLayout = new QVBoxLayout;
+
     m_connectorInfoWidget = new QFrame;
     m_connectorInfoLayout->addWidget(m_connectorInfoWidget);
-    m_connectorInfoGroupBox->setLayout(m_connectorInfoLayout);
-    connectorLayout->addWidget(m_connectorInfoGroupBox);
-
-    QGroupBox * svgGroupBox = new QGroupBox("SVG Element Info");
-	QVBoxLayout * svgGroupLayout = new QVBoxLayout;
-
-    m_elementLock = new QCheckBox(tr("Locked"));
-    m_elementLock->setChecked(true);
-    m_elementLock->setToolTip(tr("Unlock to modify the current connector's location"));
-    connect(m_elementLock, SIGNAL(clicked(bool)), this, SLOT(lockChangedSlot(bool)));
-    svgGroupLayout->addWidget(m_elementLock);
 
     m_svgElement = new QLabel;
     m_svgElement->setWordWrap(false);
     m_svgElement->setTextFormat(Qt::PlainText);
     m_svgElement->setMaximumWidth(400);
-    svgGroupLayout->addWidget(m_svgElement);
+    m_connectorInfoLayout->addWidget(m_svgElement);
+
+    m_elementLock = new QCheckBox(tr("SVG Element Locked"));
+    m_elementLock->setChecked(true);
+    m_elementLock->setToolTip(tr("Unlock to modify the current connector's location"));
+    connect(m_elementLock, SIGNAL(clicked(bool)), this, SLOT(lockChangedSlot(bool)));
+    m_connectorInfoLayout->addWidget(m_elementLock);
+
+
 
     QFrame * boundsFrame = new QFrame;
     QHBoxLayout * boundsLayout = new QHBoxLayout;
@@ -118,42 +115,92 @@ PEToolView::PEToolView(QWidget * parent) : QWidget(parent)
 
     boundsLayout->addSpacerItem(new QSpacerItem(1, 1, QSizePolicy::Expanding));
     boundsFrame->setLayout(boundsLayout);
-    svgGroupLayout->addWidget(boundsFrame);
+    m_connectorInfoLayout->addWidget(boundsFrame);
+
+    QGroupBox * anchorGroupBox = new QGroupBox("Anchor point");
+    QVBoxLayout * anchorGroupLayout = new QVBoxLayout;
+
+    QFrame * posRadioFrame = new QFrame;
+    QHBoxLayout * posRadioLayout = new QHBoxLayout;
+
+    QList<QString> positionNames;
+    positionNames << "Center" << "N" << "E" << "S" << "W";
+    QList<QString> trPositionNames;
+    trPositionNames << tr("Center") << tr("N") << tr("E") << tr("S") << tr("W");
+    for (int i = 0; i < positionNames.count(); i++) {
+        QRadioButton * radioButton = new QRadioButton(trPositionNames.at(i));
+        m_radios.insert(positionNames.at(i), radioButton);
+        radioButton->setProperty("name", positionNames.at(i));
+        connect(radioButton, SIGNAL(clicked()), this, SLOT(changeAnchor()));
+        posRadioLayout->addWidget(radioButton);
+        posRadioLayout->addSpacing(TheSpacing);
+    }
+
+    posRadioLayout->addSpacerItem(new QSpacerItem(1, 1, QSizePolicy::Expanding));
+
+    posRadioFrame->setLayout(posRadioLayout);
+    anchorGroupLayout->addWidget(posRadioFrame);
+
+    QFrame * posNumberFrame = new QFrame;
+    QHBoxLayout * posNumberLayout = new QHBoxLayout;
+
+    label = new QLabel("x");
+    posNumberLayout->addWidget(label);
+
+    QLineEdit * numberEdit = new QLineEdit();
+    QValidator *validator = new QDoubleValidator(-9999, 9999, 3, this);
+    numberEdit->setValidator(validator);
+    posNumberLayout->addWidget(numberEdit);
+    connect(numberEdit, SIGNAL(editingFinished()), this, SLOT(anchorPointEntry()));
+
+    posNumberLayout->addSpacing(TheSpacing);
+
+    label = new QLabel("y");
+    posNumberLayout->addWidget(label);
+
+    numberEdit = new QLineEdit();
+    validator = new QDoubleValidator(-9999, 9999, 3, this);
+    numberEdit->setValidator(validator);
+    posNumberLayout->addWidget(numberEdit);
+    connect(numberEdit, SIGNAL(editingFinished()), this, SLOT(anchorPointEntry()));
+
+    posNumberLayout->addSpacerItem(new QSpacerItem(1, 1, QSizePolicy::Expanding));
+
+    posNumberFrame->setLayout(posNumberLayout);
+    anchorGroupLayout->addWidget(posNumberFrame);
+
+    anchorGroupBox->setLayout(anchorGroupLayout);
+    m_connectorInfoLayout->addWidget(anchorGroupBox);
 
     QFrame * radioFrame = new QFrame;
     QHBoxLayout * radioLayout = new QHBoxLayout;
 
-    m_in = new QRadioButton("in");
-    connect(m_in, SIGNAL(clicked()), this, SLOT(changeUnits()));
-    radioLayout->addWidget(m_in);
-    radioLayout->addSpacing(TheSpacing);
-
-    m_mm = new QRadioButton("mm");
-    connect(m_mm, SIGNAL(clicked()), this, SLOT(changeUnits()));
-    radioLayout->addWidget(m_mm);
-    radioLayout->addSpacing(TheSpacing);
-
-    m_px = new QRadioButton("px");
-    connect(m_px, SIGNAL(clicked()), this, SLOT(changeUnits()));
-    m_px->setChecked(true);
-    radioLayout->addWidget(m_px);
+    QStringList radioNames;
+    radioNames << "in" << "mm" << "px";
+    foreach (QString name, radioNames) {
+        QRadioButton * radioButton = new QRadioButton(name);
+        connect(radioButton, SIGNAL(clicked()), this, SLOT(changeUnits()));
+        radioLayout->addWidget(radioButton);
+        radioLayout->addSpacing(TheSpacing);
+        m_radios.insert(radioButton->text(), radioButton);
+    }
 
     radioLayout->addSpacerItem(new QSpacerItem(1, 1, QSizePolicy::Expanding));
     radioFrame->setLayout(radioLayout);
-    svgGroupLayout->addWidget(radioFrame);
-	
-	svgGroupBox->setLayout(svgGroupLayout);
+    m_connectorInfoLayout->addWidget(radioFrame);
 
-    connectorLayout->addWidget(svgGroupBox);
-    connectorLayout->addSpacerItem(new QSpacerItem(1, 1, QSizePolicy::Minimum, QSizePolicy::Expanding));
-    connectorFrame->setLayout(connectorLayout);
+	m_connectorInfoLayout->addSpacerItem(new QSpacerItem(1, 1, QSizePolicy::Minimum, QSizePolicy::Expanding));
 
-	splitter->addWidget(connectorFrame);
+    m_connectorInfoGroupBox->setLayout(m_connectorInfoLayout);
+
+	splitter->addWidget(m_connectorInfoGroupBox);
 
 	//this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	//this->setWidget(splitter);
 
     this->setLayout(mainLayout);
+
+    m_connectorListWidget->resize(m_connectorListWidget->width(), 0);
 }
 
 PEToolView::~PEToolView() 
@@ -236,8 +283,17 @@ void PEToolView::switchConnector(QListWidgetItem * current, QListWidgetItem * pr
     int index = current->data(Qt::UserRole).toInt();
     QDomElement element = m_connectorList.at(index);
 
+    int pos = 99999;
+    for (int ix = 0; ix < m_connectorInfoLayout->count(); ix++) {
+        QLayoutItem * item = m_connectorInfoLayout->itemAt(ix);
+        if (item->widget() == m_elementLock) {
+            pos = ix - 1;
+            break;
+        }
+    }
+
     m_connectorInfoWidget = ConnectorsView::makeConnectorForm(element, m_gotZeroConnector, index, this, false);
-    m_connectorInfoLayout->addWidget(m_connectorInfoWidget);
+    m_connectorInfoLayout->insertWidget(pos, m_connectorInfoWidget);
     m_connectorInfoGroupBox->setTitle(tr("Connector %1").arg(element.attribute("name")));
 
     emit switchedConnector(element);

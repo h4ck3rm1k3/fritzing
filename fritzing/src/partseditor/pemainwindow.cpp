@@ -247,6 +247,11 @@ PEMainWindow::~PEMainWindow()
 
 void PEMainWindow::closeEvent(QCloseEvent *event) {
     Q_UNUSED(event);
+
+
+	QSettings settings;
+	settings.setValue(m_settingsPrefix + "state",saveState());
+	settings.setValue(m_settingsPrefix + "geometry",saveGeometry());
 }
 
 void PEMainWindow::initLockedFiles(bool) {
@@ -293,6 +298,7 @@ void PEMainWindow::initDock()
 {
     m_binManager = new BinManager(m_refModel, NULL, m_undoStack, this);
     m_binManager->openBin(":/resources/bins/pe.fzb");
+    m_binManager->hideTabBar();
 }
 
 void PEMainWindow::moreInitDock()
@@ -306,7 +312,8 @@ void PEMainWindow::moreInitDock()
     makeDock(tr("Tools"), m_peToolView, DockMinWidth, DockMinHeight);
     m_peToolView->setMinimumSize(DockMinWidth, DockMinHeight);
 
-	makeDock(BinManager::Title, m_binManager, MinHeight, DefaultHeight);
+	QDockWidget * dockWidget = makeDock(BinManager::Title, m_binManager, MinHeight, DefaultHeight);
+    dockWidget->resize(0, 0);
 }
 
 void PEMainWindow::createActions()

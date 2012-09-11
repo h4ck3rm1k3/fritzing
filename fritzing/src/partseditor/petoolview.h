@@ -70,14 +70,12 @@ protected:
     QLabel * m_x;
     QLabel * m_y;
     QListWidget * m_connectorListWidget;
-    QRadioButton * m_in;
-    QRadioButton * m_mm;
-    QRadioButton * m_px;
+    QHash<QString, QRadioButton *> m_radios;
     QString m_units;
     class PEGraphicsItem * m_pegi;
     QList<QDomElement> m_connectorList;
     QGroupBox * m_connectorInfoGroupBox;
-    QLayout * m_connectorInfoLayout;
+    QBoxLayout * m_connectorInfoLayout;
     QWidget * m_connectorInfoWidget;
     bool m_gotZeroConnector;
     QCheckBox * m_elementLock;

@@ -490,16 +490,15 @@ void BinManager::setAsCurrentBin(PartsBinPaletteWidget* bin) {
 	}
 
 	QString style = m_mainWindow->styleSheet();
-	StackTabBar *currTabBar = NULL;
 	if(m_currentBin && m_stackTabWidget) {
-		currTabBar = m_stackTabWidget->stackTabBar();
+		StackTabBar *currTabBar = m_stackTabWidget->stackTabBar();
 		currTabBar->setProperty("current","false");
 		currTabBar->setStyleSheet("");
 		currTabBar->setStyleSheet(style);
 	}
 	if(m_stackTabWidget) {
 		m_currentBin = bin;
-		currTabBar = m_stackTabWidget->stackTabBar();
+		StackTabBar *currTabBar = m_stackTabWidget->stackTabBar();
 		currTabBar->setProperty("current","true");
 		currTabBar->setStyleSheet("");
 		currTabBar->setStyleSheet(style);
@@ -1201,3 +1200,7 @@ void BinManager::mainLoad() {
     }
 }
 
+void BinManager::hideTabBar()
+{
+    m_stackTabWidget->stackTabBar()->hide();
+}
