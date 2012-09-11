@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 15.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="svg2" xmlns:svg="http://www.w3.org/2000/svg"
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="40.979px" height="28.8px"
+	 viewBox="0 0 40.979 28.8" enable-background="new 0 0 40.979 28.8" xml:space="preserve">
+<g id="schematic">
+	<rect id="connector0terminal" x="3.583" y="28.64" width="0.071" height="0.07"/>
+	<rect id="connector0pin" x="3.374" y="22.105" width="0.466" height="6.688"/>
+	<rect id="connector1terminal" x="17.971" y="0.035" width="0.069" height="0.07"/>
+	<rect id="connector1pin" x="17.766" width="0.466" height="6.687"/>
+	<rect id="connector2terminal" x="17.989" y="28.647" width="0.071" height="0.069"/>
+	<rect id="connector2pin" x="17.779" y="22.113" width="0.466" height="6.688"/>
+	<rect id="connector3terminal" x="32.375" y="28.647" width="0.071" height="0.069"/>
+	<rect id="connector3pin" x="32.167" y="22.113" width="0.466" height="6.688"/>
+</g>
+<text transform="matrix(1 0 0 1 33.1746 12.6411)" fill="#787878" font-family="'DroidSans'" font-size="4.5">B</text>
+<line fill="none" stroke="#000000" stroke-width="0.7" stroke-linecap="round" x1="18" y1="7.2" x2="18" y2="14.4"/>
+<path fill="none" stroke="#787878" stroke-miterlimit="10" d="M18,7.2L18,7.2L18,7.2z"/>
+<text transform="matrix(1 0 0 1 18.7751 12.6411)" fill="#787878" font-family="'DroidSans'" font-size="4.5">G</text>
+<polyline fill="none" stroke="#000000" stroke-width="0.7" stroke-linecap="round" points="3.6,14.4 3.6,7.2 32.399,7.2 
+	32.399,14.4 "/>
+<text transform="matrix(1 0 0 1 4.3748 12.6411)" fill="#787878" font-family="'DroidSans'" font-size="4.5">R</text>
+<g>
+	<line fill="none" stroke="#000000" stroke-width="0.7" stroke-linecap="round" x1="32.399" y1="14.4" x2="36" y2="14.4"/>
+	<line fill="none" stroke="#000000" stroke-width="0.7" stroke-linecap="round" x1="28.8" y1="14.4" x2="32.399" y2="14.4"/>
+	<polygon fill="#FFFFFF" stroke="#000000" stroke-width="0.7" stroke-linecap="round" points="36,21.6 32.399,21.6 28.8,21.6 
+		32.399,14.4 	"/>
+	<line fill="none" stroke="#000000" stroke-width="0.45" stroke-linecap="round" x1="32.399" y1="14.4" x2="32.399" y2="21.6"/>
+	<line fill="none" stroke="#000000" stroke-width="0.45" stroke-linecap="round" x1="37.018" y1="15.839" x2="39.358" y2="13.5"/>
+	<line fill="none" stroke="#000000" stroke-width="0.45" stroke-linecap="round" x1="36.658" y1="12.601" x2="38.998" y2="10.261"/>
+	<path d="M40.978,11.881l-1.08,2.52l-1.44-1.439L40.978,11.881z"/>
+	<path d="M40.618,8.641l-1.08,2.52L38.1,9.723L40.618,8.641z"/>
+	<line fill="none" stroke="#000000" stroke-width="0.7" stroke-linecap="round" x1="18" y1="14.4" x2="21.6" y2="14.4"/>
+	<line fill="none" stroke="#000000" stroke-width="0.7" stroke-linecap="round" x1="14.4" y1="14.4" x2="18" y2="14.4"/>
+	<polygon fill="#FFFFFF" stroke="#000000" stroke-width="0.7" stroke-linecap="round" points="21.6,21.6 18,21.6 14.4,21.6 18,14.4 
+			"/>
+	<line fill="none" stroke="#000000" stroke-width="0.45" stroke-linecap="round" x1="18" y1="14.4" x2="18" y2="21.6"/>
+	<line fill="none" stroke="#000000" stroke-width="0.45" stroke-linecap="round" x1="22.618" y1="15.839" x2="24.958" y2="13.5"/>
+	<line fill="none" stroke="#000000" stroke-width="0.45" stroke-linecap="round" x1="22.258" y1="12.601" x2="24.598" y2="10.261"/>
+	<path d="M26.578,11.881l-1.08,2.52l-1.439-1.439L26.578,11.881z"/>
+	<path d="M26.218,8.641l-1.079,2.52L23.7,9.723L26.218,8.641z"/>
+	<line fill="none" stroke="#000000" stroke-width="0.7" stroke-linecap="round" x1="3.6" y1="14.4" x2="7.2" y2="14.4"/>
+	<line fill="none" stroke="#000000" stroke-width="0.7" stroke-linecap="round" x1="0" y1="14.4" x2="3.6" y2="14.4"/>
+	<polygon fill="#FFFFFF" stroke="#000000" stroke-width="0.7" stroke-linecap="round" points="7.2,21.6 3.6,21.6 0,21.6 3.6,14.4 	
+		"/>
+	<line fill="none" stroke="#000000" stroke-width="0.45" stroke-linecap="round" x1="3.6" y1="14.4" x2="3.6" y2="21.6"/>
+	<line fill="none" stroke="#000000" stroke-width="0.45" stroke-linecap="round" x1="8.218" y1="15.839" x2="10.558" y2="13.5"/>
+	<line fill="none" stroke="#000000" stroke-width="0.45" stroke-linecap="round" x1="7.858" y1="12.601" x2="10.198" y2="10.261"/>
+	<path d="M12.178,11.881l-1.08,2.52l-1.44-1.439L12.178,11.881z"/>
+	<path d="M11.818,8.641l-1.08,2.52L9.3,9.723L11.818,8.641z"/>
+</g>
+<line id="connector0pin_2_" fill="none" stroke="#787878" stroke-width="0.7" stroke-linecap="round" x1="18" y1="0" x2="18" y2="7.2"/>
+<line fill="none" stroke="#787878" stroke-width="0.7" stroke-linecap="round" x1="32.399" y1="28.8" x2="32.399" y2="21.6"/>
+<line fill="none" stroke="#787878" stroke-width="0.7" stroke-linecap="round" x1="18" y1="28.8" x2="18" y2="21.6"/>
+<line fill="none" stroke="#787878" stroke-width="0.7" stroke-linecap="round" x1="3.6" y1="28.8" x2="3.6" y2="21.6"/>
+</svg>
