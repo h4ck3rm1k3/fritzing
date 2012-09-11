@@ -28,10 +28,12 @@ $Date: 2009-01-03 18:55:48 +0100 (Sat, 03 Jan 2009) $
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSPrincipalClass</key>
+	<string>NSApplication</string>
 	<key>CFBundleExecutable</key>
 	<string>Fritzing</string>
 	<key>CFBundleGetInfoString</key>
-	<string>Fritzing 0.7.5 (b6063 2012-06-13)</string>
+	<string>Fritzing 0.7.8 (b6063 2012-06-13)</string>
 	<key>CFBundleIconFile</key>
 	<string>fritzing_icon.icns</string>
 	<key>CFBundleIdentifier</key>
