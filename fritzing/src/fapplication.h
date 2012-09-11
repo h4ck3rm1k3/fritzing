@@ -35,9 +35,52 @@ $Date$
 #include <QWidget>
 #include <QTimer>
 #include <QNetworkReply>
+#include <QTcpServer>
+#include <QTcpSocket>
+#include <QMutex>
+#include <QThread>
 
-class FApplication :
-	public QApplication
+class FServer : public QTcpServer
+{
+    Q_OBJECT
+
+public:
+    FServer(QObject *parent = 0);
+
+signals:
+    void newConnection(int socketDescriptor);
+
+protected:
+    void incomingConnection(int socketDescriptor);
+};
+
+class FServerThread : public QThread
+{
+    Q_OBJECT
+
+public:
+    FServerThread(int socketDescriptor, QObject *parent);
+
+    void run();
+    void setDone();
+
+signals:
+    void error(QTcpSocket::SocketError socketError);
+    void doCommand(const QString & command, const QString & params, QString & result);
+
+protected:
+    void writeResponse(QTcpSocket *, int code, const QString & codeString, const QString & mimeType, const QString & message);
+
+protected:
+    int m_socketDescriptor;
+    bool m_done;
+
+protected:
+   static QMutex m_busy;
+
+ };
+
+class FApplication : public QApplication
 {
 	Q_OBJECT
 
@@ -53,10 +96,10 @@ public:
 	class ReferenceModel * loadReferenceModel(const QString & databaseName, bool fullLoad);
 	void registerFonts();
 	class MainWindow * loadWindows(int & loaded, bool lockFiles);
+    bool runAsService();
 
 public:
 	static bool spaceBarIsPressed();
-	static bool runAsService();
 
 signals:
 	void spaceBarIsPressedSignal(bool);
@@ -75,6 +118,8 @@ public slots:
 	void loadedPart(int loaded, int total);
 	void externalProcessSlot(QString & name, QString & path, QStringList & args);
 	void gotOrderFab(QNetworkReply *);
+    void newConnection(int socketDescriptor);
+    void doCommand(const QString & command, const QString & params, QString & result);
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event);
@@ -86,12 +131,15 @@ protected:
 	void registerFont(const QString &fontFile, bool reallyRegister);
 	void clearModels();
     bool notify(QObject *receiver, QEvent *e);
+    void initService();
 	void runGedaService();
 	void runDatabaseService();
 	void runKicadFootprintService();
 	void runKicadSchematicService();
 	void runGerberService();
+	void runGerberServiceAux();
 	void runSvgService();
+	void runSvgServiceAux();
 	void runPanelizerService();
 	void runInscriptionService();
 	void runExampleService();
@@ -107,6 +155,7 @@ protected:
 	void updatePrefs(class PrefsDialog & prefsDialog);
     QList<MainWindow *> orderedTopLevelMainWindows();
 	void cleanFzzs();
+    void initServer();
 
 	enum ServiceType {
 		PanelizerService = 1,
@@ -118,6 +167,7 @@ protected:
 		ExampleService,
         DatabaseService,
         SvgService,
+        PortService,
 		NoService
 	};
 
@@ -143,9 +193,12 @@ protected:
 	int m_progressIndex;
 	class FSplashScreen * m_splash;
 	QString m_outputFolder;
+	QString m_portRootFolder;
 	QString m_panelFilename;
 	QHash<QString, struct LockedFile *> m_lockedFiles;
     bool m_panelizerCustom;
+    int m_portNumber;
+    FServer * m_fServer;
 
 public:
 	static int RestartNeeded;

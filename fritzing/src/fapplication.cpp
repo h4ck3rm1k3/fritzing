@@ -120,10 +120,125 @@ QMultiHash<QString, QString> InstalledFonts::InstalledFontsNameMapper;   // fami
 static const double LoadProgressStart = 0.085;
 static const double LoadProgressEnd = 0.6;
 
-//////////////////////////
+////////////////////////////////////////////////////
+
+FServer::FServer(QObject *parent)
+    : QTcpServer(parent)
+{
+}
+
+void FServer::incomingConnection(int socketDescriptor)
+{
+    emit newConnection(socketDescriptor);
+}
+
+////////////////////////////////////////////////////
+
+QMutex FServerThread::m_busy;
+
+FServerThread::FServerThread(int socketDescriptor, QObject *parent) : QThread(parent), m_socketDescriptor(socketDescriptor)
+{
+}
+
+ void FServerThread::run()
+ {
+    QTcpSocket * socket = new QTcpSocket();
+    if (!socket->setSocketDescriptor(m_socketDescriptor)) {
+        emit error(socket->error());
+        DebugDialog::debug(QString("Socket error %1 %2").arg(socket->error()).arg(socket->errorString()));
+        socket->deleteLater();
+        return;
+    }
+
+    socket->waitForReadyRead();
+    QString header;
+    while (socket->canReadLine()) {
+        header += socket->readLine();
+    }
+
+    DebugDialog::debug("header " + header);
+
+    QStringList tokens = header.split(QRegExp("[ \r\n][ \r\n]*"), QString::SkipEmptyParts);
+    if (tokens.count() <= 0) {
+        writeResponse(socket, 400, "Bad Request", "", "");
+        return;
+    }
+
+    if (tokens[0] != "GET") {
+        writeResponse(socket, 405, "Method Not Allowed", "", "");
+        return;
+    }
+
+    if (tokens.count() < 2) {
+        writeResponse(socket, 400, "Bad Request", "", "");
+        return;
+    }
+
+    QStringList params = tokens.at(1).split("/", QString::SkipEmptyParts);
+    QString command = params.takeFirst();
+    if (params.count() == 0) {
+        writeResponse(socket, 400, "Bad Request", "", "");
+        return;
+    }
+
+    QString subFolder = params.join("/");
+    QString mimeType;
+    if (command == "svg") {
+        mimeType = "image/svg+xml";
+    }
+    else if (command == "gerber") {
+    }
+    else {
+        writeResponse(socket, 400, "Bad Request", "", "");
+        return;
+    }
+
+    int waitInterval = 100;     // 100ms to wait
+    int timeoutSeconds = 2 * 60;    // timeout after 2 minutes
+    int attempts = timeoutSeconds * 1000 / waitInterval;  // timeout a
+    bool gotLock = false;
+    for (int i = 0; i < attempts; i++) {
+        if (m_busy.tryLock()) {
+            gotLock = true;
+            break;
+        }
+    }
+
+    if (!gotLock) {
+        writeResponse(socket, 503, "Service Unavailable", "", "Server busy.");
+        return;
+    }
+
+    DebugDialog::debug(QString("emitting do command %1 %2").arg(command).arg(subFolder));
+    QString result;
+    emit doCommand(command, subFolder, result);
+
+    m_busy.unlock();
+
+
+    writeResponse(socket, 200, "Ok", mimeType, result);
+}
+
+void FServerThread::writeResponse(QTcpSocket * socket, int code, const QString & codeString, const QString & mimeType, const QString & message) 
+{
+    QString type = mimeType;
+    if (type.isEmpty()) type = "text/plain";
+    QString response = QString("HTTP/1.0 %1 %2\r\n").arg(code).arg(codeString);
+    response += QString("Content-Type: %1; charset=\"utf-8\"\r\n").arg(type);
+    response += QString("Content-Length: %1\r\n").arg(message.count());
+    response += QString("\r\n%1").arg(message);
+       
+    socket->write(response.toUtf8());
+    socket->disconnectFromHost();
+    socket->waitForDisconnected();
+    socket->deleteLater();
+}
+
+////////////////////////////////////////////////////
 
 FApplication::FApplication( int & argc, char ** argv) : QApplication(argc, argv)
 {
+    m_fServer = NULL;
 	MainWindow::RestartNeeded = FApplication::RestartNeeded;
 	m_spaceBarIsPressed = false;
 	m_mousePressed = false;
@@ -218,6 +333,30 @@ bool FApplication::init() {
 			m_outputFolder = m_arguments[i + 1];
 			toRemove << i << i + 1;
 		}
+
+		if ((m_arguments[i].compare("-port", Qt::CaseInsensitive) == 0) ||
+			(m_arguments[i].compare("--port", Qt::CaseInsensitive) == 0)) {
+            DebugDialog::setEnabled(true);
+            bool ok;
+            int p = m_arguments[i + 1].toInt(&ok);
+            if (ok) {
+                m_portNumber = p;
+            }
+
+            toRemove << i << i + 1;
+
+            if (i + 2 < m_arguments.count()) {
+                if (ok) {
+                    m_portRootFolder = m_arguments[i + 2];
+                    m_serviceType = PortService;
+                }
+                toRemove << i + 2;
+            }
+
+			m_outputFolder = m_arguments[i + 1];
+		}
+
+
 
 		if ((m_arguments[i].compare("-g", Qt::CaseInsensitive) == 0) ||
 			(m_arguments[i].compare("-gerber", Qt::CaseInsensitive) == 0)||
@@ -583,11 +722,12 @@ int FApplication::serviceStartup() {
 
 void FApplication::runGerberService()
 {
-	createUserDataStoreFolderStructure();
+	initService();
+    runGerberServiceAux();
+}
 
-	registerFonts();
-	loadReferenceModel("", false);
-
+void FApplication::runGerberServiceAux()
+{
 	QDir dir(m_outputFolder);
 	QString s = dir.absolutePath();
 	QStringList filters;
@@ -611,13 +751,21 @@ void FApplication::runGerberService()
 	}
 }
 
-void FApplication::runSvgService()
+void FApplication::initService() 
 {
 	createUserDataStoreFolderStructure();
-
 	registerFonts();
 	loadReferenceModel("", false);
+}
 
+void FApplication::runSvgService()
+{
+    initService();
+    runSvgServiceAux();
+}
+
+void FApplication::runSvgServiceAux()
+{
 	QDir dir(m_outputFolder);
 	QString s = dir.absolutePath();
 	QStringList filters;
@@ -1238,7 +1386,12 @@ which is really not intended for hundreds of widgets.
 }
 
 bool FApplication::runAsService() {
-	return ((FApplication *) qApp)->m_serviceType != NoService;
+    if (m_serviceType == PortService) {
+        initServer();
+        return false;
+    }
+
+	return m_serviceType != NoService;
 }
 
 void FApplication::loadedPart(int loaded, int total) {
@@ -1527,9 +1680,7 @@ void FApplication::runExampleService()
 {	
 	m_started = true;
 
-	createUserDataStoreFolderStructure();
-	registerFonts();
-	loadReferenceModel("", false);
+	initService();
 
 	QDir sketchesDir(FolderUtils::getApplicationSubFolderPath("sketches"));
 	runExampleService(sketchesDir);
@@ -1577,4 +1728,48 @@ void FApplication::cleanFzzs() {
 	QFileInfoList backupList;
 	LockManager::checkLockedFiles("fzz", backupList, lockedFiles, true, LockManager::SlowTime);
 	LockManager::releaseLockedFiles(folder, lockedFiles);
+}
+
+void FApplication::initServer() {
+    m_fServer = new FServer(this);
+    connect(m_fServer, SIGNAL(newConnection(int)), this, SLOT(newConnection(int)));
+    m_fServer->listen(QHostAddress::Any, m_portNumber);
+}
+
+void FApplication::newConnection(int socketDescription) {
+     FServerThread *thread = new FServerThread(socketDescription, this);
+     connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
+     connect(thread, SIGNAL(doCommand(const QString &, const QString &, QString &)), this, SLOT(doCommand(const QString &, const QString &, QString &)), Qt::BlockingQueuedConnection);
+     thread->start();
+}
+
+
+void FApplication::doCommand(const QString & command, const QString & params, QString & result) {
+    QDir dir(m_portRootFolder);
+    dir.cd(params);
+    m_outputFolder = dir.absolutePath();
+    if (command == "svg") {
+        runSvgServiceAux();
+	    QStringList nameFilters;
+	    nameFilters << ("*.svg");
+	    QFileInfoList fileList = dir.entryInfoList(nameFilters, QDir::Files | QDir::NoSymLinks);
+        if (fileList.count() > 0) {
+            QFile file(fileList.at(0).absoluteFilePath());
+            if (file.open(QFile::ReadOnly)) {
+                result = file.readAll();
+            }
+        }
+    }
+    else if (command == "gerber") {
+        runGerberServiceAux();
+	    QStringList nameFilters;
+	    nameFilters << ("*.txt");
+	    QFileInfoList fileList = dir.entryInfoList(nameFilters, QDir::Files | QDir::NoSymLinks);
+        if (fileList.count() > 0) {
+            QFile file(fileList.at(0).absoluteFilePath());
+            if (file.open(QFile::ReadOnly)) {
+                result = file.readAll();
+            }
+        }
+    }
 }
