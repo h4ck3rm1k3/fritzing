@@ -91,6 +91,7 @@ protected:
 	void runKicadFootprintService();
 	void runKicadSchematicService();
 	void runGerberService();
+	void runSvgService();
 	void runPanelizerService();
 	void runInscriptionService();
 	void runExampleService();
@@ -116,6 +117,7 @@ protected:
 		KicadFootprintService,
 		ExampleService,
         DatabaseService,
+        SvgService,
 		NoService
 	};
 

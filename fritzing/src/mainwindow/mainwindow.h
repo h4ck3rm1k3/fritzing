@@ -166,6 +166,8 @@ public:
 	void groundFill(ViewLayer::ViewLayerID);
 	void copperFill(ViewLayer::ViewLayerID);
     bool hasAnyAlien();
+    void exportSvg(double res, bool selectedItems, bool flatten, const QString & filename);
+    void setCurrentView(ViewIdentifierClass::ViewIdentifier);
 
 public:
 	static void initNames();

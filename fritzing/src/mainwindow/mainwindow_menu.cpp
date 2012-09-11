@@ -1954,6 +1954,13 @@ void MainWindow::showPCBView() {
 	this->m_tabWidget->setCurrentIndex(2);
 }
 
+void MainWindow::setCurrentView(ViewIdentifierClass::ViewIdentifier viewIdentifier)
+{
+    if (viewIdentifier == ViewIdentifierClass::BreadboardView) showBreadboardView();
+    else if (viewIdentifier == ViewIdentifierClass::SchematicView) showSchematicView();
+    else if (viewIdentifier == ViewIdentifierClass::PCBView) showPCBView();
+}
+
 void MainWindow::showPartsBinIconView() {
 	if (m_binManager) m_binManager->toIconView();
 }

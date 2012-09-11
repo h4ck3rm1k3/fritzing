@@ -52,6 +52,7 @@ $Date$
 #include "utils/ratsnestcolors.h"
 #include "utils/cursormaster.h"
 #include "utils/textutils.h"
+#include "utils/graphicsutils.h"
 #include "infoview/htmlinfoview.h"
 #include "svg/gedaelement2svg.h"
 #include "svg/kicadmodule2svg.h"
@@ -206,6 +207,14 @@ bool FApplication::init() {
 		if ((m_arguments[i].compare("-kicadschematic", Qt::CaseInsensitive) == 0) ||
 			(m_arguments[i].compare("--kicadschematic", Qt::CaseInsensitive) == 0)) {
 			m_serviceType = KicadSchematicService;
+			m_outputFolder = m_arguments[i + 1];
+			toRemove << i << i + 1;
+		}
+
+		if ((m_arguments[i].compare("-svg", Qt::CaseInsensitive) == 0) ||
+			(m_arguments[i].compare("--svg", Qt::CaseInsensitive) == 0)) {
+			m_serviceType = SvgService;
+            DebugDialog::setEnabled(true);
 			m_outputFolder = m_arguments[i + 1];
 			toRemove << i << i + 1;
 		}
@@ -550,6 +559,10 @@ int FApplication::serviceStartup() {
 			runGerberService();
 			return 0;
 
+		case SvgService:
+			runSvgService();
+			return 0;
+
 		case PanelizerService:
 			runPanelizerService();
 			return 0;
@@ -567,7 +580,6 @@ int FApplication::serviceStartup() {
 			return -1;
 	}
 }
-
 
 void FApplication::runGerberService()
 {
@@ -592,6 +604,43 @@ void FApplication::runGerberService()
 		if (mainWindow->loadWhich(filepath, false, false, "")) {
             QFileInfo info(filepath);
             GerberGenerator::exportToGerber(info.completeBaseName(), m_outputFolder, NULL, mainWindow->pcbView(), false);
+		}
+
+		mainWindow->setCloseSilently(true);
+		mainWindow->close();
+	}
+}
+
+void FApplication::runSvgService()
+{
+	createUserDataStoreFolderStructure();
+
+	registerFonts();
+	loadReferenceModel("", false);
+
+	QDir dir(m_outputFolder);
+	QString s = dir.absolutePath();
+	QStringList filters;
+	filters << "*" + FritzingBundleExtension;
+	QStringList filenames = dir.entryList(filters, QDir::Files);
+	foreach (QString filename, filenames) {
+		QString filepath = dir.absoluteFilePath(filename);
+		int loaded = 0;
+		MainWindow * mainWindow = loadWindows(loaded, false);
+		mainWindow->noBackup();
+		m_started = true;
+        
+		FolderUtils::setOpenSaveFolderAux(m_outputFolder);
+		if (mainWindow->loadWhich(filepath, false, false, "")) {
+            QFileInfo info(filepath);
+            QList<ViewIdentifierClass::ViewIdentifier> ids;
+            ids << ViewIdentifierClass::BreadboardView << ViewIdentifierClass::SchematicView << ViewIdentifierClass::PCBView;
+            foreach (ViewIdentifierClass::ViewIdentifier id, ids) {
+                QString fn = QString("%1_%2.svg").arg(info.completeBaseName()).arg(ViewIdentifierClass::viewIdentifierNaturalName(id));
+                QString svgPath = dir.absoluteFilePath(fn);
+                mainWindow->setCurrentView(id);
+                mainWindow->exportSvg(GraphicsUtils::StandardFritzingDPI, false, false, svgPath);
+            }
 		}
 
 		mainWindow->setCloseSilently(true);

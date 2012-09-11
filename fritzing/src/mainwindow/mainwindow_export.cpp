@@ -1044,6 +1044,11 @@ void MainWindow::exportSvg(double res, bool selectedItems, bool flatten) {
 
 	if (fileName.isEmpty()) return;
 
+    exportSvg(res, selectedItems, flatten, fileName);
+}
+
+void MainWindow::exportSvg(double res, bool selectedItems, bool flatten, const QString & fileName) 
+{
 	FileProgressDialog * fileProgressDialog = exportProgress();
 	LayerList viewLayerIDs;
 	foreach (ViewLayer * viewLayer, m_currentGraphicsView->viewLayers()) {
@@ -1067,7 +1072,6 @@ void MainWindow::exportSvg(double res, bool selectedItems, bool flatten) {
 
     TextUtils::writeUtf8(fileName, TextUtils::convertExtendedChars(svg));
 	delete fileProgressDialog;
-
 }
 
 void MainWindow::exportSvgWatermark(QString & svg, double res)
