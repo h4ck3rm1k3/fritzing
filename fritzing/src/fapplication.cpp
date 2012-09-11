@@ -655,18 +655,11 @@ ReferenceModel * FApplication::loadReferenceModel(const QString & databaseName, 
 	return m_referenceModel;
 }
 
-MainWindow * FApplication::loadWindows(int & loaded, bool lockFiles) {
+MainWindow * FApplication::openWindowForService(bool lockFiles) {
 	// our MainWindows use WA_DeleteOnClose so this has to be added to the heap (via new) rather than the stack (for local vars)
 	MainWindow * mainWindow = MainWindow::newMainWindow(m_paletteBinModel, m_referenceModel, "", false, lockFiles);   // this is also slow
 	mainWindow->setReportMissingModules(false);
-
-	loaded = 0;
-	initFilesToLoad();
-	foreach (QString file, m_filesToLoad) {
-		loadOne(mainWindow, file, loaded++);
-	}
-
-	//DebugDialog::debug("after argc");
+    mainWindow->noBackup();
 
 	return mainWindow;
 }
@@ -735,9 +728,7 @@ void FApplication::runGerberServiceAux()
 	QStringList filenames = dir.entryList(filters, QDir::Files);
 	foreach (QString filename, filenames) {
 		QString filepath = dir.absoluteFilePath(filename);
-		int loaded = 0;
-		MainWindow * mainWindow = loadWindows(loaded, false);
-		mainWindow->noBackup();
+		MainWindow * mainWindow = openWindowForService(false);
 		m_started = true;
         
 		FolderUtils::setOpenSaveFolderAux(m_outputFolder);
@@ -773,9 +764,7 @@ void FApplication::runSvgServiceAux()
 	QStringList filenames = dir.entryList(filters, QDir::Files);
 	foreach (QString filename, filenames) {
 		QString filepath = dir.absoluteFilePath(filename);
-		int loaded = 0;
-		MainWindow * mainWindow = loadWindows(loaded, false);
-		mainWindow->noBackup();
+		MainWindow * mainWindow = openWindowForService(false);
 		m_started = true;
         
 		FolderUtils::setOpenSaveFolderAux(m_outputFolder);
@@ -1694,11 +1683,8 @@ void FApplication::runExampleService(QDir & dir) {
 		QString path = fileInfo.absoluteFilePath();
 		DebugDialog::debug("sketch file " + path);
 
-		int loaded = 0;
-		MainWindow * mainWindow = loadWindows(loaded, false);
+		MainWindow * mainWindow = openWindowForService(false);
 		if (mainWindow == NULL) continue;
-
-		mainWindow->noBackup();
 
 		FolderUtils::setOpenSaveFolderAux(dir.absolutePath());
 

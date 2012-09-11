@@ -688,9 +688,7 @@ bool Panelizer::openWindows(QDomElement & boardElement, QHash<QString, QString> 
 
 		QString boardName = boardElement.attribute("name");
 		QString path = fzzFilePaths.value(boardName, "");
-		int loaded = 0;
-		MainWindow * mainWindow = app->loadWindows(loaded, false);
-		mainWindow->noBackup();
+		MainWindow * mainWindow = app->openWindowForService(false);
         mainWindow->setCloseSilently(true);
 
 		FolderUtils::setOpenSaveFolderAux(fzDir.absolutePath());
@@ -1144,9 +1142,7 @@ MainWindow * Panelizer::inscribeBoard(QDomElement & board, QHash<QString, QStrin
 
 	QString path = fzzFilePaths.value(boardName, "");
 
-	int loaded = 0;
-	MainWindow * mainWindow = app->loadWindows(loaded, false);
-	mainWindow->noBackup();
+	MainWindow * mainWindow = app->openWindowForService(false);
 
 	FolderUtils::setOpenSaveFolderAux(fzDir.absolutePath());
 
