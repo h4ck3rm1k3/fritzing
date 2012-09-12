@@ -78,8 +78,8 @@ protected slots:
     void descriptionEntry();
     void typeEntry();
     void nameEntry();
-    void buttonChangeAnchor();
-    void anchorPointEntry();
+    void buttonChangeTerminalPoint();
+    void terminalPointEntry();
     void getSpinAmountSlot(double &);
 
 

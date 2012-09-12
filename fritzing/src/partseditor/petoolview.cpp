@@ -130,7 +130,7 @@ PEToolView::PEToolView(QWidget * parent) : QWidget(parent)
     boundsFrame->setLayout(boundsLayout);
     m_connectorInfoLayout->addWidget(boundsFrame);
 
-    QGroupBox * anchorGroupBox = new QGroupBox("Anchor point");
+    QGroupBox * anchorGroupBox = new QGroupBox("Terminal point");
     QVBoxLayout * anchorGroupLayout = new QVBoxLayout;
 
     QFrame * posRadioFrame = new QFrame;
@@ -143,7 +143,7 @@ PEToolView::PEToolView(QWidget * parent) : QWidget(parent)
     for (int i = 0; i < positionNames.count(); i++) {
         QPushButton * button = new QPushButton(trPositionNames.at(i));
         button->setProperty("how", positionNames.at(i));
-        connect(button, SIGNAL(clicked()), this, SLOT(buttonChangeAnchor()));
+        connect(button, SIGNAL(clicked()), this, SLOT(buttonChangeTerminalPoint()));
         posRadioLayout->addWidget(button);
         m_buttons.append(button);
     }
@@ -163,8 +163,8 @@ PEToolView::PEToolView(QWidget * parent) : QWidget(parent)
     m_terminalPointX->setDecimals(4);
     posNumberLayout->addWidget(m_terminalPointX);
     connect(m_terminalPointX, SIGNAL(getSpinAmount(double &)), this, SLOT(getSpinAmountSlot(double &)), Qt::DirectConnection);
-    connect(m_terminalPointX, SIGNAL(valueChanged(double)), this, SLOT(anchorPointEntry()));
-    connect(m_terminalPointX, SIGNAL(valueChanged(const QString &)), this, SLOT(anchorPointEntry()));
+    connect(m_terminalPointX, SIGNAL(valueChanged(double)), this, SLOT(terminalPointEntry()));
+    connect(m_terminalPointX, SIGNAL(valueChanged(const QString &)), this, SLOT(terminalPointEntry()));
 
     posNumberLayout->addSpacing(TheSpacing);
 
@@ -175,8 +175,8 @@ PEToolView::PEToolView(QWidget * parent) : QWidget(parent)
     m_terminalPointY->setDecimals(4);
     posNumberLayout->addWidget(m_terminalPointY);
     connect(m_terminalPointY, SIGNAL(getSpinAmount(double &)), this, SLOT(getSpinAmountSlot(double &)), Qt::DirectConnection);
-    connect(m_terminalPointY, SIGNAL(valueChanged(double)), this, SLOT(anchorPointEntry()));
-    connect(m_terminalPointY, SIGNAL(valueChanged(double)), this, SLOT(anchorPointEntry()));
+    connect(m_terminalPointY, SIGNAL(valueChanged(double)), this, SLOT(terminalPointEntry()));
+    connect(m_terminalPointY, SIGNAL(valueChanged(double)), this, SLOT(terminalPointEntry()));
 
     posNumberLayout->addSpacerItem(new QSpacerItem(1, 1, QSizePolicy::Expanding));
 
@@ -362,8 +362,12 @@ QDomElement PEToolView::currentConnector() {
 }
 
 void PEToolView::setTerminalPointCoords(QPointF p) {
+    m_terminalPointX->blockSignals(true);
+    m_terminalPointY->blockSignals(true);
     m_terminalPointX->setValue(convertUnits(p.x()));
     m_terminalPointY->setValue(convertUnits(p.y()));
+    m_terminalPointX->blockSignals(false);
+    m_terminalPointY->blockSignals(false);
 }
 
 void PEToolView::setTerminalPointLimits(QSizeF sz) {
@@ -371,12 +375,12 @@ void PEToolView::setTerminalPointLimits(QSizeF sz) {
     m_terminalPointY->setRange(0, sz.height());
 }
 
-void PEToolView::buttonChangeAnchor() {
+void PEToolView::buttonChangeTerminalPoint() {
     QString how = sender()->property("how").toString();
     emit terminalPointChanged(how);
 }
 
-void PEToolView::anchorPointEntry()
+void PEToolView::terminalPointEntry()
 {
     if (sender() == m_terminalPointX) {
         emit terminalPointChanged("x", m_terminalPointX->value());

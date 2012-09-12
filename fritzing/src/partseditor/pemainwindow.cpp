@@ -103,8 +103,7 @@ $Date$
     zoom slider is not correctly synchronized with actual zoom level
 
     terminal points
-        move only with arrow keys (maybe cntl-arrow if arrow is used for connector)
-        give presets: center, N, E, S, W, NE, NW, SE, SW
+        drag it directly
 
     undo/redo as xml file: use index + guid for uniqueness
 
@@ -190,6 +189,8 @@ $Date$
 ////////////////////////////////////////////////////
 
 bool GotZeroConnector = false;
+
+static long FakeGornSiblingNumber = 0;
 
 bool byID(QDomElement & c1, QDomElement & c2)
 {
@@ -760,7 +761,7 @@ void PEMainWindow::initSvgTree(ItemBase * itemBase, QDomDocument & domDocument)
 
     QDomElement root = domDocument.documentElement();
     TextUtils::elevateTransform(root);
-    TextUtils::gornTree(domDocument);   //
+    TextUtils::gornTree(domDocument);   
 
     FSvgRenderer renderer;
     renderer.loadSvg(domDocument.toByteArray(), "", false);
@@ -1232,11 +1233,16 @@ void PEMainWindow::createFileMenu() {
     connect(m_fileMenu, SIGNAL(aboutToShow()), this, SLOT(updateFileMenu()));
 }
 
-bool PEMainWindow::getConnectorIDs(const QDomElement & element, SketchWidget * sketchWidget, QString & id, QString & terminalID) {
+QDomElement PEMainWindow::getConnectorPElement(const QDomElement & element, SketchWidget * sketchWidget)
+{
     QString viewName = ViewIdentifierClass::viewIdentifierXmlName(sketchWidget->viewIdentifier());
     QDomElement views = element.firstChildElement("views");
     QDomElement view = views.firstChildElement(viewName);
-    QDomElement p = view.firstChildElement("p");
+    return view.firstChildElement("p");
+}
+
+bool PEMainWindow::getConnectorIDs(const QDomElement & element, SketchWidget * sketchWidget, QString & id, QString & terminalID) {
+    QDomElement p = getConnectorPElement(element, sketchWidget);
     if (p.isNull()) return false;
 
     id = p.attribute("svgId");
@@ -1250,7 +1256,7 @@ void PEMainWindow::relocateConnectorSvg(SketchWidget * sketchWidget, const QStri
                 const QString & oldGorn, const QString & oldGornTerminal, const QString & newGorn, const QString & newGornTerminal, 
                 int changeDirection)
 {
-    QDomDocument * doc = m_docs.value(m_currentGraphicsView->viewIdentifier());
+    QDomDocument * doc = m_docs.value(sketchWidget->viewIdentifier());
     QDomElement root = doc->documentElement();
 
     QDomElement oldGornElement = TextUtils::findElementWithAttribute(root, "gorn", oldGorn);
@@ -1384,9 +1390,7 @@ void PEMainWindow::terminalPointChanged(const QString & how) {
     else if (how == "W") {
         p.setX(0);
     }
-    pegi->setTerminalPoint(p);
-    pegi->update();
-    m_peToolView->setTerminalPointCoords(p);
+    terminalPointChangedAux(pegi, p);
 
     // TODO: UndoCommand which changes fzp xml and svg xml
 }
@@ -1404,10 +1408,23 @@ void PEMainWindow::terminalPointChanged(const QString & coord, double value)
         p.setY(qMax(0.0, qMin(value, pegi->rect().width())));
     }
     
-    pegi->setTerminalPoint(p);
-    pegi->update();
-
+    terminalPointChangedAux(pegi, p);
     // TODO: UndoCommand which changes fzp xml and svg xml
+}
+
+void PEMainWindow::terminalPointChangedAux(PEGraphicsItem * pegi, QPointF p)
+{
+    if (pegi->pendingTerminalPoint() == p) {
+        return;
+    }
+
+    pegi->setPendingTerminalPoint(p);
+
+    QDomElement currentConnectorElement = m_peToolView->currentConnector();
+
+    MoveTerminalPointCommand * mtpc = new MoveTerminalPointCommand(this, this->m_currentGraphicsView, currentConnectorElement.attribute("id"), pegi->rect().size(), pegi->terminalPoint(), p, NULL);
+    mtpc->setText(tr("Move terminal point"));
+    m_undoStack->waitPush(mtpc, SketchWidget::PropChangeDelay);
 }
 
 void PEMainWindow::getSpinAmount(double & amount) {
@@ -1423,3 +1440,98 @@ void PEMainWindow::getSpinAmount(double & amount) {
     }
 }
 
+void PEMainWindow::moveTerminalPoint(SketchWidget * sketchWidget, const QString & connectorID, QSizeF size, QPointF p, int changeDirection)
+{
+    // TODO: assumes these IDs are unique--need to check if they are not 
+
+    QPointF center(size.width() / 2, size.height() / 2);
+    bool centered = qAbs(center.x() - p.x()) < .05 && qAbs(center.y() - p.y()) < .05;
+
+    QDomElement fzpRoot = m_fzpDocument.documentElement();
+    QDomElement connectorElement = TextUtils::findElementWithAttribute(fzpRoot, "id", connectorID);
+    if (connectorElement.isNull()) {
+        DebugDialog::debug(QString("missing connector %1").arg(connectorID));
+        return;
+    }
+
+    QDomElement pElement = getConnectorPElement(connectorElement, sketchWidget);
+    QString svgID = pElement.attribute("svgId");
+    if (svgID.isEmpty()) {
+        DebugDialog::debug(QString("Can't find svgId for connector %1").arg(connectorID));
+        return;
+    }
+
+    if (centered) {
+        pElement.removeAttribute("terminalId");
+        // no need to change SVG in this case
+    }
+    else {
+        QDomDocument * svgDoc = m_docs.value(sketchWidget->viewIdentifier());
+        QDomElement svgRoot = svgDoc->documentElement();
+        QDomElement svgConnectorElement = TextUtils::findElementWithAttribute(svgRoot, "id", svgID);
+        if (svgConnectorElement.isNull()) {
+            DebugDialog::debug(QString("Unable to find svg connector element %1").arg(svgID));
+            return;
+        }
+
+        QString terminalID = pElement.attribute("terminalId");
+        if (terminalID.isEmpty()) {
+            terminalID = svgID;
+            if (terminalID.endsWith("pin") || terminalID.endsWith("pad")) {
+                terminalID.chop(3);
+            }
+            terminalID += "terminal";
+            pElement.setAttribute("terminalId", terminalID);
+        }
+
+        FSvgRenderer renderer;
+        renderer.loadSvg(svgDoc->toByteArray(), "", false);
+        QRectF bounds = renderer.boundsOnElement(svgID);
+        double cx = p.x () * bounds.width() / size.width();
+        double cy = p.y() * bounds.height() / size.height();
+        double dx = bounds.width() / 1000;
+        double dy = bounds.height() / 1000;
+
+        QDomElement terminalElement = TextUtils::findElementWithAttribute(svgRoot, "id", terminalID);
+        if (terminalElement.isNull()) {
+            terminalElement = svgDoc->createElement("rect");
+        }
+        else {
+            // TODO: assumes terminal element is not currently visible
+            terminalElement.setTagName("rect");
+        }
+        terminalElement.setAttribute("stroke", "none");
+        terminalElement.setAttribute("fill", "none");
+        terminalElement.setAttribute("stroke-width", "0");
+        terminalElement.setAttribute("x", bounds.left() + cx - dx);
+        terminalElement.setAttribute("y", bounds.top() + cy - dy);
+        terminalElement.setAttribute("width", dx * 2);
+        terminalElement.setAttribute("height", dy * 2);
+        if (terminalElement.attribute("gorn").isEmpty()) {
+            QString gorn = svgConnectorElement.attribute("gorn");
+            int ix = gorn.lastIndexOf(".");
+            if (ix > 0) {
+                gorn.truncate(ix);
+            }
+            gorn = QString("%1.gen%2").arg(gorn).arg(FakeGornSiblingNumber++);
+            terminalElement.setAttribute("gorn", gorn);
+        }
+
+        svgConnectorElement.parentNode().insertAfter(terminalElement, svgConnectorElement);
+
+        updateChangeCount(sketchWidget, changeDirection);
+    }
+
+    foreach (QGraphicsItem * item, sketchWidget->scene()->items()) {
+        PEGraphicsItem * pegi = dynamic_cast<PEGraphicsItem *>(item);
+        if  (pegi== NULL) continue;
+
+        QDomElement pegiElement = pegi->element();
+        if (pegiElement.attribute("id").compare(svgID) != 0) continue;
+
+        pegi->setTerminalPoint(p);
+        pegi->update();
+        m_peToolView->setTerminalPointCoords(p);
+        break;
+    }
+}

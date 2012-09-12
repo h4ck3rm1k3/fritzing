@@ -127,6 +127,8 @@ void PEConnectorsView::connectorCountEntry() {
     if (!m_mutex.tryLock(1)) return;            // need the mutex because multiple editingFinished() signals can be triggered more-or-less at once
 
     m_mutex.unlock();
+    // TODO: this unlock is a little unsafe: another editingFinished command could come through right now
+    // do we just need to block signals?
     QMutexLocker locker(&m_mutex);
 
     QLineEdit * lineEdit = qobject_cast<QLineEdit *>(sender());

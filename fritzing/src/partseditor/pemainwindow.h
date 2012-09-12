@@ -60,9 +60,23 @@ public:
     void changeConnectorMetadata(const ConnectorMetadata &, bool updateDisplay);
     void changeSvg(SketchWidget *, const QString & filename, int changeDirection);
     void relocateConnectorSvg(SketchWidget *, const QString & id, const QString & terminalID, const QString & oldGorn, const QString & oldGornTerminal, const QString & newGorn, const QString & newGornTerminal, int changeDirection);
+    void moveTerminalPoint(SketchWidget *, const QString & id, QSizeF, QPointF, int changeDirection);
 
 signals:
     void addToMyPartsSignal(ModelPart *);
+
+public slots:
+    void metadataChanged(const QString & name, const QString & value);
+    void propertiesChanged(const QHash<QString, QString> &);
+    void tagsChanged(const QStringList &);
+    void connectorMetadataChanged(const struct ConnectorMetadata *);
+    void highlightSlot(class PEGraphicsItem *);
+    void pegiMouseReleased(class PEGraphicsItem *);
+    void switchedConnector(const QDomElement &);
+    void terminalPointChanged(const QString & how);
+    void terminalPointChanged(const QString & coord, double value);
+    void getSpinAmount(double & amount);
+    void lockChanged(bool);
 
 protected:
 	void closeEvent(QCloseEvent * event);
@@ -97,21 +111,10 @@ protected:
     void reload();
     void createFileMenu();
     bool getConnectorIDs(const QDomElement & element, SketchWidget * sketchWidget, QString & id, QString & terminalID);
+    QDomElement getConnectorPElement(const QDomElement & element, SketchWidget * sketchWidget);
     void updateChangeCount(SketchWidget * sketchWidget, int changeDirection);
     class PEGraphicsItem * findTerminalItem();
-
-public slots:
-    void metadataChanged(const QString & name, const QString & value);
-    void propertiesChanged(const QHash<QString, QString> &);
-    void tagsChanged(const QStringList &);
-    void connectorMetadataChanged(const struct ConnectorMetadata *);
-    void highlightSlot(class PEGraphicsItem *);
-    void pegiMouseReleased(class PEGraphicsItem *);
-    void switchedConnector(const QDomElement &);
-    void terminalPointChanged(const QString & how);
-    void terminalPointChanged(const QString & coord, double value);
-    void getSpinAmount(double & amount);
-    void lockChanged(bool);
+    void terminalPointChangedAux(PEGraphicsItem * pegi, QPointF p);
 
 protected slots:
     void initZoom();
@@ -146,6 +149,7 @@ protected:
     QString m_userPartsFolderPath;
     QString m_userPartsFolderSvgPath;
     bool m_isCore;
+    QMutex m_mutex;
 };
 
 #endif /* PEMAINWINDOW_H_ */

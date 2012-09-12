@@ -245,3 +245,38 @@ QString RelocateConnectorSvgCommand::getParamString() const {
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+MoveTerminalPointCommand::MoveTerminalPointCommand(PEMainWindow * peMainWindow, SketchWidget * sketchWidget, const QString  & id, 
+                QSizeF size, QPointF oldLocation, QPointF newLocation, QUndoCommand *parent)
+    : PEBaseCommand(peMainWindow, parent)
+{
+ 	m_sketchWidget = sketchWidget;
+	m_id = id;
+    m_size = size;
+	m_oldLocation = oldLocation;
+	m_newLocation = newLocation;
+}
+
+void MoveTerminalPointCommand::undo()
+{
+    m_peMainWindow->moveTerminalPoint(m_sketchWidget, m_id, m_size, m_oldLocation, -1);
+}
+
+void MoveTerminalPointCommand::redo()
+{
+    m_peMainWindow->moveTerminalPoint(m_sketchWidget, m_id, m_size, m_newLocation, 1);
+}
+
+QString MoveTerminalPointCommand::getParamString() const {
+	return "RelocateConnectorSvgCommand " + 
+        QString(" id:%1, old:%2,%3, new:%4,%5")
+            .arg(m_sketchWidget->viewIdentifier())
+            .arg(m_id)
+            .arg(m_oldLocation.x())
+            .arg(m_oldLocation.y())
+            .arg(m_newLocation.x())
+            .arg(m_newLocation.y())
+        ;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////

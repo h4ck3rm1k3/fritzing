@@ -192,11 +192,19 @@ bool PEGraphicsItem::showingTerminalPoint() {
 }
 
 void PEGraphicsItem::setTerminalPoint(QPointF p) {
-    m_terminalPoint = p;
+    m_pendingTerminalPoint = m_terminalPoint = p;
 }
 
 QPointF PEGraphicsItem::terminalPoint() {
     return m_terminalPoint;
+}
+
+void PEGraphicsItem::setPendingTerminalPoint(QPointF p) {
+    m_pendingTerminalPoint = p;
+}
+
+QPointF PEGraphicsItem::pendingTerminalPoint() {
+    return m_pendingTerminalPoint;
 }
 
 void PEGraphicsItem::mousePressEvent(QGraphicsSceneMouseEvent *) {

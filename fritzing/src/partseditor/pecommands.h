@@ -155,5 +155,24 @@ protected:
 
 /////////////////////////////////////////////
 
+class MoveTerminalPointCommand : public PEBaseCommand
+{
+public:
+	MoveTerminalPointCommand(class PEMainWindow *, SketchWidget *, const QString  & id, QSizeF size, QPointF oldLocation, QPointF newLocation, QUndoCommand *parent);
+	void undo();
+	void redo();
+
+protected:
+	QString getParamString() const;
+
+protected:
+    QString m_id;
+    QSizeF m_size;
+    QPointF m_oldLocation;
+    QPointF m_newLocation;
+};
+
+/////////////////////////////////////////////
+
 
 #endif // PECOMMANDS_H

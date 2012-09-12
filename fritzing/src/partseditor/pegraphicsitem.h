@@ -54,6 +54,8 @@ public:
     bool showingTerminalPoint();
     void setTerminalPoint(QPointF);
     QPointF terminalPoint();
+    void setPendingTerminalPoint(QPointF);
+    QPointF pendingTerminalPoint();
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
 signals:
@@ -66,6 +68,7 @@ protected:
     QPointF m_offset;
     bool m_showTerminalPoint;
     QPointF m_terminalPoint;
+    QPointF m_pendingTerminalPoint;
 };
 
 #endif /* PEGRAPHICSITEM_H_ */
