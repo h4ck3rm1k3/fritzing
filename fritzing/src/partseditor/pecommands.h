@@ -28,7 +28,7 @@ $Date$
 #define PECOMMANDS_H
 
 #include "../commands.h"
-#include "connectorsview.h"
+#include "peconnectorsview.h"
 
 
 /////////////////////////////////////////////

@@ -147,7 +147,7 @@ void PEGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *op
 {
     QGraphicsRectItem::paint(painter, option, widget);
 
-    if (m_showTerminalPoint && m_highlighted) {
+    if (m_showTerminalPoint) {
         QRectF r = rect();
         QLineF l1(0, m_terminalPoint.y(), r.width(), m_terminalPoint.y());
         QLineF l2(m_terminalPoint.x(), 0, m_terminalPoint.x(), r.height());

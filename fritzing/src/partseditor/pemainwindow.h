@@ -32,7 +32,7 @@ $Date$
 #include "../mainwindow/mainwindow.h"
 #include "../model/modelpartshared.h"
 #include "../sketch/sketchwidget.h"
-#include "connectorsview.h"
+#include "peconnectorsview.h"
 
 class IconSketchWidget : public SketchWidget
 {
@@ -98,6 +98,7 @@ protected:
     void createFileMenu();
     bool getConnectorIDs(const QDomElement & element, SketchWidget * sketchWidget, QString & id, QString & terminalID);
     void updateChangeCount(SketchWidget * sketchWidget, int changeDirection);
+    class PEGraphicsItem * findTerminalItem();
 
 public slots:
     void metadataChanged(const QString & name, const QString & value);
@@ -107,6 +108,9 @@ public slots:
     void highlightSlot(class PEGraphicsItem *);
     void pegiMouseReleased(class PEGraphicsItem *);
     void switchedConnector(const QDomElement &);
+    void terminalPointChanged(const QString & how);
+    void terminalPointChanged(const QString & coord, double value);
+    void getSpinAmount(double & amount);
     void lockChanged(bool);
 
 protected slots:
@@ -131,8 +135,8 @@ protected:
 
 	QPointer<SketchAreaWidget> m_iconWidget;
 	QPointer<class IconSketchWidget> m_iconGraphicsView;
-    class MetadataView * m_metadataView;
-    class ConnectorsView * m_connectorsView;
+    class PEMetadataView * m_metadataView;
+    class PEConnectorsView * m_connectorsView;
     class PEToolView * m_peToolView;
     QString m_guid;
     int m_fileIndex;

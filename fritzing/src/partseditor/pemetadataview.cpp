@@ -31,7 +31,7 @@ $Date$
 #include <QLineEdit>
 #include <QTextEdit>
 
-#include "metadataview.h"
+#include "pemetadataview.h"
 #include "hashpopulatewidget.h"
 
 
@@ -65,51 +65,51 @@ void FocusOutTextEdit::focusOutEvent(QFocusEvent * e) {
 
 //////////////////////////////////////
 
-MetadataView::MetadataView(QWidget * parent) : QScrollArea(parent) 
+PEMetadataView::PEMetadataView(QWidget * parent) : QScrollArea(parent) 
 {
     m_mainFrame = NULL;
 	this->setWidgetResizable(true);
 	this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 }
 
-MetadataView::~MetadataView() {
+PEMetadataView::~PEMetadataView() {
 
 }
 
-void MetadataView::titleEntry() {
+void PEMetadataView::titleEntry() {
     emit metadataChanged("title", m_titleEdit->text());
 }
 
-void MetadataView::authorEntry() {
+void PEMetadataView::authorEntry() {
     emit metadataChanged("author", m_authorEdit->text());
 }
 
-void MetadataView::descriptionEntry() {
+void PEMetadataView::descriptionEntry() {
     emit metadataChanged("description", m_descriptionEdit->toHtml());
 }
 
-void MetadataView::labelEntry() {
+void PEMetadataView::labelEntry() {
     emit metadataChanged("label", m_labelEdit->text());
 }
 
-void MetadataView::familyEntry() {
+void PEMetadataView::familyEntry() {
     emit metadataChanged("family", m_familyEdit->text());
 }
 
-void MetadataView::dateEntry() {
+void PEMetadataView::dateEntry() {
 }
 
-void MetadataView::propertiesEntry() {
+void PEMetadataView::propertiesEntry() {
     emit propertiesChanged(m_propertiesEdit->hash());
 }
 
-void MetadataView::tagsEntry() {
+void PEMetadataView::tagsEntry() {
     static QStringList keys;
     keys = m_tagsEdit->hash().keys();
     emit tagsChanged(keys);
 }
 
-void MetadataView::initMetadata(const QDomDocument & doc) 
+void PEMetadataView::initMetadata(const QDomDocument & doc) 
 {
     if (m_mainFrame) {
         this->setWidget(NULL);

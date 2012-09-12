@@ -43,11 +43,11 @@ TODO:
 #include <QMessageBox>
 #include <QMutexLocker>
 
-#include "connectorsview.h"
+#include "peconnectorsview.h"
 
 //////////////////////////////////////
 
-ConnectorsView::ConnectorsView(QWidget * parent) : QScrollArea(parent) 
+PEConnectorsView::PEConnectorsView(QWidget * parent) : QScrollArea(parent) 
 {
     m_mainFrame = NULL;
 	this->setWidgetResizable(true);
@@ -61,11 +61,11 @@ ConnectorsView::ConnectorsView(QWidget * parent) : QScrollArea(parent)
     }
 }
 
-ConnectorsView::~ConnectorsView() {
+PEConnectorsView::~PEConnectorsView() {
 
 }
 
-void ConnectorsView::initConnectors(QList<QDomElement> & connectorList, bool gotZeroConnector) 
+void PEConnectorsView::initConnectors(QList<QDomElement> & connectorList, bool gotZeroConnector) 
 {
     if (m_mainFrame) {
         this->setWidget(NULL);
@@ -111,19 +111,19 @@ void ConnectorsView::initConnectors(QList<QDomElement> & connectorList, bool got
     this->setWidget(m_mainFrame);
 }
 
-void ConnectorsView::nameEntry() {
+void PEConnectorsView::nameEntry() {
     changeConnector();
 }
 
-void ConnectorsView::typeEntry() {
+void PEConnectorsView::typeEntry() {
     changeConnector();
 }
 
-void ConnectorsView::descriptionEntry() {
+void PEConnectorsView::descriptionEntry() {
     changeConnector();
 }
 
-void ConnectorsView::connectorCountEntry() {
+void PEConnectorsView::connectorCountEntry() {
     if (!m_mutex.tryLock(1)) return;            // need the mutex because multiple editingFinished() signals can be triggered more-or-less at once
 
     m_mutex.unlock();
@@ -165,7 +165,7 @@ void ConnectorsView::connectorCountEntry() {
 
 }
 
-QWidget * ConnectorsView::makeConnectorForm(const QDomElement & connector, bool gotZeroConnector, int index, QObject * slotHolder, bool alternating) {
+QWidget * PEConnectorsView::makeConnectorForm(const QDomElement & connector, bool gotZeroConnector, int index, QObject * slotHolder, bool alternating) {
     QFrame * frame = new QFrame();
     if (alternating) frame->setObjectName(index % 2 == 0 ? "NewPartsEditorConnector0Frame" : "NewPartsEditorConnector1Frame");
     QVBoxLayout * mainLayout = new QVBoxLayout();
@@ -269,7 +269,7 @@ QWidget * ConnectorsView::makeConnectorForm(const QDomElement & connector, bool 
     return frame;
 }
 
-void ConnectorsView::changeConnector() {
+void PEConnectorsView::changeConnector() {
     bool ok;
     int senderIndex = sender()->property("index").toInt(&ok);
     if (!ok) return;

@@ -26,7 +26,7 @@ $Date$
 
 #include "petoolview.h"
 #include "pegraphicsitem.h"
-#include "connectorsview.h"
+#include "peconnectorsview.h"
 #include "../utils/textutils.h"
 #include "../utils/graphicsutils.h"
 
@@ -35,9 +35,22 @@ $Date$
 #include <QSplitter>
 #include <QPushButton>
 #include <QLineEdit>
-#include <QDoubleValidator>
 
 static const int TheSpacing = 10;
+
+//////////////////////////////////////
+
+PEDoubleSpinBox::PEDoubleSpinBox(QWidget * parent) : QDoubleSpinBox(parent)
+{
+}
+
+void PEDoubleSpinBox::stepBy(int steps)
+{
+    double amount;
+    emit getSpinAmount(amount);
+    setSingleStep(amount);
+    QDoubleSpinBox::stepBy(steps);
+}
 
 //////////////////////////////////////
 
@@ -128,12 +141,11 @@ PEToolView::PEToolView(QWidget * parent) : QWidget(parent)
     QList<QString> trPositionNames;
     trPositionNames << tr("Center") << tr("N") << tr("E") << tr("S") << tr("W");
     for (int i = 0; i < positionNames.count(); i++) {
-        QRadioButton * radioButton = new QRadioButton(trPositionNames.at(i));
-        m_radios.insert(positionNames.at(i), radioButton);
-        radioButton->setProperty("name", positionNames.at(i));
-        connect(radioButton, SIGNAL(clicked()), this, SLOT(changeAnchor()));
-        posRadioLayout->addWidget(radioButton);
-        posRadioLayout->addSpacing(TheSpacing);
+        QPushButton * button = new QPushButton(trPositionNames.at(i));
+        button->setProperty("how", positionNames.at(i));
+        connect(button, SIGNAL(clicked()), this, SLOT(buttonChangeAnchor()));
+        posRadioLayout->addWidget(button);
+        m_buttons.append(button);
     }
 
     posRadioLayout->addSpacerItem(new QSpacerItem(1, 1, QSizePolicy::Expanding));
@@ -147,22 +159,24 @@ PEToolView::PEToolView(QWidget * parent) : QWidget(parent)
     label = new QLabel("x");
     posNumberLayout->addWidget(label);
 
-    QLineEdit * numberEdit = new QLineEdit();
-    QValidator *validator = new QDoubleValidator(-9999, 9999, 3, this);
-    numberEdit->setValidator(validator);
-    posNumberLayout->addWidget(numberEdit);
-    connect(numberEdit, SIGNAL(editingFinished()), this, SLOT(anchorPointEntry()));
+    m_terminalPointX = new PEDoubleSpinBox;
+    m_terminalPointX->setDecimals(4);
+    posNumberLayout->addWidget(m_terminalPointX);
+    connect(m_terminalPointX, SIGNAL(getSpinAmount(double &)), this, SLOT(getSpinAmountSlot(double &)), Qt::DirectConnection);
+    connect(m_terminalPointX, SIGNAL(valueChanged(double)), this, SLOT(anchorPointEntry()));
+    connect(m_terminalPointX, SIGNAL(valueChanged(const QString &)), this, SLOT(anchorPointEntry()));
 
     posNumberLayout->addSpacing(TheSpacing);
 
     label = new QLabel("y");
     posNumberLayout->addWidget(label);
 
-    numberEdit = new QLineEdit();
-    validator = new QDoubleValidator(-9999, 9999, 3, this);
-    numberEdit->setValidator(validator);
-    posNumberLayout->addWidget(numberEdit);
-    connect(numberEdit, SIGNAL(editingFinished()), this, SLOT(anchorPointEntry()));
+    m_terminalPointY = new PEDoubleSpinBox;
+    m_terminalPointY->setDecimals(4);
+    posNumberLayout->addWidget(m_terminalPointY);
+    connect(m_terminalPointY, SIGNAL(getSpinAmount(double &)), this, SLOT(getSpinAmountSlot(double &)), Qt::DirectConnection);
+    connect(m_terminalPointY, SIGNAL(valueChanged(double)), this, SLOT(anchorPointEntry()));
+    connect(m_terminalPointY, SIGNAL(valueChanged(double)), this, SLOT(anchorPointEntry()));
 
     posNumberLayout->addSpacerItem(new QSpacerItem(1, 1, QSizePolicy::Expanding));
 
@@ -182,7 +196,7 @@ PEToolView::PEToolView(QWidget * parent) : QWidget(parent)
         connect(radioButton, SIGNAL(clicked()), this, SLOT(changeUnits()));
         radioLayout->addWidget(radioButton);
         radioLayout->addSpacing(TheSpacing);
-        m_radios.insert(radioButton->text(), radioButton);
+        radioButton->setChecked(radioButton->text().compare(m_units) == 0);
     }
 
     radioLayout->addSpacerItem(new QSpacerItem(1, 1, QSizePolicy::Expanding));
@@ -201,6 +215,8 @@ PEToolView::PEToolView(QWidget * parent) : QWidget(parent)
     this->setLayout(mainLayout);
 
     m_connectorListWidget->resize(m_connectorListWidget->width(), 0);
+
+    enableChanges(false);
 }
 
 PEToolView::~PEToolView() 
@@ -215,6 +231,7 @@ void PEToolView::highlightElement(PEGraphicsItem * pegi) {
         m_y->setText("");
         m_width->setText("");
         m_height->setText("");
+        enableChanges(false);
         return;
     }
 
@@ -225,11 +242,21 @@ void PEToolView::highlightElement(PEGraphicsItem * pegi) {
     string.replace("\n", " ");
     m_svgElement->setText(string);
     QPointF p = pegi->offset();
-    m_x->setText(convertUnits(p.x()));
-    m_y->setText(convertUnits(p.y()));
+    m_x->setText(convertUnitsStr(p.x()));
+    m_y->setText(convertUnitsStr(p.y()));
     QRectF r = pegi->rect();
-    m_width->setText(convertUnits(r.width()));
-    m_height->setText(convertUnits(r.height()));
+    m_width->setText(convertUnitsStr(r.width()));
+    m_height->setText(convertUnitsStr(r.height()));
+
+    enableChanges(!m_elementLock->isChecked());
+}
+
+void PEToolView::enableChanges(bool enabled)
+{
+    foreach (QPushButton * button, m_buttons) button->setEnabled(enabled);
+    m_terminalPointX->setEnabled(enabled);
+    m_terminalPointY->setEnabled(enabled);
+
 }
 
 void PEToolView::changeUnits() {
@@ -238,18 +265,24 @@ void PEToolView::changeUnits() {
 
     m_units = radio->text();
     highlightElement(m_pegi);
+
 }
 
-QString PEToolView::convertUnits(double val)
+QString PEToolView::convertUnitsStr(double val)
+{
+    return QString::number(convertUnits(val));
+}
+
+double PEToolView::convertUnits(double val)
 {
     if (m_units.compare("in") == 0) {
-        return QString::number(val / GraphicsUtils::SVGDPI);
+        return val / GraphicsUtils::SVGDPI;
     }
     else if (m_units.compare("mm") == 0) {
-        return QString::number(val * 25.4 / GraphicsUtils::SVGDPI);
+        return val * 25.4 / GraphicsUtils::SVGDPI;
     }
 
-    return QString::number(val);
+    return val;
 }
 
 void PEToolView::initConnectors(QList<QDomElement> & connectorList, bool gotZeroConnector) {
@@ -292,7 +325,7 @@ void PEToolView::switchConnector(QListWidgetItem * current, QListWidgetItem * pr
         }
     }
 
-    m_connectorInfoWidget = ConnectorsView::makeConnectorForm(element, m_gotZeroConnector, index, this, false);
+    m_connectorInfoWidget = PEConnectorsView::makeConnectorForm(element, m_gotZeroConnector, index, this, false);
     m_connectorInfoLayout->insertWidget(pos, m_connectorInfoWidget);
     m_connectorInfoGroupBox->setTitle(tr("Connector %1").arg(element.attribute("name")));
 
@@ -300,11 +333,15 @@ void PEToolView::switchConnector(QListWidgetItem * current, QListWidgetItem * pr
 }
 
 void PEToolView::setLock(bool lock) {
-    if (m_elementLock) m_elementLock->setChecked(lock);
+    if (m_elementLock) {
+        m_elementLock->setChecked(lock);
+        enableChanges(!lock);
+    }
 }
 
 void PEToolView::lockChangedSlot(bool state)
 {
+    enableChanges(!state);
     emit lockChanged(state);
 }
 
@@ -322,4 +359,33 @@ QDomElement PEToolView::currentConnector() {
     QListWidgetItem * item = m_connectorListWidget->currentItem();
     int index = item->data(Qt::UserRole).toInt();
     return m_connectorList.at(index);
+}
+
+void PEToolView::setTerminalPointCoords(QPointF p) {
+    m_terminalPointX->setValue(convertUnits(p.x()));
+    m_terminalPointY->setValue(convertUnits(p.y()));
+}
+
+void PEToolView::setTerminalPointLimits(QSizeF sz) {
+    m_terminalPointX->setRange(0, sz.width());
+    m_terminalPointY->setRange(0, sz.height());
+}
+
+void PEToolView::buttonChangeAnchor() {
+    QString how = sender()->property("how").toString();
+    emit terminalPointChanged(how);
+}
+
+void PEToolView::anchorPointEntry()
+{
+    if (sender() == m_terminalPointX) {
+        emit terminalPointChanged("x", m_terminalPointX->value());
+    }
+    else if (sender() == m_terminalPointY) {
+       emit terminalPointChanged("y", m_terminalPointY->value());
+    }
+}
+
+void PEToolView::getSpinAmountSlot(double & d) {
+    emit getSpinAmount(d);
 }

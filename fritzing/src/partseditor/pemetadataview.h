@@ -26,8 +26,8 @@ $Date$
 
 
 
-#ifndef CONNECTORSVIEW_H
-#define CONNECTORSVIEW_H
+#ifndef METADATAVIEW_H
+#define METADATAVIEW_H
 
 #include <QFrame>
 #include <QTimer>
@@ -38,50 +38,63 @@ $Date$
 #include <QVBoxLayout>
 #include <QComboBox>
 #include <QCheckBox>
-#include <QMutex>
 
 #include "../items/itembase.h"
 #include "../items/wire.h"
 #include "../connectors/connectoritem.h"
-#include "../connectors/connector.h"
 #include "../referencemodel/referencemodel.h"
 
-struct ConnectorMetadata {
-    Connector::ConnectorType connectorType;
-    QString connectorName;
-    QString connectorDescription;
-    QString connectorID;
-};
 
-class ConnectorsView : public QScrollArea
+class PEMetadataView : public QScrollArea
 {
 Q_OBJECT
 public:
-	ConnectorsView(QWidget * parent = 0);
-	~ConnectorsView();
+	PEMetadataView(QWidget * parent = 0);
+	~PEMetadataView();
 
-    void initConnectors(QList<QDomElement> & connectorList, bool gotZeroConnector);
-
-public:
-    static QWidget * makeConnectorForm(const QDomElement & connector, bool gotZeroConnector, int index, QObject * slotHolder, bool alternating);
+    void initMetadata(const QDomDocument &);
 
 signals:
-    void connectorMetadataChanged(const ConnectorMetadata *);
+    void metadataChanged(const QString & name, const QString & value);
+    void propertiesChanged(const QHash<QString, QString> &);
+    void tagsChanged(const QStringList &);
 
 protected slots:
-    void nameEntry();
+    void titleEntry();
+    void authorEntry();
     void descriptionEntry();
-    void typeEntry();
-    void connectorCountEntry();
+    void labelEntry();
+    void familyEntry();
+    void dateEntry();
+    void propertiesEntry();
+    void tagsEntry();
 
 protected:
-    void changeConnector();
-
-protected:
+    QPointer<QLineEdit> m_titleEdit;
+    QPointer<QLineEdit> m_dateEdit;
+    QPointer<QLineEdit> m_authorEdit;
+    QPointer<QLineEdit> m_familyEdit;
+    QPointer<QLineEdit> m_labelEdit;
+    QPointer<QTextEdit> m_descriptionEdit;
+    QPointer<class HashPopulateWidget> m_propertiesEdit;
+    QPointer<class HashPopulateWidget> m_tagsEdit;
     QPointer<QFrame> m_mainFrame;
-    int m_connectorCount;
-    QMutex m_mutex;
-
 };
+
+
+class FocusOutTextEdit :public QTextEdit
+{
+    Q_OBJECT
+public:
+    FocusOutTextEdit(QWidget * parent = 0);
+    ~FocusOutTextEdit();
+
+signals:
+    void focusOut();
+
+protected:
+	void focusOutEvent(QFocusEvent *);
+};
+
 
 #endif

@@ -160,8 +160,8 @@ $Date$
 ***************************************************/
 
 #include "pemainwindow.h"
-#include "metadataview.h"
-#include "connectorsview.h"
+#include "pemetadataview.h"
+#include "peconnectorsview.h"
 #include "pecommands.h"
 #include "petoolview.h"
 #include "pegraphicsitem.h"
@@ -183,7 +183,7 @@ $Date$
 #include "../svg/kicadmodule2svg.h"
 #include "../svg/kicadschematic2svg.h"
 
-#include <QCoreApplication>
+#include <QApplication>
 #include <QSvgGenerator>
 #include <QMenuBar>
 
@@ -275,14 +275,14 @@ void PEMainWindow::initSketchWidgets()
 	m_tabWidget->addWidget(m_iconWidget);
     initSketchWidget(m_iconGraphicsView);
 
-    m_metadataView = new MetadataView(this);
+    m_metadataView = new PEMetadataView(this);
 	SketchAreaWidget * sketchAreaWidget = new SketchAreaWidget(m_metadataView, this);
 	m_tabWidget->addWidget(sketchAreaWidget);
     connect(m_metadataView, SIGNAL(metadataChanged(const QString &, const QString &)), this, SLOT(metadataChanged(const QString &, const QString &)));
     connect(m_metadataView, SIGNAL(tagsChanged(const QStringList &)), this, SLOT(tagsChanged(const QStringList &)));
     connect(m_metadataView, SIGNAL(propertiesChanged(const QHash<QString, QString> &)), this, SLOT(propertiesChanged(const QHash<QString, QString> &)));
 
-    m_connectorsView = new ConnectorsView(this);
+    m_connectorsView = new PEConnectorsView(this);
 	sketchAreaWidget = new SketchAreaWidget(m_connectorsView, this);
 	m_tabWidget->addWidget(sketchAreaWidget);
     connect(m_connectorsView, SIGNAL(connectorMetadataChanged(const ConnectorMetadata *)), this, SLOT(connectorMetadataChanged(const ConnectorMetadata *)), Qt::DirectConnection);
@@ -307,6 +307,9 @@ void PEMainWindow::moreInitDock()
     static int DefaultHeight = 100;
 
     m_peToolView = new PEToolView();
+    connect(m_peToolView, SIGNAL(getSpinAmount(double &)), this, SLOT(getSpinAmount(double &)), Qt::DirectConnection);
+    connect(m_peToolView, SIGNAL(terminalPointChanged(const QString &)), this, SLOT(terminalPointChanged(const QString &)));
+    connect(m_peToolView, SIGNAL(terminalPointChanged(const QString &, double)), this, SLOT(terminalPointChanged(const QString &, double)));
     connect(m_peToolView, SIGNAL(switchedConnector(const QDomElement &)), this, SLOT(switchedConnector(const QDomElement &)));
     connect(m_peToolView, SIGNAL(lockChanged(bool)), this, SLOT(lockChanged(bool)));
     makeDock(tr("Tools"), m_peToolView, DockMinWidth, DockMinHeight);
@@ -884,12 +887,12 @@ void PEMainWindow::switchedConnector(const QDomElement & element)
     foreach (PEGraphicsItem * pegi, pegiList) {
         QDomElement pegiElement = pegi->element();
         if (pegiElement.attribute("id").compare(id) == 0) {
-            if (gotTerminal) {
-                pegi->setTerminalPoint(terminalPoint);
+            if (!gotTerminal) {
+                terminalPoint = pegi->rect().center();
             }
-            else {
-                pegi->setTerminalPoint(pegi->rect().center());
-            }
+            pegi->setTerminalPoint(terminalPoint);
+            m_peToolView->setTerminalPointCoords(terminalPoint);
+            m_peToolView->setTerminalPointLimits(pegi->rect().size());
             gotOne = true;
             pegi->showTerminalPoint(true);
             pegi->setHighlighted(true);
@@ -1350,3 +1353,73 @@ bool PEMainWindow::saveAs() {
 void PEMainWindow::updateChangeCount(SketchWidget * sketchWidget, int changeDirection) {
     m_svgChangeCount.insert(sketchWidget->viewIdentifier(), m_svgChangeCount.value(sketchWidget->viewIdentifier()) + changeDirection);
 }
+
+PEGraphicsItem * PEMainWindow::findTerminalItem()
+{
+    foreach (QGraphicsItem * item, m_currentGraphicsView->scene()->items()) {
+        PEGraphicsItem * pegi = dynamic_cast<PEGraphicsItem *>(item);
+        if (pegi && pegi->showingTerminalPoint()) return pegi;
+    }
+
+    return NULL;
+}
+
+void PEMainWindow::terminalPointChanged(const QString & how) {
+    PEGraphicsItem * pegi = findTerminalItem();
+    if (pegi == NULL) return;
+
+    QRectF r = pegi->rect();
+    QPointF p = r.center();
+    if (how == "center") {
+    }
+    else if (how == "N") {
+        p.setY(0);
+    }
+    else if (how == "E") {
+        p.setX(r.width());
+    }
+    else if (how == "S") {
+        p.setY(r.height());
+    }
+    else if (how == "W") {
+        p.setX(0);
+    }
+    pegi->setTerminalPoint(p);
+    pegi->update();
+    m_peToolView->setTerminalPointCoords(p);
+
+    // TODO: UndoCommand which changes fzp xml and svg xml
+}
+
+void PEMainWindow::terminalPointChanged(const QString & coord, double value)
+{
+    PEGraphicsItem * pegi = findTerminalItem();
+    if (pegi == NULL) return;
+
+    QPointF p = pegi->terminalPoint();
+    if (coord == "x") {
+        p.setX(qMax(0.0, qMin(value, pegi->rect().width())));
+    }
+    else {
+        p.setY(qMax(0.0, qMin(value, pegi->rect().width())));
+    }
+    
+    pegi->setTerminalPoint(p);
+    pegi->update();
+
+    // TODO: UndoCommand which changes fzp xml and svg xml
+}
+
+void PEMainWindow::getSpinAmount(double & amount) {
+    double zoom = m_currentGraphicsView->currentZoom() / 100;
+    if (zoom == 0) {
+        amount = 1;
+        return;
+    }
+
+    amount = qMin(1.0, 1.0 / zoom);
+    if (QApplication::keyboardModifiers() & Qt::ShiftModifier) {
+        amount *= 10;
+    }
+}
+

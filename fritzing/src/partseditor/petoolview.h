@@ -29,12 +29,26 @@ $Date$
 
 #include <QFrame>
 #include <QRadioButton>
+#include <QPushButton>
 #include <QVBoxLayout>
 #include <QGroupBox>
 #include <QCheckBox>
 #include <QLabel>
 #include <QListWidget>
 #include <QDomDocument>
+#include <QDoubleSpinBox>
+
+class PEDoubleSpinBox : public QDoubleSpinBox
+{
+Q_OBJECT
+public:
+    PEDoubleSpinBox(QWidget * parent = 0);
+
+    void stepBy (int steps);
+
+signals:
+    void getSpinAmount(double &);
+};
 
 class PEToolView : public QWidget
 {
@@ -47,10 +61,15 @@ public:
     void initConnectors(QList<QDomElement> & connectorList, bool gotZeroConnector);
     void setLock(bool);
     QDomElement currentConnector();
+    void setTerminalPointCoords(QPointF);
+    void setTerminalPointLimits(QSizeF);
 
 signals:
     void switchedConnector(const QDomElement &);
     void lockChanged(bool);
+    void terminalPointChanged(const QString & how);
+    void terminalPointChanged(const QString & coord, double value);
+    void getSpinAmount(double &);
 
 protected slots:
     void changeUnits();
@@ -59,9 +78,15 @@ protected slots:
     void descriptionEntry();
     void typeEntry();
     void nameEntry();
+    void buttonChangeAnchor();
+    void anchorPointEntry();
+    void getSpinAmountSlot(double &);
+
 
 protected:
-    QString convertUnits(double);
+    QString convertUnitsStr(double);
+    double convertUnits(double);
+    void enableChanges(bool);
 
 protected:
     QLabel * m_svgElement;
@@ -70,7 +95,7 @@ protected:
     QLabel * m_x;
     QLabel * m_y;
     QListWidget * m_connectorListWidget;
-    QHash<QString, QRadioButton *> m_radios;
+    QList<QPushButton *> m_buttons;
     QString m_units;
     class PEGraphicsItem * m_pegi;
     QList<QDomElement> m_connectorList;
@@ -79,6 +104,8 @@ protected:
     QWidget * m_connectorInfoWidget;
     bool m_gotZeroConnector;
     QCheckBox * m_elementLock;
+    QDoubleSpinBox * m_terminalPointX;
+    QDoubleSpinBox * m_terminalPointY;
 };
 
 #endif

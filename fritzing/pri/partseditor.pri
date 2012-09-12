@@ -54,9 +54,9 @@ HEADERS += \
     src/partseditor/fixfontsdialog.h \
     \
     src/partseditor/pemainwindow.h \
-    src/partseditor/metadataview.h \
+    src/partseditor/pemetadataview.h \
     src/partseditor/pecommands.h \
-    src/partseditor/connectorsview.h \
+    src/partseditor/peconnectorsview.h \
     src/partseditor/petoolview.h \
     src/partseditor/pegraphicsitem.h \
     src/partseditor/kicadmoduledialog.h \
@@ -87,9 +87,9 @@ SOURCES += \
     src/partseditor/fixfontsdialog.cpp \
      \
     src/partseditor/pemainwindow.cpp \
-    src/partseditor/metadataview.cpp \
+    src/partseditor/pemetadataview.cpp \
     src/partseditor/pecommands.cpp \
-    src/partseditor/connectorsview.cpp \
+    src/partseditor/peconnectorsview.cpp \
     src/partseditor/petoolview.cpp \
     src/partseditor/pegraphicsitem.cpp \
     src/partseditor/kicadmoduledialog.cpp \
