@@ -52,7 +52,8 @@ class PartsBinIconView : public InfoGraphicsView, public PartsBinView
 
 		bool swappingEnabled(ItemBase *);
 
-		ModelPart *selected();
+		ModelPart *selectedModelPart();
+		ItemBase *selectedItemBase();
 		int selectedIndex();
 
 		QList<QObject*> orderedChildren();

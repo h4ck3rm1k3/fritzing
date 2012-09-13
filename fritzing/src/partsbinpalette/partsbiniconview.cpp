@@ -275,10 +275,19 @@ void PartsBinIconView::loadFromModel(PaletteModel * model) {
 	}
 }
 
-ModelPart *PartsBinIconView::selected() {
+ModelPart *PartsBinIconView::selectedModelPart() {
 	SvgIconWidget *icon = dynamic_cast<SvgIconWidget *>(selectedAux());
 	if(icon) {
 		return icon->modelPart();
+	} else {
+		return NULL;
+	}
+}
+
+ItemBase *PartsBinIconView::selectedItemBase() {
+	SvgIconWidget *icon = dynamic_cast<SvgIconWidget *>(selectedAux());
+	if(icon) {
+		return icon->itemBase();
 	} else {
 		return NULL;
 	}

@@ -43,7 +43,8 @@ class PartsBinListView : public QListWidget, public PartsBinView {
         void removePart(const QString &moduleID);
         void removeParts();
 
-		ModelPart *selected();
+		ModelPart *selectedModelPart();
+		ItemBase *selectedItemBase();
 		bool swappingEnabled();
 		int position(const QString &moduleID);
 
@@ -74,6 +75,7 @@ class PartsBinListView : public QListWidget, public PartsBinView {
 		int setItemAux(ModelPart * modelPart, int position = -1);
 
 		ModelPart *itemModelPart(const QListWidgetItem *item) const;
+		ItemBase *itemItemBase(const QListWidgetItem *item) const;
 		const QString& itemModuleID(const QListWidgetItem *item);
 
 		void showInfo(QListWidgetItem * item);

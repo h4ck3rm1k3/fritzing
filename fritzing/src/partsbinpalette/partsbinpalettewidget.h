@@ -61,7 +61,8 @@ class PartsBinPaletteWidget : public QFrame, public Bundler {
 		bool beforeClosing();
 		bool canClose();
 
-		ModelPart * selected();
+		ModelPart * selectedModelPart();
+		ItemBase * selectedItemBase();
 		bool hasAlienParts();
 
 		void setInfoViewOnHover(bool infoViewOnHover);

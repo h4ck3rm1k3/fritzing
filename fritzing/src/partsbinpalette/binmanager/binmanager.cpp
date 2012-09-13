@@ -41,7 +41,6 @@ $Date$
 #include "../../model/palettemodel.h"
 #include "../../waitpushundostack.h"
 #include "../../debugdialog.h"
-#include "../../partseditor/partseditormainwindow.h"
 #include "../../utils/folderutils.h"
 #include "../../utils/fileprogressdialog.h"
 #include "../../referencemodel/referencemodel.h"
@@ -729,20 +728,17 @@ void BinManager::addPartTo(PartsBinPaletteWidget* bin, ModelPart* mp, bool setDi
 }
 
 void BinManager::newPartTo(PartsBinPaletteWidget* bin) {
-	PartsEditorMainWindow *partsEditor = m_mainWindow->getPartsEditor(NULL, -1, NULL, bin);
-	if (partsEditor == NULL) return;
-
-	partsEditor->show();
-	partsEditor->raise();
+	m_mainWindow->getPartsEditorAnd(NULL, -1, NULL, bin);
 }
 
 void BinManager::editSelectedPartFrom(PartsBinPaletteWidget* bin) {
-	ModelPart *selectedMP = bin->selected();
-	PartsEditorMainWindow *partsEditor = m_mainWindow->getPartsEditor(selectedMP, -1, NULL, bin);
-	if (partsEditor == NULL) return;
+	ModelPart *selectedMP = bin->selectedModelPart();
+	m_mainWindow->getPartsEditorAnd(selectedMP, -1, NULL, bin);
+}
 
-	partsEditor->show();
-	partsEditor->raise();
+void BinManager::editSelectedPartNewFrom(PartsBinPaletteWidget* bin) {
+	ItemBase * itemBase = bin->selectedItemBase();
+	m_mainWindow->getPartsEditorNewAnd(itemBase);
 }
 
 bool BinManager::isTabReorderingEvent(QDropEvent* event) {
@@ -848,9 +844,10 @@ void BinManager::updateBinCombinedMenu(PartsBinPaletteWidget * bin) {
 	m_renameBinAction->setEnabled(bin->canClose());
 	m_closeBinAction->setEnabled(bin->canClose());
 	m_deleteBinAction->setEnabled(bin->canClose());
-	ModelPart *mp = bin->selected();
+	ModelPart *mp = bin->selectedModelPart();
 	bool enabled = (mp != NULL);
 	m_editPartAction->setEnabled(enabled);
+	m_editPartNewAction->setEnabled(enabled);
 	m_exportPartAction->setEnabled(enabled && !mp->isCore());
 	m_removePartAction->setEnabled(enabled && bin->allowsChanges());
 }
@@ -917,11 +914,13 @@ void BinManager::createCombinedMenu()
 
 	m_newPartAction = new QAction(tr("New Part..."), this);
 	m_editPartAction = new QAction(tr("Edit Part..."),this);
+	m_editPartNewAction = new QAction(tr("Edit Part (new parts editor)..."),this);
 	m_exportPartAction = new QAction(tr("Export Part..."),this);
 	m_removePartAction = new QAction(tr("Remove Part"),this);
 
 	connect(m_newPartAction, SIGNAL(triggered()),this, SLOT(newPart()));
 	connect(m_editPartAction, SIGNAL(triggered()),this, SLOT(editSelected()));
+	connect(m_editPartNewAction, SIGNAL(triggered()),this, SLOT(editSelectedNew()));
 	connect(m_exportPartAction, SIGNAL(triggered()),this, SLOT(exportSelected()));
 	connect(m_removePartAction, SIGNAL(triggered()),this, SLOT(removeSelected()));
 
@@ -930,6 +929,7 @@ void BinManager::createCombinedMenu()
 	m_combinedMenu->addSeparator();
 	m_combinedMenu->addAction(m_newPartAction);
 	m_combinedMenu->addAction(m_editPartAction);
+	m_combinedMenu->addAction(m_editPartNewAction);
 	m_combinedMenu->addAction(m_exportPartAction);
 	m_combinedMenu->addAction(m_removePartAction);
 
@@ -946,6 +946,7 @@ void BinManager::createContextMenus() {
 
 	m_partContextMenu = new QMenu(this);
 	m_partContextMenu->addAction(m_editPartAction);
+	m_partContextMenu->addAction(m_editPartNewAction);
 	m_partContextMenu->addAction(m_exportPartAction);
 	m_partContextMenu->addAction(m_removePartAction);
 }
@@ -1006,6 +1007,10 @@ void BinManager::importPart(const QString & filename, PartsBinPaletteWidget * bi
 
 void BinManager::editSelected() {
 	editSelectedPartFrom(currentBin());
+}
+
+void BinManager::editSelectedNew() {
+	editSelectedPartNewFrom(currentBin());
 }
 
 void BinManager::renameBin() {
@@ -1088,7 +1093,7 @@ bool BinManager::removeSelected() {
 	PartsBinPaletteWidget * bin = currentBin();
 	if (bin == NULL) return false;
 
-	ModelPart * mp = bin->selected();
+	ModelPart * mp = bin->selectedModelPart();
 	if (mp == NULL) return false;
 
 	QMessageBox::StandardButton answer = QMessageBox::question(
@@ -1113,7 +1118,7 @@ void BinManager::exportSelected() {
 	PartsBinPaletteWidget * bin = currentBin();
 	if (bin == NULL) return;
 
-	ModelPart * mp = bin->selected();
+	ModelPart * mp = bin->selectedModelPart();
 	if (mp == NULL) return;
 
 	emit savePartAsBundled(mp->moduleID());

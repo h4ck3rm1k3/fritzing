@@ -589,8 +589,12 @@ void PartsBinPaletteWidget::mousePressEvent(QMouseEvent* event) {
 	QFrame::mousePressEvent(event);
 }
 
-ModelPart * PartsBinPaletteWidget::selected() {
-	return m_currentView->selected();
+ModelPart * PartsBinPaletteWidget::selectedModelPart() {
+	return m_currentView->selectedModelPart();
+}
+
+ItemBase * PartsBinPaletteWidget::selectedItemBase() {
+	return m_currentView->selectedItemBase();
 }
 
 bool PartsBinPaletteWidget::contains(const QString &moduleID) {

@@ -2027,6 +2027,22 @@ void MainWindow::openNewPartsEditor(PaletteItem * paletteItem) {
     connect(peMainWindow, SIGNAL(addToMyPartsSignal(ModelPart *)), this, SLOT(addToMyParts(ModelPart *)));
 }
 
+void MainWindow::getPartsEditorAnd(ModelPart *modelPart, long _id, ItemBase * fromItem, class PartsBinPaletteWidget* requester) {
+    PartsEditorMainWindow* partsEditor = getPartsEditor(modelPart, _id, fromItem, requester);
+	if (partsEditor == NULL) return;
+
+	partsEditor->show();
+	partsEditor->raise();
+}
+
+void MainWindow::getPartsEditorNewAnd(ItemBase * fromItem) 
+{
+    PaletteItem * paletteItem = qobject_cast<PaletteItem *>(fromItem);
+    if (paletteItem == NULL) return;
+
+    openNewPartsEditor(paletteItem);
+}
+
 PartsEditorMainWindow* MainWindow::getPartsEditor(ModelPart *modelPart, long _id, ItemBase * fromItem, class PartsBinPaletteWidget* requester) {
 	QMessageBox::StandardButton answer = QMessageBox::question(
             this,
@@ -3093,6 +3109,7 @@ QMenu *MainWindow::viewItemMenuAux(QMenu* menu) {
 #endif
 	menu->addSeparator();
 	menu->addAction(m_openInPartsEditorAct);
+	menu->addAction(m_openInPartsEditorNewAct);
 	menu->addMenu(m_addToBinMenu);
 	menu->addSeparator();
 	menu->addAction(m_showPartLabelAct);

@@ -124,7 +124,8 @@ public:
 	void showAllFirstTimeHelp(bool show);
 	void enableCheckUpdates(bool enabled);
 
-	class PartsEditorMainWindow* getPartsEditor(ModelPart *modelPart, long id, ItemBase * fromItem, class PartsBinPaletteWidget* requester);
+	void getPartsEditorAnd(ModelPart *modelPart, long id, ItemBase * fromItem, class PartsBinPaletteWidget* requester);
+	void getPartsEditorNewAnd(ItemBase * fromItem);
 	ModelPart *loadPartFromFile(const QString& newPartPath, bool connectorsChanged=false);
 	void addDefaultParts();
     void init(class PaletteModel *, ReferenceModel *refModel, bool lockFiles);
@@ -535,6 +536,7 @@ protected:
 	void dockMarginAux(FDockWidget* dock, const QString &name, const QString &style);
     void initStyleSheet();
     virtual QString getStyleSheetSuffix();
+	class PartsEditorMainWindow* getPartsEditor(ModelPart *modelPart, long id, ItemBase * fromItem, class PartsBinPaletteWidget* requester);
 
 protected:
 	static void removeActionsStartingAt(QMenu *menu, int start=0);

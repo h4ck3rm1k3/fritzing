@@ -32,6 +32,7 @@ $Date$
         test on mac, linux
 
 	first time help?
+        dialog box always comes up, click to say not next time
 
 	disable dragging wires
 

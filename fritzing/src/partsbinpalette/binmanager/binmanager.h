@@ -96,6 +96,7 @@ class BinManager : public QFrame {
 		void addPartTo(PartsBinPaletteWidget* bin, ModelPart* mp, bool setDirty);
 		void newPartTo(PartsBinPaletteWidget* bin);
 		void editSelectedPartFrom(PartsBinPaletteWidget* bin);
+		void editSelectedPartNewFrom(PartsBinPaletteWidget* bin);
 
 		const QString &getSelectedModuleIDFromSketch();
 		QList<QAction*> openedBinsActions(const QString &moduleId);
@@ -135,6 +136,7 @@ class BinManager : public QFrame {
 		void deleteBin();
 		void newPart();
 		void editSelected();
+		void editSelectedNew();
 		void saveBin();
 		void saveBinAs();
 		void renameBin();
@@ -200,6 +202,7 @@ protected:
 		QMenu *m_partMenu;	
 		QAction *m_newPartAction;
 		QAction *m_editPartAction;
+		QAction *m_editPartNewAction;
 		QAction *m_exportPartAction;
 		QAction *m_removePartAction;
 

@@ -153,7 +153,7 @@ void PartsBinListView::showInfo(QListWidgetItem * item) {
 	}
 
 	if (m_hoverItem != NULL && m_infoView != NULL) {
-		ItemBase * itemBase = m_hoverItem->data(Qt::UserRole).value<ItemBase *>();
+		ItemBase * itemBase = itemItemBase(m_hoverItem);
 		if (itemBase != NULL) {
 			m_infoView->hoverLeaveItem(NULL, NULL, itemBase);
 		}
@@ -165,7 +165,7 @@ void PartsBinListView::showInfo(QListWidgetItem * item) {
 
 	m_hoverItem = item;
     if (m_infoView != NULL) {
-	    ItemBase * itemBase = item->data(Qt::UserRole).value<ItemBase *>();
+	    ItemBase * itemBase = itemItemBase(item);
 	    if (itemBase != NULL) {
 	        m_infoView->hoverEnterItem(NULL, NULL, itemBase, swappingEnabled());
         }
@@ -185,7 +185,7 @@ void PartsBinListView::mousePressEvent(QMouseEvent *event) {
 	}
 
 	showInfo(current);
-	if (m_infoView != NULL) m_infoView->viewItemInfo(NULL, current->data(Qt::UserRole).value<ItemBase *>(), false);
+	if (m_infoView != NULL) m_infoView->viewItemInfo(NULL, itemItemBase(current), false);
 }
 
 void PartsBinListView::setInfoView(HtmlInfoView * infoView) {
@@ -218,8 +218,12 @@ int PartsBinListView::position(const QString &moduleID) {
 	return -1;
 }
 
+ItemBase * PartsBinListView::itemItemBase(const QListWidgetItem *item) const {
+    return item->data(Qt::UserRole).value<ItemBase *>();
+}
+
 ModelPart *PartsBinListView::itemModelPart(const QListWidgetItem *item) const {
-	ItemBase * itemBase = item->data(Qt::UserRole).value<ItemBase *>();
+	ItemBase * itemBase = itemItemBase(item);
 	if (itemBase == NULL) return NULL;
 
 	return itemBase->modelPart();
@@ -235,7 +239,14 @@ const QString &PartsBinListView::itemModuleID(const QListWidgetItem *item) {
 	return modelPart->moduleID();
 }
 
-ModelPart *PartsBinListView::selected() {
+ItemBase *PartsBinListView::selectedItemBase() {
+	if(selectedItems().size()==1) {
+		return itemItemBase(selectedItems()[0]);
+	}
+	return NULL;
+}
+
+ModelPart *PartsBinListView::selectedModelPart() {
 	if(selectedItems().size()==1) {
 		return itemModelPart(selectedItems()[0]);
 	}

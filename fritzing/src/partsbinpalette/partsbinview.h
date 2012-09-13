@@ -47,7 +47,8 @@ class PartsBinView {
 		virtual void removePart(const QString &moduleID) = 0;
         virtual void removeParts() = 0;
 
-		virtual ModelPart *selected() = 0;
+		virtual ModelPart *selectedModelPart() = 0;
+		virtual ItemBase *selectedItemBase() = 0;
 
 		bool contains(const QString &moduleID);
 		void setInfoViewOnHover(bool infoViewOnHover);
