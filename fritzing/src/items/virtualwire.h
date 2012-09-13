@@ -34,7 +34,7 @@ class VirtualWire : public ClipableWire
 	Q_OBJECT
 
 public:
-	VirtualWire( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier,  const ViewGeometry & , long id, QMenu* itemMenu  ); 
+	VirtualWire( ModelPart * modelPart, ViewLayer::ViewIdentifier,  const ViewGeometry & , long id, QMenu* itemMenu  ); 
 	~VirtualWire();
 	
 	void setHidden(bool hidden);
@@ -47,7 +47,7 @@ protected:
 	void paint (QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget );	
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
 	void connectionChange(ConnectorItem * onMe, ConnectorItem * onIt, bool connect);
- 	class FSvgRenderer * setUpConnectors(class ModelPart *, ViewIdentifierClass::ViewIdentifier);
+ 	class FSvgRenderer * setUpConnectors(class ModelPart *, ViewLayer::ViewIdentifier);
 	void hideConnectors();	
 	void inactivateConnectors();
 

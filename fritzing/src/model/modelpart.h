@@ -95,7 +95,7 @@ public:
 	void addViewItem(class ItemBase *);
 	void removeViewItem(class ItemBase *);
 	class ItemBase * viewItem(QGraphicsScene * scene);
-	class ItemBase * viewItem(ViewIdentifierClass::ViewIdentifier);
+	class ItemBase * viewItem(ViewLayer::ViewIdentifier);
 	bool hasViewItems();
 	void initConnectors(bool force=false);
 	const QHash<QString, QPointer<Connector> > & connectors();
@@ -140,14 +140,14 @@ public:
 	void setFzz(bool alien);
 	void setLocationFlag(bool setting, LocationFlag flag);
 
-	bool hasViewIdentifier(ViewIdentifierClass::ViewIdentifier);
-	bool canFlipVertical(ViewIdentifierClass::ViewIdentifier);
-	bool canFlipHorizontal(ViewIdentifierClass::ViewIdentifier);
-	bool anySticky(ViewIdentifierClass::ViewIdentifier);
-    QString imageFileName(ViewIdentifierClass::ViewIdentifier);
-    void setImageFileName(ViewIdentifierClass::ViewIdentifier, const QString & filename);
-    QString imageFileName(ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerID);
-    LayerList viewLayers(ViewIdentifierClass::ViewIdentifier);
+	bool hasViewIdentifier(ViewLayer::ViewIdentifier);
+	bool canFlipVertical(ViewLayer::ViewIdentifier);
+	bool canFlipHorizontal(ViewLayer::ViewIdentifier);
+	bool anySticky(ViewLayer::ViewIdentifier);
+    QString imageFileName(ViewLayer::ViewIdentifier);
+    void setImageFileName(ViewLayer::ViewIdentifier, const QString & filename);
+    QString imageFileName(ViewLayer::ViewIdentifier, ViewLayer::ViewLayerID);
+    LayerList viewLayers(ViewLayer::ViewIdentifier);
     void setViewImage(struct ViewImage *);
 
 	QList<ModelPart*> getAllParts();
@@ -173,9 +173,9 @@ public:
 
 	bool flippedSMD();
 	bool needsCopper1();
-	bool hasViewFor(ViewIdentifierClass::ViewIdentifier);
-	bool hasViewFor(ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerID);
-	QString hasBaseNameFor(ViewIdentifierClass::ViewIdentifier);
+	bool hasViewFor(ViewLayer::ViewIdentifier);
+	bool hasViewFor(ViewLayer::ViewIdentifier, ViewLayer::ViewLayerID);
+	QString hasBaseNameFor(ViewLayer::ViewIdentifier);
 	void initBuses();
 	void clearBuses();
 	void setConnectorLocalName(const QString & id, const QString & name);

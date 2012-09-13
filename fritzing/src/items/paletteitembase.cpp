@@ -55,7 +55,7 @@ static QPointF RotationAxis;
 static QTransform OriginalTransform;
 
 
-PaletteItemBase::PaletteItemBase(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu ) :
+PaletteItemBase::PaletteItemBase(ModelPart * modelPart, ViewLayer::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu ) :
 	ItemBase(modelPart, viewIdentifier, viewGeometry, id, itemMenu)
 {
 	m_inRotation = m_syncSelected = false;
@@ -217,7 +217,7 @@ void PaletteItemBase::mousePressConnectorEvent(ConnectorItem * connectorItem, QG
 bool PaletteItemBase::acceptsMousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent * event) {
 	Q_UNUSED(event);
 	
-	//if (m_viewIdentifier != ViewIdentifierClass::PCBView) {
+	//if (m_viewIdentifier != ViewLayer::PCBView) {
 		return true;
 	//}
 }
@@ -275,8 +275,8 @@ void PaletteItemBase::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 	double deltaAngle = (a2 - a1) * 180 / M_PI;
 	//DebugDialog::debug(QString("original:%1 delta:%2").arg(originalAngle).arg(deltaAngle));
 	switch (m_viewIdentifier) {
-		case ViewIdentifierClass::BreadboardView:
-		case ViewIdentifierClass::PCBView:
+		case ViewLayer::BreadboardView:
+		case ViewLayer::PCBView:
 			{
 				double nearest = qRound((originalAngle + deltaAngle) / 45) * 45;
 				if (qAbs(originalAngle + deltaAngle - nearest) < 6) {
@@ -285,7 +285,7 @@ void PaletteItemBase::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 				}
 			}
 			break;
-		case ViewIdentifierClass::SchematicView:
+		case ViewLayer::SchematicView:
 			{
 				double nearest = qRound((originalAngle + deltaAngle) / 90) * 90;
 				deltaAngle = nearest - originalAngle;
@@ -379,7 +379,7 @@ void PaletteItemBase::collectWireConnectees(QSet<Wire *> & wires) {
 	}
 }
 
-bool PaletteItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec viewLayerSpec, bool doConnectors, LayerAttributes & layerAttributes, QString & error)
+bool PaletteItemBase::setUpImage(ModelPart * modelPart, ViewLayer::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec viewLayerSpec, bool doConnectors, LayerAttributes & layerAttributes, QString & error)
 {
 	FSvgRenderer * renderer = ItemBase::setUpImage(modelPart, viewIdentifier, viewLayerID, viewLayerSpec, layerAttributes, error);
 	if (renderer == NULL) {
@@ -415,7 +415,7 @@ bool PaletteItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::Vie
 void PaletteItemBase::setUpConnectors(FSvgRenderer * renderer, bool ignoreTerminalPoints) {
 	clearConnectorItemCache();
 
-	if (m_viewIdentifier == ViewIdentifierClass::PCBView && ViewLayer::isNonCopperLayer(m_viewLayerID)) {
+	if (m_viewIdentifier == ViewLayer::PCBView && ViewLayer::isNonCopperLayer(m_viewLayerID)) {
 		//DebugDialog::debug(QString("skip connectors: %1 vid:%2 vlid:%3")
 		//				   .arg(this->title())
 		//				   .arg(m_viewIdentifier) 
@@ -484,7 +484,7 @@ void PaletteItemBase::connectedMoved(ConnectorItem * from, ConnectorItem * to) {
 	if (from->connectorType() != Connector::Female) return;
 
 	// female connectors really only operate in breadboard view
-	if (m_viewIdentifier != ViewIdentifierClass::BreadboardView) return;
+	if (m_viewIdentifier != ViewLayer::BreadboardView) return;
 
 	QTransform t = this->transform();
 	if (t.isRotating()) {
@@ -576,7 +576,7 @@ void PaletteItemBase::contextMenuEvent(QGraphicsSceneContextMenuEvent *event) {
 
 
 LayerKinPaletteItem *PaletteItemBase::newLayerKinPaletteItem(PaletteItemBase * chief, ModelPart * modelPart, 
-															 ViewIdentifierClass::ViewIdentifier viewIdentifier,
+															 ViewLayer::ViewIdentifier viewIdentifier,
 															 const ViewGeometry & viewGeometry, long id,
 															 ViewLayer::ViewLayerID viewLayerID, 
 															 ViewLayer::ViewLayerSpec viewLayerSpec, 
@@ -710,7 +710,7 @@ bool PaletteItemBase::freeRotationAllowed(Qt::KeyboardModifiers modifiers) {
 bool PaletteItemBase::inRotationLocation(QPointF scenePos, Qt::KeyboardModifiers modifiers, QPointF & returnPoint)
 {
 	if (!freeRotationAllowed(modifiers)) return false;
-	if (m_viewIdentifier == ViewIdentifierClass::SchematicView) return false;
+	if (m_viewIdentifier == ViewLayer::SchematicView) return false;
 
 	QRectF r = this->boundingRectWithoutLegs();
 	QPolygonF polygon;

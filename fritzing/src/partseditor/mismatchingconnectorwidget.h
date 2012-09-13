@@ -36,17 +36,17 @@ $Date$
 class MismatchingConnectorWidget : public AbstractConnectorInfoWidget {
 	Q_OBJECT
 	public:
-		MismatchingConnectorWidget(class ConnectorsInfoWidget *topLevelContainer, ViewIdentifierClass::ViewIdentifier viewId, const QString &connId, QWidget *parent, bool isInView = true, Connector* conn = NULL);
+		MismatchingConnectorWidget(class ConnectorsInfoWidget *topLevelContainer, ViewLayer::ViewIdentifier viewId, const QString &connId, QWidget *parent, bool isInView = true, Connector* conn = NULL);
 		~MismatchingConnectorWidget();
 		
 		void setSelected(bool selected, bool doEmitChange=true);
-		bool onlyMissingThisView(ViewIdentifierClass::ViewIdentifier viewId);
-		void addViewPresence(ViewIdentifierClass::ViewIdentifier viewId);
-		void removeViewPresence(ViewIdentifierClass::ViewIdentifier viewId);
+		bool onlyMissingThisView(ViewLayer::ViewIdentifier viewId);
+		void addViewPresence(ViewLayer::ViewIdentifier viewId);
+		void removeViewPresence(ViewLayer::ViewIdentifier viewId);
 		const QString &connId();
 		Connector *prevConn();
-		QList<ViewIdentifierClass::ViewIdentifier> views();
-		QList<ViewIdentifierClass::ViewIdentifier> missingViews();
+		QList<ViewLayer::ViewIdentifier> views();
+		QList<ViewLayer::ViewIdentifier> missingViews();
 		bool presentInAllViews();
 
 	signals:
@@ -59,14 +59,14 @@ class MismatchingConnectorWidget : public AbstractConnectorInfoWidget {
 		void mousePressEvent(QMouseEvent * event);
 		QString viewsString();
 
-		QList<ViewIdentifierClass::ViewIdentifier> m_missingViews;
+		QList<ViewLayer::ViewIdentifier> m_missingViews;
 		QString m_connId;
 		QPointer<Connector> m_prevConn; // If this connector info used to be a not mismatching one, we save that info here
 
 		QLabel *m_connIdLabel;
 		QLabel *m_connMsgLabel;
 
-		static QList<ViewIdentifierClass::ViewIdentifier> AllViews;
+		static QList<ViewLayer::ViewIdentifier> AllViews;
 };
 
 #endif /* MISMATCHINGCONNECTORWIDGET_H_ */

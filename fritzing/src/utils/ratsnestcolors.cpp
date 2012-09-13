@@ -29,7 +29,7 @@ $Date$
 
 #include <QFile>
 
-QHash<ViewIdentifierClass::ViewIdentifier, RatsnestColors *> RatsnestColors::m_viewList;
+QHash<ViewLayer::ViewIdentifier, RatsnestColors *> RatsnestColors::m_viewList;
 QHash<QString, class RatsnestColor *> RatsnestColors::m_allNames;
 
 QColor ErrorColor(0, 0, 0);
@@ -72,7 +72,7 @@ RatsnestColor::~RatsnestColor() {
 
 RatsnestColors::RatsnestColors(const QDomElement & view) 
 {
-	m_viewIdentifier = ViewIdentifierClass::idFromXmlName(view.attribute("name"));
+	m_viewIdentifier = ViewLayer::idFromXmlName(view.attribute("name"));
 	m_backgroundColor.setNamedColor(view.attribute("background"));
 	m_index = 0;
 	QDomElement color = view.firstChildElement("color");
@@ -132,7 +132,7 @@ void RatsnestColors::cleanup() {
 	m_viewList.clear();
 }
 
-const QColor & RatsnestColors::netColor(ViewIdentifierClass::ViewIdentifier viewIdentifier) {
+const QColor & RatsnestColors::netColor(ViewLayer::ViewIdentifier viewIdentifier) {
 	RatsnestColors * ratsnestColors = m_viewList.value(viewIdentifier, NULL);
 	if (ratsnestColors == NULL) return ErrorColor;
 
@@ -180,7 +180,7 @@ bool RatsnestColors::findConnectorColor(const QStringList & names, QColor & colo
 	return false;
 }
 
-bool RatsnestColors::isConnectorColor(ViewIdentifierClass::ViewIdentifier m_viewIdentifier, const QColor & color) {
+bool RatsnestColors::isConnectorColor(ViewLayer::ViewIdentifier m_viewIdentifier, const QColor & color) {
 	RatsnestColors * ratsnestColors = m_viewList.value(m_viewIdentifier, NULL);
 	if (ratsnestColors == NULL) return false;
 
@@ -193,14 +193,14 @@ bool RatsnestColors::isConnectorColor(ViewIdentifierClass::ViewIdentifier m_view
 	return false;
 }
 
-void RatsnestColors::reset(ViewIdentifierClass::ViewIdentifier m_viewIdentifier) {
+void RatsnestColors::reset(ViewLayer::ViewIdentifier m_viewIdentifier) {
 	RatsnestColors * ratsnestColors = m_viewList.value(m_viewIdentifier, NULL);
 	if (ratsnestColors == NULL) return;
 
 	ratsnestColors->m_index = 0;
 }
 
-QColor RatsnestColors::backgroundColor(ViewIdentifierClass::ViewIdentifier viewIdentifier) 
+QColor RatsnestColors::backgroundColor(ViewLayer::ViewIdentifier viewIdentifier) 
 {
 	RatsnestColors * ratsnestColors = m_viewList.value(viewIdentifier, NULL);
 	if (ratsnestColors == NULL) return QColor();
@@ -208,7 +208,7 @@ QColor RatsnestColors::backgroundColor(ViewIdentifierClass::ViewIdentifier viewI
 	return ratsnestColors->m_backgroundColor;
 }
 
-const QString & RatsnestColors::shadowColor(ViewIdentifierClass::ViewIdentifier viewIdentifier, const QString & name)
+const QString & RatsnestColors::shadowColor(ViewLayer::ViewIdentifier viewIdentifier, const QString & name)
 {
 	RatsnestColors * ratsnestColors = m_viewList.value(viewIdentifier, NULL);
 	if (ratsnestColors == NULL) return ___emptyString___;
@@ -219,7 +219,7 @@ const QString & RatsnestColors::shadowColor(ViewIdentifierClass::ViewIdentifier 
 	return ratsnestColor->m_shadow;
 }
 
-QString RatsnestColors::wireColor(ViewIdentifierClass::ViewIdentifier viewIdentifier, QString & name)
+QString RatsnestColors::wireColor(ViewLayer::ViewIdentifier viewIdentifier, QString & name)
 {
 	RatsnestColors * ratsnestColors = m_viewList.value(viewIdentifier, NULL);
 	if (ratsnestColors == NULL) return ___emptyString___;

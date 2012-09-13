@@ -35,8 +35,8 @@ class PartsEditorView;
 class PartsEditorConnectorsPaletteItem : public PartsEditorPaletteItem {
 	Q_OBJECT
 	public:
-		PartsEditorConnectorsPaletteItem(PartsEditorView *owner, ModelPart *modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier);
-		PartsEditorConnectorsPaletteItem(PartsEditorView *owner, ModelPart *modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, SvgAndPartFilePath *path);
+		PartsEditorConnectorsPaletteItem(PartsEditorView *owner, ModelPart *modelPart, ViewLayer::ViewIdentifier viewIdentifier);
+		PartsEditorConnectorsPaletteItem(PartsEditorView *owner, ModelPart *modelPart, ViewLayer::ViewIdentifier viewIdentifier, SvgAndPartFilePath *path);
 
 	public slots:
 		void highlightConnectors(const QString &connId);
@@ -45,7 +45,7 @@ class PartsEditorConnectorsPaletteItem : public PartsEditorPaletteItem {
 		void highlightConnsAux(ItemBase* item, const QString &connId);
 		ConnectorItem* newConnectorItem(Connector *connector);
 		LayerKinPaletteItem * newLayerKinPaletteItem(
-			PaletteItemBase * chief, ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier,
+			PaletteItemBase * chief, ModelPart * modelPart, ViewLayer::ViewIdentifier viewIdentifier,
 			const ViewGeometry & viewGeometry, long id,ViewLayer::ViewLayerID, ViewLayer::ViewLayerSpec, QMenu* itemMenu, const LayerHash & viewLayers
 		);
 		bool isShowingTerminalPoints();

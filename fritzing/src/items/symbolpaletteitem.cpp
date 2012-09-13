@@ -46,7 +46,7 @@ static QList< QPointer<ConnectorItem> > localGrounds;
 static QList<double> Voltages;
 double SymbolPaletteItem::DefaultVoltage = 5;
 
-SymbolPaletteItem::SymbolPaletteItem( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
+SymbolPaletteItem::SymbolPaletteItem( ModelPart * modelPart, ViewLayer::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: PaletteItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
 	m_connector0 = m_connector1 = NULL;
@@ -117,7 +117,7 @@ void SymbolPaletteItem::removeMeFromBus(double v) {
 ConnectorItem* SymbolPaletteItem::newConnectorItem(Connector *connector) 
 {
 	ConnectorItem * connectorItem = PaletteItemBase::newConnectorItem(connector);
-	//if (m_viewIdentifier != ViewIdentifierClass::SchematicView) return connectorItem;
+	//if (m_viewIdentifier != ViewLayer::SchematicView) return connectorItem;
 
 	if (connector->connectorSharedID().compare("connector0") == 0) {
 		m_connector0 = connectorItem;
@@ -145,7 +145,7 @@ void SymbolPaletteItem::busConnectorItems(Bus * bus, QList<class ConnectorItem *
 
 	PaletteItem::busConnectorItems(bus, items);
 
-	//if (m_viewIdentifier != ViewIdentifierClass::SchematicView) return;
+	//if (m_viewIdentifier != ViewLayer::SchematicView) return;
 
 	//foreach (ConnectorItem * bc, items) {
 		//bc->debugInfo(QString("bc %1").arg(bus->id()));
@@ -189,7 +189,7 @@ void SymbolPaletteItem::setVoltage(double v) {
 		Voltages.append(v);
 	}
 
-	//if (m_viewIdentifier != ViewIdentifierClass::SchematicView) return;
+	//if (m_viewIdentifier != ViewLayer::SchematicView) return;
 
 	foreach (ConnectorItem * connectorItem, cachedConnectorItems()) {
 		if (connectorItem->isGrounded()) {
@@ -325,11 +325,11 @@ bool SymbolPaletteItem::hasPartNumberProperty()
 	return false;
 }
 
-ViewIdentifierClass::ViewIdentifier SymbolPaletteItem::useViewIdentifierForPixmap(ViewIdentifierClass::ViewIdentifier vid, bool) 
+ViewLayer::ViewIdentifier SymbolPaletteItem::useViewIdentifierForPixmap(ViewLayer::ViewIdentifier vid, bool) 
 {
-    if (vid == ViewIdentifierClass::SchematicView) {
-        return ViewIdentifierClass::IconView;
+    if (vid == ViewLayer::SchematicView) {
+        return ViewLayer::IconView;
     }
 
-    return ViewIdentifierClass::UnknownView;
+    return ViewLayer::UnknownView;
 }

@@ -56,7 +56,7 @@ static HoleClassThing TheHoleThing;
 // TODO
 //	save into parts bin
 
-MysteryPart::MysteryPart( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
+MysteryPart::MysteryPart( ModelPart * modelPart, ViewLayer::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: PaletteItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
 	m_chipLabel = modelPart->localProp("chip label").toString();
@@ -89,10 +89,10 @@ void MysteryPart::setChipLabel(QString chipLabel, bool force) {
 
 	QString svg;
 	switch (this->m_viewIdentifier) {
-		case ViewIdentifierClass::BreadboardView:
+		case ViewLayer::BreadboardView:
 			svg = makeSvg(chipLabel, true);
 			break;
-		case ViewIdentifierClass::SchematicView:
+		case ViewLayer::SchematicView:
 			svg = makeSvg(chipLabel, false);
 			svg = retrieveSchematicSvg(svg);
 			break;
@@ -257,10 +257,10 @@ const QString & MysteryPart::title() {
 
 bool MysteryPart::hasCustomSVG() {
 	switch (m_viewIdentifier) {
-		case ViewIdentifierClass::BreadboardView:
-		case ViewIdentifierClass::SchematicView:
-		case ViewIdentifierClass::IconView:
-		case ViewIdentifierClass::PCBView:
+		case ViewLayer::BreadboardView:
+		case ViewLayer::SchematicView:
+		case ViewLayer::IconView:
+		case ViewLayer::PCBView:
 			return true;
 		default:
 			return ItemBase::hasCustomSVG();
@@ -544,7 +544,7 @@ QString MysteryPart::makeBreadboardSipSvg(const QString & expectedFileName)
 bool MysteryPart::changePinLabels(bool singleRow, bool sip) {
 	Q_UNUSED(singleRow);
 
-	if (m_viewIdentifier != ViewIdentifierClass::SchematicView) return true;
+	if (m_viewIdentifier != ViewLayer::SchematicView) return true;
 
 	bool hasLocal = false;
 	QStringList labels = getPinLabels(hasLocal);

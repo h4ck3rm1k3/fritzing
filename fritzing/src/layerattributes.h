@@ -32,7 +32,6 @@ $Date$
 #include <QString>
 #include <QDomElement>
 
-#include "viewidentifierclass.h"
 #include "viewlayer.h"
 
 class LayerAttributes {

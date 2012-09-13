@@ -26,7 +26,7 @@ $Date$
 
 #include "svgidlayer.h"
 
-SvgIdLayer::SvgIdLayer(ViewIdentifierClass::ViewIdentifier viewIdentifier) {
+SvgIdLayer::SvgIdLayer(ViewLayer::ViewIdentifier viewIdentifier) {
     m_viewIdentifier = viewIdentifier;
 	m_processed = m_hybrid = false;
 	m_radius = m_strokeWidth = 0;

@@ -237,8 +237,8 @@ bool SqliteReferenceModel::loadFromDB(QSqlDatabase & keep_db, QSqlDatabase & db)
 
     while (query.next()) {
         int ix = 0;
-        ViewImage * viewImage = new ViewImage(ViewIdentifierClass::BreadboardView);
-        viewImage->viewIdentifier = (ViewIdentifierClass::ViewIdentifier) query.value(ix++).toInt();
+        ViewImage * viewImage = new ViewImage(ViewLayer::BreadboardView);
+        viewImage->viewIdentifier = (ViewLayer::ViewIdentifier) query.value(ix++).toInt();
         viewImage->image = query.value(ix++).toString();
         viewImage->layers = query.value(ix++).toULongLong();
         viewImage->sticky = query.value(ix++).toULongLong();
@@ -338,7 +338,7 @@ bool SqliteReferenceModel::loadFromDB(QSqlDatabase & keep_db, QSqlDatabase & db)
 
     while (query.next()) {
         int ix = 0;
-        ViewIdentifierClass::ViewIdentifier viewIdentifier = (ViewIdentifierClass::ViewIdentifier) query.value(ix++).toInt();
+        ViewLayer::ViewIdentifier viewIdentifier = (ViewLayer::ViewIdentifier) query.value(ix++).toInt();
         ViewLayer::ViewLayerID viewLayerID = (ViewLayer::ViewLayerID) query.value(ix++).toInt();
         QString svgID = query.value(ix++).toString();
         bool hybrid = query.value(ix++).toInt() == 0 ? false : true;
@@ -448,7 +448,7 @@ bool SqliteReferenceModel::createConnection(const QString & databaseName, bool f
         QSqlQuery query;
         result = query.exec("CREATE TABLE viewimages (\n"
 			"id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\n"
-			"viewid INTEGER NOT NULL,\n"                     // ViewIdentifierClass::ViewIdentifier
+			"viewid INTEGER NOT NULL,\n"                     // ViewLayer::ViewIdentifier
 			"image TEXT NOT NULL,\n"
 			"layers INTEGER NOT NULL,\n"                     // bit flag (max 8 bytes = 64 layers)
 			"sticky INTEGER NOT NULL,\n"                     // bit flag (max 8 bytes = 64 layers)
@@ -474,7 +474,7 @@ bool SqliteReferenceModel::createConnection(const QString & databaseName, bool f
 
         result = query.exec("CREATE TABLE connectorlayers (\n"
 			"id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\n"
-			"view INTEGER NOT NULL,\n"                      // ViewIdentifierClass::ViewIdentifier
+			"view INTEGER NOT NULL,\n"                      // ViewLayer::ViewIdentifier
 			"layer INTEGER NOT NULL,\n"                     // ViewLayer::ViewLayerID
 			"svgid TEXT NOT NULL,\n"
 			"hybrid INTEGER NOT NULL,\n"

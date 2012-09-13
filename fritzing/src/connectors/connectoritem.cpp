@@ -1095,8 +1095,8 @@ ViewLayer::ViewLayerSpec ConnectorItem::attachedToViewLayerSpec() {
 	return m_attachedTo->viewLayerSpec();
 }
 
-ViewIdentifierClass::ViewIdentifier ConnectorItem::attachedToViewIdentifier() {
-	if (m_attachedTo == NULL) return ViewIdentifierClass::UnknownView;
+ViewLayer::ViewIdentifier ConnectorItem::attachedToViewIdentifier() {
+	if (m_attachedTo == NULL) return ViewLayer::UnknownView;
 
 	return m_attachedTo->viewIdentifier();
 }
@@ -1597,7 +1597,7 @@ bool ConnectorItem::isGrounded() {
 ConnectorItem * ConnectorItem::getCrossLayerConnectorItem() {
 	if (m_connector == NULL) return NULL;
 	if (m_attachedTo == NULL) return NULL;
-	if (m_attachedTo->viewIdentifier() != ViewIdentifierClass::PCBView) return NULL;
+	if (m_attachedTo->viewIdentifier() != ViewLayer::PCBView) return NULL;
 
 	ViewLayer::ViewLayerID viewLayerID = attachedToViewLayerID();
 	if (viewLayerID == ViewLayer::Copper0) {
@@ -1647,7 +1647,7 @@ void ConnectorItem::paint(QPainter * painter, const QStyleOptionGraphicsItem * o
 
 	if (m_effectively == EffectivelyUnknown) {
 		if (!m_circular && m_shape.isEmpty()) {
-			if (this->attachedTo()->viewIdentifier() == ViewIdentifierClass::PCBView) {
+			if (this->attachedTo()->viewIdentifier() == ViewLayer::PCBView) {
 				QRectF r = rect();
 				if (qAbs(r.width() - r.height()) < 0.01) m_effectively = EffectivelyCircular;
 				else m_effectively = EffectivelyRectangular;
@@ -2349,7 +2349,7 @@ double ConnectorItem::findT(Bezier * bezier, double blen, double length)
 	return t;
 }
 
-const QString & ConnectorItem::legID(ViewIdentifierClass::ViewIdentifier viewID, ViewLayer::ViewLayerID viewLayerID) {
+const QString & ConnectorItem::legID(ViewLayer::ViewIdentifier viewID, ViewLayer::ViewLayerID viewLayerID) {
 	if (m_connector) return m_connector->legID(viewID, viewLayerID);
 
 	return ___emptyString___;

@@ -65,7 +65,7 @@ static double FontSize = 11;
 QHash<QString, QString> FrameProps;
 static const QString DisplayFormat("dd MMM yyyy hh:mm:ss");
 
-SchematicFrame::SchematicFrame( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
+SchematicFrame::SchematicFrame( ModelPart * modelPart, ViewLayer::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: ResizableBoard(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
 	if (FrameProps.count() == 0) {
@@ -217,8 +217,8 @@ QString SchematicFrame::makeFirstLayerSvg(double mmW, double mmH, double milsW, 
 	return makeLayerSvg(ViewLayer::SchematicFrame, mmW, mmH, milsW, milsH);
 }
 
-ViewIdentifierClass::ViewIdentifier SchematicFrame::theViewIdentifier() {
-	return ViewIdentifierClass::SchematicView;
+ViewLayer::ViewIdentifier SchematicFrame::theViewIdentifier() {
+	return ViewLayer::SchematicView;
 }
 
 double SchematicFrame::minWidth() {
@@ -439,11 +439,11 @@ void SchematicFrame::sheetEntry(int value) {
 	}
 }
 
-ViewIdentifierClass::ViewIdentifier SchematicFrame::useViewIdentifierForPixmap(ViewIdentifierClass::ViewIdentifier vid, bool) 
+ViewLayer::ViewIdentifier SchematicFrame::useViewIdentifierForPixmap(ViewLayer::ViewIdentifier vid, bool) 
 {
-    if (vid == ViewIdentifierClass::SchematicView) {
-        return ViewIdentifierClass::IconView;
+    if (vid == ViewLayer::SchematicView) {
+        return ViewLayer::IconView;
     }
 
-    return ViewIdentifierClass::UnknownView;
+    return ViewLayer::UnknownView;
 }

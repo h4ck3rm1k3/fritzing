@@ -451,7 +451,7 @@ bool FApplication::init() {
 
 	MainWindow::initNames();
 	FSvgRenderer::initNames();
-	ViewIdentifierClass::initNames();
+	ViewLayer::initNames();
 	RatsnestColors::initNames();
 	Wire::initNames();
 	ItemBase::initNames();
@@ -479,7 +479,7 @@ FApplication::~FApplication(void)
 	}
 
 	FSvgRenderer::cleanup();
-	ViewIdentifierClass::cleanup();
+	ViewLayer::cleanup();
 	ViewLayer::cleanup();
 	ItemBase::cleanup();
 	Wire::cleanup();
@@ -770,10 +770,10 @@ void FApplication::runSvgServiceAux()
 		FolderUtils::setOpenSaveFolderAux(m_outputFolder);
 		if (mainWindow->loadWhich(filepath, false, false, "")) {
             QFileInfo info(filepath);
-            QList<ViewIdentifierClass::ViewIdentifier> ids;
-            ids << ViewIdentifierClass::BreadboardView << ViewIdentifierClass::SchematicView << ViewIdentifierClass::PCBView;
-            foreach (ViewIdentifierClass::ViewIdentifier id, ids) {
-                QString fn = QString("%1_%2.svg").arg(info.completeBaseName()).arg(ViewIdentifierClass::viewIdentifierNaturalName(id));
+            QList<ViewLayer::ViewIdentifier> ids;
+            ids << ViewLayer::BreadboardView << ViewLayer::SchematicView << ViewLayer::PCBView;
+            foreach (ViewLayer::ViewIdentifier id, ids) {
+                QString fn = QString("%1_%2.svg").arg(info.completeBaseName()).arg(ViewLayer::viewIdentifierNaturalName(id));
                 QString svgPath = dir.absoluteFilePath(fn);
                 mainWindow->setCurrentView(id);
                 mainWindow->exportSvg(GraphicsUtils::StandardFritzingDPI, false, false, svgPath);
@@ -1186,7 +1186,7 @@ void FApplication::initSplash(FSplashScreen & splash) {
 
 struct Thing {
         QString moduleID;
-        ViewIdentifierClass::ViewIdentifier viewIdentifier;
+        ViewLayer::ViewIdentifier viewIdentifier;
         ViewLayer::ViewLayerID viewLayerID;
 };
 

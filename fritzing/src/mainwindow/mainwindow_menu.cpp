@@ -1954,11 +1954,11 @@ void MainWindow::showPCBView() {
 	this->m_tabWidget->setCurrentIndex(2);
 }
 
-void MainWindow::setCurrentView(ViewIdentifierClass::ViewIdentifier viewIdentifier)
+void MainWindow::setCurrentView(ViewLayer::ViewIdentifier viewIdentifier)
 {
-    if (viewIdentifier == ViewIdentifierClass::BreadboardView) showBreadboardView();
-    else if (viewIdentifier == ViewIdentifierClass::SchematicView) showSchematicView();
-    else if (viewIdentifier == ViewIdentifierClass::PCBView) showPCBView();
+    if (viewIdentifier == ViewLayer::BreadboardView) showBreadboardView();
+    else if (viewIdentifier == ViewLayer::SchematicView) showSchematicView();
+    else if (viewIdentifier == ViewLayer::PCBView) showPCBView();
 }
 
 void MainWindow::showPartsBinIconView() {
@@ -2049,7 +2049,7 @@ PartsEditorMainWindow* MainWindow::getPartsEditor(ModelPart *modelPart, long _id
 
 	PartsEditorMainWindow *mainPartsEditorWindow = new PartsEditorMainWindow(this);
 	if (fromItem != NULL) {
-		ItemBase * ii = m_breadboardGraphicsView->addItemAuxTemp(modelPart, fromItem->viewLayerSpec(), ViewGeometry(), ItemBase::getNextID(), NULL, true, ViewIdentifierClass::IconView, true);
+		ItemBase * ii = m_breadboardGraphicsView->addItemAuxTemp(modelPart, fromItem->viewLayerSpec(), ViewGeometry(), ItemBase::getNextID(), NULL, true, ViewLayer::IconView, true);
 		if (ii != NULL) {
 			m_breadboardGraphicsView->scene()->removeItem(ii);
 			if (!ii->hasCustomSVG()) {
@@ -3154,7 +3154,7 @@ void MainWindow::startSaveInstancesSlot(const QString & fileName, ModelPart *, Q
 	views << m_breadboardGraphicsView << m_schematicGraphicsView << m_pcbGraphicsView;
 	foreach  (SketchWidget * sketchWidget, views) {
 		streamWriter.writeStartElement("view");
-		streamWriter.writeAttribute("name", ViewIdentifierClass::viewIdentifierXmlName(sketchWidget->viewIdentifier()));
+		streamWriter.writeAttribute("name", ViewLayer::viewIdentifierXmlName(sketchWidget->viewIdentifier()));
 		streamWriter.writeAttribute("backgroundColor", sketchWidget->background().name());
 		streamWriter.writeAttribute("gridSize", sketchWidget->gridSizeText());
 		streamWriter.writeAttribute("showGrid", sketchWidget->showingGrid() ? "1" : "0");
@@ -3227,16 +3227,16 @@ void MainWindow::loadedViewsSlot(ModelBase *, QDomElement & views) {
 	QDomElement view = views.firstChildElement("view");
 	while (!view.isNull()) {
 		QString name = view.attribute("name");
-		ViewIdentifierClass::ViewIdentifier viewIdentifier = ViewIdentifierClass::idFromXmlName(name);
+		ViewLayer::ViewIdentifier viewIdentifier = ViewLayer::idFromXmlName(name);
         SketchWidget * sketchWidget = NULL;
 		switch (viewIdentifier) {
-			case ViewIdentifierClass::BreadboardView:
+			case ViewLayer::BreadboardView:
 				sketchWidget = m_breadboardGraphicsView;
 				break;
-			case ViewIdentifierClass::SchematicView:
+			case ViewLayer::SchematicView:
 				sketchWidget = m_schematicGraphicsView;
 				break;
-			case ViewIdentifierClass::PCBView:
+			case ViewLayer::PCBView:
 				sketchWidget = m_pcbGraphicsView;
 				break;
 			default:

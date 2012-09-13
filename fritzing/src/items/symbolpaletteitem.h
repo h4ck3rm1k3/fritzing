@@ -35,7 +35,7 @@ class SymbolPaletteItem : public PaletteItem
 	Q_OBJECT
 
 public:
-	SymbolPaletteItem(ModelPart *, ViewIdentifierClass::ViewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel);
+	SymbolPaletteItem(ModelPart *, ViewLayer::ViewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel);
 	~SymbolPaletteItem();
 
 	ConnectorItem* newConnectorItem(class Connector *connector);
@@ -63,7 +63,7 @@ protected:
 	double useVoltage(ConnectorItem * connectorItem);
 	QString makeSvg();
 	QString replaceTextElement(QString svg);
-    ViewIdentifierClass::ViewIdentifier useViewIdentifierForPixmap(ViewIdentifierClass::ViewIdentifier, bool swappingEnabled);
+    ViewLayer::ViewIdentifier useViewIdentifierForPixmap(ViewLayer::ViewIdentifier, bool swappingEnabled);
 
 protected:
 	double m_voltage;

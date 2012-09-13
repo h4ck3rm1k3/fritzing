@@ -78,7 +78,7 @@ class PaletteItem : public PaletteItemBase
 
 public:
 	// after calling this constructor if you want to render the loaded svg (either from model or from file), MUST call <renderImage>
-	PaletteItem(ModelPart *, ViewIdentifierClass::ViewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel);
+	PaletteItem(ModelPart *, ViewLayer::ViewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel);
 	~PaletteItem();
 
 	void removeLayerKin();
@@ -91,7 +91,7 @@ public:
 	void transformItem2(const QMatrix &);
 	void setItemPos(QPointF & pos);
 
-	bool renderImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID, bool doConnectors, QString & error);
+	bool renderImage(ModelPart * modelPart, ViewLayer::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID, bool doConnectors, QString & error);
 
 	void setTransforms();
 	void syncKinMoved(QPointF offset, QPointF loc);

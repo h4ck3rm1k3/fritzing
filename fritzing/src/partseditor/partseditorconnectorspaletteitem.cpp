@@ -31,14 +31,14 @@ $Date$
 #include "partseditorconnectorslayerkinpaletteitem.h"
 
 
-PartsEditorConnectorsPaletteItem::PartsEditorConnectorsPaletteItem(PartsEditorView *owner, ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier)
+PartsEditorConnectorsPaletteItem::PartsEditorConnectorsPaletteItem(PartsEditorView *owner, ModelPart * modelPart, ViewLayer::ViewIdentifier viewIdentifier)
 	: PartsEditorPaletteItem(owner, modelPart, viewIdentifier)
 {
 	m_showingTerminalPoints = owner->showingTerminalPoints();
 	setAcceptHoverEvents(true);
 }
 
-PartsEditorConnectorsPaletteItem::PartsEditorConnectorsPaletteItem(PartsEditorView *owner, ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, SvgAndPartFilePath *path)
+PartsEditorConnectorsPaletteItem::PartsEditorConnectorsPaletteItem(PartsEditorView *owner, ModelPart * modelPart, ViewLayer::ViewIdentifier viewIdentifier, SvgAndPartFilePath *path)
 	: PartsEditorPaletteItem(owner, modelPart, viewIdentifier, path)
 {
 	m_showingTerminalPoints = owner->showingTerminalPoints();
@@ -70,7 +70,7 @@ ConnectorItem* PartsEditorConnectorsPaletteItem::newConnectorItem(Connector *con
 }
 
 LayerKinPaletteItem * PartsEditorConnectorsPaletteItem::newLayerKinPaletteItem(PaletteItemBase * chief, ModelPart * modelPart, 
-																			   ViewIdentifierClass::ViewIdentifier viewIdentifier,
+																			   ViewLayer::ViewIdentifier viewIdentifier,
 																			   const ViewGeometry & viewGeometry, long id,
 																			   ViewLayer::ViewLayerID viewLayerID, 
 																			   ViewLayer::ViewLayerSpec viewLayerSpec, 

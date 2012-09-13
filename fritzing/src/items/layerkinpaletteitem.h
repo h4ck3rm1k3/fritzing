@@ -35,7 +35,7 @@ class LayerKinPaletteItem : public PaletteItemBase
 Q_OBJECT
 
 public:       
-	LayerKinPaletteItem(PaletteItemBase * chief, ModelPart *, ViewIdentifierClass::ViewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu);
+	LayerKinPaletteItem(PaletteItemBase * chief, ModelPart *, ViewLayer::ViewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu);
 	void setOffset(double x, double y);
 	ItemBase * layerKinChief();
 	bool ok();

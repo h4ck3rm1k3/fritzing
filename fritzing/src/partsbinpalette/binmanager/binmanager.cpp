@@ -1155,9 +1155,9 @@ void BinManager::copyFilesToContrib(ModelPart * mp, QWidget * originator) {
 	dir.cd("svg");
 	dir.cd("contrib");
 
-	QList<ViewIdentifierClass::ViewIdentifier> viewIdentifiers;
-	viewIdentifiers << ViewIdentifierClass::IconView << ViewIdentifierClass::BreadboardView << ViewIdentifierClass::SchematicView << ViewIdentifierClass::PCBView;
-	foreach (ViewIdentifierClass::ViewIdentifier viewIdentifier, viewIdentifiers) {
+	QList<ViewLayer::ViewIdentifier> viewIdentifiers;
+	viewIdentifiers << ViewLayer::IconView << ViewLayer::BreadboardView << ViewLayer::SchematicView << ViewLayer::PCBView;
+	foreach (ViewLayer::ViewIdentifier viewIdentifier, viewIdentifiers) {
 		QString fn = mp->hasBaseNameFor(viewIdentifier);
 		if (!fn.isEmpty()) {
 			QFile svg(dir.absoluteFilePath(fn));

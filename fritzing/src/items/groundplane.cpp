@@ -65,13 +65,13 @@ void loadIconSvg()
 
 /////////////////////////////////////////////////////////
 
-GroundPlane::GroundPlane( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier,  const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel) 
+GroundPlane::GroundPlane( ModelPart * modelPart, ViewLayer::ViewIdentifier viewIdentifier,  const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel) 
 	: PaletteItem(modelPart, viewIdentifier,  viewGeometry,  id, itemMenu, doLabel)
 {
 	m_connector0 = NULL;
 }
 
-bool GroundPlane::setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec viewLayerSpec, bool doConnectors, LayerAttributes & layerAttributes, QString & error)
+bool GroundPlane::setUpImage(ModelPart * modelPart, ViewLayer::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec viewLayerSpec, bool doConnectors, LayerAttributes & layerAttributes, QString & error)
 {
 	bool result = PaletteItem::setUpImage(modelPart, viewIdentifier, viewLayers, viewLayerID, viewLayerSpec, doConnectors, layerAttributes, error);
 
@@ -122,7 +122,7 @@ ConnectorItem * GroundPlane::connector0() {
 
 bool GroundPlane::hasCustomSVG() {
 	switch (m_viewIdentifier) {
-		case ViewIdentifierClass::PCBView:
+		case ViewLayer::PCBView:
 			return true;
 		default:
 			return ItemBase::hasCustomSVG();
@@ -167,7 +167,7 @@ void GroundPlane::setSvg(const QString & svg) {
 
 void GroundPlane::setSvgAux(const QString & svg) {
 	if (svg.isEmpty()) return;
-	if (m_viewIdentifier == ViewIdentifierClass::BreadboardView || m_viewIdentifier == ViewIdentifierClass::SchematicView) return;
+	if (m_viewIdentifier == ViewLayer::BreadboardView || m_viewIdentifier == ViewLayer::SchematicView) return;
 
 	QString xmlName = ViewLayer::viewLayerXmlNameFromID(m_viewLayerID);
 	SvgFileSplitter	splitter;
@@ -263,11 +263,11 @@ QPainterPath GroundPlane::shape() const
     return PaletteItemBase::shape();
 }
 
-ViewIdentifierClass::ViewIdentifier GroundPlane::useViewIdentifierForPixmap(ViewIdentifierClass::ViewIdentifier vid, bool) 
+ViewLayer::ViewIdentifier GroundPlane::useViewIdentifierForPixmap(ViewLayer::ViewIdentifier vid, bool) 
 {
-    if (vid == ViewIdentifierClass::PCBView) {
-        return ViewIdentifierClass::IconView;
+    if (vid == ViewLayer::PCBView) {
+        return ViewLayer::IconView;
     }
 
-    return ViewIdentifierClass::UnknownView;
+    return ViewLayer::UnknownView;
 }

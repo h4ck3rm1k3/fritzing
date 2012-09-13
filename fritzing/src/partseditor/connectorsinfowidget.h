@@ -56,23 +56,23 @@ class ConnectorsInfoWidget : public QFrame {
 		void connectorsFound(QList< QPointer<Connector> >);
 		void informConnectorSelection(const QString &);
 		void informEditionCompleted();
-		void syncNewConnectors(ViewIdentifierClass::ViewIdentifier viewId, const QList< QPointer<Connector> > &conns);
+		void syncNewConnectors(ViewLayer::ViewIdentifier viewId, const QList< QPointer<Connector> > &conns);
 		void emitPaintNeeded();
 		void addConnector();
 		void removeSelectedConnector();
 		void removeConnector(AbstractConnectorInfoWidget* connInfo);
-		void removeTerminalPoint(const QString &connId, ViewIdentifierClass::ViewIdentifier vid);
+		void removeTerminalPoint(const QString &connId, ViewLayer::ViewIdentifier vid);
 
 	signals:
 		void connectorSelected(const QString &);
 		void editionCompleted();
-		void existingConnectorSignal(ViewIdentifierClass::ViewIdentifier viewId, const QString &id, Connector* existingConnector, Connector * newConnector);
-		void setMismatching(ViewIdentifierClass::ViewIdentifier viewId, const QString &connId, bool mismatching);
+		void existingConnectorSignal(ViewLayer::ViewIdentifier viewId, const QString &id, Connector* existingConnector, Connector * newConnector);
+		void setMismatching(ViewLayer::ViewIdentifier viewId, const QString &connId, bool mismatching);
 		void repaintNeeded();
 		void showTerminalPoints(bool show);
 		void drawConnector(Connector*);
-		void drawConnector(ViewIdentifierClass::ViewIdentifier, Connector*);
-		void removeConnectorFrom(const QString &connId, ViewIdentifierClass::ViewIdentifier view);
+		void drawConnector(ViewLayer::ViewIdentifier, Connector*);
+		void removeConnectorFrom(const QString &connId, ViewLayer::ViewIdentifier view);
 
 	protected slots:
 		void updateLayout();
@@ -89,15 +89,15 @@ class ConnectorsInfoWidget : public QFrame {
 		Connector* addConnectorInfo(QString id);
 		void addConnectorInfo(Connector *conn);
 		void addMismatchingConnectorInfo(MismatchingConnectorWidget *mcw);
-		void addMismatchingConnectorInfo(ViewIdentifierClass::ViewIdentifier viewID, QString connId);
+		void addMismatchingConnectorInfo(ViewLayer::ViewIdentifier viewID, QString connId);
 		QVBoxLayout *scrollContentLayout();
 		bool eventFilter(QObject *obj, QEvent *event);
 		void setSelected(AbstractConnectorInfoWidget * newSelected);
 		void selectNext();
 		void selectPrev();
 
-		void clearMismatchingForView(ViewIdentifierClass::ViewIdentifier viewId);
-		void singleToMismatchingNotInView(ViewIdentifierClass::ViewIdentifier viewId, const QStringList &connIds);
+		void clearMismatchingForView(ViewLayer::ViewIdentifier viewId);
+		void singleToMismatchingNotInView(ViewLayer::ViewIdentifier viewId, const QStringList &connIds);
 
 		bool existingConnId(const QString &id);
 		MismatchingConnectorWidget* existingMismatchingConnector(const QString &id);
@@ -107,12 +107,12 @@ class ConnectorsInfoWidget : public QFrame {
 		SingleConnectorInfoWidget * findSCI(const QString &id);
 
 		int nextConnId();
-		void resetType(ViewIdentifierClass::ViewIdentifier viewId, SingleConnectorInfoWidget * sci, Connector * conn);
-		void resetName(ViewIdentifierClass::ViewIdentifier viewId, SingleConnectorInfoWidget * sci, Connector * conn);
+		void resetType(ViewLayer::ViewIdentifier viewId, SingleConnectorInfoWidget * sci, Connector * conn);
+		void resetName(ViewLayer::ViewIdentifier viewId, SingleConnectorInfoWidget * sci, Connector * conn);
 
 protected:
 
-		//QHash<QString /*connId*/, QMultiHash<ViewIdentifierClass::ViewIdentifier, SvgIdLayer*> > m_connectorsPins;
+		//QHash<QString /*connId*/, QMultiHash<ViewLayer::ViewIdentifier, SvgIdLayer*> > m_connectorsPins;
 
 		QLabel *m_title;
 		QScrollArea *m_scrollArea;

@@ -42,7 +42,6 @@ $Date$
 #include "fritzingwindow.h"
 #include "sketchareawidget.h"
 #include "../viewlayer.h"
-#include "../viewidentifierclass.h"
 #include "../program/programwindow.h"
 #include "../svg/svg2gerber.h"
 #include "../dock/viewswitcher.h"
@@ -167,7 +166,7 @@ public:
 	void copperFill(ViewLayer::ViewLayerID);
     bool hasAnyAlien();
     void exportSvg(double res, bool selectedItems, bool flatten, const QString & filename);
-    void setCurrentView(ViewIdentifierClass::ViewIdentifier);
+    void setCurrentView(ViewLayer::ViewIdentifier);
 
 public:
 	static void initNames();
@@ -423,7 +422,7 @@ protected:
 	void exportSvgWatermark(QString & svg, double res);
 	void exportEtchable(bool wantPDF, bool wantSVG);
 
-	virtual QList<QWidget*> getButtonsForView(ViewIdentifierClass::ViewIdentifier viewId);
+	virtual QList<QWidget*> getButtonsForView(ViewLayer::ViewIdentifier viewId);
 	const QString untitledFileName();
 	int &untitledFileCount();
 	const QString fileExtension();

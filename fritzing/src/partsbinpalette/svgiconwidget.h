@@ -54,7 +54,7 @@ class SvgIconWidget : public QGraphicsWidget
 {
 Q_OBJECT
 public:
-	SvgIconWidget(ModelPart *, ViewIdentifierClass::ViewIdentifier, ItemBase *, bool plural);
+	SvgIconWidget(ModelPart *, ViewLayer::ViewIdentifier, ItemBase *, bool plural);
 	~SvgIconWidget();
 	ItemBase * itemBase() const;
 	ModelPart * modelPart() const;

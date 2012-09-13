@@ -81,7 +81,7 @@ void SvgIconPixmapItem::paint(QPainter *painter, const QStyleOptionGraphicsItem 
 
 ////////////////////////////////////////////////////////////
 
-SvgIconWidget::SvgIconWidget(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, ItemBase * itemBase, bool plural)
+SvgIconWidget::SvgIconWidget(ModelPart * modelPart, ViewLayer::ViewIdentifier viewIdentifier, ItemBase * itemBase, bool plural)
 	: QGraphicsWidget() 
 {
 	m_moduleId = modelPart->moduleID();

@@ -51,7 +51,7 @@ static QHash<QString, QColor> Tolerances;
 //	save into parts bin
 //	other manifestations of "220"?
 
-Resistor::Resistor( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
+Resistor::Resistor( ModelPart * modelPart, ViewLayer::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: Capacitor(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
 	m_changingPinSpacing = false;
@@ -134,14 +134,14 @@ void Resistor::setResistance(QString resistance, QString pinSpacing, bool force)
 	modelPart()->setLocalTitle(resistance + " " + OhmSymbol + " " + tr("Resistor"));
 
 	switch (this->m_viewIdentifier) {
-		case ViewIdentifierClass::BreadboardView:
+		case ViewLayer::BreadboardView:
 			if (force || resistance.compare(m_ohms) != 0) {
 				QString svg = makeSvg(resistance, m_viewLayerID);
 				//DebugDialog::debug(svg);
 				reloadRenderer(svg, false);
 			}
 			break;
-		case ViewIdentifierClass::PCBView:
+		case ViewLayer::PCBView:
 			if (force || pinSpacing.compare(m_pinSpacing) != 0) {
 
 				InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
@@ -354,8 +354,8 @@ ConnectorItem* Resistor::newConnectorItem(ItemBase * layerKin, Connector *connec
 
 bool Resistor::hasCustomSVG() {
 	switch (m_viewIdentifier) {
-		case ViewIdentifierClass::BreadboardView:
-		case ViewIdentifierClass::IconView:
+		case ViewLayer::BreadboardView:
+		case ViewLayer::IconView:
 			return true;
 		default:
 			return ItemBase::hasCustomSVG();
@@ -401,7 +401,7 @@ void Resistor::setProp(const QString & prop, const QString & value)
 	}
 }
 
-bool Resistor::setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec viewLayerSpec, bool doConnectors, LayerAttributes & layerAttributes, QString & error)
+bool Resistor::setUpImage(ModelPart * modelPart, ViewLayer::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec viewLayerSpec, bool doConnectors, LayerAttributes & layerAttributes, QString & error)
 {
 	bool result = Capacitor::setUpImage(modelPart, viewIdentifier, viewLayers, viewLayerID, viewLayerSpec, doConnectors, layerAttributes, error);
 	if (viewLayerID == ViewLayer::Breadboard) {
@@ -413,8 +413,8 @@ bool Resistor::setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdenti
 	return result;
 }
 
-ViewIdentifierClass::ViewIdentifier Resistor::useViewIdentifierForPixmap(ViewIdentifierClass::ViewIdentifier vid, bool swappingEnabled) {
-    if (swappingEnabled && vid == ViewIdentifierClass::BreadboardView) {
+ViewLayer::ViewIdentifier Resistor::useViewIdentifierForPixmap(ViewLayer::ViewIdentifier vid, bool swappingEnabled) {
+    if (swappingEnabled && vid == ViewLayer::BreadboardView) {
         return vid;
     }
 

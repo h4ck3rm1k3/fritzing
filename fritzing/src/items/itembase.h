@@ -41,7 +41,6 @@ $Date$
 
 #include "../viewgeometry.h"
 #include "../viewlayer.h"
-#include "../viewidentifierclass.h"
 #include "../utils/misc.h"
 
 class ConnectorItem;
@@ -62,7 +61,7 @@ public:
 	};
 
 public:
-	ItemBase(class ModelPart*, ViewIdentifierClass::ViewIdentifier, const ViewGeometry &, long id, QMenu * itemMenu);
+	ItemBase(class ModelPart*, ViewLayer::ViewIdentifier, const ViewGeometry &, long id, QMenu * itemMenu);
 	virtual ~ItemBase();
 
 	qint64 id() const;
@@ -87,7 +86,7 @@ public:
 	void transformItem(const QTransform &);
 	virtual void transformItem2(const QMatrix &);
 	virtual void removeLayerKin();
-	ViewIdentifierClass::ViewIdentifier viewIdentifier();
+	ViewLayer::ViewIdentifier viewIdentifier();
 	QString & viewIdentifierName();
 	ViewLayer::ViewLayerID viewLayerID() const;
 	void setViewLayerID(ViewLayer::ViewLayerID, const LayerHash & viewLayers);
@@ -213,7 +212,7 @@ public:
 	bool resetRenderer(const QString & svg);
 	bool resetRenderer(const QString & svg, QString & newSvg);
     void getPixmaps(QPixmap * &, QPixmap * &, QPixmap * &, bool swappingEnabled, QSize);
-    class FSvgRenderer * setUpImage(class ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerID, ViewLayer::ViewLayerSpec, class LayerAttributes &, QString & error);
+    class FSvgRenderer * setUpImage(class ModelPart * modelPart, ViewLayer::ViewIdentifier, ViewLayer::ViewLayerID, ViewLayer::ViewLayerSpec, class LayerAttributes &, QString & error);
 
 public:
 	virtual void getConnectedColor(ConnectorItem *, QBrush * &, QPen * &, double & opacity, double & negativePenWidth, bool & negativeOffsetRect);
@@ -303,8 +302,8 @@ protected:
 	virtual void setDefaultTooltip();
 	void setInstanceTitleAux(const QString & title);
 	void saveLocAndTransform(QXmlStreamWriter & streamWriter);
-    QPixmap * getPixmap(ViewIdentifierClass::ViewIdentifier, bool swappingEnabled, QSize size);
-    virtual ViewIdentifierClass::ViewIdentifier useViewIdentifierForPixmap(ViewIdentifierClass::ViewIdentifier, bool swappingEnabled);
+    QPixmap * getPixmap(ViewLayer::ViewIdentifier, bool swappingEnabled, QSize size);
+    virtual ViewLayer::ViewIdentifier useViewIdentifierForPixmap(ViewLayer::ViewIdentifier, bool swappingEnabled);
     virtual void makeLocalModifications(QByteArray & svg, const QString & filename);
 
 protected:
@@ -316,7 +315,7 @@ protected:
 	qint64 m_id;
 	ViewGeometry m_viewGeometry;
 	QPointer<ModelPart> m_modelPart;
-	ViewIdentifierClass::ViewIdentifier m_viewIdentifier;
+	ViewLayer::ViewIdentifier m_viewIdentifier;
 	ViewLayer::ViewLayerID m_viewLayerID;
 	int m_connectorHoverCount;
 	int m_connectorHoverCount2;

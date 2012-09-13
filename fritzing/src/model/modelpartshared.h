@@ -35,11 +35,10 @@ $Date$
 #include <QDate>
 #include <QPointer>
 
-#include "../viewidentifierclass.h"
 #include "../viewlayer.h"
 
 struct ViewImage {
-    ViewIdentifierClass::ViewIdentifier viewIdentifier;
+    ViewLayer::ViewIdentifier viewIdentifier;
     qulonglong layers;
     qulonglong sticky;
     qulonglong flipped;
@@ -47,7 +46,7 @@ struct ViewImage {
     bool canFlipHorizontal;
     bool canFlipVertical;
 
-    ViewImage(ViewIdentifierClass::ViewIdentifier);
+    ViewImage(ViewLayer::ViewIdentifier);
 };
 
 class ModelPartShared : public QObject
@@ -89,16 +88,16 @@ public:
     void setFritzingVersion(const QString & fv);
 
     const QList<ViewImage *> viewImages();
-    QString imageFileName(ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerID);
-    void setImageFileName(ViewIdentifierClass::ViewIdentifier, const QString & filename);
-    QString imageFileName(ViewIdentifierClass::ViewIdentifier);
-    bool anySticky(ViewIdentifierClass::ViewIdentifier);
-    bool hasMultipleLayers(ViewIdentifierClass::ViewIdentifier);
-    bool canFlipHorizontal(ViewIdentifierClass::ViewIdentifier);
-    bool canFlipVertical(ViewIdentifierClass::ViewIdentifier);
-    bool hasViewIdentifier(ViewIdentifierClass::ViewIdentifier viewIdentifier);
-    LayerList viewLayers(ViewIdentifierClass::ViewIdentifier viewIdentifier);
-    LayerList viewLayersFlipped(ViewIdentifierClass::ViewIdentifier viewIdentifier);
+    QString imageFileName(ViewLayer::ViewIdentifier, ViewLayer::ViewLayerID);
+    void setImageFileName(ViewLayer::ViewIdentifier, const QString & filename);
+    QString imageFileName(ViewLayer::ViewIdentifier);
+    bool anySticky(ViewLayer::ViewIdentifier);
+    bool hasMultipleLayers(ViewLayer::ViewIdentifier);
+    bool canFlipHorizontal(ViewLayer::ViewIdentifier);
+    bool canFlipVertical(ViewLayer::ViewIdentifier);
+    bool hasViewIdentifier(ViewLayer::ViewIdentifier viewIdentifier);
+    LayerList viewLayers(ViewLayer::ViewIdentifier viewIdentifier);
+    LayerList viewLayersFlipped(ViewLayer::ViewIdentifier viewIdentifier);
 
 	const QString & path();
 	void setPath(QString path);
@@ -107,7 +106,7 @@ public:
 
 	const QList< QPointer<class ConnectorShared> > connectorsShared();
 	void setConnectorsShared(QList< QPointer<class ConnectorShared> > connectors);
-	void connectorIDs(ViewIdentifierClass::ViewIdentifier viewId, ViewLayer::ViewLayerID viewLayerID, QStringList & connectorIDs, QStringList & terminalIDs, QStringList & legIDs);
+	void connectorIDs(ViewLayer::ViewIdentifier viewId, ViewLayer::ViewLayerID viewLayerID, QStringList & connectorIDs, QStringList & terminalIDs, QStringList & legIDs);
 
 	const QStringList &tags();
 	void setTags(const QStringList &tags);
@@ -136,9 +135,9 @@ public:
 	void setFlippedSMD(bool);
 	bool flippedSMD();	
 	bool needsCopper1();
-	bool hasViewFor(ViewIdentifierClass::ViewIdentifier);
-	bool hasViewFor(ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerID);
-	QString hasBaseNameFor(ViewIdentifierClass::ViewIdentifier);
+	bool hasViewFor(ViewLayer::ViewIdentifier);
+	bool hasViewFor(ViewLayer::ViewIdentifier, ViewLayer::ViewLayerID);
+	QString hasBaseNameFor(ViewLayer::ViewIdentifier);
     void setViewImage(ViewImage *);
     void addConnector(ConnectorShared *);
     void insertBus(class BusShared *);
@@ -153,7 +152,7 @@ protected:
 	void commonInit();
 	void ensurePartNumberProperty();
     void copyPins(ViewLayer::ViewLayerID from, ViewLayer::ViewLayerID to);
-    LayerList viewLayersAux(ViewIdentifierClass::ViewIdentifier viewIdentifier, qulonglong (*accessor)(ViewImage *));
+    LayerList viewLayersAux(ViewLayer::ViewIdentifier viewIdentifier, qulonglong (*accessor)(ViewImage *));
 
 public:
 	static const QString PartNumberPropertyName;
@@ -184,7 +183,7 @@ protected:
 	QHash<QString, QPointer<class ConnectorShared> > m_connectorSharedHash;
 	QHash<QString, class BusShared *> m_buses;
 	QList<class ConnectorShared *> m_deletedList;
-    QHash<ViewIdentifierClass::ViewIdentifier, ViewImage *> m_viewImages;
+    QHash<ViewLayer::ViewIdentifier, ViewImage *> m_viewImages;
 
 	bool m_connectorsInitialized;
 	bool m_ignoreTerminalPoints;

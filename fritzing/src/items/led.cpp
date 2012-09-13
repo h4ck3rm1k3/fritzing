@@ -39,7 +39,7 @@ $Date$
 static QHash<QString, QString> BreadboardSvg;
 static QHash<QString, QString> IconSvg;
 
-LED::LED( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
+LED::LED( ModelPart * modelPart, ViewLayer::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: Capacitor(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
 }
@@ -84,8 +84,8 @@ void LED::addedToScene(bool temporary)
 
 bool LED::hasCustomSVG() {
 	switch (m_viewIdentifier) {
-		case ViewIdentifierClass::BreadboardView:
-		case ViewIdentifierClass::IconView:
+		case ViewLayer::BreadboardView:
+		case ViewLayer::IconView:
 			return true;
 		default:
 			return ItemBase::hasCustomSVG();
@@ -173,7 +173,7 @@ QString LED::getColorSVG(const QString & color, ViewLayer::ViewLayerID viewLayer
 	return domDocument.toString();
 }
 
-bool LED::setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec viewLayerSpec, bool doConnectors, LayerAttributes & layerAttributes, QString & error)
+bool LED::setUpImage(ModelPart * modelPart, ViewLayer::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec viewLayerSpec, bool doConnectors, LayerAttributes & layerAttributes, QString & error)
 {
 	bool result = Capacitor::setUpImage(modelPart, viewIdentifier, viewLayers, viewLayerID, viewLayerSpec, doConnectors, layerAttributes, error);
 	if (viewLayerID == ViewLayer::Breadboard && BreadboardSvg.value(m_filename).isEmpty() && result) {
@@ -190,8 +190,8 @@ const QString & LED::title() {
 	return m_title;
 }
 
-ViewIdentifierClass::ViewIdentifier LED::useViewIdentifierForPixmap(ViewIdentifierClass::ViewIdentifier vid, bool swappingEnabled) {
-    if (swappingEnabled && vid == ViewIdentifierClass::BreadboardView) {
+ViewLayer::ViewIdentifier LED::useViewIdentifierForPixmap(ViewLayer::ViewIdentifier vid, bool swappingEnabled) {
+    if (swappingEnabled && vid == ViewLayer::BreadboardView) {
         return vid;
     }
 

@@ -64,7 +64,7 @@ static const double JND = (double) 0.01;
 QString Board::OneLayerTranslated;
 QString Board::TwoLayersTranslated;
 
-Board::Board( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
+Board::Board( ModelPart * modelPart, ViewLayer::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: PaletteItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
     m_svgOnly = true;
@@ -401,18 +401,18 @@ void Board::prepLoadImageAux(const QString & fileName, bool addName)
 	}
 }
 
-ViewIdentifierClass::ViewIdentifier Board::useViewIdentifierForPixmap(ViewIdentifierClass::ViewIdentifier vid, bool) 
+ViewLayer::ViewIdentifier Board::useViewIdentifierForPixmap(ViewLayer::ViewIdentifier vid, bool) 
 {
-    if (vid == ViewIdentifierClass::PCBView) {
-        return ViewIdentifierClass::IconView;
+    if (vid == ViewLayer::PCBView) {
+        return ViewLayer::IconView;
     }
 
-    return ViewIdentifierClass::UnknownView;
+    return ViewLayer::UnknownView;
 }
 
 ///////////////////////////////////////////////////////////
 
-ResizableBoard::ResizableBoard( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
+ResizableBoard::ResizableBoard( ModelPart * modelPart, ViewLayer::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: Board(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
 	fixWH();
@@ -637,15 +637,15 @@ void ResizableBoard::mouseReleaseEvent(QGraphicsSceneMouseEvent * event) {
 	}
 }
 
-bool ResizableBoard::setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec viewLayerSpec, bool doConnectors, LayerAttributes & layerAttributes, QString & error)
+bool ResizableBoard::setUpImage(ModelPart * modelPart, ViewLayer::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec viewLayerSpec, bool doConnectors, LayerAttributes & layerAttributes, QString & error)
 {
 	bool result = Board::setUpImage(modelPart, viewIdentifier, viewLayers, viewLayerID, viewLayerSpec, doConnectors, layerAttributes, error);
 
 	return result;
 }
 
-ViewIdentifierClass::ViewIdentifier ResizableBoard::theViewIdentifier() {
-	return ViewIdentifierClass::PCBView;
+ViewLayer::ViewIdentifier ResizableBoard::theViewIdentifier() {
+	return ViewLayer::PCBView;
 }
 
 void ResizableBoard::resizePixels(double w, double h, const LayerHash & viewLayers) {

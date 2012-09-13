@@ -37,7 +37,7 @@ $Date$
 
 static const double WireHoverStrokeFactor = 4.0;
 
-BreadboardSketchWidget::BreadboardSketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, QWidget *parent)
+BreadboardSketchWidget::BreadboardSketchWidget(ViewLayer::ViewIdentifier viewIdentifier, QWidget *parent)
     : SketchWidget(viewIdentifier, parent)
 {
 	m_shortName = QObject::tr("bb");

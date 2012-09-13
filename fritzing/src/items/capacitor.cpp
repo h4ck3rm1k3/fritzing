@@ -36,7 +36,7 @@ $Date$
 // TODO
 //	save into parts bin
 
-Capacitor::Capacitor( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
+Capacitor::Capacitor( ModelPart * modelPart, ViewLayer::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: PaletteItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
 	PropertyDefMaster::initPropertyDefs(modelPart, m_propertyDefs);

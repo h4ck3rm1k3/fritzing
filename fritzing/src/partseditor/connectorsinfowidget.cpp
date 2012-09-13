@@ -235,21 +235,21 @@ Connector* ConnectorsInfoWidget::addConnectorInfo(QString id) {
 	connShared->setId(id);
 
 	connShared->addPin(
-		ViewIdentifierClass::BreadboardView,
+		ViewLayer::BreadboardView,
 		m_views->breadboardView()->svgIdForConnector(id),
 		m_views->breadboardView()->connectorsLayerId(),
 		m_views->breadboardView()->terminalIdForConnector(id),
         "", false
 	);
 	connShared->addPin(
-		ViewIdentifierClass::SchematicView,
+		ViewLayer::SchematicView,
 		m_views->schematicView()->svgIdForConnector(id),
 		m_views->schematicView()->connectorsLayerId(),
 		m_views->schematicView()->terminalIdForConnector(id),
         "", false
 	);
 	connShared->addPin(
-		ViewIdentifierClass::PCBView,
+		ViewLayer::PCBView,
 		m_views->pcbView()->svgIdForConnector(id),
 		m_views->pcbView()->connectorsLayerId(),
 		m_views->pcbView()->terminalIdForConnector(id),
@@ -278,7 +278,7 @@ void ConnectorsInfoWidget::addConnectorInfo(Connector *conn) {
 	m_scrollContent->updateGeometry();
 }
 
-void ConnectorsInfoWidget::addMismatchingConnectorInfo(ViewIdentifierClass::ViewIdentifier viewId, QString connId) {
+void ConnectorsInfoWidget::addMismatchingConnectorInfo(ViewLayer::ViewIdentifier viewId, QString connId) {
 	m_connIds << connId;
 	MismatchingConnectorWidget *mcw = new MismatchingConnectorWidget(this,viewId,connId,m_mismatchersFrame);
 	addMismatchingConnectorInfo(mcw);
@@ -304,7 +304,7 @@ void ConnectorsInfoWidget::addMismatchingConnectorInfo(MismatchingConnectorWidge
 		setSelected(mcw);
 	}*/
 
-	foreach(ViewIdentifierClass::ViewIdentifier viewId, mcw->views()) {
+	foreach(ViewLayer::ViewIdentifier viewId, mcw->views()) {
 		emit setMismatching(viewId, mcw->connId(), true);
 	}
 }
@@ -359,7 +359,7 @@ const QList< QPointer<ConnectorShared> > ConnectorsInfoWidget::connectorsShared(
 	return connectorsShared;
 }
 
-void ConnectorsInfoWidget::removeTerminalPoint(const QString &connId, ViewIdentifierClass::ViewIdentifier vid) {
+void ConnectorsInfoWidget::removeTerminalPoint(const QString &connId, ViewLayer::ViewIdentifier vid) {
 	for(int i=0; i<m_connsInfo.size(); i++) {
 		SingleConnectorInfoWidget *sci = m_connsInfo[i];
 		Connector *conn = sci->connector();
@@ -372,7 +372,7 @@ void ConnectorsInfoWidget::removeTerminalPoint(const QString &connId, ViewIdenti
 }
 
 // If we're reloading an image, clear mismatching connectors related exclusively to that view
-void ConnectorsInfoWidget::clearMismatchingForView(ViewIdentifierClass::ViewIdentifier viewId) {
+void ConnectorsInfoWidget::clearMismatchingForView(ViewLayer::ViewIdentifier viewId) {
 	foreach(MismatchingConnectorWidget* mcw, m_mismatchConnsInfo) {
 		if(mcw->views().size()==1 &&  mcw->views()[0] == viewId) {
 			removeMismatchingConnectorInfo(mcw, false);
@@ -381,7 +381,7 @@ void ConnectorsInfoWidget::clearMismatchingForView(ViewIdentifierClass::ViewIden
 }
 
 // Updates previous connector to mismatching if they are not in the list
-void ConnectorsInfoWidget::singleToMismatchingNotInView(ViewIdentifierClass::ViewIdentifier viewId, const QStringList &connIds) {
+void ConnectorsInfoWidget::singleToMismatchingNotInView(ViewLayer::ViewIdentifier viewId, const QStringList &connIds) {
 	foreach(SingleConnectorInfoWidget* sci, m_connsInfo) {
 		if(connIds.indexOf(sci->id()) == -1) {
 			MismatchingConnectorWidget *mcw = sci->toMismatching(viewId);
@@ -400,7 +400,7 @@ void ConnectorsInfoWidget::singleToMismatchingNotInView(ViewIdentifierClass::Vie
 	updateLayout();
 }
 
-void ConnectorsInfoWidget::syncNewConnectors(ViewIdentifierClass::ViewIdentifier viewId, const QList< QPointer<Connector> > &conns) {
+void ConnectorsInfoWidget::syncNewConnectors(ViewLayer::ViewIdentifier viewId, const QList< QPointer<Connector> > &conns) {
 	clearMismatchingForView(viewId);
 
 	// clean the old pins for this view
@@ -472,9 +472,9 @@ void ConnectorsInfoWidget::removeMismatchingConnectorInfo(MismatchingConnectorWi
 	}
 
 	if(alsoDeleteFromView) {
-		emit removeConnectorFrom(mcw->connId(),ViewIdentifierClass::AllViews);
+		emit removeConnectorFrom(mcw->connId(),ViewLayer::AllViews);
 	} else {
-		foreach(ViewIdentifierClass::ViewIdentifier viewId, mcw->views()) {
+		foreach(ViewLayer::ViewIdentifier viewId, mcw->views()) {
 			emit setMismatching(viewId, mcw->connId(), false);
 		}
 	}
@@ -503,7 +503,7 @@ void ConnectorsInfoWidget::removeConnectorInfo(SingleConnectorInfoWidget *sci, b
 	}
 
 	if(alsoDeleteFromView) {
-		emit removeConnectorFrom(sci->id(), ViewIdentifierClass::AllViews);
+		emit removeConnectorFrom(sci->id(), ViewLayer::AllViews);
 	}
 
 	m_objToDelete = sci;
@@ -619,8 +619,8 @@ void ConnectorsInfoWidget::setViews(PartsEditorViewsWidget* connsView) {
 
 void ConnectorsInfoWidget::completeConn(MismatchingConnectorWidget* mcw) {
 	if(m_views->imagesLoadedInAllViews()) {
-		QList<ViewIdentifierClass::ViewIdentifier> missingViews = mcw->missingViews();
-		QList<ViewIdentifierClass::ViewIdentifier> availViews = mcw->views();
+		QList<ViewLayer::ViewIdentifier> missingViews = mcw->missingViews();
+		QList<ViewLayer::ViewIdentifier> availViews = mcw->views();
 		QString connId = mcw->connId();
 		removeMismatchingConnectorInfo(mcw);
 
@@ -631,10 +631,10 @@ void ConnectorsInfoWidget::completeConn(MismatchingConnectorWidget* mcw) {
 		}
 
 		Connector *connector = findConnector(connId);
-		foreach(ViewIdentifierClass::ViewIdentifier viewId, missingViews) {
+		foreach(ViewLayer::ViewIdentifier viewId, missingViews) {
 			emit drawConnector(viewId, connector);
 		}
-		foreach(ViewIdentifierClass::ViewIdentifier viewId, availViews) {
+		foreach(ViewLayer::ViewIdentifier viewId, availViews) {
 			emit setMismatching(viewId,connId,false);
 		}
 	} else {
@@ -662,8 +662,8 @@ bool ConnectorsInfoWidget::hasMismatchingConnectors() {
 	return m_mismatchConnsInfo.size() > 0;
 }
 
-void ConnectorsInfoWidget::resetType(ViewIdentifierClass::ViewIdentifier viewId, SingleConnectorInfoWidget * sci, Connector * conn) {
-	if (viewId != ViewIdentifierClass::PCBView) return;
+void ConnectorsInfoWidget::resetType(ViewLayer::ViewIdentifier viewId, SingleConnectorInfoWidget * sci, Connector * conn) {
+	if (viewId != ViewLayer::PCBView) return;
 
 	if (conn->connectorType() == sci->connectorType()) return;
 
@@ -683,7 +683,7 @@ void ConnectorsInfoWidget::resetType(ViewIdentifierClass::ViewIdentifier viewId,
 }
 
 
-void ConnectorsInfoWidget::resetName(ViewIdentifierClass::ViewIdentifier viewId, SingleConnectorInfoWidget * sci, Connector * conn) 
+void ConnectorsInfoWidget::resetName(ViewLayer::ViewIdentifier viewId, SingleConnectorInfoWidget * sci, Connector * conn) 
 {
 	Q_UNUSED(viewId);
 

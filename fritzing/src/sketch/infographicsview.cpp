@@ -49,7 +49,7 @@ void InfoGraphicsView::viewItemInfo(ItemBase * item) {
 void InfoGraphicsView::hoverEnterItem(QGraphicsSceneHoverEvent * event, ItemBase * itemBase) {
 	if (m_infoView == NULL) return;
 
-	if (event->modifiers() & Qt::ShiftModifier || itemBase->viewIdentifier() == ViewIdentifierClass::IconView) {
+	if (event->modifiers() & Qt::ShiftModifier || itemBase->viewIdentifier() == ViewLayer::IconView) {
 		m_hoverEnterMode = true;
 		m_infoView->hoverEnterItem(this, event, itemBase ? itemBase->layerKinChief() : itemBase, swappingEnabled(itemBase));
 	}

@@ -39,7 +39,7 @@ class IconSketchWidget : public SketchWidget
 	Q_OBJECT
 
 public:
-    IconSketchWidget(ViewIdentifierClass::ViewIdentifier, QWidget *parent=0);
+    IconSketchWidget(ViewLayer::ViewIdentifier, QWidget *parent=0);
 
 	void addViewLayers();
 };
@@ -87,7 +87,7 @@ protected:
     void moreInitDock();
     void createActions();
     void createMenus();
-    QList<QWidget*> getButtonsForView(ViewIdentifierClass::ViewIdentifier);
+    QList<QWidget*> getButtonsForView(ViewLayer::ViewIdentifier);
     void connectPairs();
 	QMenu *breadboardItemMenu();
 	QMenu *schematicItemMenu();
@@ -115,6 +115,9 @@ protected:
     void updateChangeCount(SketchWidget * sketchWidget, int changeDirection);
     class PEGraphicsItem * findTerminalItem();
     void terminalPointChangedAux(PEGraphicsItem * pegi, QPointF p);
+    void showInOS(QWidget *parent, const QString &pathIn);
+    void switchedConnector(const QDomElement &, SketchWidget *);
+    PEGraphicsItem * makePegi(QSizeF size, QPointF topLeft, ItemBase * itemBase, QDomElement & element);
 
 protected slots:
     void initZoom();
@@ -124,6 +127,7 @@ protected slots:
     void loadImage();
     bool save();
     bool saveAs();
+    void showInOS();
 
 protected:
     QDomDocument m_fzpDocument;
@@ -135,6 +139,7 @@ protected:
     QAction * m_showMetadataViewAct;
     QAction * m_showConnectorsViewAct;
     QAction * m_showIconAct;
+    QAction * m_showInOSAct;
 
 	QPointer<SketchAreaWidget> m_iconWidget;
 	QPointer<class IconSketchWidget> m_iconGraphicsView;
@@ -143,9 +148,9 @@ protected:
     class PEToolView * m_peToolView;
     QString m_guid;
     int m_fileIndex;
-    QHash<ViewIdentifierClass::ViewIdentifier, ItemBase *> m_items;
-    QHash<ViewIdentifierClass::ViewIdentifier, QDomDocument *> m_docs;
-    QHash<ViewIdentifierClass::ViewIdentifier, int> m_svgChangeCount;
+    QHash<ViewLayer::ViewIdentifier, ItemBase *> m_items;
+    QHash<ViewLayer::ViewIdentifier, QDomDocument *> m_docs;
+    QHash<ViewLayer::ViewIdentifier, int> m_svgChangeCount;
     QString m_userPartsFolderPath;
     QString m_userPartsFolderSvgPath;
     bool m_isCore;

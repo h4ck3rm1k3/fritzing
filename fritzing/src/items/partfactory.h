@@ -30,7 +30,6 @@ $Date$
 #include <QMenu>
 #include <QDomDocument>
 #include <QDomElement>
-#include "../viewidentifierclass.h"
 #include "../viewlayer.h"
 #include "paletteitem.h"
 
@@ -38,7 +37,7 @@ $Date$
 class PartFactory
 {
 public:
-	static class ItemBase * createPart(class ModelPart *, ViewLayer::ViewLayerSpec, ViewIdentifierClass::ViewIdentifier, const class ViewGeometry & viewGeometry, long id, QMenu * itemMenu, QMenu * wireMenu, bool doLabel);
+	static class ItemBase * createPart(class ModelPart *, ViewLayer::ViewLayerSpec, ViewLayer::ViewIdentifier, const class ViewGeometry & viewGeometry, long id, QMenu * itemMenu, QMenu * wireMenu, bool doLabel);
 	static QString getSvgFilename(class ModelPart *, const QString & filename);
 	static QString getFzpFilename(const QString & moduleID);
 	static void initFolder();
@@ -55,7 +54,7 @@ public:
 protected:
 	static QString getFzpFilenameAux(const QString & moduleID, GenFzp);
 	static QString getSvgFilenameAux(const QString & expectedFileName, const ModelPart *, GenSvg);
-	static class ItemBase * createPartAux(class ModelPart *, ViewIdentifierClass::ViewIdentifier, const class ViewGeometry & viewGeometry, long id, QMenu * itemMenu, QMenu * wireMenu, bool doLabel);
+	static class ItemBase * createPartAux(class ModelPart *, ViewLayer::ViewIdentifier, const class ViewGeometry & viewGeometry, long id, QMenu * itemMenu, QMenu * wireMenu, bool doLabel);
 };
 
 #endif

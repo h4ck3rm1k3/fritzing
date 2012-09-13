@@ -99,11 +99,11 @@ int PartsBinListView::setItemAux(ModelPart * modelPart, int position) {
 	else {
         ItemBase * itemBase = ItemBaseHash.value(moduleID);
         if (itemBase == NULL) {
-		    itemBase = PartFactory::createPart(modelPart, ViewLayer::ThroughHoleThroughTop_OneLayer, ViewIdentifierClass::IconView, ViewGeometry(), ItemBase::getNextID(), NULL, NULL, false);
+		    itemBase = PartFactory::createPart(modelPart, ViewLayer::ThroughHoleThroughTop_OneLayer, ViewLayer::IconView, ViewGeometry(), ItemBase::getNextID(), NULL, NULL, false);
 		    ItemBaseHash.insert(moduleID, itemBase);
             QString error;
 		    LayerAttributes layerAttributes;
-		    FSvgRenderer * renderer = itemBase->setUpImage(modelPart, ViewIdentifierClass::IconView, ViewLayer::Icon, itemBase->viewLayerSpec(), layerAttributes, error);
+		    FSvgRenderer * renderer = itemBase->setUpImage(modelPart, ViewLayer::IconView, ViewLayer::Icon, itemBase->viewLayerSpec(), layerAttributes, error);
 		    if (renderer != NULL) {
 			    if (itemBase) {
 				    itemBase->setFilename(renderer->filename());

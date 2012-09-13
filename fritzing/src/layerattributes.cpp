@@ -41,7 +41,7 @@ void LayerAttributes::setFilename(const QString & filename) {
 
 /*
 
-bool LayerAttributes::getSvgElementID(QDomDocument * doc, ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID) {
+bool LayerAttributes::getSvgElementID(QDomDocument * doc, ViewLayer::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID) {
 	int layerCount;
 	QDomElement layer = getSvgElementLayer(doc, viewIdentifier, viewLayerID, layerCount);
 	bool m_multiLayer = (layerCount > 1);
@@ -66,7 +66,7 @@ bool LayerAttributes::getSvgElementID(QDomDocument * doc, ViewIdentifierClass::V
 	return true;
 }
 
-QDomElement LayerAttributes::getSvgElementLayers(QDomDocument * doc, ViewIdentifierClass::ViewIdentifier viewIdentifier )
+QDomElement LayerAttributes::getSvgElementLayers(QDomDocument * doc, ViewLayer::ViewIdentifier viewIdentifier )
 {
    	if (doc == NULL) return ___emptyElement___;
 
@@ -76,7 +76,7 @@ QDomElement LayerAttributes::getSvgElementLayers(QDomDocument * doc, ViewIdentif
 	QDomElement views = root.firstChildElement("views");
 	if (views.isNull()) return ___emptyElement___;
 
-	QString name = ViewIdentifierClass::viewIdentifierXmlName(viewIdentifier);
+	QString name = ViewLayer::viewIdentifierXmlName(viewIdentifier);
 	if (name.isEmpty() || name.isNull()) return ___emptyElement___;
 
 	QDomElement view = views.firstChildElement(name);
@@ -89,7 +89,7 @@ QDomElement LayerAttributes::getSvgElementLayers(QDomDocument * doc, ViewIdentif
 }
 
 
-QDomElement LayerAttributes::getSvgElementLayer(QDomDocument * doc, ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID, int & layerCount )
+QDomElement LayerAttributes::getSvgElementLayer(QDomDocument * doc, ViewLayer::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID, int & layerCount )
 {
 	QString layerName = ViewLayer::viewLayerXmlNameFromID(viewLayerID);
 	if (layerName.isNull() || layerName.isEmpty()) return ___emptyElement___;

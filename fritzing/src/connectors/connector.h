@@ -35,7 +35,6 @@ $Date$
 #include <QSvgRenderer>
 #include <QPointer>
 
-#include "../viewidentifierclass.h"
 #include "../viewlayer.h"
 
 class Connector : public QObject
@@ -62,7 +61,7 @@ public:
 	void disconnectFrom(Connector *);
 	void saveAsPart(QXmlStreamWriter & writer);
 	const QList<Connector *> & toConnectors();
-	ConnectorItem * connectorItemByViewLayerID(ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID);
+	ConnectorItem * connectorItemByViewLayerID(ViewLayer::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID);
 	bool connectionIsAllowed(Connector* that);
 	const QString & connectorSharedID() const;
 	const QString & connectorSharedName() const;	
@@ -74,14 +73,14 @@ public:
 	long modelIndex();
 	ModelPart * modelPart();
 	int connectorItemCount();
-	void unprocess(ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID);
-	struct SvgIdLayer * fullPinInfo(ViewIdentifierClass::ViewIdentifier viewId, ViewLayer::ViewLayerID viewLayerID);
+	void unprocess(ViewLayer::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID);
+	struct SvgIdLayer * fullPinInfo(ViewLayer::ViewIdentifier viewId, ViewLayer::ViewLayerID viewLayerID);
 	const QList<SvgIdLayer *> svgIdLayers() const;
 	QList< QPointer<class ConnectorItem> > viewItems();
-	const QString & legID(ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerID);
+	const QString & legID(ViewLayer::ViewIdentifier, ViewLayer::ViewLayerID);
 	void setConnectorLocalName(const QString &);
 	const QString & connectorLocalName();
-	void addPin(ViewIdentifierClass::ViewIdentifier, const QString & svgId, ViewLayer::ViewLayerID, const QString & terminalId, const QString & legId, bool hybrid);
+	void addPin(ViewLayer::ViewIdentifier, const QString & svgId, ViewLayer::ViewLayerID, const QString & terminalId, const QString & legId, bool hybrid);
 
 public:
 	static void initNames();
@@ -90,8 +89,8 @@ public:
 
 protected:
 	void writeLayerAttr(QXmlStreamWriter &writer, ViewLayer::ViewLayerID);
-	void writeSvgIdAttr(QXmlStreamWriter &writer, ViewIdentifierClass::ViewIdentifier view, QString connId);
-	void writeTerminalIdAttr(QXmlStreamWriter &writer, ViewIdentifierClass::ViewIdentifier view, QString terminalId);
+	void writeSvgIdAttr(QXmlStreamWriter &writer, ViewLayer::ViewIdentifier view, QString connId);
+	void writeTerminalIdAttr(QXmlStreamWriter &writer, ViewLayer::ViewIdentifier view, QString terminalId);
 
 protected:
 	QPointer<class ConnectorShared> m_connectorShared;

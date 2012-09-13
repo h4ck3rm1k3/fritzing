@@ -31,7 +31,7 @@ $Date$
 #include <QDomElement>
 #include <QHash>
 #include <QStringList>
-#include "../viewidentifierclass.h"
+#include "../viewlayer.h"
 
 class RatsnestColors {
 
@@ -41,25 +41,25 @@ public:
 
 	static void initNames();
 	static void cleanup();
-	static const QColor & netColor(ViewIdentifierClass::ViewIdentifier m_viewIdentifier);
+	static const QColor & netColor(ViewLayer::ViewIdentifier m_viewIdentifier);
 	static bool findConnectorColor(const QStringList & names, QColor & color);
-	static bool isConnectorColor(ViewIdentifierClass::ViewIdentifier m_viewIdentifier, const QColor &);
-	static void reset(ViewIdentifierClass::ViewIdentifier m_viewIdentifier);
-	static QColor backgroundColor(ViewIdentifierClass::ViewIdentifier);
-	static const QString & shadowColor(ViewIdentifierClass::ViewIdentifier, const QString& name);
-	static QString wireColor(ViewIdentifierClass::ViewIdentifier, QString& name);
+	static bool isConnectorColor(ViewLayer::ViewIdentifier m_viewIdentifier, const QColor &);
+	static void reset(ViewLayer::ViewIdentifier m_viewIdentifier);
+	static QColor backgroundColor(ViewLayer::ViewIdentifier);
+	static const QString & shadowColor(ViewLayer::ViewIdentifier, const QString& name);
+	static QString wireColor(ViewLayer::ViewIdentifier, QString& name);
 
 protected:
 	const QColor & getNextColor();
 
 protected:
-	ViewIdentifierClass::ViewIdentifier m_viewIdentifier;
+	ViewLayer::ViewIdentifier m_viewIdentifier;
 	QColor m_backgroundColor;
 	int m_index;
 	QHash<QString, class RatsnestColor *> m_ratsnestColorHash;
 	QList<class RatsnestColor *> m_ratsnestColorList;
 
-	static QHash<ViewIdentifierClass::ViewIdentifier, RatsnestColors *> m_viewList;
+	static QHash<ViewLayer::ViewIdentifier, RatsnestColors *> m_viewList;
 	static QHash<QString, class RatsnestColor *> m_allNames;
 };
 

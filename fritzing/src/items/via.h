@@ -34,7 +34,7 @@ class Via : public Hole
 	Q_OBJECT
 
 public:
-	Via(ModelPart *, ViewIdentifierClass::ViewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel);
+	Via(ModelPart *, ViewLayer::ViewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel);
 	~Via();
 
 	void setAutoroutable(bool);

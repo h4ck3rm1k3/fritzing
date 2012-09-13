@@ -68,7 +68,7 @@ void shorten(QRectF r0, QPointF r0c, QPointF r1c, double & r0x, double & r0y, do
 
 /////////////////////////////////////////////////////////
 
-JumperItem::JumperItem( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier,  const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel) 
+JumperItem::JumperItem( ModelPart * modelPart, ViewLayer::ViewIdentifier viewIdentifier,  const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel) 
 	: PaletteItem(modelPart, viewIdentifier,  viewGeometry,  id, itemMenu, doLabel)
 {
 	if (Colors.isEmpty()) {
@@ -100,7 +100,7 @@ JumperItem::~JumperItem() {
 
 QRectF JumperItem::boundingRect() const
 {
-    if (m_viewIdentifier != ViewIdentifierClass::PCBView) {
+    if (m_viewIdentifier != ViewLayer::PCBView) {
         return PaletteItem::boundingRect();
     }
 
@@ -109,7 +109,7 @@ QRectF JumperItem::boundingRect() const
 
 void JumperItem::paintHover(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    if (m_viewIdentifier != ViewIdentifierClass::PCBView) {
+    if (m_viewIdentifier != ViewLayer::PCBView) {
        PaletteItem::paintHover(painter, option, widget);
 	   return;
     }
@@ -119,7 +119,7 @@ void JumperItem::paintHover(QPainter *painter, const QStyleOptionGraphicsItem *o
 
 void JumperItem::paintSelected(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    if (m_viewIdentifier != ViewIdentifierClass::PCBView) {
+    if (m_viewIdentifier != ViewLayer::PCBView) {
        PaletteItem::paintSelected(painter, option, widget);
 	   return;
     }
@@ -129,7 +129,7 @@ void JumperItem::paintSelected(QPainter *painter, const QStyleOptionGraphicsItem
 
 QPainterPath JumperItem::hoverShape() const
 {
-    if (m_viewIdentifier != ViewIdentifierClass::PCBView) {
+    if (m_viewIdentifier != ViewLayer::PCBView) {
         return PaletteItem::hoverShape();
      }
 
@@ -154,7 +154,7 @@ QPainterPath JumperItem::shape() const
 	return hoverShape();
 }
 
-bool JumperItem::setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec viewLayerSpec, bool doConnectors, LayerAttributes & layerAttributes, QString & error)
+bool JumperItem::setUpImage(ModelPart * modelPart, ViewLayer::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec viewLayerSpec, bool doConnectors, LayerAttributes & layerAttributes, QString & error)
 {
 	bool result = PaletteItem::setUpImage(modelPart, viewIdentifier, viewLayers, viewLayerID, viewLayerSpec, doConnectors, layerAttributes, error);
 
@@ -177,8 +177,8 @@ bool JumperItem::setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIden
 	return result;
 }
 
-void JumperItem::initialResize(ViewIdentifierClass::ViewIdentifier viewIdentifier) {
-	if (viewIdentifier != ViewIdentifierClass::PCBView) return;
+void JumperItem::initialResize(ViewLayer::ViewIdentifier viewIdentifier) {
+	if (viewIdentifier != ViewLayer::PCBView) return;
 
 	bool ok;
 	double r0x = m_modelPart->localProp("r0x").toDouble(&ok);
@@ -335,7 +335,7 @@ void JumperItem::resize(QPointF p0, QPointF p1) {
 }
 
 void JumperItem::resize() {
-	if (m_viewIdentifier != ViewIdentifierClass::PCBView) return;
+	if (m_viewIdentifier != ViewLayer::PCBView) return;
 
 	if (m_connector0 == NULL) return;
 	if (m_connector1 == NULL) return;
@@ -461,7 +461,7 @@ ConnectorItem * JumperItem::connector1() {
 
 bool JumperItem::hasCustomSVG() {
 	switch (m_viewIdentifier) {
-		case ViewIdentifierClass::PCBView:
+		case ViewLayer::PCBView:
 			return true;
 		default:
 			return ItemBase::hasCustomSVG();
@@ -555,11 +555,11 @@ bool JumperItem::hasPartNumberProperty()
 	return false;
 }
 
-ViewIdentifierClass::ViewIdentifier JumperItem::useViewIdentifierForPixmap(ViewIdentifierClass::ViewIdentifier vid, bool) 
+ViewLayer::ViewIdentifier JumperItem::useViewIdentifierForPixmap(ViewLayer::ViewIdentifier vid, bool) 
 {
-    if (vid == ViewIdentifierClass::PCBView) {
-        return ViewIdentifierClass::IconView;
+    if (vid == ViewLayer::PCBView) {
+        return ViewLayer::IconView;
     }
 
-    return ViewIdentifierClass::UnknownView;
+    return ViewLayer::UnknownView;
 }

@@ -51,7 +51,7 @@ class PartsEditorView : public SketchWidget {
 
 	public:
 		PartsEditorView(
-			ViewIdentifierClass::ViewIdentifier, QDir tempDir,
+			ViewLayer::ViewIdentifier, QDir tempDir,
 			bool showingTerminalPoints, QGraphicsProxyWidget *startItem=0,
 			QWidget *parent=0, int size=150, bool deleteModelPartOnClearScene=false,
 			class ItemBase * fromItem = NULL);
@@ -101,8 +101,8 @@ class PartsEditorView : public SketchWidget {
 		// conns
 		void informConnectorSelection(const QString& connId);
 		void informConnectorSelectionFromView(const QString& connId);
-		void setMismatching(ViewIdentifierClass::ViewIdentifier viewId, const QString &id, bool mismatching);
-		void checkConnectorLayers(ViewIdentifierClass::ViewIdentifier, const QString & connId, Connector* existingConnector, Connector * newConnector);
+		void setMismatching(ViewLayer::ViewIdentifier viewId, const QString &id, bool mismatching);
+		void checkConnectorLayers(ViewLayer::ViewIdentifier, const QString & connId, Connector* existingConnector, Connector * newConnector);
 
 	protected slots:
 		void recoverTerminalPointsState();
@@ -111,10 +111,10 @@ class PartsEditorView : public SketchWidget {
 
 	signals:
 		// conns
-		void connectorsFoundSignal(ViewIdentifierClass::ViewIdentifier viewId, const QList< QPointer<Connector> > &conns);
+		void connectorsFoundSignal(ViewLayer::ViewIdentifier viewId, const QList< QPointer<Connector> > &conns);
 		void svgFileLoadNeeded(const QString &filepath);
 		void connectorSelected(const QString& connId);
-		void removeTerminalPoint(const QString &connId, ViewIdentifierClass::ViewIdentifier vid);
+		void removeTerminalPoint(const QString &connId, ViewLayer::ViewIdentifier vid);
 
 	protected:
 		// general
@@ -129,7 +129,7 @@ class PartsEditorView : public SketchWidget {
 		void wheelEvent(QWheelEvent* event);
 		void drawBackground(QPainter *painter, const QRectF &rect);
 
-		ItemBase * addItemAux(ModelPart * modelPart, ViewLayer::ViewLayerSpec, const ViewGeometry & viewGeometry, long id, PaletteItem* paletteItem, bool doConnectors, ViewIdentifierClass::ViewIdentifier, bool temporary);
+		ItemBase * addItemAux(ModelPart * modelPart, ViewLayer::ViewLayerSpec, const ViewGeometry & viewGeometry, long id, PaletteItem* paletteItem, bool doConnectors, ViewLayer::ViewIdentifier, bool temporary);
 
 		ModelPart *createFakeModelPart(SvgAndPartFilePath *svgpath);
 		ModelPart *createFakeModelPart(const QHash<QString,ConnectorTerminalSvgIdPair> &connIds, const QStringList &layers, const QString &svgFilePath);

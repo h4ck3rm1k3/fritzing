@@ -83,7 +83,7 @@ class SingleConnectorInfoWidget : public AbstractConnectorInfoWidget {
 		Connector::ConnectorType connectorType();
 		void setConnectorType(Connector::ConnectorType);
 
-		MismatchingConnectorWidget *toMismatching(ViewIdentifierClass::ViewIdentifier viewId);
+		MismatchingConnectorWidget *toMismatching(ViewLayer::ViewIdentifier viewId);
 
 	protected slots:
 		void editionCompleted();

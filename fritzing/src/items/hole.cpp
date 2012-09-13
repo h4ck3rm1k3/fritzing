@@ -53,7 +53,7 @@ static HoleClassThing TheHoleThing;
 
 //////////////////////////////////////////////////
 
-Hole::Hole( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
+Hole::Hole( ModelPart * modelPart, ViewLayer::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: PaletteItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
 	PaletteItem::setUpHoleSizes("hole", TheHoleThing);
@@ -107,7 +107,7 @@ QRectF Hole::getRect(const QString & newSize) {
 }
 
 void Hole::setBoth(const QString & holeDiameter, const QString & ringThickness) {
-	if (this->m_viewIdentifier != ViewIdentifierClass::PCBView) return;
+	if (this->m_viewIdentifier != ViewLayer::PCBView) return;
 
 	ItemBase * otherLayer = setBothSvg(holeDiameter, ringThickness);
 
@@ -238,7 +238,7 @@ void Hole::addedToScene(bool temporary)
 
 bool Hole::hasCustomSVG() {
 	switch (m_viewIdentifier) {
-		case ViewIdentifierClass::PCBView:
+		case ViewLayer::PCBView:
 			return true;
 		default:
 			return ItemBase::hasCustomSVG();
@@ -251,7 +251,7 @@ ItemBase::PluralType Hole::isPlural() {
 
 QString Hole::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, QString> & svgHash, bool blackOnly, double dpi) 
 {
-	if (m_viewIdentifier != ViewIdentifierClass::PCBView || 
+	if (m_viewIdentifier != ViewLayer::PCBView || 
 		(viewLayerID != ViewLayer::Copper0 && viewLayerID != ViewLayer::Copper1)) 
 	{
 		return PaletteItemBase::retrieveSvg(viewLayerID, svgHash, blackOnly, dpi);
@@ -317,13 +317,13 @@ bool Hole::canFindConnectorsUnder() {
 	return false;
 }
 
-ViewIdentifierClass::ViewIdentifier Hole::useViewIdentifierForPixmap(ViewIdentifierClass::ViewIdentifier vid, bool) 
+ViewLayer::ViewIdentifier Hole::useViewIdentifierForPixmap(ViewLayer::ViewIdentifier vid, bool) 
 {
-    if (vid == ViewIdentifierClass::PCBView) {
-        return ViewIdentifierClass::IconView;
+    if (vid == ViewLayer::PCBView) {
+        return ViewLayer::IconView;
     }
 
-    return ViewIdentifierClass::UnknownView;
+    return ViewLayer::UnknownView;
 }
 
 void Hole::changeUnits(bool) 

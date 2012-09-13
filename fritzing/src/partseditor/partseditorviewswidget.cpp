@@ -47,9 +47,9 @@ PartsEditorViewsWidget::PartsEditorViewsWidget(SketchModel *sketchModel, WaitPus
 	m_showTerminalPointsCheckBox->setText(tr("Show Anchor Points"));
 	connect(m_showTerminalPointsCheckBox, SIGNAL(stateChanged(int)), this, SLOT(showHideTerminalPoints(int)));
 
-	m_breadView = createViewImageWidget(sketchModel, undoStack, ViewIdentifierClass::BreadboardView, "breadboard_icon.png", EmptyBreadViewText, info, ViewLayer::Breadboard, fromItem);
-	m_schemView = createViewImageWidget(sketchModel, undoStack, ViewIdentifierClass::SchematicView, "schematic_icon.png", EmptySchemViewText, info, ViewLayer::Schematic, fromItem);
-	m_pcbView = createViewImageWidget(sketchModel, undoStack, ViewIdentifierClass::PCBView, "pcb_icon.png", EmptyPcbViewText, info, ViewLayer::Copper0, fromItem);
+	m_breadView = createViewImageWidget(sketchModel, undoStack, ViewLayer::BreadboardView, "breadboard_icon.png", EmptyBreadViewText, info, ViewLayer::Breadboard, fromItem);
+	m_schemView = createViewImageWidget(sketchModel, undoStack, ViewLayer::SchematicView, "schematic_icon.png", EmptySchemViewText, info, ViewLayer::Schematic, fromItem);
+	m_pcbView = createViewImageWidget(sketchModel, undoStack, ViewLayer::PCBView, "pcb_icon.png", EmptyPcbViewText, info, ViewLayer::Copper0, fromItem);
 
 	m_breadView->setViewLayerIDs(ViewLayer::Breadboard, ViewLayer::BreadboardWire, ViewLayer::Breadboard, ViewLayer::BreadboardRuler, ViewLayer::BreadboardNote);
 	m_schemView->setViewLayerIDs(ViewLayer::Schematic, ViewLayer::SchematicWire, ViewLayer::Schematic, ViewLayer::SchematicRuler, ViewLayer::SchematicNote);
@@ -118,7 +118,7 @@ void PartsEditorViewsWidget::init() {
 
 PartsEditorView * PartsEditorViewsWidget::createViewImageWidget(
 		SketchModel* sketchModel, WaitPushUndoStack *undoStack,
-		ViewIdentifierClass::ViewIdentifier viewId, QString iconFileName, QString startText,
+		ViewLayer::ViewIdentifier viewId, QString iconFileName, QString startText,
 		ConnectorsInfoWidget* info, ViewLayer::ViewLayerID viewLayerId, ItemBase * fromItem) 
 {
 
@@ -135,17 +135,17 @@ PartsEditorView * PartsEditorViewsWidget::createViewImageWidget(
 		viw, SLOT(informConnectorSelection(const QString&))
 	);
 	connect(
-		viw, SIGNAL(connectorsFoundSignal(ViewIdentifierClass::ViewIdentifier, const QList< QPointer<Connector> > &)),
-		info, SLOT(syncNewConnectors(ViewIdentifierClass::ViewIdentifier, const QList< QPointer<Connector> > &))
+		viw, SIGNAL(connectorsFoundSignal(ViewLayer::ViewIdentifier, const QList< QPointer<Connector> > &)),
+		info, SLOT(syncNewConnectors(ViewLayer::ViewIdentifier, const QList< QPointer<Connector> > &))
 	);
 	connect(
-		info, SIGNAL(existingConnectorSignal(ViewIdentifierClass::ViewIdentifier, const QString &, Connector*, Connector*)),
-		viw, SLOT(checkConnectorLayers(ViewIdentifierClass::ViewIdentifier, const QString &, Connector*, Connector*))
+		info, SIGNAL(existingConnectorSignal(ViewLayer::ViewIdentifier, const QString &, Connector*, Connector*)),
+		viw, SLOT(checkConnectorLayers(ViewLayer::ViewIdentifier, const QString &, Connector*, Connector*))
 	);
 
 	connect(
-		info, SIGNAL(setMismatching(ViewIdentifierClass::ViewIdentifier, const QString &, bool)),
-		viw, SLOT(setMismatching(ViewIdentifierClass::ViewIdentifier, const QString &, bool))
+		info, SIGNAL(setMismatching(ViewLayer::ViewIdentifier, const QString &, bool)),
+		viw, SLOT(setMismatching(ViewLayer::ViewIdentifier, const QString &, bool))
 	);
 
 	return viw;
@@ -210,12 +210,12 @@ void PartsEditorViewsWidget::drawConnector(Connector* conn) {
 	m_pcbView->drawConector(conn,showing);
 }
 
-void PartsEditorViewsWidget::drawConnector(ViewIdentifierClass::ViewIdentifier viewId, Connector* conn) {
+void PartsEditorViewsWidget::drawConnector(ViewLayer::ViewIdentifier viewId, Connector* conn) {
 	bool showing = showingTerminalPoints();
 	m_views[viewId]->drawConector(conn,showing);
 }
 
-void PartsEditorViewsWidget::setMismatching(ViewIdentifierClass::ViewIdentifier viewId, const QString &connId, bool mismatching) {
+void PartsEditorViewsWidget::setMismatching(ViewLayer::ViewIdentifier viewId, const QString &connId, bool mismatching) {
 	m_views[viewId]->setMismatching(viewId, connId, mismatching);
 	m_views[viewId]->scene()->update();
 }
@@ -227,8 +227,8 @@ void PartsEditorViewsWidget::aboutToSave() {
 }
 
 
-void PartsEditorViewsWidget::removeConnectorFrom(const QString &connId, ViewIdentifierClass::ViewIdentifier viewId) {
-	if(viewId == ViewIdentifierClass::AllViews) {
+void PartsEditorViewsWidget::removeConnectorFrom(const QString &connId, ViewLayer::ViewIdentifier viewId) {
+	if(viewId == ViewLayer::AllViews) {
 		m_breadView->removeConnector(connId);
 		m_schemView->removeConnector(connId);
 		m_pcbView->removeConnector(connId);
@@ -313,16 +313,16 @@ bool PartsEditorViewsWidget::imagesLoadedInAllViews() {
 
 void PartsEditorViewsWidget::connectTerminalRemoval(const ConnectorsInfoWidget* connsInfo) {
 	connect(
-		m_breadView, SIGNAL(removeTerminalPoint(const QString&, ViewIdentifierClass::ViewIdentifier)),
-		connsInfo, SLOT(removeTerminalPoint(const QString&, ViewIdentifierClass::ViewIdentifier))
+		m_breadView, SIGNAL(removeTerminalPoint(const QString&, ViewLayer::ViewIdentifier)),
+		connsInfo, SLOT(removeTerminalPoint(const QString&, ViewLayer::ViewIdentifier))
 	);
 	connect(
-		m_schemView, SIGNAL(removeTerminalPoint(const QString&, ViewIdentifierClass::ViewIdentifier)),
-		connsInfo, SLOT(removeTerminalPoint(const QString&, ViewIdentifierClass::ViewIdentifier))
+		m_schemView, SIGNAL(removeTerminalPoint(const QString&, ViewLayer::ViewIdentifier)),
+		connsInfo, SLOT(removeTerminalPoint(const QString&, ViewLayer::ViewIdentifier))
 	);
 	connect(
-		m_pcbView, SIGNAL(removeTerminalPoint(const QString&, ViewIdentifierClass::ViewIdentifier)),
-		connsInfo, SLOT(removeTerminalPoint(const QString&, ViewIdentifierClass::ViewIdentifier))
+		m_pcbView, SIGNAL(removeTerminalPoint(const QString&, ViewLayer::ViewIdentifier)),
+		connsInfo, SLOT(removeTerminalPoint(const QString&, ViewLayer::ViewIdentifier))
 	);
 }
 

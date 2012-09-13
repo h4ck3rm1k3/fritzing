@@ -29,6 +29,7 @@ $Date$
 	clean up menus
 
     show in OS button
+        test on mac, linux
 
 	first time help?
 
@@ -40,18 +41,11 @@ $Date$
 
     swap connector metadata op
 
-    assign connector to selected svg element 
-
-	on first time switching to view, select first connector
-
     on svg import detect all connector IDs
         if any are invisible, tell user this is obsolete
     
     move connectors with arrow keys, or typed coordinates
 	drag and drop later
-
-    load new file
-        load image button can be replaced by file menu
 	
     import
         eagle lbr
@@ -61,17 +55,15 @@ $Date$
 
     for schematic view 
         offer pins, rects, and a selection of standard schematic icons in the parts bin
-        text?
 
     for breadboard view
         import 
         generate ICs, dips, sips, breakouts
 
     for pcb view
-        pads, pins (circle, rect, oblong)
+        pads, pins (circle, rect, oblong), holes
         lines and curves?
         import silkscreen
-        text?
 
     allow but discourage png imports
 
@@ -83,8 +75,7 @@ $Date$
         illustrator px
         <gradient>, <pattern>, <marker>, <tspan>, etc.
         pcb view missing layers
-
-    holes
+        multiple connector or terminal ids
 
     smd vs. tht
 
@@ -107,8 +98,6 @@ $Date$
 
     undo/redo as xml file: use index + guid for uniqueness
 
-    nudge via arrow keys
-
     taxonomy entry like tag entry?
 
     new schematic layout specs
@@ -128,8 +117,6 @@ $Date$
 
     force a new variant property to distinguish this part from any others for swapping?
 
-    lock svg element, if unlocked then click to change.  If a connector is found, lock to start with
-
     matrix problem with move and duplicate (i.e. if element inherits a matrix from far above)
         even a problem when inserting hole, pad, or pin
         eliminate internal transforms, then insert inverted matrix, then use untransformed coords based on viewbox
@@ -141,8 +128,6 @@ $Date$
     kicad schematic does not match our schematic
 
     move contrib pcb files to obsolete
-
-    always show terminal point when highlighting
     
     how to figure out whether to copy an svg? -- for now copy them all
 
@@ -181,14 +166,18 @@ $Date$
 #include "../svg/gedaelement2svg.h"
 #include "../svg/kicadmodule2svg.h"
 #include "../svg/kicadschematic2svg.h"
+#include "../sketchtoolbutton.h"
 
 #include <QApplication>
 #include <QSvgGenerator>
 #include <QMenuBar>
+#include <QMessageBox>
 
 ////////////////////////////////////////////////////
 
 bool GotZeroConnector = false;
+
+static QHash<ViewLayer::ViewIdentifier, int> ZList;
 
 static long FakeGornSiblingNumber = 0;
 
@@ -208,7 +197,7 @@ bool byID(QDomElement & c1, QDomElement & c2)
 
 ////////////////////////////////////////////////////
 
-IconSketchWidget::IconSketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, QWidget *parent)
+IconSketchWidget::IconSketchWidget(ViewLayer::ViewIdentifier viewIdentifier, QWidget *parent)
     : SketchWidget(viewIdentifier, parent)
 {
 	m_shortName = QObject::tr("ii");
@@ -270,7 +259,7 @@ void PEMainWindow::initSketchWidgets()
     m_schematicGraphicsView->setAcceptWheelEvents(false);
     m_pcbGraphicsView->setAcceptWheelEvents(false);
 
-	m_iconGraphicsView = new IconSketchWidget(ViewIdentifierClass::IconView, this);
+	m_iconGraphicsView = new IconSketchWidget(ViewLayer::IconView, this);
 	initSketchWidget(m_iconGraphicsView);
 	m_iconWidget = new SketchAreaWidget(m_iconGraphicsView,this);
 	m_tabWidget->addWidget(m_iconWidget);
@@ -326,7 +315,11 @@ void PEMainWindow::createActions()
 	m_openAct->setStatusTip(tr("Open a file to use as a part image."));
 	disconnect(m_openAct, SIGNAL(triggered()), this, SLOT(mainLoad()));
 	connect(m_openAct, SIGNAL(triggered()), this, SLOT(loadImage()));
-  
+
+	m_showInOSAct = new QAction(tr("Show in Folder"), this);
+	m_showInOSAct->setStatusTip(tr("On the desktop, open the folder containing the current svg file."));
+	connect(m_showInOSAct, SIGNAL(triggered()), this, SLOT(showInOS()));
+
     createEditMenuActions();
     createViewMenuActions();
     createHelpMenuActions();
@@ -340,7 +333,7 @@ void PEMainWindow::createMenus()
     createHelpMenu();
 }
 
-QList<QWidget*> PEMainWindow::getButtonsForView(ViewIdentifierClass::ViewIdentifier) {
+QList<QWidget*> PEMainWindow::getButtonsForView(ViewLayer::ViewIdentifier) {
 	QList<QWidget*> retval;
     return retval;
 }
@@ -471,7 +464,7 @@ void PEMainWindow::setInitialItem(PaletteItem * paletteItem) {
 		    return;
         }
 
-        QDomElement view = views.firstChildElement(ViewIdentifierClass::viewIdentifierXmlName(sketchWidget->viewIdentifier()));
+        QDomElement view = views.firstChildElement(ViewLayer::viewIdentifierXmlName(sketchWidget->viewIdentifier()));
         QDomElement layers = view.firstChildElement("layers");
         if (layers.isNull()) {
             QMessageBox::critical(NULL, tr("Parts Editor"), QString("Unable to parse fzp file  %1").arg(originalModelPart->path()));
@@ -759,6 +752,8 @@ void PEMainWindow::initSvgTree(ItemBase * itemBase, QDomDocument & domDocument)
         return;
 	}
 
+    ZList.insert(itemBase->viewIdentifier(), 5000);
+
     QDomElement root = domDocument.documentElement();
     TextUtils::elevateTransform(root);
     TextUtils::gornTree(domDocument);   
@@ -769,7 +764,6 @@ void PEMainWindow::initSvgTree(ItemBase * itemBase, QDomDocument & domDocument)
 	QSizeF defaultSizeF = renderer.defaultSizeF();
 	QRectF viewBox = renderer.viewBoxF();
 
-    double z = 5000;
     QList<QDomElement> traverse;
     traverse << domDocument.documentElement();
     while (traverse.count() > 0) {
@@ -805,14 +799,7 @@ void PEMainWindow::initSvgTree(ItemBase * itemBase, QDomDocument & domDocument)
 
             // known Qt bug: boundsOnElement returns zero width and height for text elements.
             if (bounds.width() > 0 && bounds.height() > 0) {
-                PEGraphicsItem * pegItem = new PEGraphicsItem(0, 0, bounds.width(), bounds.height());
-                pegItem->setPos(itemBase->pos() + bounds.topLeft());
-                pegItem->setZValue(z);
-                itemBase->scene()->addItem(pegItem);
-                pegItem->setElement(element);
-                pegItem->setOffset(bounds.topLeft());
-                connect(pegItem, SIGNAL(highlightSignal(PEGraphicsItem *)), this, SLOT(highlightSlot(PEGraphicsItem *)));
-                connect(pegItem, SIGNAL(mouseReleased(PEGraphicsItem *)), this, SLOT(pegiMouseReleased(PEGraphicsItem *)));
+                makePegi(bounds.size(), bounds.topLeft(), itemBase, element);
 
                 /* 
                 QString string;
@@ -829,7 +816,6 @@ void PEMainWindow::initSvgTree(ItemBase * itemBase, QDomDocument & domDocument)
                 child = child.nextSiblingElement();
             }
         }
-        z++;
         traverse.clear();
         foreach (QDomElement element, next) traverse.append(element);
         next.clear();
@@ -861,12 +847,16 @@ void PEMainWindow::initConnectors() {
 void PEMainWindow::switchedConnector(const QDomElement & element)
 {
     if (m_currentGraphicsView == NULL) return;
+    switchedConnector(element, m_currentGraphicsView);
+}
 
+void PEMainWindow::switchedConnector(const QDomElement & element, SketchWidget * sketchWidget)
+{
     QString id, terminalID;
-    if (!getConnectorIDs(element, m_currentGraphicsView, id, terminalID)) return;
+    if (!getConnectorIDs(element, sketchWidget, id, terminalID)) return;
 
     QList<PEGraphicsItem *> pegiList;
-    foreach (QGraphicsItem * item, m_currentGraphicsView->scene()->items()) {
+    foreach (QGraphicsItem * item, sketchWidget->scene()->items()) {
         PEGraphicsItem * pegi = dynamic_cast<PEGraphicsItem *>(item);
         if (pegi) pegiList.append(pegi);
     }
@@ -914,7 +904,7 @@ void PEMainWindow::loadImage()
 	extras.append("");
 	extras.append("");
 	QString imageFiles;
-	if (m_currentGraphicsView->viewIdentifier() == ViewIdentifierClass::PCBView) {
+	if (m_currentGraphicsView->viewIdentifier() == ViewLayer::PCBView) {
 		imageFiles = tr("Image & Footprint Files (%1 %2 %3 %4 %5);;SVG Files (%1);;JPEG Files (%2);;PNG Files (%3);;gEDA Footprint Files (%4);;Kicad Module Files (%5)");   // 
 		extras[0] = "*.fp";
 		extras[1] = "*.mod";
@@ -923,7 +913,7 @@ void PEMainWindow::loadImage()
 		imageFiles = tr("Image Files (%1 %2 %3);;SVG Files (%1);;JPEG Files (%2);;PNG Files (%3)%4%5");
 	}
 
-	if (m_currentGraphicsView->viewIdentifier() == ViewIdentifierClass::SchematicView) {
+	if (m_currentGraphicsView->viewIdentifier() == ViewLayer::SchematicView) {
 		extras[0] = "*.lib";
 		imageFiles = tr("Image & Footprint Files (%1 %2 %3 %4);;SVG Files (%1);;JPEG Files (%2);;PNG Files (%3);;Kicad Schematic Files (%4)%5");   // 
 	}
@@ -1090,7 +1080,7 @@ QString PEMainWindow::createSvgFromImage(const QString &origFilePath) {
 
 QString PEMainWindow::makeSvgPath(SketchWidget * sketchWidget, bool useIndex)
 {
-    QString viewName = ViewIdentifierClass::viewIdentifierNaturalName(sketchWidget->viewIdentifier());
+    QString viewName = ViewLayer::viewIdentifierNaturalName(sketchWidget->viewIdentifier());
     QString indexString;
     if (useIndex) indexString = QString("_%3").arg(m_fileIndex++);
     return QString("%1/%2_%1%3.svg").arg(viewName).arg(m_guid).arg(indexString);
@@ -1106,7 +1096,7 @@ QString PEMainWindow::saveSvg(const QString & svg, const QString & newFilePath) 
 void PEMainWindow::changeSvg(SketchWidget * sketchWidget, const QString & filename, int changeDirection) {
     QDomElement fzpRoot = m_fzpDocument.documentElement();
     QDomElement views = fzpRoot.firstChildElement("views");
-    QDomElement view = views.firstChildElement(ViewIdentifierClass::viewIdentifierXmlName(sketchWidget->viewIdentifier()));
+    QDomElement view = views.firstChildElement(ViewLayer::viewIdentifierXmlName(sketchWidget->viewIdentifier()));
     QDomElement layers = view.firstChildElement("layers");
     QFileInfo info(filename);
     QDir dir = info.absoluteDir();
@@ -1165,6 +1155,11 @@ void PEMainWindow::reload() {
     m_items.insert(m_breadboardGraphicsView->viewIdentifier(), breadboardItem);
     m_items.insert(m_schematicGraphicsView->viewIdentifier(), schematicItem);
     m_items.insert(m_pcbGraphicsView->viewIdentifier(), pcbItem);
+
+    foreach (ItemBase * item, m_items.values()) {
+        // TODO: may have to revisit this and move all pegi items
+        item->setMoveLock(true);
+    }
 
     QTimer::singleShot(10, this, SLOT(initZoom()));
 }
@@ -1226,6 +1221,7 @@ void PEMainWindow::createFileMenu() {
     m_fileMenu->addSeparator();
     //m_fileMenu->addAction(m_pageSetupAct);
     m_fileMenu->addAction(m_printAct);
+    m_fileMenu->addAction(m_showInOSAct);
 
 	m_fileMenu->addSeparator();
 	m_fileMenu->addAction(m_quitAct);
@@ -1235,7 +1231,7 @@ void PEMainWindow::createFileMenu() {
 
 QDomElement PEMainWindow::getConnectorPElement(const QDomElement & element, SketchWidget * sketchWidget)
 {
-    QString viewName = ViewIdentifierClass::viewIdentifierXmlName(sketchWidget->viewIdentifier());
+    QString viewName = ViewLayer::viewIdentifierXmlName(sketchWidget->viewIdentifier());
     QDomElement views = element.firstChildElement("views");
     QDomElement view = views.firstChildElement(viewName);
     return view.firstChildElement("p");
@@ -1285,7 +1281,7 @@ void PEMainWindow::relocateConnectorSvg(SketchWidget * sketchWidget, const QStri
         QDomElement element = pegi->element();
         if (element.attribute("gorn").compare(newGorn) == 0) {
             pegi->setHighlighted(true);
-            switchedConnector(m_peToolView->currentConnector());
+            switchedConnector(m_peToolView->currentConnector(), sketchWidget);
             break;
         }
     }
@@ -1305,12 +1301,12 @@ bool PEMainWindow::saveAs() {
     QDomElement fzpRoot = m_fzpDocument.documentElement();
     QDomElement views = fzpRoot.firstChildElement("views");
 
-    QHash<ViewIdentifierClass::ViewIdentifier, QString> svgPaths;
+    QHash<ViewLayer::ViewIdentifier, QString> svgPaths;
 
     QList<SketchWidget *> sketchWidgets;
     sketchWidgets << m_breadboardGraphicsView << m_schematicGraphicsView << m_pcbGraphicsView << m_iconGraphicsView;
     foreach (SketchWidget * sketchWidget, sketchWidgets) {
-        QDomElement view = views.firstChildElement(ViewIdentifierClass::viewIdentifierXmlName(sketchWidget->viewIdentifier()));
+        QDomElement view = views.firstChildElement(ViewLayer::viewIdentifierXmlName(sketchWidget->viewIdentifier()));
         QDomElement layers = view.firstChildElement("layers");
 
         QString currentSvgPath = layers.attribute("image");
@@ -1339,7 +1335,7 @@ bool PEMainWindow::saveAs() {
         QString svgPath = svgPaths.value(sketchWidget->viewIdentifier());
         if (svgPath.isEmpty()) continue;
 
-        QDomElement view = views.firstChildElement(ViewIdentifierClass::viewIdentifierXmlName(sketchWidget->viewIdentifier()));
+        QDomElement view = views.firstChildElement(ViewLayer::viewIdentifierXmlName(sketchWidget->viewIdentifier()));
         QDomElement layers = view.firstChildElement("layers");
         layers.setAttribute("image", svgPath);
     }
@@ -1461,6 +1457,12 @@ void PEMainWindow::moveTerminalPoint(SketchWidget * sketchWidget, const QString 
         return;
     }
 
+    QList<PEGraphicsItem *> pegiList;
+    foreach (QGraphicsItem * item, sketchWidget->scene()->items()) {
+        PEGraphicsItem * pegi = dynamic_cast<PEGraphicsItem *>(item);
+        if (pegi) pegiList.append(pegi);
+    }
+
     if (centered) {
         pElement.removeAttribute("terminalId");
         // no need to change SVG in this case
@@ -1496,10 +1498,11 @@ void PEMainWindow::moveTerminalPoint(SketchWidget * sketchWidget, const QString 
         if (terminalElement.isNull()) {
             terminalElement = svgDoc->createElement("rect");
         }
-        else {
-            // TODO: assumes terminal element is not currently visible
-            terminalElement.setTagName("rect");
+        else if (terminalElement.tagName() != "rect" || terminalElement.attribute("fill") != "none" || terminalElement.attribute("stroke") != "none") {
+            terminalElement.setAttribute("id", "");
+            terminalElement = svgDoc->createElement("rect");
         }
+        terminalElement.setAttribute("id", terminalID);
         terminalElement.setAttribute("stroke", "none");
         terminalElement.setAttribute("fill", "none");
         terminalElement.setAttribute("stroke-width", "0");
@@ -1519,13 +1522,23 @@ void PEMainWindow::moveTerminalPoint(SketchWidget * sketchWidget, const QString 
 
         svgConnectorElement.parentNode().insertAfter(terminalElement, svgConnectorElement);
 
+        foreach (PEGraphicsItem * pegi, pegiList) {
+            QDomElement pegiElement = pegi->element();
+            if (pegiElement.attribute("id").compare(terminalID) == 0) {
+                delete pegi;
+                break;
+            }
+        }
+
+        double invdx = dx * size.width() / bounds.width();
+        double invdy = dy * size.height() / bounds.height();
+
+        makePegi(QSizeF(invdx * 2, invdy * 2), p - QPointF(dx, dy), m_items.value(sketchWidget->viewIdentifier()), terminalElement);
+
         updateChangeCount(sketchWidget, changeDirection);
     }
 
-    foreach (QGraphicsItem * item, sketchWidget->scene()->items()) {
-        PEGraphicsItem * pegi = dynamic_cast<PEGraphicsItem *>(item);
-        if  (pegi== NULL) continue;
-
+    foreach (PEGraphicsItem * pegi, pegiList) {
         QDomElement pegiElement = pegi->element();
         if (pegiElement.attribute("id").compare(svgID) != 0) continue;
 
@@ -1534,4 +1547,67 @@ void PEMainWindow::moveTerminalPoint(SketchWidget * sketchWidget, const QString 
         m_peToolView->setTerminalPointCoords(p);
         break;
     }
+}
+
+// http://stackoverflow.com/questions/3490336/how-to-reveal-in-finder-or-show-in-explorer-with-qt
+// http://stackoverflow.com/questions/9581330/change-selection-in-explorer-window
+void PEMainWindow::showInOS(QWidget *parent, const QString &pathIn)
+{
+    // Mac, Windows support folder or file.
+#if defined(Q_OS_WIN)
+    Q_UNUSED(parent)
+    const QString explorer = "explorer.exe";
+    QString param = QLatin1String("/e,/select,");
+    param += QDir::toNativeSeparators(pathIn);
+    QProcess::startDetached(explorer, QStringList(param));
+#elif defined(Q_OS_MAC)
+    Q_UNUSED(parent)
+    QStringList scriptArgs;
+    scriptArgs << QLatin1String("-e")
+               << QString::fromLatin1("tell application \"Finder\" to reveal POSIX file \"%1\"")
+                                     .arg(pathIn);
+    QProcess::execute(QLatin1String("/usr/bin/osascript"), scriptArgs);
+    scriptArgs.clear();
+    scriptArgs << QLatin1String("-e")
+               << QLatin1String("tell application \"Finder\" to activate");
+    QProcess::execute("/usr/bin/osascript", scriptArgs);
+#else
+    // we cannot select a file here, because no file browser really supports it...
+    const QFileInfo fileInfo(pathIn);
+    const QString folder = fileInfo.absoluteFilePath();
+    const QString app = Utils::UnixUtils::fileBrowser(Core::ICore::instance()->settings());
+    QProcess browserProc;
+    const QString browserArgs = Utils::UnixUtils::substituteFileBrowserParameters(app, folder);
+    if (debug)
+        qDebug() <<  browserArgs;
+    bool success = browserProc.startDetached(browserArgs);
+    const QString error = QString::fromLocal8Bit(browserProc.readAllStandardError());
+    success = success && error.isEmpty();
+    if (!success)
+        QMessageBox::warning(parent, tr("Fritzing"), tr("File browser Launch failed: %1").arg(error));
+        
+#endif
+
+}
+
+void PEMainWindow::showInOS() {
+    if (m_currentGraphicsView == NULL) return;
+
+    ItemBase * itemBase = m_items.value(m_currentGraphicsView->viewIdentifier());
+    showInOS(this, itemBase->filename());
+}
+
+PEGraphicsItem * PEMainWindow::makePegi(QSizeF size, QPointF topLeft, ItemBase * itemBase, QDomElement & element) 
+{
+    PEGraphicsItem * pegiItem = new PEGraphicsItem(0, 0, size.width(), size.height());
+    pegiItem->setPos(itemBase->pos() + topLeft);
+    int z = ZList.value(itemBase->viewIdentifier());
+    ZList.insert(itemBase->viewIdentifier(), z + 1);
+    pegiItem->setZValue(z);
+    itemBase->scene()->addItem(pegiItem);
+    pegiItem->setElement(element);
+    pegiItem->setOffset(topLeft);
+    connect(pegiItem, SIGNAL(highlightSignal(PEGraphicsItem *)), this, SLOT(highlightSlot(PEGraphicsItem *)));
+    connect(pegiItem, SIGNAL(mouseReleased(PEGraphicsItem *)), this, SLOT(pegiMouseReleased(PEGraphicsItem *)));
+    return pegiItem;
 }

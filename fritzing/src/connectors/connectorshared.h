@@ -55,14 +55,14 @@ public:
 	void setConnectorType(Connector::ConnectorType);
 	Connector::ConnectorType connectorType();
 
-	const QString & legID(ViewIdentifierClass::ViewIdentifier viewId, ViewLayer::ViewLayerID viewLayerID);
-	const QMultiHash<ViewIdentifierClass::ViewIdentifier,SvgIdLayer *> &pins();
-	SvgIdLayer * fullPinInfo(ViewIdentifierClass::ViewIdentifier viewId, ViewLayer::ViewLayerID viewLayerID);
+	const QString & legID(ViewLayer::ViewIdentifier viewId, ViewLayer::ViewLayerID viewLayerID);
+	const QMultiHash<ViewLayer::ViewIdentifier,SvgIdLayer *> &pins();
+	SvgIdLayer * fullPinInfo(ViewLayer::ViewIdentifier viewId, ViewLayer::ViewLayerID viewLayerID);
     const QList<SvgIdLayer *> svgIdLayers() const;
-	void addPin(ViewIdentifierClass::ViewIdentifier, const QString & svgId, ViewLayer::ViewLayerID, const QString & terminalId, const QString & legId, bool hybrid);
-	void insertPin(ViewIdentifierClass::ViewIdentifier layer, SvgIdLayer * svgIdLayer);
-	void removePins(ViewIdentifierClass::ViewIdentifier layer);
-	void removePin(ViewIdentifierClass::ViewIdentifier layer, SvgIdLayer * svgIdLayer);
+	void addPin(ViewLayer::ViewIdentifier, const QString & svgId, ViewLayer::ViewLayerID, const QString & terminalId, const QString & legId, bool hybrid);
+	void insertPin(ViewLayer::ViewIdentifier layer, SvgIdLayer * svgIdLayer);
+	void removePins(ViewLayer::ViewIdentifier layer);
+	void removePin(ViewLayer::ViewIdentifier layer, SvgIdLayer * svgIdLayer);
 
 	class BusShared * bus();
 	void setBus(class BusShared *);
@@ -71,7 +71,7 @@ public:
 
 protected:
 	void loadPins(const QDomElement & domElement);
-	void loadPin(QDomElement elem, ViewIdentifierClass::ViewIdentifier viewId);
+	void loadPin(QDomElement elem, ViewLayer::ViewIdentifier viewId);
 
 	QString m_description;
 	QString m_id;
@@ -82,7 +82,7 @@ protected:
 	class ErcData * m_ercData;
 	class BusShared * m_bus;
 
-	QMultiHash<ViewIdentifierClass::ViewIdentifier, SvgIdLayer*> m_pins;
+	QMultiHash<ViewLayer::ViewIdentifier, SvgIdLayer*> m_pins;
 };
 
 static QList<ConnectorShared *> ___emptyConnectorSharedList___;

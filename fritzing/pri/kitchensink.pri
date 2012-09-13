@@ -29,7 +29,6 @@ HEADERS += \
     src/routingstatus.h \
     src/sketchtoolbutton.h \
     src/viewgeometry.h \
-    src/viewidentifierclass.h \
     src/viewlayer.h \
     src/waitpushundostack.h 
     
@@ -45,7 +44,6 @@ SOURCES += \
     src/processeventblocker.cpp \
     src/sketchtoolbutton.cpp \
     src/viewgeometry.cpp \
-    src/viewidentifierclass.cpp \
     src/viewlayer.cpp \
     src/waitpushundostack.cpp 
     

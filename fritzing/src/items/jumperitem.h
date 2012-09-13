@@ -34,12 +34,12 @@ class JumperItem : public PaletteItem
 	Q_OBJECT
 
 public:
-	JumperItem( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier,  const ViewGeometry & , long id, QMenu* itemMenu, bool doLabel); 
+	JumperItem( ModelPart * modelPart, ViewLayer::ViewIdentifier,  const ViewGeometry & , long id, QMenu* itemMenu, bool doLabel); 
 	~JumperItem();
 
     QPainterPath shape() const;
     QPainterPath hoverShape() const;
- 	bool setUpImage(ModelPart* modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID, ViewLayer::ViewLayerSpec, bool doConnectors, LayerAttributes &, QString & error);
+ 	bool setUpImage(ModelPart* modelPart, ViewLayer::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID, ViewLayer::ViewLayerSpec, bool doConnectors, LayerAttributes &, QString & error);
 	void saveParams();
 	void getParams(QPointF & pos, QPointF & c0, QPointF & c1);
 	void resize(QPointF pos, QPointF c0, QPointF c1);
@@ -71,10 +71,10 @@ protected:
 	void resizeAux(double r0x, double r0y, double r1x, double r1y);
 	void rotateEnds(QTransform & rotation, QPointF & tc0, QPointF & tc1); 
 	QPointF calcPos(QPointF p0, QPointF p1);
-	void initialResize(ViewIdentifierClass::ViewIdentifier);
+	void initialResize(ViewLayer::ViewIdentifier);
 	void paintHover(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 	void paintSelected(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-    ViewIdentifierClass::ViewIdentifier useViewIdentifierForPixmap(ViewIdentifierClass::ViewIdentifier, bool swappingEnabled);
+    ViewLayer::ViewIdentifier useViewIdentifierForPixmap(ViewLayer::ViewIdentifier, bool swappingEnabled);
 
 signals:
 	void alignMe(JumperItem *, QPointF & p); 

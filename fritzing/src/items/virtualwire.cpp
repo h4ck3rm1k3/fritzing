@@ -27,7 +27,7 @@ $Date$
 #include "virtualwire.h"
 #include "../connectors/connectoritem.h"
 
-VirtualWire::VirtualWire( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier,  const ViewGeometry & viewGeometry, long id, QMenu * itemMenu  ) 
+VirtualWire::VirtualWire( ModelPart * modelPart, ViewLayer::ViewIdentifier viewIdentifier,  const ViewGeometry & viewGeometry, long id, QMenu * itemMenu  ) 
 	: ClipableWire(modelPart, viewIdentifier,  viewGeometry,  id, itemMenu, false)
 {
 	m_colorWasNamed = false;
@@ -49,7 +49,7 @@ void VirtualWire::connectionChange(ConnectorItem * onMe, ConnectorItem * onIt, b
 	checkVisibility(onMe, onIt, connect);
 }
 
-FSvgRenderer * VirtualWire::setUpConnectors(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier) {
+FSvgRenderer * VirtualWire::setUpConnectors(ModelPart * modelPart, ViewLayer::ViewIdentifier viewIdentifier) {
 	FSvgRenderer * renderer = Wire::setUpConnectors(modelPart, viewIdentifier);
 	hideConnectors();
 	return renderer;

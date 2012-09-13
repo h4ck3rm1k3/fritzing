@@ -50,7 +50,7 @@ bool sameGround(ConnectorItem * c1, ConnectorItem * c2)
 	return (c1Grounded == c2Grounded);
 }
 
-SchematicSketchWidget::SchematicSketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, QWidget *parent)
+SchematicSketchWidget::SchematicSketchWidget(ViewLayer::ViewIdentifier viewIdentifier, QWidget *parent)
     : PCBSketchWidget(viewIdentifier, parent)
 {
 	m_shortName = QObject::tr("schem");

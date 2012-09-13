@@ -45,12 +45,46 @@ static LayerList CopperBottomLayers;
 static LayerList CopperTopLayers;
 static LayerList NonCopperLayers;  // just NonCopperLayers in pcb view
 
+static LayerList ii;
+static LayerList bb;
+static LayerList ss;
+static LayerList pp;
+static LayerList ee;
 
 NamePair::NamePair(QString xml, QString display)
 {
     xmlName = xml;
     displayName = display;
 }
+
+//////////////////////////////////////////////
+
+class NameTriple {
+
+public:
+	NameTriple(const QString & _xmlName, const QString & _viewName, const QString & _naturalName) {
+		m_xmlName = _xmlName;
+		m_viewName = _viewName;
+		m_naturalName = _naturalName;
+	}
+
+	QString & xmlName() {
+		return m_xmlName;
+	}
+
+	QString & viewName() {
+		return m_viewName;
+	}
+
+	QString & naturalName() {
+		return m_naturalName;
+	}
+
+protected:
+	QString m_xmlName;
+	QString m_naturalName;
+	QString m_viewName;
+};
 
 //////////////////////////////////////////////
 
@@ -139,6 +173,33 @@ void ViewLayer::initNames() {
 		unconnectables.insert(ViewLayer::Copper1Trace, ViewLayer::Copper0Trace);
 	}
 
+	if (ViewIdentifierNames.count() == 0) {
+		ViewIdentifierNames.insert(ViewLayer::IconView, new NameTriple("iconView", QObject::tr("icon view"), "icon"));
+		ViewIdentifierNames.insert(ViewLayer::BreadboardView, new NameTriple("breadboardView", QObject::tr("breadboard view"), "breadboard"));
+		ViewIdentifierNames.insert(ViewLayer::SchematicView, new NameTriple("schematicView", QObject::tr("schematic view"), "schematic"));
+		ViewIdentifierNames.insert(ViewLayer::PCBView, new NameTriple("pcbView", QObject::tr("pcb view"), "pcb"));
+	}
+
+	if (bb.count() == 0) {
+		ii << ViewLayer::Icon;
+		bb << ViewLayer::BreadboardBreadboard << ViewLayer::Breadboard 
+			<< ViewLayer::BreadboardWire << ViewLayer::BreadboardLabel 
+			<< ViewLayer::BreadboardRatsnest 
+			<< ViewLayer::BreadboardNote << ViewLayer::BreadboardRuler;
+		ss << ViewLayer::SchematicFrame << ViewLayer::Schematic 
+			<< ViewLayer::SchematicWire 
+			<< ViewLayer::SchematicTrace << ViewLayer::SchematicLabel 
+			<< ViewLayer::SchematicNote <<  ViewLayer::SchematicRuler;
+		pp << ViewLayer::Board << ViewLayer::GroundPlane0 
+			<< ViewLayer::Silkscreen0 << ViewLayer::Silkscreen0Label
+			<< ViewLayer::Copper0 
+			<< ViewLayer::Copper0Trace << ViewLayer::GroundPlane1 
+			<< ViewLayer::Copper1 << ViewLayer::Copper1Trace 
+			<< ViewLayer::PcbRatsnest 
+			<< ViewLayer::Silkscreen1 << ViewLayer::Silkscreen1Label 
+			<< ViewLayer::PartImage 
+			<< ViewLayer::PcbNote << ViewLayer::PcbRuler;
+	}
 }
 
 QString & ViewLayer::displayName() {
@@ -224,6 +285,11 @@ void ViewLayer::cleanup() {
 		delete sp;
 	}
 	names.clear();
+
+	foreach (NameTriple * nameTriple, ViewIdentifierNames) {
+		delete nameTriple;
+	}
+	ViewIdentifierNames.clear();
 }
 
 void ViewLayer::resetNextZ(double z) {
@@ -338,3 +404,58 @@ void ViewLayer::setIncludeChildLayers(bool incl) {
 	m_includeChildLayers = incl;
 }
 
+/////////////////////////////////
+
+QHash <ViewLayer::ViewIdentifier, NameTriple * > ViewLayer::ViewIdentifierNames;
+
+QString & ViewLayer::viewIdentifierName(ViewLayer::ViewIdentifier viewIdentifier) {
+	if (viewIdentifier < 0 || viewIdentifier >= ViewLayer::ViewCount) {
+		throw "ViewLayer::viewIdentifierName bad identifier";
+	}
+
+	return ViewIdentifierNames[viewIdentifier]->viewName();
+}
+
+QString & ViewLayer::viewIdentifierXmlName(ViewLayer::ViewIdentifier viewIdentifier) {
+	if (viewIdentifier < 0 || viewIdentifier >= ViewLayer::ViewCount) {
+		throw "ViewLayer::viewIdentifierXmlName bad identifier";
+	}
+
+	return ViewIdentifierNames[viewIdentifier]->xmlName();
+}
+
+QString & ViewLayer::viewIdentifierNaturalName(ViewLayer::ViewIdentifier viewIdentifier) {
+	if (viewIdentifier < 0 || viewIdentifier >= ViewLayer::ViewCount) {
+		throw "ViewLayer::viewIdentifierNaturalName bad identifier";
+	}
+
+	return ViewIdentifierNames[viewIdentifier]->naturalName();
+}
+
+ViewLayer::ViewIdentifier ViewLayer::idFromXmlName(const QString & name) {
+	foreach (ViewIdentifier id, ViewIdentifierNames.keys()) {
+		NameTriple * nameTriple = ViewIdentifierNames.value(id);
+		if (name.compare(nameTriple->xmlName()) == 0) return id;
+	}
+
+	return UnknownView;
+}
+
+const LayerList & ViewLayer::layersForView(ViewLayer::ViewIdentifier viewIdentifier) {
+	switch(viewIdentifier) {
+		case IconView:
+			return ii;
+		case BreadboardView:
+			return bb;
+		case SchematicView:
+			return ss;
+		case PCBView:
+			return pp;
+		default:
+			return ee;
+	}
+}
+
+bool ViewLayer::viewHasLayer(ViewLayer::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID) {
+	return layersForView(viewIdentifier).contains(viewLayerID);
+}

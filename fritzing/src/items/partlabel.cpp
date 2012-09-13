@@ -118,7 +118,7 @@ PartLabel::PartLabel(ItemBase * owner, QGraphicsItem * parent)
 
 	m_inactive = m_hidden = m_initialized = false;
 	m_displayKeys.append(LabelTextKey);
-	if (m_owner->hasPartNumberProperty() && m_owner->viewIdentifier() != ViewIdentifierClass::PCBView) {
+	if (m_owner->hasPartNumberProperty() && m_owner->viewIdentifier() != ViewLayer::PCBView) {
 		m_displayKeys.append(ModelPartShared::PartNumberPropertyName);
 	}
 
@@ -147,7 +147,7 @@ void PartLabel::showLabel(bool showIt, ViewLayer * viewLayer) {
 
 		bool flipped = (viewLayer->viewLayerID() == ViewLayer::Silkscreen0Label);
 
-		if (m_owner->viewIdentifier() != ViewIdentifierClass::PCBView) {
+		if (m_owner->viewIdentifier() != ViewLayer::PCBView) {
 			foreach (QString dk, m_owner->modelPart()->displayKeys()) {
 				if (!m_displayKeys.contains(dk)) {
 					m_displayKeys.append(dk);
@@ -444,7 +444,7 @@ void PartLabel::initMenu()
 	QMenu * rlmenu = m_menu.addMenu(tr("Flip/Rotate"));
 	QMenu * fsmenu = m_menu.addMenu(tr("Font Size"));
 
-	bool include45 = (m_owner != NULL) && (m_owner->viewIdentifier() == ViewIdentifierClass::PCBView);
+	bool include45 = (m_owner != NULL) && (m_owner->viewIdentifier() == ViewLayer::PCBView);
 
 	if (include45) {
 		QAction *rotate45cwAct = rlmenu->addAction(tr("Rotate 45\x00B0 Clockwise"));

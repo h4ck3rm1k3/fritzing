@@ -270,10 +270,10 @@ int Stripbit::x() {
 
 /////////////////////////////////////////////////////////////////////
 
-Stripboard::Stripboard( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
+Stripboard::Stripboard( ModelPart * modelPart, ViewLayer::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: Perfboard(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
-	if (!viewIdentifier == ViewIdentifierClass::BreadboardView) return;
+	if (!viewIdentifier == ViewLayer::BreadboardView) return;
 
 	int x, y;
 	getXY(x, y, m_size);

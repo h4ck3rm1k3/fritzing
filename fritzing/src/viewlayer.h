@@ -97,6 +97,16 @@ public:
 		UnknownSpec
 	};
 
+   enum ViewIdentifier {
+    	IconView,
+    	BreadboardView,
+    	SchematicView,
+    	PCBView,
+    	AllViews,
+		UnknownView,
+    	ViewCount
+   	};
+
 public:
 	static const QString HolesColor;
 	static const QString Copper0Color;
@@ -152,6 +162,13 @@ public:
 	static bool isCopperLayer(ViewLayer::ViewLayerID);
 	static bool isNonCopperLayer(ViewLayer::ViewLayerID viewLayerID);  // for pcb view layers only
 
+    static QString & viewIdentifierName(ViewLayer::ViewIdentifier);
+	static QString & viewIdentifierXmlName(ViewLayer::ViewIdentifier);
+	static QString & viewIdentifierNaturalName(ViewLayer::ViewIdentifier);
+	static ViewIdentifier idFromXmlName(const QString & name);
+	static const QList<ViewLayer::ViewLayerID> & layersForView(ViewLayer::ViewIdentifier);
+	static bool viewHasLayer(ViewIdentifier, ViewLayer::ViewLayerID);
+
 
 protected:
 	bool m_visible;
@@ -163,6 +180,8 @@ protected:
 	ViewLayer * m_parentLayer;
 	bool m_active;
 	bool m_includeChildLayers;
+
+    static QHash <ViewIdentifier, class NameTriple * > ViewIdentifierNames;
 
 };
 

@@ -53,7 +53,7 @@ static QStringList NewLogoImageNames;
 static QStringList Copper0ImageNames;
 static QStringList Copper1ImageNames;
 
-LogoItem::LogoItem( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
+LogoItem::LogoItem( ModelPart * modelPart, ViewLayer::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: ResizableBoard(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
 	if (LogoImageNames.count() == 0) {
@@ -464,7 +464,7 @@ void LogoItem::setLogo(QString logo, bool force) {
 	if (!force && m_logo.compare(logo) == 0) return;
 
 	switch (this->m_viewIdentifier) {
-		case ViewIdentifierClass::PCBView:
+		case ViewLayer::PCBView:
 			break;
 		default:
 			return;
@@ -711,7 +711,7 @@ void LogoItem::paintHover(QPainter *painter, const QStyleOptionGraphicsItem *opt
 
 ///////////////////////////////////////////////////////////////////////
 
-SchematicLogoItem::SchematicLogoItem( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
+SchematicLogoItem::SchematicLogoItem( ModelPart * modelPart, ViewLayer::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: LogoItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
 }
@@ -730,7 +730,7 @@ QString SchematicLogoItem::colorString() {
 
 ///////////////////////////////////////////////////////////////////////
 
-CopperLogoItem::CopperLogoItem( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
+CopperLogoItem::CopperLogoItem( ModelPart * modelPart, ViewLayer::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: LogoItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
 	if (Copper1ImageNames.count() == 0) {
@@ -808,7 +808,7 @@ bool CopperLogoItem::isCopper0() {
 //
 // don't mess with colors at all?
 
-BoardLogoItem::BoardLogoItem(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel) 
+BoardLogoItem::BoardLogoItem(ModelPart * modelPart, ViewLayer::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel) 
     : LogoItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
     m_hasLogo = false;

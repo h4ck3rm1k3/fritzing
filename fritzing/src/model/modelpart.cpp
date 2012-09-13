@@ -196,7 +196,7 @@ ItemBase * ModelPart::viewItem(QGraphicsScene * scene) {
 	return NULL;
 }
 
-ItemBase * ModelPart::viewItem(ViewIdentifierClass::ViewIdentifier viewIdentifier) {
+ItemBase * ModelPart::viewItem(ViewLayer::ViewIdentifier viewIdentifier) {
 	foreach (ItemBase * itemBase, m_viewItems) {
 		if (itemBase->viewIdentifier() == viewIdentifier) return itemBase;
 	}
@@ -610,46 +610,46 @@ void ModelPart::setLocationFlag(bool setting, LocationFlag flag) {
 	}
 }
 
-bool ModelPart::hasViewIdentifier(ViewIdentifierClass::ViewIdentifier viewIdentifier) {
+bool ModelPart::hasViewIdentifier(ViewLayer::ViewIdentifier viewIdentifier) {
     if (m_modelPartShared) return m_modelPartShared->hasViewIdentifier(viewIdentifier);
 
     return false;
 
 }
 
-bool ModelPart::canFlipVertical(ViewIdentifierClass::ViewIdentifier viewIdentifier) {
+bool ModelPart::canFlipVertical(ViewLayer::ViewIdentifier viewIdentifier) {
     if (m_modelPartShared) return m_modelPartShared->canFlipVertical(viewIdentifier);
 
     return false;
 
 }
 
-bool ModelPart::canFlipHorizontal(ViewIdentifierClass::ViewIdentifier viewIdentifier) {
+bool ModelPart::canFlipHorizontal(ViewLayer::ViewIdentifier viewIdentifier) {
     if (m_modelPartShared) return m_modelPartShared->canFlipHorizontal(viewIdentifier);
 
     return false;
 }
 
-LayerList ModelPart::viewLayers(ViewIdentifierClass::ViewIdentifier viewIdentifier) {
+LayerList ModelPart::viewLayers(ViewLayer::ViewIdentifier viewIdentifier) {
     if (m_modelPartShared) return m_modelPartShared->viewLayers(viewIdentifier);
 
     LayerList layerList;
     return layerList;
 }
 
-QString ModelPart::imageFileName(ViewIdentifierClass::ViewIdentifier viewIdentifier) {
+QString ModelPart::imageFileName(ViewLayer::ViewIdentifier viewIdentifier) {
     if (m_modelPartShared) return m_modelPartShared->imageFileName(viewIdentifier);
 
     return "";
 }
 
-QString ModelPart::imageFileName(ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID) {
+QString ModelPart::imageFileName(ViewLayer::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID) {
     if (m_modelPartShared) return m_modelPartShared->imageFileName(viewIdentifier, viewLayerID);
 
     return "";
 }
 
-bool ModelPart::anySticky(ViewIdentifierClass::ViewIdentifier viewIdentifier) {
+bool ModelPart::anySticky(ViewLayer::ViewIdentifier viewIdentifier) {
     if (m_modelPartShared) return m_modelPartShared->anySticky(viewIdentifier);
 
     return false;
@@ -870,19 +870,19 @@ bool ModelPart::needsCopper1() {
 	return false;
 }
 
-bool ModelPart::hasViewFor(ViewIdentifierClass::ViewIdentifier viewIdentifier) {
+bool ModelPart::hasViewFor(ViewLayer::ViewIdentifier viewIdentifier) {
 	if (m_modelPartShared == NULL) return false;
 
 	return m_modelPartShared->hasViewFor(viewIdentifier);
 }
 
-bool ModelPart::hasViewFor(ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID) {
+bool ModelPart::hasViewFor(ViewLayer::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID) {
 	if (m_modelPartShared == NULL) return false;
 
 	return m_modelPartShared->hasViewFor(viewIdentifier, viewLayerID);
 }
 
-QString ModelPart::hasBaseNameFor(ViewIdentifierClass::ViewIdentifier viewIdentifier) {
+QString ModelPart::hasBaseNameFor(ViewLayer::ViewIdentifier viewIdentifier) {
 	if (m_modelPartShared == NULL) return ___emptyString___;
 
 	return m_modelPartShared->hasBaseNameFor(viewIdentifier);
@@ -958,7 +958,7 @@ void ModelPart::flipSMDAnd() {
     if (m_modelPartShared) m_modelPartShared->flipSMDAnd();
 }
 
-void ModelPart::setImageFileName(ViewIdentifierClass::ViewIdentifier viewIdentifier, const QString & filename) {
+void ModelPart::setImageFileName(ViewLayer::ViewIdentifier viewIdentifier, const QString & filename) {
     if (m_modelPartShared) m_modelPartShared->setImageFileName(viewIdentifier, filename);
 }
 

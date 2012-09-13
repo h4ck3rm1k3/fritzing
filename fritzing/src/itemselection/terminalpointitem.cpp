@@ -62,7 +62,7 @@ void TerminalPointItem::init(PartsEditorConnectorsConnectorItem *parent, bool vi
 	pen.setBrush(QBrush());
 	setPen(pen);
 
-	bool editable = parent->attachedTo()->viewIdentifier() != ViewIdentifierClass::PCBView;
+	bool editable = parent->attachedTo()->viewIdentifier() != ViewLayer::PCBView;
 	m_cross = new TerminalPointItemPrivate(this,editable);
 	setMovable(editable);
 	setVisible(visible);

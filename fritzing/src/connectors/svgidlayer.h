@@ -30,13 +30,12 @@ $Date$
 #include <QString>
 
 #include "../viewlayer.h"
-#include "../viewidentifierclass.h"
 
 struct SvgIdLayer 
 {
 	QString m_svgId;
 	QString m_terminalId;
-    ViewIdentifierClass::ViewIdentifier m_viewIdentifier;
+    ViewLayer::ViewIdentifier m_viewIdentifier;
 	ViewLayer::ViewLayerID m_svgViewLayerID;
 	bool m_svgVisible;
 	bool m_hybrid;
@@ -50,7 +49,7 @@ struct SvgIdLayer
 	double m_legStrokeWidth;
 	QLineF m_legLine;
 
-	SvgIdLayer(ViewIdentifierClass::ViewIdentifier);
+	SvgIdLayer(ViewLayer::ViewIdentifier);
 	SvgIdLayer * copyLayer();
 };
 

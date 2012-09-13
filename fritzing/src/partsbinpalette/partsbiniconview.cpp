@@ -209,7 +209,7 @@ int PartsBinIconView::setItemAux(ModelPart * modelPart, int position) {
         ItemBase::PluralType plural;
         ItemBase * itemBase = ItemBaseHash.value(moduleID);
         if (itemBase == NULL) {
-		    itemBase = PartFactory::createPart(modelPart, ViewLayer::ThroughHoleThroughTop_OneLayer, ViewIdentifierClass::IconView, ViewGeometry(), ItemBase::getNextID(), NULL, NULL, false);
+		    itemBase = PartFactory::createPart(modelPart, ViewLayer::ThroughHoleThroughTop_OneLayer, ViewLayer::IconView, ViewGeometry(), ItemBase::getNextID(), NULL, NULL, false);
 		    plural = itemBase->isPlural();
 		    if (plural == ItemBase::NotSure) {
 			    QHash<QString,QString> properties = modelPart->properties();
@@ -227,11 +227,11 @@ int PartsBinIconView::setItemAux(ModelPart * modelPart, int position) {
         else {
             plural = itemBase->isPlural();
         }
-        svgicon = new SvgIconWidget(modelPart, ViewIdentifierClass::IconView, itemBase, plural == ItemBase::Plural);
+        svgicon = new SvgIconWidget(modelPart, ViewLayer::IconView, itemBase, plural == ItemBase::Plural);
 		m_partHash[moduleID] = modelPart;
 	}
 	else {
-		svgicon = new SvgIconWidget(modelPart, ViewIdentifierClass::IconView, NULL, false);
+		svgicon = new SvgIconWidget(modelPart, ViewLayer::IconView, NULL, false);
 	}
 
 
@@ -264,7 +264,7 @@ void PartsBinIconView::loadFromModel(PaletteModel * model) {
 		QDomElement views = instance.firstChildElement("views");
 		if (views.isNull()) continue;
 
-		QString name = ViewIdentifierClass::viewIdentifierXmlName(ViewIdentifierClass::IconView);
+		QString name = ViewLayer::viewIdentifierXmlName(ViewLayer::IconView);
 		QDomElement view = views.firstChildElement(name);
 		if (view.isNull()) continue;
 

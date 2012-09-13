@@ -36,7 +36,7 @@ $Date$
 QHash <Connector::ConnectorType, QString > Connector::Names;
 static const QList<SvgIdLayer *> EmptySvgIdLayerList;
 
-static inline int QuickHash(ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID) {
+static inline int QuickHash(ViewLayer::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID) {
 	return (1000 * viewIdentifier) + viewLayerID;
 }
 
@@ -131,9 +131,9 @@ void Connector::saveAsPart(QXmlStreamWriter & writer) {
 	writer.writeAttribute("name", connectorShared()->sharedName());
 	writer.writeTextElement("description", connectorShared()->description());
 	writer.writeStartElement("views");
-	QMultiHash<ViewIdentifierClass::ViewIdentifier,SvgIdLayer *> pins = m_connectorShared->pins();
-	foreach (ViewIdentifierClass::ViewIdentifier currView, pins.uniqueKeys()) {
-		writer.writeStartElement(ViewIdentifierClass::viewIdentifierXmlName(currView));
+	QMultiHash<ViewLayer::ViewIdentifier,SvgIdLayer *> pins = m_connectorShared->pins();
+	foreach (ViewLayer::ViewIdentifier currView, pins.uniqueKeys()) {
+		writer.writeStartElement(ViewLayer::viewIdentifierXmlName(currView));
 		foreach (SvgIdLayer * svgIdLayer, pins.values(currView)) {
 			writer.writeStartElement("p");
 			writeLayerAttr(writer, svgIdLayer->m_svgViewLayerID);
@@ -151,13 +151,13 @@ void Connector::writeLayerAttr(QXmlStreamWriter &writer, ViewLayer::ViewLayerID 
 	writer.writeAttribute("layer",ViewLayer::viewLayerXmlNameFromID(viewLayerID));
 }
 
-void Connector::writeSvgIdAttr(QXmlStreamWriter &writer, ViewIdentifierClass::ViewIdentifier view, QString connId) {
+void Connector::writeSvgIdAttr(QXmlStreamWriter &writer, ViewLayer::ViewIdentifier view, QString connId) {
 	Q_UNUSED(view);
 	writer.writeAttribute("svgId",connId);
 }
 
-void Connector::writeTerminalIdAttr(QXmlStreamWriter &writer, ViewIdentifierClass::ViewIdentifier view, QString terminalId) {
-        if((view == ViewIdentifierClass::BreadboardView || view == ViewIdentifierClass::SchematicView)
+void Connector::writeTerminalIdAttr(QXmlStreamWriter &writer, ViewLayer::ViewIdentifier view, QString terminalId) {
+        if((view == ViewLayer::BreadboardView || view == ViewLayer::SchematicView)
             &&
            (!terminalId.isNull() && !terminalId.isEmpty()) ) {
 		writer.writeAttribute("terminalId",terminalId);
@@ -170,7 +170,7 @@ const QList<Connector *> & Connector::toConnectors() {
 	return m_toConnectors;
 }
 
-ConnectorItem * Connector::connectorItemByViewLayerID(ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID) {
+ConnectorItem * Connector::connectorItemByViewLayerID(ViewLayer::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID) {
 	return m_connectorItems.value(QuickHash(viewIdentifier, viewLayerID), NULL);
 }
 
@@ -229,14 +229,14 @@ void Connector::setBus(Bus * bus) {
 	m_bus = bus;
 }
 
-void Connector::unprocess(ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID) {
+void Connector::unprocess(ViewLayer::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID) {
 	SvgIdLayer * svgIdLayer = m_connectorShared->fullPinInfo(viewIdentifier, viewLayerID);
 	if (svgIdLayer != NULL) {
 		svgIdLayer->m_processed = false;
 	}
 }
 
-SvgIdLayer * Connector::fullPinInfo(ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID) {
+SvgIdLayer * Connector::fullPinInfo(ViewLayer::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID) {
 	if (m_connectorShared == NULL) return NULL;
 
 	return m_connectorShared->fullPinInfo(viewIdentifier, viewLayerID);
@@ -262,7 +262,7 @@ QList< QPointer<ConnectorItem> > Connector::viewItems() {
 	return m_connectorItems.values();
 }
 
-const QString & Connector::legID(ViewIdentifierClass::ViewIdentifier viewID, ViewLayer::ViewLayerID viewLayerID) {
+const QString & Connector::legID(ViewLayer::ViewIdentifier viewID, ViewLayer::ViewLayerID viewLayerID) {
 	if (m_connectorShared) return m_connectorShared->legID(viewID, viewLayerID);
 
 	return ___emptyString___;
@@ -287,7 +287,7 @@ const QList<SvgIdLayer *> Connector::svgIdLayers() const {
     return EmptySvgIdLayerList;
 }
 
-void Connector::addPin(ViewIdentifierClass::ViewIdentifier viewIdentifier, const QString & svgId, ViewLayer::ViewLayerID viewLayerId, const QString & terminalId, const QString & legId, bool hybrid)
+void Connector::addPin(ViewLayer::ViewIdentifier viewIdentifier, const QString & svgId, ViewLayer::ViewLayerID viewLayerId, const QString & terminalId, const QString & legId, bool hybrid)
 {
     if (m_connectorShared) m_connectorShared->addPin(viewIdentifier, svgId, viewLayerId, terminalId, legId, hybrid);
 }

@@ -118,7 +118,7 @@ bool byID(Connector * c1, Connector * c2)
 
 /////////////////////////////////////////////////
 
-PaletteItem::PaletteItem( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
+PaletteItem::PaletteItem( ModelPart * modelPart, ViewLayer::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: PaletteItemBase(modelPart, viewIdentifier, viewGeometry, id, itemMenu)
 {
 	if(doLabel) {
@@ -135,7 +135,7 @@ PaletteItem::~PaletteItem() {
 	}
 }
 
-bool PaletteItem::renderImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID viewLayerID, bool doConnectors, QString & error) {
+bool PaletteItem::renderImage(ModelPart * modelPart, ViewLayer::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID viewLayerID, bool doConnectors, QString & error) {
 	LayerAttributes layerAttributes; 
 	bool result = setUpImage(modelPart, viewIdentifier, viewLayers, viewLayerID, this->viewLayerSpec(), doConnectors, layerAttributes, error);
 
@@ -592,7 +592,7 @@ QStringList PaletteItem::collectValues(const QString & family, const QString & p
     if (modelPart()->flippedSMD() && prop.compare("layer") == 0) {
         QStringList values = PaletteItemBase::collectValues(family, prop, value);
         if (values.count() == 0) {
-            ItemBase * itemBase = modelPart()->viewItem(ViewIdentifierClass::PCBView);
+            ItemBase * itemBase = modelPart()->viewItem(ViewLayer::PCBView);
             if (itemBase) {
                 values << "copper0" << "copper1";
                 if (itemBase->viewLayerID() == ViewLayer::Copper0) {
@@ -716,7 +716,7 @@ QList<Connector *> PaletteItem::sortConnectors() {
 bool PaletteItem::changePinLabels(bool singleRow, bool sip) {
 	Q_UNUSED(singleRow);
 	Q_UNUSED(sip);
-	if (m_viewIdentifier != ViewIdentifierClass::SchematicView) return true;
+	if (m_viewIdentifier != ViewLayer::SchematicView) return true;
 
 	return false;
 }
@@ -738,7 +738,7 @@ QStringList PaletteItem::getPinLabels(bool & hasLocal) {
 }
 
 void PaletteItem::resetConnectors() {
-	if (m_viewIdentifier != ViewIdentifierClass::SchematicView) return;
+	if (m_viewIdentifier != ViewLayer::SchematicView) return;
 
 	QSizeF size = fsvgRenderer()->defaultSizeF();   // pixels
 	QRectF viewBox = fsvgRenderer()->viewBoxF();
@@ -1139,8 +1139,8 @@ QStringList PaletteItem::getSizes(QString & holeSize, HoleSettings & holeSetting
 }
 
 void PaletteItem::changeHoleSize(const QString & newSize) {
-    if (this->m_viewIdentifier != ViewIdentifierClass::PCBView) {
-        PaletteItem * paletteItem = qobject_cast<PaletteItem *>(modelPart()->viewItem(ViewIdentifierClass::PCBView));
+    if (this->m_viewIdentifier != ViewLayer::PCBView) {
+        PaletteItem * paletteItem = qobject_cast<PaletteItem *>(modelPart()->viewItem(ViewLayer::PCBView));
         if (paletteItem == NULL) return;
 
         paletteItem->changeHoleSize(newSize);
@@ -1454,7 +1454,7 @@ void PaletteItem::makeLocalModifications(QByteArray & svg, const QString & filen
     // for saved-as-new-part parts (i.e. that are no longer MysteryParts) that still have a chip-label or custom pin names
     // also handles adding a title if there is a label id in the 
     switch (m_viewIdentifier) {
-        case ViewIdentifierClass::PCBView:
+        case ViewLayer::PCBView:
             return;
             
         default:
@@ -1471,7 +1471,7 @@ void PaletteItem::makeLocalModifications(QByteArray & svg, const QString & filen
         gotChipLabel = true;
     }
 
-    if (m_viewIdentifier == ViewIdentifierClass::SchematicView) {
+    if (m_viewIdentifier == ViewLayer::SchematicView) {
         QString value = modelPart()->properties().value("editable pin labels", "");
         if (value.compare("true") == 0) {
             bool hasLayout, sip;

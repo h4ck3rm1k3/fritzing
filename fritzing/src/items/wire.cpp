@@ -136,7 +136,7 @@ Wire * WireAction::wire() {
 
 /////////////////////////////////////////////////////////////
 
-Wire::Wire( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier,  const ViewGeometry & viewGeometry, long id, QMenu* itemMenu, bool initLabel)
+Wire::Wire( ModelPart * modelPart, ViewLayer::ViewIdentifier viewIdentifier,  const ViewGeometry & viewGeometry, long id, QMenu* itemMenu, bool initLabel)
 	: ItemBase(modelPart, viewIdentifier, viewGeometry, id, itemMenu)
 {
 	m_bezier = NULL;
@@ -940,7 +940,7 @@ void Wire::connectedMoved(ConnectorItem * from, ConnectorItem * to) {
 }
 
 
-FSvgRenderer * Wire::setUpConnectors(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier) 
+FSvgRenderer * Wire::setUpConnectors(ModelPart * modelPart, ViewLayer::ViewIdentifier viewIdentifier) 
 {
 	clearConnectorItemCache();
 
@@ -1269,7 +1269,7 @@ bool Wire::canChangeColor() {
 	if (getRatsnest()) return false;
 	if (!getTrace()) return true;
 
-	return (this->m_viewIdentifier == ViewIdentifierClass::SchematicView);
+	return (this->m_viewIdentifier == ViewLayer::SchematicView);
 }
 
 void Wire::collectDirectWires(QList<Wire *> & wires) {
@@ -1418,7 +1418,7 @@ bool Wire::connectionIsAllowed(ConnectorItem * to) {
 
 	if (w->getRatsnest()) return false;
 
-	return m_viewIdentifier != ViewIdentifierClass::BreadboardView;
+	return m_viewIdentifier != ViewLayer::BreadboardView;
 }
 
 bool Wire::isGrounded() {
@@ -1460,7 +1460,7 @@ bool Wire::collectExtraInfo(QWidget * parent, const QString & family, const QStr
 			QString englishCurrColor = colorString();
 			foreach(QString transColorName, Wire::colorNames) {
 				QString englishColorName = Wire::colorTrans.value(transColorName);
-				bool ok = (this->m_viewIdentifier != ViewIdentifierClass::SchematicView || englishColorName.compare("white", Qt::CaseInsensitive) != 0);
+				bool ok = (this->m_viewIdentifier != ViewLayer::SchematicView || englishColorName.compare("white", Qt::CaseInsensitive) != 0);
 				if (ok) {
 					comboBox->addItem(transColorName, QVariant(englishColorName));
 					if (englishColorName.compare(englishCurrColor, Qt::CaseInsensitive) == 0) {
@@ -1653,7 +1653,7 @@ void Wire::setPen(const QPen &pen)
 }
 
 bool Wire::canHaveCurve() {
-	return m_canHaveCurve && (m_viewIdentifier == ViewIdentifierClass::BreadboardView);
+	return m_canHaveCurve && (m_viewIdentifier == ViewLayer::BreadboardView);
 }
 
 void Wire::dragCurve(QPointF eventPos, Qt::KeyboardModifiers)
@@ -1761,11 +1761,11 @@ bool Wire::canChainMultiple()
 	return m_canChainMultiple;
 }
 
-ViewIdentifierClass::ViewIdentifier Wire::useViewIdentifierForPixmap(ViewIdentifierClass::ViewIdentifier vid, bool) 
+ViewLayer::ViewIdentifier Wire::useViewIdentifierForPixmap(ViewLayer::ViewIdentifier vid, bool) 
 {
-    if (vid == ViewIdentifierClass::BreadboardView) {
-        return ViewIdentifierClass::IconView;
+    if (vid == ViewLayer::BreadboardView) {
+        return ViewLayer::IconView;
     }
 
-    return ViewIdentifierClass::UnknownView;
+    return ViewLayer::UnknownView;
 }

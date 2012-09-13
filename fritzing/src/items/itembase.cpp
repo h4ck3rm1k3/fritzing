@@ -140,7 +140,7 @@ static QHash<QString, QStringList> CachedValues;
 
 ///////////////////////////////////////////////////
 
-ItemBase::ItemBase( ModelPart* modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu )
+ItemBase::ItemBase( ModelPart* modelPart, ViewLayer::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu )
 	: QGraphicsSvgItem()
 {
     m_fsvgRenderer = NULL;
@@ -331,7 +331,7 @@ void ItemBase::initNames() {
 }
 
 void ItemBase::saveInstance(QXmlStreamWriter & streamWriter) {
-	streamWriter.writeStartElement(ViewIdentifierClass::viewIdentifierXmlName(m_viewIdentifier));
+	streamWriter.writeStartElement(ViewLayer::viewIdentifierXmlName(m_viewIdentifier));
 	streamWriter.writeAttribute("layer", ViewLayer::viewLayerXmlNameFromID(m_viewLayerID));
 	if (m_moveLock) {
 		streamWriter.writeAttribute("locked", "true");
@@ -374,12 +374,12 @@ ViewGeometry & ItemBase::getViewGeometry() {
 	return m_viewGeometry;
 }
 
-ViewIdentifierClass::ViewIdentifier ItemBase::viewIdentifier() {
+ViewLayer::ViewIdentifier ItemBase::viewIdentifier() {
 	return m_viewIdentifier;
 }
 
 QString & ItemBase::viewIdentifierName() {
-	return ViewIdentifierClass::viewIdentifierName(m_viewIdentifier);
+	return ViewLayer::viewIdentifierName(m_viewIdentifier);
 }
 
 ViewLayer::ViewLayerID ItemBase::viewLayerID() const {
@@ -939,7 +939,7 @@ void ItemBase::setInstanceTitleTooltip(const QString &text) {
 
 void ItemBase::setDefaultTooltip() {
 	if (m_modelPart) {
-		if (m_viewIdentifier == ViewIdentifierClass::IconView) {
+		if (m_viewIdentifier == ViewLayer::IconView) {
 			QString base = ITEMBASE_FONT_PREFIX + "%1" + ITEMBASE_FONT_SUFFIX;
 			if(m_modelPart->itemType() != ModelPart::Wire) {
 				this->setToolTip(base.arg(m_modelPart->title()));
@@ -1231,7 +1231,7 @@ void ItemBase::saveLocAndTransform(QXmlStreamWriter & streamWriter)
 	GraphicsUtils::saveTransform(streamWriter, m_viewGeometry.transform());
 }
 
-FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec viewLayerSpec, LayerAttributes & layerAttributes, QString & error)
+FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, ViewLayer::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID, ViewLayer::ViewLayerSpec viewLayerSpec, LayerAttributes & layerAttributes, QString & error)
 {
 #ifndef QT_NO_DEBUG
 	QTime t;
@@ -1267,7 +1267,7 @@ FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::
 	QString setColor;
 	QString colorElementID;
 	switch (viewIdentifier) {
-		case ViewIdentifierClass::PCBView:
+		case ViewLayer::PCBView:
 			colorElementID = ViewLayer::viewLayerXmlNameFromID(viewLayerID);
 			switch (viewLayerID) {
 				case ViewLayer::Copper0:
@@ -1288,7 +1288,7 @@ FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::
 					break;
 			}
 			break;
-		case ViewIdentifierClass::BreadboardView:
+		case ViewLayer::BreadboardView:
 			modelPartShared->connectorIDs(viewIdentifier, viewLayerID, connectorIDs, terminalIDs, legIDs);
 			break;
         default:
@@ -1332,7 +1332,7 @@ FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::
     QByteArray resultBytes; 
     if (!bytesToLoad.isEmpty()) {
         makeLocalModifications(bytesToLoad, filename);
-        resultBytes = newRenderer->loadSvg(bytesToLoad, filename, connectorIDs, terminalIDs, legIDs, setColor, colorElementID, viewIdentifier == ViewIdentifierClass::PCBView);
+        resultBytes = newRenderer->loadSvg(bytesToLoad, filename, connectorIDs, terminalIDs, legIDs, setColor, colorElementID, viewIdentifier == ViewLayer::PCBView);
     }
 
     layerAttributes.setLoaded(resultBytes);
@@ -2021,12 +2021,12 @@ bool ItemBase::resetRenderer(const QString & svg, QString & newSvg) {
 
 void ItemBase::getPixmaps(QPixmap * & pixmap1, QPixmap * & pixmap2, QPixmap * & pixmap3, bool swappingEnabled, QSize size) 
 {
-    pixmap1 = getPixmap(ViewIdentifierClass::BreadboardView, swappingEnabled, size);
-    pixmap2 = getPixmap(ViewIdentifierClass::SchematicView, swappingEnabled, size);
-    pixmap3 = getPixmap(ViewIdentifierClass::PCBView, swappingEnabled, size);
+    pixmap1 = getPixmap(ViewLayer::BreadboardView, swappingEnabled, size);
+    pixmap2 = getPixmap(ViewLayer::SchematicView, swappingEnabled, size);
+    pixmap3 = getPixmap(ViewLayer::PCBView, swappingEnabled, size);
 }
 
-QPixmap * ItemBase::getPixmap(ViewIdentifierClass::ViewIdentifier vid, bool swappingEnabled, QSize size)
+QPixmap * ItemBase::getPixmap(ViewLayer::ViewIdentifier vid, bool swappingEnabled, QSize size)
 {
     ItemBase * vItemBase = NULL;
 
@@ -2039,7 +2039,7 @@ QPixmap * ItemBase::getPixmap(ViewIdentifierClass::ViewIdentifier vid, bool swap
     }
 
     vid = useViewIdentifierForPixmap(vid, swappingEnabled);
-    if (vid == ViewIdentifierClass::UnknownView) return NULL;
+    if (vid == ViewLayer::UnknownView) return NULL;
 
     if (viewIdentifier() == vid) {
         return getPixmap(size);
@@ -2080,10 +2080,10 @@ QPixmap * ItemBase::getPixmap(ViewIdentifierClass::ViewIdentifier vid, bool swap
 	return pixmap;
 }
 
-ViewIdentifierClass::ViewIdentifier ItemBase::useViewIdentifierForPixmap(ViewIdentifierClass::ViewIdentifier vid, bool) 
+ViewLayer::ViewIdentifier ItemBase::useViewIdentifierForPixmap(ViewLayer::ViewIdentifier vid, bool) 
 {
-    if (vid == ViewIdentifierClass::BreadboardView) {
-        return ViewIdentifierClass::IconView;
+    if (vid == ViewLayer::BreadboardView) {
+        return ViewLayer::IconView;
     }
 
     return vid;

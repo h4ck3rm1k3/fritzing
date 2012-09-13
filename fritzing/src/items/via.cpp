@@ -41,7 +41,7 @@ const QString Via::AutorouteViaRingThickness = "autorouteViaRingThickness";
 QString Via::DefaultAutorouteViaHoleSize;
 QString Via::DefaultAutorouteViaRingThickness;
 
-Via::Via( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
+Via::Via( ModelPart * modelPart, ViewLayer::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: Hole(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
 	QSettings settings;
@@ -77,7 +77,7 @@ void Via::initHoleSettings(HoleSettings & holeSettings)
 }
 
 void Via::setBoth(const QString & holeDiameter, const QString & ringThickness) {
-	if (this->m_viewIdentifier != ViewIdentifierClass::PCBView) return;
+	if (this->m_viewIdentifier != ViewLayer::PCBView) return;
 
 	ItemBase * otherLayer = setBothSvg(holeDiameter, ringThickness);
 	resetConnectors(otherLayer, otherLayer->fsvgRenderer());

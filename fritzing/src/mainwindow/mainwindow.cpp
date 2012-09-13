@@ -294,9 +294,9 @@ void MainWindow::init(PaletteModel * paletteModel, ReferenceModel *refModel, boo
 	createZoomOptions(m_schematicWidget);
 	createZoomOptions(m_pcbWidget);
 
-    m_breadboardWidget->setToolbarWidgets(getButtonsForView(ViewIdentifierClass::BreadboardView));
-    m_schematicWidget->setToolbarWidgets(getButtonsForView(ViewIdentifierClass::SchematicView));
-	m_pcbWidget->setToolbarWidgets(getButtonsForView(ViewIdentifierClass::PCBView));
+    m_breadboardWidget->setToolbarWidgets(getButtonsForView(ViewLayer::BreadboardView));
+    m_schematicWidget->setToolbarWidgets(getButtonsForView(ViewLayer::SchematicView));
+	m_pcbWidget->setToolbarWidgets(getButtonsForView(ViewLayer::PCBView));
 
     initStyleSheet();
 
@@ -387,7 +387,7 @@ void MainWindow::initSketchWidgets() {
 	//DebugDialog::debug("init sketch widgets");
 
 	// all this belongs in viewLayer.xml
-	m_breadboardGraphicsView = new BreadboardSketchWidget(ViewIdentifierClass::BreadboardView, this);
+	m_breadboardGraphicsView = new BreadboardSketchWidget(ViewLayer::BreadboardView, this);
 	initSketchWidget(m_breadboardGraphicsView);
 	m_breadboardWidget = new SketchAreaWidget(m_breadboardGraphicsView,this);
 	m_tabWidget->addWidget(m_breadboardWidget);
@@ -396,7 +396,7 @@ void MainWindow::initSketchWidgets() {
 		m_fileProgressDialog->setValue(11);
 	}
 
-	m_schematicGraphicsView = new SchematicSketchWidget(ViewIdentifierClass::SchematicView, this);
+	m_schematicGraphicsView = new SchematicSketchWidget(ViewLayer::SchematicView, this);
 	initSketchWidget(m_schematicGraphicsView);
 	m_schematicWidget = new SketchAreaWidget(m_schematicGraphicsView, this);
 	m_tabWidget->addWidget(m_schematicWidget);
@@ -405,7 +405,7 @@ void MainWindow::initSketchWidgets() {
 		m_fileProgressDialog->setValue(20);
 	}
 
-	m_pcbGraphicsView = new PCBSketchWidget(ViewIdentifierClass::PCBView, this);
+	m_pcbGraphicsView = new PCBSketchWidget(ViewLayer::PCBView, this);
 	initSketchWidget(m_pcbGraphicsView);
 	m_pcbWidget = new SketchAreaWidget(m_pcbGraphicsView, this);
 	m_tabWidget->addWidget(m_pcbWidget);
@@ -827,20 +827,20 @@ QWidget *MainWindow::createToolbarSpacer(SketchAreaWidget *parent) {
 	return toolbarSpacer;
 }
 
-QList<QWidget*> MainWindow::getButtonsForView(ViewIdentifierClass::ViewIdentifier viewId) {
+QList<QWidget*> MainWindow::getButtonsForView(ViewLayer::ViewIdentifier viewId) {
 	QList<QWidget*> retval;
 	SketchAreaWidget *parent;
 	switch(viewId) {
-		case ViewIdentifierClass::BreadboardView: parent = m_breadboardWidget; break;
-		case ViewIdentifierClass::SchematicView: parent = m_schematicWidget; break;
-		case ViewIdentifierClass::PCBView: parent = m_pcbWidget; break;
+		case ViewLayer::BreadboardView: parent = m_breadboardWidget; break;
+		case ViewLayer::SchematicView: parent = m_schematicWidget; break;
+		case ViewLayer::PCBView: parent = m_pcbWidget; break;
 		default: return retval;
 	}
 	retval << createShareButton(parent);
 
 	switch(viewId) {
-		case ViewIdentifierClass::BreadboardView:
-		case ViewIdentifierClass::SchematicView:
+		case ViewLayer::BreadboardView:
+		case ViewLayer::SchematicView:
 			retval << createNoteButton(parent);
 		default: 
 			break;
@@ -848,13 +848,13 @@ QList<QWidget*> MainWindow::getButtonsForView(ViewIdentifierClass::ViewIdentifie
 	
 	retval << createRotateButton(parent);
 	switch (viewId) {
-		case ViewIdentifierClass::BreadboardView:
+		case ViewLayer::BreadboardView:
 			retval << createFlipButton(parent); 
 			break;
-		case ViewIdentifierClass::SchematicView:
+		case ViewLayer::SchematicView:
 			retval << createFlipButton(parent) << createToolbarSpacer(parent) << createAutorouteButton(parent);
 			break;
-		case ViewIdentifierClass::PCBView:
+		case ViewLayer::PCBView:
 			retval << SketchAreaWidget::separator(parent) 
 				<< createActiveLayerButton(parent) 
 				<< createAutorouteButton(parent) 
@@ -1144,7 +1144,7 @@ bool MainWindow::wannaRestart() {
 
 void MainWindow::loadPart(const QString &newPartPath, long partsEditorId, bool connectorsChanged) {
 	ModelPart * modelPart = loadPartFromFile(newPartPath, connectorsChanged);
-	if(modelPart && modelPart->hasViewIdentifier(ViewIdentifierClass::IconView)) {
+	if(modelPart && modelPart->hasViewIdentifier(ViewLayer::IconView)) {
 		if(m_binsWithPartsEditorRequests.contains(partsEditorId)
 		   && !m_binsWithPartsEditorRequests[partsEditorId]->currentBinIsCore()	) {
 			m_binManager->addPartTo(m_binsWithPartsEditorRequests[partsEditorId],modelPart, true);
@@ -1460,9 +1460,9 @@ QStringList MainWindow::saveBundledAux(ModelPart *mp, const QDir &destFolder) {
 	names << fn;
 	file.copy(destFolder.path()+"/"+fn);
 
-	QList<ViewIdentifierClass::ViewIdentifier> identifiers;
-	identifiers << ViewIdentifierClass::IconView << ViewIdentifierClass::BreadboardView << ViewIdentifierClass::SchematicView << ViewIdentifierClass::PCBView;
-	foreach (ViewIdentifierClass::ViewIdentifier viewIdentifier, identifiers) {
+	QList<ViewLayer::ViewIdentifier> identifiers;
+	identifiers << ViewLayer::IconView << ViewLayer::BreadboardView << ViewLayer::SchematicView << ViewLayer::PCBView;
+	foreach (ViewLayer::ViewIdentifier viewIdentifier, identifiers) {
 		QString basename = mp->hasBaseNameFor(viewIdentifier);
 		if (basename.isEmpty()) continue;
 
@@ -1827,7 +1827,7 @@ void MainWindow::swapSelectedMap(const QString & family, const QString & prop, Q
 
 	if(moduleID.isEmpty()) {
         if (prop.compare("layer") == 0 && itemBase->modelPart()->flippedSMD()) {
-            ItemBase * viewItem = itemBase->modelPart()->viewItem(ViewIdentifierClass::PCBView);
+            ItemBase * viewItem = itemBase->modelPart()->viewItem(ViewLayer::PCBView);
             if (viewItem) {
                 ViewLayer::ViewLayerID wantViewLayerID = ViewLayer::viewLayerIDFromXmlString(currPropsMap.value(prop));
                 if (viewItem->viewLayerID() != wantViewLayerID) {
@@ -1967,10 +1967,10 @@ long MainWindow::swapSelectedAuxAux(ItemBase * itemBase, const QString & moduleI
 
     // master view must go last, since it creates the delete command, and possibly has all the local props
     switch (itemBase->viewIdentifier()) {
-        case ViewIdentifierClass::SchematicView:
+        case ViewLayer::SchematicView:
 		    sketchWidgets << m_pcbGraphicsView << m_breadboardGraphicsView << m_schematicGraphicsView;
             break;
-        case ViewIdentifierClass::PCBView:
+        case ViewLayer::PCBView:
             sketchWidgets << m_schematicGraphicsView << m_breadboardGraphicsView << m_pcbGraphicsView;
             break;
         default:

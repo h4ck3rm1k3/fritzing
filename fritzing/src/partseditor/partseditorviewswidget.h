@@ -60,11 +60,11 @@ Q_OBJECT
 	public slots:
 		void repaint();
 		void drawConnector(Connector*);
-		void drawConnector(ViewIdentifierClass::ViewIdentifier, Connector*);
-		void removeConnectorFrom(const QString&,ViewIdentifierClass::ViewIdentifier);
+		void drawConnector(ViewLayer::ViewIdentifier, Connector*);
+		void removeConnectorFrom(const QString&,ViewLayer::ViewIdentifier);
 		void showHideTerminalPoints(int checkState);
 		void informConnectorSelection(const QString &connId);
-		void setMismatching(ViewIdentifierClass::ViewIdentifier viewId, const QString &id, bool mismatching);
+		void setMismatching(ViewLayer::ViewIdentifier viewId, const QString &id, bool mismatching);
 
 	signals:
 		void connectorsFoundSignal(QList< QPointer<Connector> >);
@@ -73,7 +73,7 @@ Q_OBJECT
 	protected:
 		PartsEditorView * createViewImageWidget(
 			SketchModel* sketchModel, class WaitPushUndoStack *undoStack,
-			ViewIdentifierClass::ViewIdentifier viewId, QString iconFileName, QString startText,
+			ViewLayer::ViewIdentifier viewId, QString iconFileName, QString startText,
 			ConnectorsInfoWidget* info, ViewLayer::ViewLayerID viewLayerId, class ItemBase * fromItem
 		);
 		void init();
@@ -89,7 +89,7 @@ Q_OBJECT
 		QPointer<PartsEditorView> m_breadView;
 		QPointer<PartsEditorView> m_schemView;
 		QPointer<PartsEditorView> m_pcbView;
-		QHash<ViewIdentifierClass::ViewIdentifier,PartsEditorView*> m_views;
+		QHash<ViewLayer::ViewIdentifier,PartsEditorView*> m_views;
 		QSplitter *m_viewsContainter;
 
 		QPointer<QCheckBox> m_showTerminalPointsCheckBox;

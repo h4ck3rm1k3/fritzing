@@ -234,7 +234,7 @@ void PartsEditorMainWindow::createHeader(ModelPart *modelPart) {
 	int iconViewSize = 50;
 	QGraphicsProxyWidget *startItem = modelPart? NULL: PartsEditorMainWindow::emptyViewItem("icon_icon.png",___emptyString___);
 	m_iconViewImage = new PartsEditorView(
-		ViewIdentifierClass::IconView, createTempFolderIfNecessary(), false, startItem, m_headerFrame, iconViewSize
+		ViewLayer::IconView, createTempFolderIfNecessary(), false, startItem, m_headerFrame, iconViewSize
 	);
 	m_iconViewImage->setViewItem(m_iconItem);
 	m_iconViewImage->setFixedSize(iconViewSize,iconViewSize);
@@ -340,15 +340,15 @@ void PartsEditorMainWindow::createCenter(ModelPart *modelPart, ItemBase * fromIt
 	connect(m_connsInfo, SIGNAL(repaintNeeded()), m_views, SLOT(repaint()));
 	connect(m_connsInfo, SIGNAL(drawConnector(Connector*)), m_views, SLOT(drawConnector(Connector*)));
 	connect(
-		m_connsInfo, SIGNAL(drawConnector(ViewIdentifierClass::ViewIdentifier, Connector*)),
-		m_views, SLOT(drawConnector(ViewIdentifierClass::ViewIdentifier, Connector*))
+		m_connsInfo, SIGNAL(drawConnector(ViewLayer::ViewIdentifier, Connector*)),
+		m_views, SLOT(drawConnector(ViewLayer::ViewIdentifier, Connector*))
 	);
 	connect(
-		m_connsInfo, SIGNAL(setMismatching(ViewIdentifierClass::ViewIdentifier, const QString&, bool)),
-		m_views, SLOT(setMismatching(ViewIdentifierClass::ViewIdentifier, const QString&, bool))
+		m_connsInfo, SIGNAL(setMismatching(ViewLayer::ViewIdentifier, const QString&, bool)),
+		m_views, SLOT(setMismatching(ViewLayer::ViewIdentifier, const QString&, bool))
 	);
-	connect(m_connsInfo, SIGNAL(removeConnectorFrom(const QString&,ViewIdentifierClass::ViewIdentifier)),
-			m_views, SLOT(removeConnectorFrom(const QString&,ViewIdentifierClass::ViewIdentifier)));
+	connect(m_connsInfo, SIGNAL(removeConnectorFrom(const QString&,ViewLayer::ViewIdentifier)),
+			m_views, SLOT(removeConnectorFrom(const QString&,ViewLayer::ViewIdentifier)));
 	connect(m_views, SIGNAL(connectorSelectedInView(const QString&)),
 			m_connsInfo, SLOT(connectorSelectedInView(const QString&)));
 	m_views->showTerminalPointsCheckBox()->setChecked(false);
