@@ -113,11 +113,12 @@ protected:
     bool getConnectorIDs(const QDomElement & element, SketchWidget * sketchWidget, QString & id, QString & terminalID);
     QDomElement getConnectorPElement(const QDomElement & element, SketchWidget * sketchWidget);
     void updateChangeCount(SketchWidget * sketchWidget, int changeDirection);
-    class PEGraphicsItem * findTerminalItem();
+    class PEGraphicsItem * findConnectorItem();
     void terminalPointChangedAux(PEGraphicsItem * pegi, QPointF p);
     void showInOS(QWidget *parent, const QString &pathIn);
     void switchedConnector(const QDomElement &, SketchWidget *);
     PEGraphicsItem * makePegi(QSizeF size, QPointF topLeft, ItemBase * itemBase, QDomElement & element);
+    QRectF getPixelBounds(FSvgRenderer & renderer, QDomElement & element);
 
 protected slots:
     void initZoom();

@@ -1359,16 +1359,20 @@ QString ItemBase::getSvgFilename(ModelPart * modelPart, const QString & baseName
 {
 	QStringList tempPaths;
 	QString postfix = +"/"+ ItemBase::SvgFilesDir +"/%1/"+ baseName;
+    QString userStore = FolderUtils::getUserDataStorePath("parts")+postfix;
 	if(!modelPart->path().isEmpty()) {
 		QDir dir(modelPart->path());			// is a path to a filename
 		dir.cdUp();									// lop off the filename
 		dir.cdUp();									// parts root
 		tempPaths << dir.absolutePath() + "/" + ItemBase::SvgFilesDir +"/%1/" + baseName;
 		tempPaths << FolderUtils::getApplicationSubFolderPath("parts")+postfix;    // some svgs may still be in the fritzing parts folder, though the other svgs are in the user folder
-	} 
+        if (tempPaths.at(0).compare(userStore) != 0) {
+            tempPaths << userStore;
+        }
+    } 
 	else { // for fake models
 		tempPaths << FolderUtils::getApplicationSubFolderPath("parts")+postfix;
-		tempPaths << FolderUtils::getUserDataStorePath("parts")+postfix;
+		tempPaths << userStore;
 	}
 	tempPaths << ":resources/parts/svg/%1/" + baseName;
 

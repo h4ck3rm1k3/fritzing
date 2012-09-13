@@ -269,7 +269,7 @@ void MoveTerminalPointCommand::redo()
 
 QString MoveTerminalPointCommand::getParamString() const {
 	return "RelocateConnectorSvgCommand " + 
-        QString(" id:%1, old:%2,%3, new:%4,%5")
+        QString(" vid:%1, id:%2, old:%3,%4, new:%5,%6")
             .arg(m_sketchWidget->viewIdentifier())
             .arg(m_id)
             .arg(m_oldLocation.x())

@@ -761,9 +761,6 @@ void PEMainWindow::initSvgTree(ItemBase * itemBase, QDomDocument & domDocument)
     FSvgRenderer renderer;
     renderer.loadSvg(domDocument.toByteArray(), "", false);
 
-	QSizeF defaultSizeF = renderer.defaultSizeF();
-	QRectF viewBox = renderer.viewBoxF();
-
     QList<QDomElement> traverse;
     traverse << domDocument.documentElement();
     while (traverse.count() > 0) {
@@ -783,19 +780,7 @@ void PEMainWindow::initSvgTree(ItemBase * itemBase, QDomDocument & domDocument)
             else if (tagName.compare("text") == 0);
             else continue;
 
-            QString id = element.attribute("id");
-            QRectF r = renderer.boundsOnElement(id);
-            QMatrix matrix = renderer.matrixForElement(id);
-            QString oldid = element.attribute("oldid");
-            if (!oldid.isEmpty()) {
-                element.setAttribute("id", oldid);
-                element.removeAttribute("oldid");
-            }
-            QRectF bounds = matrix.mapRect(r);
-	        bounds.setRect(bounds.x() * defaultSizeF.width() / viewBox.width(), 
-							   bounds.y() * defaultSizeF.height() / viewBox.height(), 
-							   bounds.width() * defaultSizeF.width() / viewBox.width(), 
-							   bounds.height() * defaultSizeF.height() / viewBox.height());
+            QRectF bounds = getPixelBounds(renderer, element);
 
             // known Qt bug: boundsOnElement returns zero width and height for text elements.
             if (bounds.width() > 0 && bounds.height() > 0) {
@@ -861,14 +846,12 @@ void PEMainWindow::switchedConnector(const QDomElement & element, SketchWidget *
         if (pegi) pegiList.append(pegi);
     }
 
-    bool gotTerminal = false;
-    QPointF terminalPoint;
+    PEGraphicsItem * terminalItem = NULL;
     if (!terminalID.isEmpty()) {
         foreach (PEGraphicsItem * pegi, pegiList) {
             QDomElement pegiElement = pegi->element();
             if (pegiElement.attribute("id").compare(terminalID) == 0) {
-                terminalPoint = pegi->rect().center();
-                gotTerminal = true;
+                terminalItem = pegi;
                 break;
             }
         }
@@ -878,8 +861,9 @@ void PEMainWindow::switchedConnector(const QDomElement & element, SketchWidget *
     foreach (PEGraphicsItem * pegi, pegiList) {
         QDomElement pegiElement = pegi->element();
         if (pegiElement.attribute("id").compare(id) == 0) {
-            if (!gotTerminal) {
-                terminalPoint = pegi->rect().center();
+            QPointF terminalPoint = pegi->rect().center();
+            if (terminalItem) {
+                terminalPoint = terminalItem->pos() - pegi->pos() + terminalItem->rect().center();
             }
             pegi->setTerminalPoint(terminalPoint);
             m_peToolView->setTerminalPointCoords(terminalPoint);
@@ -1356,7 +1340,7 @@ void PEMainWindow::updateChangeCount(SketchWidget * sketchWidget, int changeDire
     m_svgChangeCount.insert(sketchWidget->viewIdentifier(), m_svgChangeCount.value(sketchWidget->viewIdentifier()) + changeDirection);
 }
 
-PEGraphicsItem * PEMainWindow::findTerminalItem()
+PEGraphicsItem * PEMainWindow::findConnectorItem()
 {
     foreach (QGraphicsItem * item, m_currentGraphicsView->scene()->items()) {
         PEGraphicsItem * pegi = dynamic_cast<PEGraphicsItem *>(item);
@@ -1367,7 +1351,7 @@ PEGraphicsItem * PEMainWindow::findTerminalItem()
 }
 
 void PEMainWindow::terminalPointChanged(const QString & how) {
-    PEGraphicsItem * pegi = findTerminalItem();
+    PEGraphicsItem * pegi = findConnectorItem();
     if (pegi == NULL) return;
 
     QRectF r = pegi->rect();
@@ -1393,7 +1377,7 @@ void PEMainWindow::terminalPointChanged(const QString & how) {
 
 void PEMainWindow::terminalPointChanged(const QString & coord, double value)
 {
-    PEGraphicsItem * pegi = findTerminalItem();
+    PEGraphicsItem * pegi = findConnectorItem();
     if (pegi == NULL) return;
 
     QPointF p = pegi->terminalPoint();
@@ -1457,11 +1441,19 @@ void PEMainWindow::moveTerminalPoint(SketchWidget * sketchWidget, const QString 
         return;
     }
 
+    PEGraphicsItem * connectorPegi = NULL;
     QList<PEGraphicsItem *> pegiList;
     foreach (QGraphicsItem * item, sketchWidget->scene()->items()) {
         PEGraphicsItem * pegi = dynamic_cast<PEGraphicsItem *>(item);
-        if (pegi) pegiList.append(pegi);
+        if (pegi == NULL) continue;
+
+        pegiList.append(pegi);
+        QDomElement pegiElement = pegi->element();
+        if (pegiElement.attribute("id").compare(svgID) == 0) {
+            connectorPegi = pegi;        
+        }
     }
+    if (connectorPegi == NULL) return;
 
     if (centered) {
         pElement.removeAttribute("terminalId");
@@ -1488,11 +1480,11 @@ void PEMainWindow::moveTerminalPoint(SketchWidget * sketchWidget, const QString 
 
         FSvgRenderer renderer;
         renderer.loadSvg(svgDoc->toByteArray(), "", false);
-        QRectF bounds = renderer.boundsOnElement(svgID);
-        double cx = p.x () * bounds.width() / size.width();
-        double cy = p.y() * bounds.height() / size.height();
-        double dx = bounds.width() / 1000;
-        double dy = bounds.height() / 1000;
+        QRectF svgBounds = renderer.boundsOnElement(svgID);
+        double cx = p.x () * svgBounds.width() / size.width();
+        double cy = p.y() * svgBounds.height() / size.height();
+        double dx = svgBounds.width() / 1000;
+        double dy = svgBounds.height() / 1000;
 
         QDomElement terminalElement = TextUtils::findElementWithAttribute(svgRoot, "id", terminalID);
         if (terminalElement.isNull()) {
@@ -1506,8 +1498,8 @@ void PEMainWindow::moveTerminalPoint(SketchWidget * sketchWidget, const QString 
         terminalElement.setAttribute("stroke", "none");
         terminalElement.setAttribute("fill", "none");
         terminalElement.setAttribute("stroke-width", "0");
-        terminalElement.setAttribute("x", bounds.left() + cx - dx);
-        terminalElement.setAttribute("y", bounds.top() + cy - dy);
+        terminalElement.setAttribute("x", svgBounds.left() + cx - dx);
+        terminalElement.setAttribute("y", svgBounds.top() + cy - dy);
         terminalElement.setAttribute("width", dx * 2);
         terminalElement.setAttribute("height", dy * 2);
         if (terminalElement.attribute("gorn").isEmpty()) {
@@ -1525,28 +1517,24 @@ void PEMainWindow::moveTerminalPoint(SketchWidget * sketchWidget, const QString 
         foreach (PEGraphicsItem * pegi, pegiList) {
             QDomElement pegiElement = pegi->element();
             if (pegiElement.attribute("id").compare(terminalID) == 0) {
+                DebugDialog::debug("old pegi location", pegi->pos());
+                pegiList.removeOne(pegi);
                 delete pegi;
                 break;
             }
         }
 
-        double invdx = dx * size.width() / bounds.width();
-        double invdy = dy * size.height() / bounds.height();
-
-        makePegi(QSizeF(invdx * 2, invdy * 2), p - QPointF(dx, dy), m_items.value(sketchWidget->viewIdentifier()), terminalElement);
-
+        double invdx = dx * size.width() / svgBounds.width();
+        double invdy = dy * size.height() / svgBounds.height();
+        QPointF topLeft = connectorPegi->offset() + p - QPointF(invdx, invdy);
+        PEGraphicsItem * pegi = makePegi(QSizeF(invdx * 2, invdy * 2), topLeft, m_items.value(sketchWidget->viewIdentifier()), terminalElement);
+        DebugDialog::debug("new pegi location", pegi->pos());
         updateChangeCount(sketchWidget, changeDirection);
     }
 
-    foreach (PEGraphicsItem * pegi, pegiList) {
-        QDomElement pegiElement = pegi->element();
-        if (pegiElement.attribute("id").compare(svgID) != 0) continue;
-
-        pegi->setTerminalPoint(p);
-        pegi->update();
-        m_peToolView->setTerminalPointCoords(p);
-        break;
-    }
+    connectorPegi->setTerminalPoint(p);
+    connectorPegi->update();
+    m_peToolView->setTerminalPointCoords(p);
 }
 
 // http://stackoverflow.com/questions/3490336/how-to-reveal-in-finder-or-show-in-explorer-with-qt
@@ -1611,3 +1599,25 @@ PEGraphicsItem * PEMainWindow::makePegi(QSizeF size, QPointF topLeft, ItemBase *
     connect(pegiItem, SIGNAL(mouseReleased(PEGraphicsItem *)), this, SLOT(pegiMouseReleased(PEGraphicsItem *)));
     return pegiItem;
 }
+
+QRectF PEMainWindow::getPixelBounds(FSvgRenderer & renderer, QDomElement & element)
+{
+	QSizeF defaultSizeF = renderer.defaultSizeF();
+	QRectF viewBox = renderer.viewBoxF();
+
+    QString id = element.attribute("id");
+    QRectF r = renderer.boundsOnElement(id);
+    QMatrix matrix = renderer.matrixForElement(id);
+    QString oldid = element.attribute("oldid");
+    if (!oldid.isEmpty()) {
+        element.setAttribute("id", oldid);
+        element.removeAttribute("oldid");
+    }
+    QRectF bounds = matrix.mapRect(r);
+	bounds.setRect(bounds.x() * defaultSizeF.width() / viewBox.width(), 
+						bounds.y() * defaultSizeF.height() / viewBox.height(), 
+						bounds.width() * defaultSizeF.width() / viewBox.width(), 
+						bounds.height() * defaultSizeF.height() / viewBox.height());
+    return bounds;
+}
+
